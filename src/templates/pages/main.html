@@ -1,29 +1,16 @@
+{% extends "../bases/base.html" %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
-    <title>Main Page</title>
-    <link href="{% static 'css/pages/main.css' %}" rel="stylesheet" />
-</head>
-<body>
-    <div class="app homepage" id="app">
-        {% comment %} {% include "components/header/primary.html" %} {% endcomment %}
-        {% comment %} {% include "components/menu.html" %} {% endcomment %}
-        
-        <div>
-          <button @click="++count">Add count</button>
-          <h1 v-text="count"></h1>
-        </div>
+{% block title %}
+  Home Page
+{% endblock %}
 
-        {% comment %} {% include "components/footer.html" %} {% endcomment %}
-        
-        {% comment %} {% include "components/modals/logout.html" %} {% endcomment %}
-        {% comment %} {% block modals %}{% endblock %} {% endcomment %}
-    </div>
-    <script src="{% static 'js/pages/main.js' %}"></script>
-</body>
-</html>
+{% block css %}
+<link href="{% static 'css/pages/main.css' %}?{% now "U" %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}{% endblock %}
+
+{% block js %}
+<script src="{% static "js/pages/main.js" %}?{% now "U" %}"></script>
+{% endblock %}
