@@ -1,0 +1,44 @@
+.header.secondary {
+  position: relative;
+  background-color: $neutral-color-100;
+  box-shadow: $primary-box-shadow;
+
+  .container {
+    height: 64px;
+    @include flex-center-between;
+  }
+
+  .logo {
+    font-size: 1.75rem;
+    color: $primary-color-500;
+  }
+
+  nav {
+    @include flex-center-center;
+    gap: 1rem;
+
+    .link {
+      color: $primary-color-500;
+    }
+  }
+
+  .menu-button {
+    display: none;
+    font-size: 0px;
+    @include reset-button;
+    @include square(20px);
+    @include background-image(pathImages("menu.svg"));
+  }
+}
+
+@include md {
+  .header.secondary {
+    nav {
+      display: none;
+    }
+
+    .menu-button {
+      display: block;
+    }
+  }
+}

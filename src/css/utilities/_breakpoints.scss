@@ -1,0 +1,29 @@
+@mixin xl {
+  @media (max-width: bp("xl")) {
+    @content;
+  }
+}
+
+@mixin lg {
+  @media (max-width: bp("lg")) {
+    @content;
+  }
+}
+
+@mixin md {
+  @media (max-width: bp("md")) {
+    @content;
+  }
+}
+
+@mixin sm {
+  @media (max-width: bp("sm")) {
+    @content;
+  }
+}
+
+@mixin xs {
+  @media (max-width: bp("xs")) {
+    @content;
+  }
+}

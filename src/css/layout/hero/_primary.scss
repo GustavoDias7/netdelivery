@@ -1,0 +1,15 @@
+.hero {
+  $mb: 16px;
+  @include max-width(480px);
+
+  .title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: $mb;
+  }
+
+  .subtitle {
+    font-size: 1.5rem;
+    margin-bottom: $mb;
+  }
+}

@@ -1,0 +1,70 @@
+.g-root {
+  // overflow: hidden;
+}
+
+.g-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.g-center {
+  justify-content: center;
+}
+
+.g-right {
+  justify-content: right;
+}
+
+@for $i from 1 through 12 {
+  .g-item-#{$i} {
+    width: calc(100% * #{$i} / 12);
+  }
+}
+
+.g-item-auto {
+  flex: 0 0 auto;
+  width: auto;
+}
+
+@each $bp, $vl in $breakpoints {
+  @media (min-width: $vl) {
+    @for $i from 1 through 12 {
+      .#{$bp}\:g-item-#{$i} {
+        width: calc(100% * #{$i} / 12);
+      }
+    }
+
+    .#{$bp}\:g-item-auto {
+      flex: 0 0 auto;
+      width: auto;
+    }
+  }
+}
+
+@for $i from 0 through 12 {
+  .g-gap-#{$i} {
+    .g-row {
+      margin: #{-$i * 2}px;
+
+      >[class*="g-item"] {
+        padding: #{$i * 2}px;
+      }
+    }
+  }
+}
+
+@each $bp, $vl in $breakpoints {
+  @media (min-width: $vl) {
+    @for $i from 0 through 12 {
+      .#{$bp}\:g-gap-#{$i} {
+        .g-row {
+          margin: #{-$i * 2}px;
+
+          >[class*="g-item"] {
+            padding: #{$i * 2}px;
+          }
+        }
+      }
+    }
+  }
+}

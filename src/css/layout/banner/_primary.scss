@@ -1,0 +1,84 @@
+.primary-banner {
+  background-color: $neutral-color-100;
+
+  .container {
+    @include flex-center-between;
+    gap: 2rem;
+    min-height: 610px;
+  }
+
+  .left,
+  .right {
+    width: 50%;
+  }
+
+  .left {
+    h2 {
+      font-weight: 700;
+      font-size: 4rem;
+      color: $primary-color-500;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.25rem;
+      line-height: 2rem;
+      color: $primary-color-300;
+      margin-bottom: 1.5rem;
+    }
+  }
+  .right {
+    img {
+      width: 100%;
+    }
+  }
+}
+@include xl {
+  .primary-banner {
+    .left {
+      h2 {
+        font-size: 3rem;
+      }
+    }
+  }
+}
+@include lg {
+  .primary-banner {
+    .left {
+      h2 {
+        font-size: 2.5rem;
+      }
+    }
+  }
+}
+@include md {
+  .primary-banner {
+    .container {
+      flex-direction: column;
+      justify-content: flex-start;
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
+
+    .left,
+    .right {
+      @include max-width(342px);
+      margin: 0px auto;
+    }
+
+    .left {
+      h2 {
+        font-weight: 500;
+        font-size: 2rem;
+      }
+      .gn-button {
+        width: 100%;
+      }
+
+      p {
+        font-size: 1.25rem;
+        margin-bottom: 1.5rem;
+      }
+    }
+  }
+}

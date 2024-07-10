@@ -1,0 +1,98 @@
+.modal {
+  position: fixed;
+  @include insert;
+  @include opacity(false);
+  transition: $primary-transition;
+  background-color: $opacity-color-100;
+
+  &.active {
+    @include opacity(true);
+  }
+
+  &.primary {
+    @include flex-center-center;
+
+    .modal-content {
+      @include flex-center-center;
+      position: relative;
+      @include max-width(352px);
+      min-height: 312px;
+      max-height: 400px;
+      padding: 20px;
+      margin: 16px;
+      border-radius: 16px;
+      background-color: $neutral-color-100;
+
+      text-align: center;
+
+      h2 {
+        margin-bottom: 16px;
+        font-size: 24px;
+      }
+    }
+
+    .close {
+      $dimention: 20px;
+
+      position: absolute;
+      top: $dimention;
+      right: $dimention;
+      @include square($dimention);
+      cursor: pointer;
+      border: none;
+      background-color: $transparent-color;
+      @include background-image(pathImages("close.svg"));
+
+      &:hover,
+      &:focus {
+        opacity: 0.6;
+        transition: $primary-transition;
+      }
+    }
+  }
+
+  &.secondary {
+    .modal-content {
+      display: flex;
+      flex-direction: column;
+      $content-width: 480px;
+      @include max-width($content-width);
+      margin-right: -100%;
+      margin-left: auto;
+      height: 100vh;
+      padding: 20px;
+      background-color: $neutral-color-100;
+      transition: margin-right $primary-transition;
+    }
+
+    &.active .modal-content {
+      margin-right: 0px;
+    }
+
+    $section-margin-bottom: 20px;
+
+    .modal-header {
+      @include flex-center-between;
+      margin-bottom: $section-margin-bottom;
+
+      .close {
+        @include square(20px);
+        cursor: pointer;
+        border: none;
+        background-color: $transparent-color;
+        @include background-image(pathImages("close.svg"));
+
+        &:hover,
+        &:focus {
+          opacity: 0.6;
+          transition: $primary-transition;
+        }
+      }
+    }
+
+    .modal-body {
+      overflow-y: auto;
+      margin-bottom: $section-margin-bottom;
+    }
+  }
+}

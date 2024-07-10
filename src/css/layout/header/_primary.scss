@@ -1,0 +1,15 @@
+.header.primary {
+  position: relative;
+  background-color: $neutral-color-100;
+  box-shadow: $primary-box-shadow;
+
+  .container {
+    height: 64px;
+    @include flex-align-center;
+  }
+
+  .logo {
+    font-size: 1.75rem;
+    color: $primary-color-500;
+  }
+}
