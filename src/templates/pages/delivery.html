@@ -1,0 +1,31 @@
+{% extends "../bases/base.html" %}
+{% load static %}
+
+{% block title %}
+  Delivery
+{% endblock %}
+
+{% block css %}
+<link href="{% static 'css/pages/delivery.css' %}?{% now "U" %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+  <form action="POST">
+    {% include "../layouts/cart.html" %}
+    {% include "../layouts/order-type.html" %}
+    {% include "../layouts/address.html" %}
+    {% include "../layouts/payment.html" %}
+
+    <section>
+      <div class="container sm:container">
+        <button class="gn-button tt-button full" type="submit">
+          Enviar
+        </button>
+      </div>
+    </section>
+  </form>
+{% endblock %}
+
+{% block js %}
+<script src="{% static "js/pages/delivery.js" %}?{% now "U" %}"></script>
+{% endblock %}

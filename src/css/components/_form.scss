@@ -98,7 +98,7 @@ $svg-dimention-large: $svg-dimention + 4px;
   border-radius: $f-border-radius;
   padding: $f-padding;
   outline: none;
-  border: $f-primary-border;
+  border: 1px solid $neutral-color-800;
   transition: border $primary-transition;
   background-color: transparent;
   border-color: $primary-color-500;
@@ -109,7 +109,7 @@ $svg-dimention-large: $svg-dimention + 4px;
   }
 
   &::placeholder {
-    color: $primary-color-200;
+    color: $primary-color-500;
   }
 
   &.transparent {

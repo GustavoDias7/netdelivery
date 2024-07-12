@@ -34,4 +34,33 @@
 @import "../layout/menu/primary";
 @import "../layout/modal/primary";
 @import "../layout/hero/primary";
-@import "../layout/details/"
+@import "../layout/details/";
+
+@import "../layout/cart";
+@import "../layout/order-type";
+
+h2 {
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+section {
+  padding-top: 64px;
+
+  &:last-of-type {
+    padding-bottom: 64px;
+  }
+
+  @include sm {
+    padding-top: 40px;
+
+    &:last-of-type {
+      padding-bottom: 40px;
+    }
+  }
+}
+
+#change_to {
+  margin-top: 12px;
+  max-width: 180px;
+}

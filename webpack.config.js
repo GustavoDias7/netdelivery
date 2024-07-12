@@ -60,17 +60,20 @@ module.exports = {
       // access the content of extends and includes associated to the pages
       const data = fs.readFileSync(src);
       const dirPath = path.parse(src).dir;
-      const extendsPath = extractExtendsPaths("" + data)[0];
-      const basePath = path.join("./", dirPath, extendsPath);
-      const data2 = fs.readFileSync(basePath);
+      const extendsPathFromPage = extractExtendsPaths("" + data)[0];
+      const includesPathsFromPage = extractIncludePaths("" + data).map((p) => {
+        return path.join(dirPath, p);
+      });
+      const basePathFromPage = path.join("./", dirPath, extendsPathFromPage);
+      const data2 = fs.readFileSync(basePathFromPage);
       const includesPaths = extractIncludePaths("" + data2).map((p) => {
         return path.join(dirPath, "..", p);
       });
-      includesPaths.push(basePath);
+      includesPaths.push(basePathFromPage);
       includesPaths.push(src);
 
       return new PurgeCSSPlugin({
-        paths: globAll.sync([...includesPaths], { nodir: true }),
+        paths: globAll.sync([...includesPaths, ...includesPathsFromPage], { nodir: true }),
         only: [path.parse(src).name],
         fontFace: true,
         variables: true,

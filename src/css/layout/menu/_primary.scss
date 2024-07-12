@@ -1,6 +1,7 @@
 .menu {
   $width: 320px;
   position: fixed;
+  z-index: 1;
   top: 0px;
   right: -$width;
   padding: 2rem;
@@ -24,7 +25,7 @@
     .link {
       display: block;
       width: fit-content;
-      color: $primary-color-500;
+      color: $neutral-color-800;
       margin-bottom: 1rem;
 
       &:last-child {

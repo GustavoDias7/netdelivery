@@ -1,0 +1,85 @@
+<section class="payment">
+  <div class="container sm:container">
+    <h2 class="text-2xl sm:text-3xl">Forma de pagamento</h2>
+
+    <div class="g-root g-gap-4">
+      <div class="g-row">
+        <div class="g-item-12">
+          <div class="f-row">
+            <label for="money" class="check radio">
+              <input
+                id="money"
+                v-model="payment_form"
+                type="radio"
+                value="money"
+              />
+              <span class="marker"></span>
+              <span class="text">Dinheiro sem troco</span>
+            </label>
+          </div>
+        </div>
+        <div class="g-item-12">
+          <div class="f-row">
+            <label for="change_money" class="check radio" @change="focusInput">
+              <input
+                id="change_money"
+                v-model="payment_form"
+                type="radio"
+                value="change_money"
+              />
+              <span class="marker"></span>
+              <span class="text">Dinheiro com troco</span>
+            </label>
+          </div>
+          <div v-show="payment_form === 'change_money'" class="f-row">
+            <input
+              ref="inputField"
+              id="change_to"
+              name="change_to"
+              type="text"
+              class="f-input small"
+              placeholder="Troco para quanto?"
+            />
+          </div>
+        </div>
+        <div class="g-item-12">
+          <div class="f-row">
+            <label for="pix" class="check radio">
+              <input id="pix" v-model="payment_form" type="radio" value="pix" />
+              <span class="marker"></span>
+              <span class="text">PIX</span>
+            </label>
+          </div>
+        </div>
+        <div class="g-item-12">
+          <div class="f-row">
+            <label for="debit" class="check radio">
+              <input
+                id="debit"
+                v-model="payment_form"
+                type="radio"
+                value="debit"
+              />
+              <span class="marker"></span>
+              <span class="text">Cartão de Débito</span>
+            </label>
+          </div>
+        </div>
+        <div class="g-item-12">
+          <div class="f-row">
+            <label for="credit" class="check radio">
+              <input
+                id="credit"
+                v-model="payment_form"
+                type="radio"
+                value="credit"
+              />
+              <span class="marker"></span>
+              <span class="text">Cartão de Crédito</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

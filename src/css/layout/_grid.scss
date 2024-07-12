@@ -43,7 +43,7 @@
 
 @for $i from 0 through 12 {
   .g-gap-#{$i} {
-    .g-row {
+    >.g-row {
       margin: #{-$i * 2}px;
 
       >[class*="g-item"] {
@@ -57,7 +57,7 @@
   @media (min-width: $vl) {
     @for $i from 0 through 12 {
       .#{$bp}\:g-gap-#{$i} {
-        .g-row {
+        >.g-row {
           margin: #{-$i * 2}px;
 
           >[class*="g-item"] {
