@@ -69,6 +69,7 @@ $f-border-radius-large: $f-border-radius + 2px;
         content: "";
         display: block;
         position: absolute;
+        z-index: 1;
         margin: auto;
         background-color: $neutral-color-800;
       }
