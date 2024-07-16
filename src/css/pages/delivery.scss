@@ -9,43 +9,43 @@
 @import "../components/circle-button";
 @import "../components/form";
 @import "../components/checkbox";
-@import "../components/accordion";
-@import "../components/price/primary";
-@import "../components/price/secondary";
-@import "../components/price/tertiary";
-@import "../components/list";
-
-@import "../components/box/primary";
-@import "../components/card/primary";
-@import "../components/topic/primary";
 @import "../components/typography";
-@import "../components/see-more";
 @import "../components/aspect-ratio";
 @import "../components/counter";
+// @import "../components/list";
+// @import "../components/accordion";
+// @import "../components/price/primary";
+// @import "../components/price/secondary";
+@import "../components/price/tertiary";
+// @import "../components/box/primary";
+// @import "../components/card/primary";
+// @import "../components/topic/primary";
+// @import "../components/see-more";
+@import "../components/modal";
 
-@import "../layout/header/primary";
+// @import "../layout/header/primary";
 @import "../layout/header/secondary";
 @import "../layout/footer/primary";
-@import "../layout/banner/primary";
-@import "../layout/banner/secondary";
-@import "../layout/banner/tertiary";
-@import "../layout/section/primary";
-@import "../layout/section/secondary";
-@import "../layout/menu/primary";
-@import "../layout/modal/primary";
-@import "../layout/hero/primary";
-@import "../layout/details/";
-
+@import "../layout/menu";
 @import "../layout/cart";
 @import "../layout/order-type";
-
-h2 {
-  font-weight: 500;
-  margin-bottom: 16px;
-}
+// @import "../layout/banner/primary";
+// @import "../layout/banner/secondary";
+// @import "../layout/banner/tertiary";
+// @import "../layout/section/primary";
+// @import "../layout/section/secondary";
+// @import "../layout/hero/primary";
+// @import "../layout/details/";
 
 section {
   padding-top: 64px;
+
+  .container {
+    > h2 {
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+  }
 
   &:last-of-type {
     padding-bottom: 64px;
