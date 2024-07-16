@@ -1,12 +1,15 @@
 <header class="header secondary">
-  <div class="container">
+  <div class="container md:container">
     <div class="left"><a class="logo" href="/">LOGO</a></div>
     <div class="right">
       <nav>
         <a class="link" href="/">Home</a>
-        <a class="link" href="/">About</a>
-        <a class="link" href="/">Contact</a>
-        <a class="gn-button pm-button" href="/">Buy now</a>
+        <a class="link" href="/">Login</a>
+        <a class="link" href="/">Cadastro</a>
+        <a class="link" href="/" @click.prevent="openCart">
+          <img src="../../staticfiles/img/shopping-cart.svg" alt="Carrinho" />
+          Carrinho
+        </a>
       </nav>
       <button class="menu-button" @click="openModal('menu')">Open menu</button>
     </div>
