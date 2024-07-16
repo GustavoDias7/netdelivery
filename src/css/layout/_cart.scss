@@ -1,53 +1,118 @@
 .cart {
-    .cart-item {
+  .cart-item {
+    @include flex-center-between;
+    min-height: 64px;
+
+    .img {
+      @include square(64px);
+      border-radius: 8px;
+      overflow: hidden;
+      align-self: flex-start;
+    }
+
+    .cart-item-center {
       @include flex-center-between;
-      min-height: 64px;
-  
-      .img {
-        border-radius: 8px;
-        overflow: hidden;
-        width: 64px;
-      }
-  
-      .cart-item-center {
-        @include flex-align-center;
-        flex: 1;
-        margin: 0px 16px;
-  
-        .counter {
-          margin: 0px auto 0px auto;
+      flex-wrap: wrap;
+      flex: 1;
+      gap: 4px;
+      margin: 0px 16px 0px 8px;
+
+      .cart-item-center-left {
+        @include flex-center-between;
+        flex-wrap: wrap;
+        gap: 8px;
+        width: calc(100% * 9.5 / 12);
+
+        h3 {
+          @include max-width(240px);
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+          @media (max-width: 360px) {
+            white-space: normal;
+          }
         }
       }
-  
-      .delete {
-        @include reset-button;
-        @include square(24px);
-        @include background-image(pathImages("circle-close.svg"));
+
+      .cart-item-center-right {
+        margin-left: auto;
+        justify-self: flex-end;
+        flex: 0 0 auto;
+        width: auto;
       }
-  
-      @include sm {
+    }
+
+    .delete {
+      @include reset-button;
+      @include square(24px);
+      @include background-image(pathImages("circle-close.svg"));
+    }
+
+    @include sm {
+      align-items: flex-start;
+      gap: 8px;
+
+      .img {
+        flex-shrink: 0;
+        @include square(56px);
+      }
+
+      .cart-item-center {
+        flex-direction: column;
         align-items: flex-start;
-  
-        .cart-item-center {
+        gap: 8px;
+        margin: 0px;
+
+        .cart-item-center-left {
           flex-direction: column;
           align-items: flex-start;
-          gap: 8px;
-  
-          .counter {
-            margin: 0;
+          width: 100%;
+
+          h3 {
+            max-width: 220px;
+          }
+        }
+
+        .cart-item-center-right {
+          margin-left: 0;
+        }
+      }
+
+      .delete {
+        flex-shrink: 0;
+      }
+    }
+  }
+
+  hr {
+    border: none;
+    border-bottom: 1px solid $neutral-color-400;
+  }
+
+  .cart-total {
+    .cart-total-item {
+      @include flex-center-between;
+
+      .price.tertiary {
+        strong {
+          font-size: 24px;
+          height: auto;
+          font-weight: 500;
+        }
+
+        @include sm {
+          .left span {
+            font-size: 12px;
+            position: relative;
+            top: -2px;
+          }
+
+          strong {
+            font-size: 20px;
           }
         }
       }
     }
-  
-    hr {
-      border: none;
-      border-bottom: 1px solid $neutral-color-400;
-    }
-  
-    .cart-total {
-      .cart-total-item {
-        @include flex-center-between;
-      }
-    }
   }
+}
