@@ -11,6 +11,7 @@
 
 {% block content %}
   <form action="POST">
+    {% include "../components/modals/cart.html" %}
     {% include "../layouts/cart.html" %}
     {% include "../layouts/order-type.html" %}
     {% include "../layouts/address.html" %}
