@@ -1,5 +1,7 @@
 .g-root {
-  // overflow: hidden;
+  &.g-hidden {
+    overflow: hidden;
+  }
 }
 
 .g-row {
@@ -43,10 +45,10 @@
 
 @for $i from 0 through 12 {
   .g-gap-#{$i} {
-    >.g-row {
+    > .g-row {
       margin: #{-$i * 2}px;
 
-      >[class*="g-item"] {
+      > [class*="g-item"] {
         padding: #{$i * 2}px;
       }
     }
@@ -57,10 +59,10 @@
   @media (min-width: $vl) {
     @for $i from 0 through 12 {
       .#{$bp}\:g-gap-#{$i} {
-        >.g-row {
+        > .g-row {
           margin: #{-$i * 2}px;
 
-          >[class*="g-item"] {
+          > [class*="g-item"] {
             padding: #{$i * 2}px;
           }
         }
