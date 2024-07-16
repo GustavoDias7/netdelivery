@@ -15,9 +15,11 @@ const app = createApp({
       modal: {
         menu: false,
         logout: false,
+        cart: false,
       },
       order_type: 1, // 1 = Delivery | 2 === retirada
       payment_form: "money",
+      save_address: true,
     };
   },
   methods: {
@@ -33,6 +35,13 @@ const app = createApp({
     },
     closeLogout() {
       this.modal.logout = false;
+    },
+    openCart() {
+      this.closeModal("menu");
+      this.modal.cart = true;
+    },
+    closeCart() {
+      this.modal.cart = false;
     },
   },
   computed: {
