@@ -18,6 +18,8 @@
     gap: 1rem;
 
     .link {
+      @include flex-align-center;
+      gap: 4px;
       color: $neutral-color-800;
     }
   }
