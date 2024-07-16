@@ -1,0 +1,80 @@
+<div class="modal secondary cart-modal" :class="{active: modal.cart}">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title text-2xl sm:text-3xl">Carrinho</h2>
+      <button class="modal-close" @click.prevent="closeCart" type="button"></button>
+    </div>
+    <div class="modal-body">
+      <div class="g-root g-gap-4 sm:g-gap-5 g-hidden">
+        <div class="g-row">
+          <div v-for="item in [1,2,3,4]" class="g-item-12">
+            <div class="cart-item">
+              <a href="/" class="img">
+                <figure class="aspect-ratio aspect-1-1 fit">
+                  <img
+                    src="static/media/placeholder-1.f88ca17b.svg"
+                    alt="Placeholder"
+                  />
+                </figure>
+              </a>
+              <div class="cart-item-center">
+                <h3 class="text-sm">
+                  Lorem ipsum dolor sit amet.
+                </h3>
+                <div class="counter small">
+                  <button class="counter-button">
+                    <span class="sign minus"></span>
+                  </button>
+                  <input class="counter-input" type="text" value="999" />
+                  <button class="counter-button">
+                    <span class="sign"></span>
+                  </button>
+                </div>
+                <p class="text-base">R$ 9999,99</p>
+              </div>
+              <button class="delete" type="button"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="g-root g-gap-4 sm:g-gap-5">
+        <div class="g-row">
+          <div class="g-item-12"><hr /></div>
+          <div class="g-item-12">
+            <div class="cart-total">
+              <div class="g-root g-gap-2">
+                <div class="g-row">
+                  <div class="g-item-12">
+                    <div class="cart-total-item">
+                      <p>Price</p>
+                      <p>R$ <strong>99,99</strong></p>
+                    </div>
+                  </div>
+                  <div class="g-item-12">
+                    <div class="cart-total-item">
+                      <p>Tax</p>
+                      <p>R$ <strong>99,99</strong></p>
+                    </div>
+                  </div>
+                  <div class="g-item-12">
+                    <div class="cart-total-item">
+                      <p>Total</p>
+                      <p>R$ <strong>99,99</strong></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="g-item-12">
+            <button class="gn-button tt-button full small sm:regular" type="button">
+              Comprar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
