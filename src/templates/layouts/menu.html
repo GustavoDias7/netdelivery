@@ -1,9 +1,12 @@
 <aside class="menu" :class="{active: modal.menu}">
-  <button class="menu-button" @click="closeModal('menu')">Close menu</button>
+  <button type="button" class="menu-button" @click="closeModal('menu')">Close menu</button>
   <nav>
     <a class="link" href="/">Home</a>
-    <a class="link" href="/">About</a>
-    <a class="link" href="/">Contact</a>
-    <a class="gn-button pm-button" href="/">Buy now</a>
+    <a class="link" href="/">Login</a>
+    <a class="link" href="/">Cadastro</a>
+    <a class="link" href="/" @click.prevent="openCart">
+      <img src="../../staticfiles/img/shopping-cart.svg" alt="">
+      Carrinho
+    </a>
   </nav>
 </aside>
