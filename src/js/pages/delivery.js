@@ -1,7 +1,9 @@
 import * as vue from "../vendor/vue";
+import { mainMixin } from "../mixins";
 const { createApp, ref } = vue;
 
 const app = createApp({
+  mixins: [mainMixin],
   delimiters: ["[[", "]]"],
   setup() {
     const inputField = ref();
@@ -12,38 +14,12 @@ const app = createApp({
   },
   data() {
     return {
-      modal: {
-        menu: false,
-        logout: false,
-        cart: false,
-      },
       order_type: 1, // 1 = Delivery | 2 === retirada
       payment_form: "money",
       save_address: true,
     };
   },
-  methods: {
-    openModal(name = "") {
-      this.modal[name] = true;
-    },
-    closeModal(name = "") {
-      this.modal[name] = false;
-    },
-    openLogout() {
-      this.closeModal("menu");
-      this.modal.logout = true;
-    },
-    closeLogout() {
-      this.modal.logout = false;
-    },
-    openCart() {
-      this.closeModal("menu");
-      this.modal.cart = true;
-    },
-    closeCart() {
-      this.modal.cart = false;
-    },
-  },
+  methods: {},
   computed: {
     buttonVariant(type) {
       return type === "Delivery" ? "pm-button" : "sc-button";
