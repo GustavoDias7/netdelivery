@@ -1,0 +1,15 @@
+<section>
+  <div class="container md:container">
+    <h2 class="title-line">{{ category.0.product_category.name }}</h2>
+    
+    <div class="g-root g-gap-2 sm:g-gap-4">
+      <div class="g-row">
+        {% for product in category %}
+          <div class="g-item-12 sm:g-item-6 md:g-item-4">
+          {% include "../components/card/secondary.html" with product=product %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>

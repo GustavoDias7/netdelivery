@@ -1,0 +1,32 @@
+.card.secondary {
+  @include max-width(272px);
+  color: $neutral-color-700;
+  background-color: $neutral-color-100;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.32);
+
+  $mb: 16px;
+
+  a {
+    font-size: 0;
+  }
+
+  .description {
+    padding: $mb;
+  }
+
+  .title {
+    font-weight: 400;
+    margin-bottom: 4px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .subtitle,
+  .price {
+    margin-bottom: 4px;
+  }
+  @include sm {
+    margin: 0px auto;
+  }
+}

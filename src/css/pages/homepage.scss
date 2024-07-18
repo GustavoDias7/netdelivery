@@ -1,0 +1,56 @@
+@import "../themes/theme";
+@import "../base/global";
+@import "../utilities/breakpoints";
+@import "../utilities/mixins";
+@import "../base/container";
+@import "../layout/grid";
+
+@import "../components/button";
+// @import "../components/circle-button";
+// @import "../components/form";
+// @import "../components/checkbox";
+@import "../components/typography";
+@import "../components/aspect-ratio";
+@import "../components/counter";
+// @import "../components/list";
+// @import "../components/accordion";
+// @import "../components/price/primary";
+// @import "../components/price/secondary";
+// @import "../components/price/tertiary";
+// @import "../components/box/primary";
+// @import "../components/card/primary";
+@import "../components/card/secondary";
+// @import "../components/topic/primary";
+// @import "../components/see-more";
+@import "../components/modal";
+@import "../components/title-line";
+
+// @import "../layout/header/primary";
+@import "../layout/header/secondary";
+@import "../layout/footer/primary";
+@import "../layout/menu";
+@import "../layout/cart";
+@import "../layout/order-type";
+// @import "../layout/banner/primary";
+// @import "../layout/banner/secondary";
+// @import "../layout/banner/tertiary";
+// @import "../layout/section/primary";
+// @import "../layout/section/secondary";
+// @import "../layout/hero/primary";
+// @import "../layout/details/";
+
+section {
+  padding-top: 64px;
+
+  &:last-of-type {
+    padding-bottom: 64px;
+  }
+
+  @include sm {
+    padding-top: 40px;
+
+    &:last-of-type {
+      padding-bottom: 40px;
+    }
+  }
+}

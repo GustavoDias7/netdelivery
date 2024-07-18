@@ -1,0 +1,22 @@
+{% extends "../bases/base.html" %}
+{% load static %}
+
+{% block title %}
+  Página inicial
+{% endblock %}
+
+{% block css %}
+<link href="{% static 'css/pages/homepage.css' %}?{% now "U" %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+  {% for category in categories %}
+      {% include "../layouts/product-category.html"  with category=category%}
+  {% endfor %}
+    
+{% endblock %}
+
+{% block js %}
+<script src="{% static "js/pages/homepage.js" %}?{% now "U" %}"></script>
+{% endblock %}
+
