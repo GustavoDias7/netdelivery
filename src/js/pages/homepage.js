@@ -5,7 +5,9 @@ const { createApp } = vue;
 const app = createApp({
   mixins: [mainMixin],
   delimiters: ["[[", "]]"],
-  setup() {},
+  setup() {
+    return {}
+  },
   data() {
     return {};
   },

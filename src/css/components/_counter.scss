@@ -92,6 +92,9 @@ $f-border-radius-large: $f-border-radius + 2px;
         display: none;
       }
     }
+    &:disabled {
+      cursor: not-allowed
+    }
   }
 
   .counter-input {

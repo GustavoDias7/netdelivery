@@ -1,3 +1,5 @@
+const ShoppingCart = require("./ShoppingCart");
+
 const mainMixin = {
   data() {
     return {
@@ -6,6 +8,7 @@ const mainMixin = {
         logout: false,
         cart: false,
       },
+      cart: new ShoppingCart(),
     };
   },
   methods: {
@@ -28,6 +31,15 @@ const mainMixin = {
     },
     closeCart() {
       this.modal.cart = false;
+    },
+    addToCart(obj) {
+      this.cart.push(obj);
+      console.log(this.cart);
+    },
+    handleCountInput(e, id) {
+      const value = e.target.value;
+      const numValue = value !== "" ? Number(value) : 1;
+      this.cart.setCount(id, numValue);
     },
   },
 };

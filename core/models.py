@@ -16,7 +16,7 @@ class Product(models.Model):
     )
     product_category = models.ForeignKey("ProductCategory", on_delete=models.RESTRICT)
     
-    def get_price(self):
+    def fprice(self):
         cents = int(self.price) / 100
         return f"{cents:.2f}".replace(".", ",")
 

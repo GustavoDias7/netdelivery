@@ -7,8 +7,10 @@
         <a class="link" href="/">Login</a>
         <a class="link" href="/">Cadastro</a>
         <a class="link" href="/" @click.prevent="openCart">
-          <img src="../../staticfiles/img/shopping-cart.svg" alt="Carrinho" />
-          Carrinho
+          <span class="badge active">
+            <p class="badge-item" v-text="cart.totalCount(99)"></p>
+            <img src="../../staticfiles/img/shopping-cart.svg" alt="Carrinho" />
+          </span>
         </a>
       </nav>
       <button class="menu-button" @click="openModal('menu')">Open menu</button>

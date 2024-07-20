@@ -4,36 +4,47 @@
 
     <div class="g-root g-gap-4 sm:g-gap-5">
       <div class="g-row">
-        <div v-for="item in [1,2,3]" class="g-item-12">
+        <div v-for="item in cart.cart" class="g-item-12">
           <div class="cart-item">
             <a href="/" class="img">
               <figure class="aspect-ratio aspect-1-1 fit">
-                <img
-                  {% comment %} src="" {% endcomment %}
-                  alt="Placeholder"
-                />
+                <img {% comment %} src="" {% endcomment %} alt="Placeholder" />
               </figure>
             </a>
             <div class="cart-item-center">
               <div class="cart-item-center-left">
-                <h3 class="text-sm sm:text-base">
-                  Lorem ipsum dolor sit amet.
-                </h3>
+                <h3 class="text-sm sm:text-base" v-text="item.name"></h3>
                 <div class="counter small">
-                  <button class="counter-button">
+                  <button
+                    class="counter-button"
+                    type="button"
+                    @click="cart.removeItem(item.id)"
+                    :disabled="cart.getCount(item.id) === 1"
+                  >
                     <span class="sign minus"></span>
                   </button>
-                  <input class="counter-input" type="text" value="999" />
-                  <button class="counter-button">
+                  <p
+                    class="counter-input"
+                    v-text="cart.getCount(item.id)"
+                  ></p>
+                  <button
+                    class="counter-button"
+                    type="button"
+                    @click="cart.addItem(item.id, item.name, item.price)"
+                  >
                     <span class="sign"></span>
                   </button>
                 </div>
               </div>
               <div class="cart-item-center-right">
-                <p class="text-base">R$ 999,99</p>
+                <p class="text-base">R$ <span v-text="item.fprice"></span></p>
               </div>
             </div>
-            <button class="delete" type="button"></button>
+            <button
+              class="delete"
+              type="button"
+              @click="cart.deleteItem(item.id)"
+            ></button>
           </div>
         </div>
         <div class="g-item-12"><hr /></div>
@@ -46,7 +57,7 @@
                     <p>Price</p>
                     <p class="price tertiary">
                       <span class="left"> <span>R$</span> </span>
-                      <strong>99,99</strong>
+                      <strong>0,00</strong>
                     </p>
                   </div>
                 </div>
@@ -55,7 +66,7 @@
                     <p>Tax</p>
                     <p class="price tertiary">
                       <span class="left"> <span>R$</span> </span>
-                      <strong>99,99</strong>
+                      <strong>0,00</strong>
                     </p>
                   </div>
                 </div>
@@ -64,7 +75,7 @@
                     <p>Total</p>
                     <p class="price tertiary">
                       <span class="left"> <span>R$</span> </span>
-                      <strong>99,99</strong>
+                      <strong v-text="cart.ftotalPrice()"></strong>
                     </p>
                   </div>
                 </div>
