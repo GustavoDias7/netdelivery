@@ -11,5 +11,5 @@ def homepage(request):
     
     return render(request, "pages/homepage.html", {"categories": categories})
 
-def delivery(request):
-    return render(request, "pages/delivery.html")
+def order(request):
+    return render(request, "pages/order.html")
