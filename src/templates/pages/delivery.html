@@ -11,6 +11,8 @@
 
 {% block content %}
   <form action="POST">
+    {% csrf_token %}
+    {% include "../components/hidden-fields.html" %}
     {% include "../layouts/cart.html" %}
     {% include "../layouts/order-type.html" %}
     {% include "../layouts/address.html" %}
