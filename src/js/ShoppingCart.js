@@ -35,13 +35,12 @@ class ShoppingCart {
     return this.cart[index].price * this.cart[index].count;
   }
   totalCount(limit = null) {
-    console.log(limit);
     const total = this.cart.reduce((acc, curr) => acc + curr.count, 0);
-    const int_limit = Number(limit)
+    const int_limit = Number(limit);
     if (limit === null) {
-      return total
+      return total;
     } else {
-      return total > int_limit ? `${int_limit}+` : total
+      return total > int_limit ? `${int_limit}+` : total;
     }
   }
   setCount(id, count) {
@@ -52,12 +51,12 @@ class ShoppingCart {
     } else {
       this.cart[itemIndex].count = item.count;
     }
-    this.setLocal()
+    this.setLocal();
   }
   getCount(id) {
     const item = this.itemFactory({ id });
     const itemIndex = this.findItemIndex(item.id);
-    return itemIndex === -1 ? null : this.cart[itemIndex].count
+    return itemIndex === -1 ? null : this.cart[itemIndex].count;
   }
   addItem(id, name, price) {
     const item = this.itemFactory({ id, name, price, count: 1 });
@@ -67,7 +66,7 @@ class ShoppingCart {
     } else {
       this.incrementCount(itemIndex);
     }
-    this.setLocal()
+    this.setLocal();
   }
   removeItem(id) {
     const item = this.itemFactory({ id });
@@ -79,7 +78,7 @@ class ShoppingCart {
         this.decrementCount(itemIndex);
       }
     }
-    this.setLocal()
+    this.setLocal();
   }
   deleteItem(id) {
     const item = this.itemFactory({ id });
@@ -89,13 +88,22 @@ class ShoppingCart {
     } else {
       this.cart.splice(itemIndex, 1);
     }
-    this.setLocal()
+    this.setLocal();
   }
   setLocal() {
-    window.sessionStorage.setItem("cart", JSON.stringify(this.cart))
+    window.sessionStorage.setItem("cart", JSON.stringify(this.cart));
   }
   getLocal() {
-    return JSON.parse(window.sessionStorage.getItem("cart")) || []
+    return JSON.parse(window.sessionStorage.getItem("cart")) || [];
+  }
+  toString(id) {
+    const item = this.itemFactory({ id });
+    const itemIndex = this.findItemIndex(item.id);
+    return JSON.stringify({
+      id: this.cart[itemIndex].id,
+      price: this.cart[itemIndex].price,
+      count: this.cart[itemIndex].count,
+    });
   }
 }
 
