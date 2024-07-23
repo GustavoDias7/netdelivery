@@ -16,7 +16,6 @@ const app = createApp({
     return {
       is_delivery: true,
       payment_type: "money",
-      save_address: true,
     };
   },
   methods: {},
