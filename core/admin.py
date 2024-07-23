@@ -33,15 +33,16 @@ class OrderAdmin(admin.ModelAdmin):
     #         [field.name for field in obj._meta.fields] + \
     #         [field.name for field in obj._meta.many_to_many]
     
-class OrderItempeAdmin(admin.ModelAdmin):
+class OrderItemAdmin(admin.ModelAdmin):
     # list_display = []
     readonly_fields = []
     
+admin.site.register(models.User)
 admin.site.register(models.Product, ProductAdmin)
 admin.site.register(models.ProductCategory)
 admin.site.register(models.ShippingTax, ShippingTaxAdmin)
 admin.site.register(models.PaymentType, PaymentTypeAdmin)
 admin.site.register(models.Order, OrderAdmin)
-admin.site.register(models.OrderItem, OrderItempeAdmin)
+admin.site.register(models.OrderItem, OrderItemAdmin)
 admin.site.register(models.OrderStatus)
 
