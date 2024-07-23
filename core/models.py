@@ -40,6 +40,7 @@ class ProductCategory(models.Model):
         return f"{self.name}"
     
 class Order(models.Model):
+    user = models.ForeignKey("User", on_delete=models.RESTRICT)
     payment_type = models.ForeignKey("PaymentType", on_delete=models.RESTRICT)
     shipping_tax = models.ForeignKey("ShippingTax", on_delete=models.RESTRICT, null=True)
     shipping_tax_name = models.CharField(max_length=50, null=True)

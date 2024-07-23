@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from core.models import (ProductCategory, Product, Order, OrderItem, ShippingTax, PaymentType)
 import json
 
@@ -12,6 +13,7 @@ def homepage(request):
     
     return render(request, "pages/homepage.html", {"categories": categories})
 
+@login_required
 def order(request):
     context = {}
     if request.method == "POST":
@@ -20,6 +22,7 @@ def order(request):
         payment_code = request.POST.get("payment_type")
         
         order = Order()
+        order.user = request.user
         payment_type = PaymentType.objects.get(code=payment_code)
         order.payment_type = payment_type
         
