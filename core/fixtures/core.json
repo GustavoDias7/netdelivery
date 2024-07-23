@@ -1,0 +1,71 @@
+[
+  {
+    "model": "core.shippingtax",
+    "pk": 1,
+    "fields": {
+      "name": "PADRAO",
+      "value": 600
+    }
+  },
+  {
+    "model": "core.orderstatus",
+    "pk": 1,
+    "fields": {
+      "name": "EM_ABERTO"
+    }
+  },
+  {
+    "model": "core.orderstatus",
+    "pk": 2,
+    "fields": {
+      "name": "FINALIZADO"
+    }
+  },
+  {
+    "model": "core.orderstatus",
+    "pk": 3,
+    "fields": {
+      "name": "CANCELADO"
+    }
+  },
+  {
+    "model": "core.paymenttype",
+    "pk": 1,
+    "fields": {
+      "name": "PIX",
+      "code": "pix"
+    }
+  },
+  {
+    "model": "core.paymenttype",
+    "pk": 2,
+    "fields": {
+      "name": "Cartão de Débito",
+      "code": "debit"
+    }
+  },
+  {
+    "model": "core.paymenttype",
+    "pk": 3,
+    "fields": {
+      "name": "Cartão de Crédito",
+      "code": "credit"
+    }
+  },
+  {
+    "model": "core.paymenttype",
+    "pk": 4,
+    "fields": {
+      "name": "Dinheiro sem troco",
+      "code": "money"
+    }
+  },
+  {
+    "model": "core.paymenttype",
+    "pk": 5,
+    "fields": {
+      "name": "Dinheiro com troco",
+      "code": "change_money"
+    }
+  }
+]

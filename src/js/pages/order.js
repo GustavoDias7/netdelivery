@@ -14,17 +14,13 @@ const app = createApp({
   },
   data() {
     return {
-      order_type: 1, // 1 = Delivery | 2 === retirada
-      payment_form: "money",
+      is_delivery: true,
+      payment_type: "money",
       save_address: true,
     };
   },
   methods: {},
-  computed: {
-    buttonVariant(type) {
-      return type === "Delivery" ? "pm-button" : "sc-button";
-    },
-  },
+  computed: {},
 });
 
 app.mount("#app");

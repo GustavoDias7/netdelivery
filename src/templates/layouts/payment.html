@@ -9,7 +9,8 @@
             <label for="money" class="check radio">
               <input
                 id="money"
-                v-model="payment_form"
+                v-model="payment_type"
+                name="payment_type"
                 type="radio"
                 value="money"
               />
@@ -23,7 +24,8 @@
             <label for="change_money" class="check radio" @change="focusInput">
               <input
                 id="change_money"
-                v-model="payment_form"
+                v-model="payment_type"
+                name="payment_type"
                 type="radio"
                 value="change_money"
               />
@@ -31,7 +33,7 @@
               <span class="text">Dinheiro com troco</span>
             </label>
           </div>
-          <div v-show="payment_form === 'change_money'" class="f-row">
+          <div v-show="payment_type === 'change_money'" class="f-row">
             <input
               ref="inputField"
               id="change_to"
@@ -45,7 +47,7 @@
         <div class="g-item-12">
           <div class="f-row">
             <label for="pix" class="check radio">
-              <input id="pix" v-model="payment_form" type="radio" value="pix" />
+              <input id="pix" v-model="payment_type" name="payment_type" type="radio" value="pix" />
               <span class="marker"></span>
               <span class="text">PIX</span>
             </label>
@@ -56,7 +58,8 @@
             <label for="debit" class="check radio">
               <input
                 id="debit"
-                v-model="payment_form"
+                v-model="payment_type"
+                name="payment_type"
                 type="radio"
                 value="debit"
               />
@@ -70,7 +73,8 @@
             <label for="credit" class="check radio">
               <input
                 id="credit"
-                v-model="payment_form"
+                v-model="payment_type"
+                name="payment_type"
                 type="radio"
                 value="credit"
               />

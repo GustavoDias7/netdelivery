@@ -1,7 +1,1 @@
-<input
-  v-for="cartItem in cart.cart"
-  type="hidden"
-  :name="cartItem.name"
-  :id="'product_id_' + cartItem.id"
-  :value="`${cart.toString(cartItem.id)}`"
-/>
+<input type="hidden" name="cart" :value="cart.toString()" />

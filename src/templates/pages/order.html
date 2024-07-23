@@ -10,7 +10,7 @@
 {% endblock %}
 
 {% block content %}
-  <form action="POST">
+  <form method="POST" action="{% url 'order' %}">
     {% csrf_token %}
     {% include "../components/hidden-fields.html" %}
     {% include "../layouts/cart.html" %}

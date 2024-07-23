@@ -10,14 +10,15 @@
               <div class="g-item-12 sm:g-item-6">
                 <label
                   class="gn-button full"
-                  :class="order_type == 1 ? 'pm-button' : 'sc-button'"
+                  :class="is_delivery ? 'pm-button' : 'sc-button'"
                   for="delivery"
                 >
                   <input
                     type="radio"
-                    v-model="order_type"
+                    v-model="is_delivery"
+                    name="is_delivery"
                     id="delivery"
-                    value="1"
+                    :value="true"
                   />
                   Delivery
                 </label>
@@ -25,14 +26,15 @@
               <div class="g-item-12 sm:g-item-6">
                 <label
                   class="gn-button full"
-                  :class="order_type == 2 ? 'pm-button' : 'sc-button'"
+                  :class="!is_delivery ? 'pm-button' : 'sc-button'"
                   for="retirada"
                 >
                   <input
                     type="radio"
-                    v-model="order_type"
+                    v-model="is_delivery"
+                    name="is_delivery"
                     id="retirada"
-                    value="2"
+                    :value="false"
                   />
                   Retirada
                 </label>
@@ -42,11 +44,11 @@
         </div>
         <div class="g-item-12">
           <div class="order-description">
-            <p v-if="order_type == 1" class="text-base sm:text-xl">
+            <p v-if="is_delivery" class="text-base sm:text-xl">
               Você receberá o seu produto no conforto da sua casa pela taxa de
               R$ 6,00.
             </p>
-            <p v-if="order_type == 2" class="text-base sm:text-xl">
+            <p v-if="!is_delivery" class="text-base sm:text-xl">
               Você pode retirar seu pedido no endereço do nosso estabelecimento.
               Rua alguma coisa, bairro Pirirí Pororó, cidade de Algum Lugar,
               estado AL, próximo ao buteco do Seu Quincas. CEP

@@ -96,14 +96,16 @@ class ShoppingCart {
   getLocal() {
     return JSON.parse(window.sessionStorage.getItem("cart")) || [];
   }
-  toString(id) {
-    const item = this.itemFactory({ id });
-    const itemIndex = this.findItemIndex(item.id);
-    return JSON.stringify({
-      id: this.cart[itemIndex].id,
-      price: this.cart[itemIndex].price,
-      count: this.cart[itemIndex].count,
-    });
+  toString() {
+    return JSON.stringify(
+      this.cart.map((item) => {
+        return {
+          id: item.id,
+          price: item.price,
+          count: item.count,
+        };
+      })
+    );
   }
 }
 
