@@ -49,6 +49,17 @@ section {
     }
   }
 
+  .title-container {
+    @include flex-align-center;
+    margin-bottom: 16px;
+    gap: 8px;
+
+    a {
+      margin-top: 4px;
+      text-decoration: underline;
+    }
+  }
+
   &:last-of-type {
     padding-bottom: 64px;
   }

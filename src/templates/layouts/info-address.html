@@ -1,0 +1,20 @@
+<section class="address" v-if="is_delivery">
+  <div class="container sm:container">
+    <div class="title-container">
+      <h2 class="text-2xl sm:text-3xl">Endereço</h2>
+      <a class="text-sm" href="/">Editar</a>
+    </div>
+
+    <div>
+      <p class="text-sm sm:text-lg"><strong>CEP:</strong> {{address.fcep}}</p>
+      <p class="text-sm sm:text-lg"><strong>Bairro:</strong> {{address.district}}</p>
+      <p class="text-sm sm:text-lg"><strong>Endereço:</strong> {{address.address}}</p>
+      <p class="text-sm sm:text-lg">
+        <strong>Número:</strong> {% firstof address.number "s/n" %}
+      </p>
+      <p class="text-sm sm:text-lg">
+        <strong>Complemento:</strong> {{address.complement}}
+      </p>
+    </div>
+  </div>
+</section>

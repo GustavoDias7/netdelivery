@@ -1,4 +1,4 @@
-<section class="address">
+<section class="address" v-if="is_delivery">
   <div class="container sm:container">
     <h2 class="text-2xl sm:text-3xl">Endereço</h2>
 
@@ -6,7 +6,15 @@
       <div class="g-row">
         <div class="g-item-12">
           <div class="f-row">
-            <input id="cep" name="cep" type="text" class="f-input filled" />
+            <input
+              id="cep"
+              v-model="form.cep"
+              name="cep"
+              type="text"
+              class="f-input filled"
+              :class="{...active(form.cep)}"
+              v-mask="'00000-000'"
+            />
             <label for="cep" class="f-label">CEP</label>
           </div>
         </div>
@@ -14,9 +22,11 @@
           <div class="f-row">
             <input
               id="district"
+              v-model="form.district"
               name="district"
               type="text"
               class="f-input filled"
+              :class="{...active(form.district)}"
             />
             <label for="district" class="f-label">Bairro</label>
           </div>
@@ -25,9 +35,11 @@
           <div class="f-row">
             <input
               id="address"
+              v-model="form.address"
               name="address"
               type="text"
               class="f-input filled"
+              :class="{...active(form.address)}"
             />
             <label for="address" class="f-label">Endereço</label>
           </div>
@@ -36,9 +48,12 @@
           <div class="f-row">
             <input
               id="number"
+              v-model.number="form.number"
               name="number"
               type="text"
               class="f-input filled"
+              :class="{...active(form.number)}"
+              v-mask="'0000000000'"
             />
             <label for="number" class="f-label">Número</label>
           </div>
@@ -47,9 +62,11 @@
           <div class="f-row">
             <input
               id="complement"
+              v-model="form.complement"
               name="complement"
               type="text"
               class="f-input filled"
+              :class="{...active(form.complement)}"
             />
             <label for="complement" class="f-label">Complemento</label>
           </div>

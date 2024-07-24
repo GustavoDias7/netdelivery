@@ -41,6 +41,9 @@ const mainMixin = {
       const numValue = value !== "" ? Number(value) : 1;
       this.cart.setCount(id, numValue);
     },
+    active(data) {
+      return {active: data !== ""}
+    }
   },
 };
 
