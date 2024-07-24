@@ -1,6 +1,16 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from core.models import (ProductCategory, Product, Order, OrderItem, ShippingTax, PaymentType)
+from core.models import (
+    ProductCategory,
+    Product,
+    Order,
+    OrderItem,
+    ShippingTax,
+    PaymentType,
+    Address
+)
+import re
+
 import json
 
 def homepage(request):
@@ -16,6 +26,13 @@ def homepage(request):
 @login_required
 def order(request):
     context = {}
+    
+    try:
+        address = Address.objects.get(user=request.user)
+        context["address"] = address
+    except Address.DoesNotExist:
+        address = None
+        
     if request.method == "POST":
         cart = json.loads(request.POST.get("cart")) # id, price, count(quantity), discount
         is_delivery = request.POST.get("is_delivery", False) == 'true'
@@ -32,6 +49,20 @@ def order(request):
             order.shipping_tax = shipping_tax
             order.shipping_tax_name = shipping_tax.name
             order.shipping_tax_value = shipping_tax.value
+            
+            if not address:
+                address = Address()
+                address.user = request.user
+                address.cep = re.sub(r"\D", "", request.POST.get("cep"))
+                address.district = request.POST.get("district")
+                address.address = request.POST.get("address")
+                address.complement = request.POST.get("complement")
+                
+                number = request.POST.get("number")
+                if number: address.number = int(number)
+                
+                address.save()
+        
         
         # validate all cart item with Product model
         

@@ -67,5 +67,156 @@
       "name": "Dinheiro com troco",
       "code": "change_money"
     }
+  },
+  {
+    "model": "core.product",
+    "pk": 1,
+    "fields": {
+      "name": "Coxinha",
+      "price": 1000,
+      "discount": "0.00",
+      "description": "Um dos salgados mais populares do Brasil, a coxinha é conhecida por sua massa fina e macia, recheada com um refogado de frango desfiado, temperado com cebola, alho, e às vezes, requeijão ou catupiry. Após moldada no formato que lembra uma coxa de frango, é empanada em farinha de rosca e frita até ficar dourada e crocante por fora, mantendo o recheio suculento por dentro.",
+      "stock": 100,
+      "archived": false,
+      "product_category": 1
+    }
+  },
+  {
+    "model": "core.product",
+    "pk": 2,
+    "fields": {
+      "name": "Mini pasteizinhos",
+      "price": 1200,
+      "discount": "0.00",
+      "description": "São pequenos pastéis de massa fina e crocante, recheados com uma variedade de ingredientes como carne moída temperada com cebola, alho e especiarias, queijo derretido ou palmito refogado. São fritos em óleo quente até ficarem dourados e crocantes, perfeitos para petiscar.",
+      "stock": 100,
+      "archived": false,
+      "product_category": 1
+    }
+  },
+  {
+    "model": "core.product",
+    "pk": 3,
+    "fields": {
+      "name": "Croquete",
+      "price": 800,
+      "discount": "0.00",
+      "description": "Feito com uma massa à base de farinha de trigo, leite e manteiga, o croquete é recheado com carne moída ou frango desfiado, temperado com ervas como salsa e cebolinha, e às vezes, um toque de pimenta. Após moldado em formato cilíndrico, é empanado em ovos batidos e farinha de rosca, e frito até ficar crocante por fora e macio por dentro.",
+      "stock": 100,
+      "archived": false,
+      "product_category": 1
+    }
+  },
+  {
+    "model": "core.product",
+    "pk": 4,
+    "fields": {
+      "name": "Quibe",
+      "price": 1500,
+      "discount": "0.00",
+      "description": "Originário do Oriente Médio, o quibe é popular no Brasil, especialmente na versão frita. Sua massa é feita de trigo para quibe, carne moída (geralmente de cordeiro ou carne bovina), hortelã, cebola e especiarias como pimenta síria. Depois de modelado em formato alongado ou esférico, é frito até dourar e servido muitas vezes com limão.",
+      "stock": 100,
+      "archived": false,
+      "product_category": 1
+    }
+  },
+  {
+    "model": "core.product",
+    "pk": 5,
+    "fields": {
+      "name": "Bolinha de presunto e queijo",
+      "price": 1600,
+      "discount": "0.00",
+      "description": "Pequenas bolinhas de massa de batata ou mandioca, recheadas com presunto e queijo derretido. São empanadas e fritas, resultando em um salgado cremoso por dentro e crocante por fora.",
+      "stock": 100,
+      "archived": false,
+      "product_category": 1
+    }
+  },
+  {
+    "model": "core.product",
+    "pk": 6,
+    "fields": {
+      "name": "Enrolado de salsicha",
+      "price": 1200,
+      "discount": "0.00",
+      "description": "Um clássico entre as crianças brasileiras, consiste em salsichas envoltas em uma massa de salgado, muitas vezes temperada com orégano, empanadas em farinha de rosca e fritas até dourar. Podem ser servidos com ketchup ou mostarda.",
+      "stock": 100,
+      "archived": false,
+      "product_category": 2
+    }
+  },
+  {
+    "model": "core.product",
+    "pk": 7,
+    "fields": {
+      "name": "Esfirras",
+      "price": 1500,
+      "discount": "0.00",
+      "description": "Originárias do Oriente Médio, as esfirras são pequenas tortas abertas, com uma massa macia e recheios variados como carne moída temperada com cebola, tomate e especiarias como hortelã e cominho, ou queijo branco com orégano. São assadas até que a massa fique dourada e o recheio suculento.",
+      "stock": 100,
+      "archived": false,
+      "product_category": 2
+    }
+  },
+  {
+    "model": "core.product",
+    "pk": 8,
+    "fields": {
+      "name": "Risoles",
+      "price": 500,
+      "discount": "0.00",
+      "description": "Semelhante a uma coxinha, porém em formato de meia-lua, o risole tem uma massa fina e crocante, recheada com carne desfiada, queijo derretido, camarão ou presunto. É empanado e frito, proporcionando uma textura crocante por fora e um recheio cremoso por dentro.",
+      "stock": 100,
+      "archived": false,
+      "product_category": 2
+    }
+  },
+  {
+    "model": "core.product",
+    "pk": 9,
+    "fields": {
+      "name": "Empada",
+      "price": 1400,
+      "discount": "0.00",
+      "description": "Uma pequena torta salgada de origem portuguesa, com uma massa quebradiça feita de farinha de trigo, manteiga e água, recheada com uma variedade de ingredientes como frango desfiado com catupiry, palmito refogado com creme de leite, ou camarão com requeijão. É assada até que a massa fique dourada e crocante.",
+      "stock": 100,
+      "archived": false,
+      "product_category": 2
+    }
+  },
+  {
+    "model": "core.product",
+    "pk": 10,
+    "fields": {
+      "name": "Coca Cola 1L",
+      "price": 1000,
+      "discount": "0.00",
+      "description": "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eum, sequi recusandae porro, quisquam atque tempora magnam laborum perferendis eius, aut fugit? Voluptatem molestiae optio, repellat veritatis rem eius accusantium eligendi.",
+      "stock": 100,
+      "archived": false,
+      "product_category": 3
+    }
+  },
+  {
+    "model": "core.productcategory",
+    "pk": 1,
+    "fields": {
+      "name": "Salgados Assados"
+    }
+  },
+  {
+    "model": "core.productcategory",
+    "pk": 2,
+    "fields": {
+      "name": "Salgados Frito"
+    }
+  },
+  {
+    "model": "core.productcategory",
+    "pk": 3,
+    "fields": {
+      "name": "Refrigerantes"
+    }
   }
 ]

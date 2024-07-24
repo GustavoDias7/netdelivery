@@ -85,6 +85,22 @@ class ShippingTax(models.Model):
     
     def __str__(self):
         return f"{self.name}"
+    
+class Address(models.Model):
+    user = models.ForeignKey("User", on_delete=models.RESTRICT)
+    cep = models.CharField(max_length=8)
+    district = models.CharField(max_length=50)
+    address = models.CharField(max_length=50)
+    locality = models.CharField(max_length=50)
+    uf = models.CharField(max_length=2)
+    number = models.PositiveSmallIntegerField(null=True)
+    complement = models.CharField(max_length=50)
+    
+    def fcep(self):
+        return f"{self.cep[0:5]}-{self.cep[5:]}"
+    
+    def __str__(self):
+        return f"{self.fcep()}"
 
 class UserManager(BaseUserManager):
     def _create_user(
