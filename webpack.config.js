@@ -8,7 +8,6 @@ const { getPaths } = require("./utils/recursive-path.js");
 
 module.exports = {
   watch: true,
-  mode: "production", // development | production
   context: __dirname,
 
   entry: globAll
