@@ -1,0 +1,73 @@
+{% extends "../bases/base.html" %}
+{% load static %}
+
+{% block title %}
+  Página inicial
+{% endblock %}
+
+{% block css %}
+<link href="{% static 'css/pages/account.css' %}?{% now "U" %}" rel="stylesheet">
+{% endblock %}
+
+{% load static %}
+{% block content %}
+    <section>
+        <div class="container md:container">
+            <h2 class="text-2xl sm:text-3xl">Sua conta</h2>
+            <div class="g-root g-gap-3">
+                <div class="g-row g-center">
+                    <div class="g-item-12 sm:g-item-6">
+                        <div class="topics">
+                            <a class="topic primary" href="{% url 'homepage' %}">
+                            <div class="left">
+                                <div class="icon">
+                                <img src="{% static "img/user.svg" %}" alt="Icon" />
+                                </div>
+                            </div>
+                            <div class="right">
+                                <h3 class="title">Perfil</h3>
+                                <p>Acesse as informações do seu perfil.</p>
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="g-item-12 sm:g-item-6">
+                        <div class="topics">
+                            <a class="topic primary" href="{% url 'homepage' %}">
+                            <div class="left">
+                                <div class="icon">
+                                <img src="{% static "img/order.svg" %}" alt="Icon" />
+                                </div>
+                            </div>
+                            <div class="right">
+                                <h3 class="title">Pedidos</h3>
+                                <p>Visualize seus pedidos feitos no site.</p>
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="g-item-12 sm:g-item-6">
+                        <div class="topics">
+                            <a class="topic primary" href="{% url 'homepage' %}">
+                            <div class="left">
+                                <div class="icon">
+                                <img src="{% static "img/address.svg" %}" alt="Icon" />
+                                </div>
+                            </div>
+                            <div class="right">
+                                <h3 class="title">Endereço</h3>
+                                <p>Visualize ou edite seu endereço.</p>
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block js %}
+<script src="{% static "js/pages/account.js" %}?{% now "U" %}"></script>
+{% endblock %}
+

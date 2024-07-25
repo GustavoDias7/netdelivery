@@ -122,6 +122,10 @@ def logout_view(request):
     return redirect("signin")
 
 @login_required
+def account(request):
+    return render(request, "pages/account.html")
+
+@login_required
 def order(request):
     context = {}
     

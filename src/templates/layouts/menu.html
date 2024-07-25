@@ -5,7 +5,7 @@
   <nav>
     {% if user.is_authenticated %}
     <p class="link">Olá, {{user.first_name}}!</p>
-    <a class="link" href="{% url 'homepage' %}">Conta</a>
+    <a class="link" href="{% url 'account' %}">Conta</a>
     <a class="link" href="/" @click.prevent="openLogout">Sair</a>
     {% else %}
     <a class="link" href="{% url 'signin' %}">Login</a>
