@@ -1,0 +1,142 @@
+<section>
+  <div class="container xs:container">
+    <h2 class="text-2xl sm:text-3xl">Cadastro</h2>
+
+    <form action="{% url 'signup' %}{{next_page}}" method="post">
+      {% csrf_token %}
+
+      <div class="g-root g-gap-2 sm:g-gap-4">
+        <div class="g-row">
+          <div class="g-item-12">
+            <div class="f-row">
+              <input
+                v-model="fields.first_name"
+                id="first_name"
+                name="first_name"
+                type="text"
+                class="f-input filled"
+                :class="{...active(fields.first_name)}"
+                value="{{form.first_name.value}}"
+              />
+              <label for="first_name" class="f-label">Nome</label>
+              {% if form.errors.first_name %}
+              <p class="f-helper error">{{form.errors.first_name.as_text}}</p>
+              {% endif %}
+            </div>
+          </div>
+          <div class="g-item-12">
+            <div class="f-row">
+              <input
+                v-model="fields.last_name"
+                id="last_name"
+                name="last_name"
+                type="text"
+                class="f-input filled"
+                :class="{...active(fields.last_name)}"
+                value="{{form.last_name.value}}"
+              />
+              <label for="last_name" class="f-label">Sobrenome</label>
+              {% if form.errors.last_name %}
+              <p class="f-helper error">{{form.errors.last_name.as_text}}</p>
+              {% endif %}
+            </div>
+          </div>
+          <div class="g-item-12">
+            <div class="f-row">
+              <input
+                v-model="fields.phone"
+                id="phone"
+                name="phone"
+                type="text"
+                class="f-input filled"
+                :class="{...active(fields.phone)}"
+                value="{{form.phone.value}}"
+              />
+              <label for="last_name" class="f-label">WhatsApp</label>
+              {% if form.errors.last_name %}
+              <p class="f-helper error">{{form.errors.last_name.as_text}}</p>
+              {% endif %}
+            </div>
+          </div>
+          <div class="g-item-12">
+            <div class="f-row">
+              <input
+                v-model="fields.email"
+                id="email"
+                name="email"
+                type="text"
+                class="f-input filled"
+                :class="{...active(fields.email)}"
+                value="{{form.email.value}}"
+              />
+              <label for="email" class="f-label">E-mail</label>
+              {% if form.errors.email %}
+              <p class="f-helper error">{{form.errors.email.as_text}}</p>
+              {% endif %}
+            </div>
+          </div>
+          <div class="g-item-12">
+            <div class="f-row">
+              <div class="f-container">
+                <input
+                  v-model="fields.password"
+                  id="password"
+                  name="password"
+                  class="f-input filled"
+                  :class="{...active(fields.password)}"
+                  :type="passwords.main ? 'text' : 'password'"
+                  value="{{form.password.value}}"
+                />
+                <label for="password" class="f-label">Senha</label>
+                <div class="f-right">
+                  <button
+                    type="button"
+                    class="gn-button sc-button small"
+                    @click="togglePassword('main')"
+                    v-text="passwords.main ? 'Esconder' : 'Mostrar'"
+                  ></button>
+                </div>
+              </div>
+              {% if form.errors.password %}
+              <p class="f-helper error">{{form.errors.password.as_text}}</p>
+              {% endif %}
+            </div>
+          </div>
+          <div class="g-item-12">
+            <div class="f-container">
+              <input
+                v-model="fields.confirm_password"
+                id="confirm_password"
+                name="confirm_password"
+                class="f-input filled"
+                :class="{...active(fields.confirm_password)}"
+                :type="passwords.confirm ? 'text' : 'password'"
+              />
+              <label for="confirm_password" class="f-label"
+                >Confirmar Senha</label
+              >
+              <div class="f-right">
+                <button
+                  type="button"
+                  class="gn-button sc-button small"
+                  @click="togglePassword('confirm')"
+                  v-text="passwords.confirm ? 'Esconder' : 'Mostrar'"
+                ></button>
+              </div>
+            </div>
+            {% if form.errors.confirm_password %}
+            <p class="f-helper error">
+              {{form.errors.confirm_password.as_text}}
+            </p>
+            {% endif %}
+          </div>
+          <div class="g-item-12">
+            <div class="f-row">
+              <button class="gn-button tt-button full">Cadastrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

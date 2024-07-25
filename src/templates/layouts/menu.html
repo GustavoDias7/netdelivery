@@ -3,9 +3,8 @@
     Close menu
   </button>
   <nav>
-    <a class="link" href="/">Home</a>
     <a class="link" href="/">Login</a>
-    <a class="link" href="/">Cadastro</a>
+    <a class="link" href="{% url 'signup' %}">Cadastro</a>
     <a class="link" href="/" @click.prevent="openCart">
       Carrinho
       <span class="badge active">

@@ -1,11 +1,10 @@
 <header class="header secondary">
   <div class="container md:container">
-    <div class="left"><a class="logo" href="/">LOGO</a></div>
+    <div class="left"><a class="logo" href="{% url 'homepage' %}">LOGO</a></div>
     <div class="right">
       <nav>
-        <a class="link" href="/">Home</a>
         <a class="link" href="/">Login</a>
-        <a class="link" href="/">Cadastro</a>
+        <a class="link" href="{% url 'signup' %}">Cadastro</a>
         <a class="link" href="/" @click.prevent="openCart">
           <span class="badge active">
             <p class="badge-item" v-text="cart.totalCount(99)"></p>
