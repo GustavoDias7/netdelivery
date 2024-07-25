@@ -117,6 +117,10 @@ def create_username(fn, ln):
     random_number = get_random_string(length=6, allowed_chars='0123456789')
     return f"{fn[:2]}{ln[:2]}{random_number}".upper()
 
+def logout_view(request):
+    logout(request)
+    return redirect("signin")
+
 @login_required
 def order(request):
     context = {}

@@ -23,5 +23,6 @@ urlpatterns = [
     path("", views.homepage, name="homepage"),
     path("cadastro/", views.signup, name="signup"),
     path("login/", views.signin, name="signin"),
+    path("logout/", views.logout_view, name="logout"),
     path("pedido/", views.order, name="order"),
 ]

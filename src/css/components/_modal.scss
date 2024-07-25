@@ -166,4 +166,12 @@
       }
     }
   }
+
+  &.logout {
+    .modal-content {
+      p {
+        margin-bottom: 16px;
+      }
+    }
+  }
 }
