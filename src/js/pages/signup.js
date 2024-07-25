@@ -1,5 +1,6 @@
 import * as vue from "../vendor/vue";
 import { mainMixin } from "../mixins";
+import getInputValues from "../utils/getInputValues";
 const { createApp } = vue;
 
 const app = createApp({
@@ -28,6 +29,16 @@ const app = createApp({
     togglePassword(name = "") {
       this.passwords[name] = !this.passwords[name];
     },
+  },
+  mounted() {
+    const fields = getInputValues([
+      "first_name",
+      "last_name",
+      "email",
+      "password",
+      "confirm_password",
+    ]);
+    this.fields = { ...this.fields, ...fields };
   },
 });
 

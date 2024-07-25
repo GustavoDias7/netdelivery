@@ -1,5 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
+from django.utils.crypto import get_random_string
+from django.contrib.auth.password_validation import validate_password
 from core.models import (
     ProductCategory,
     Product,
@@ -7,8 +10,10 @@ from core.models import (
     OrderItem,
     ShippingTax,
     PaymentType,
-    Address
+    Address,
+    User
 )
+from .forms import UserForm
 import re
 
 import json
@@ -22,6 +27,62 @@ def homepage(request):
         if len(products): categories.append(products)
     
     return render(request, "pages/homepage.html", {"categories": categories})
+
+def signup(request):
+    next_page = request.GET.get('next', "")
+    context = {}
+    if next_page:
+        context["next_page"] = f"?next={next_page}"
+    
+    if request.method == "POST":
+        user_form = UserForm(request.POST)
+        print(request.POST.get("first_name"))
+
+        password = request.POST.get("password", "")
+        confirm_password = request.POST.get("confirm_password", "")
+
+        if password != "":
+            try:
+                validate_password(password, user=None, password_validators=None)
+            except Exception as e:
+                user_form.add_error("password", e)
+
+        if confirm_password != password and confirm_password != "":
+            user_form.add_error("confirm_password", "Password is not equal")
+
+        if user_form.is_valid():
+            username = create_username(
+                user_form.data.get("first_name", ""), 
+                user_form.data.get("last_name", "")
+            )
+
+            user = User.objects.create_user(
+                username=username,
+                email=user_form.data.get("email", ""),
+                first_name=user_form.data.get("first_name", ""),
+                last_name=user_form.data.get("last_name", ""),
+                password=password,
+            )
+            user.save()
+
+            user = authenticate(email=user_form.data.get("email", ""), password=password)
+
+            if user is not None:
+                login(request, user)
+                
+                if next_page:
+                    return redirect(next_page)
+                else:
+                    return redirect("profile")
+        else:
+            context["form"] = user_form
+            return render(request, "pages/signup.html", context)
+
+    return render(request, "pages/signup.html", context)
+
+def create_username(fn, ln):
+    random_number = get_random_string(length=6, allowed_chars='0123456789')
+    return f"{fn[:2]}{ln[:2]}{random_number}".upper()
 
 @login_required
 def order(request):
