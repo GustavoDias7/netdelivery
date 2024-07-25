@@ -1,0 +1,71 @@
+<section>
+  <div class="container xs:container">
+    <h2 class="text-2xl sm:text-3xl">Login</h2>
+
+    <form action="{% url 'signin' %}{{next_page}}" method="post">
+      {% csrf_token %}
+
+      <div class="g-root g-gap-2 sm:g-gap-4">
+        <div class="g-row">
+          <div class="g-item-12">
+            <div class="f-row">
+              <input
+                v-model="fields.email"
+                id="email"
+                name="email"
+                type="text"
+                class="f-input filled"
+                :class="active('email')"
+                value="{{form.email.value}}"
+              />
+              <label for="email" class="f-label">E-mail</label>
+              {% if form.errors.email %}
+              <p class="f-helper error">{{form.errors.email.as_text}}</p>
+              {% endif %}
+            </div>
+          </div>
+          <div class="g-item-12">
+            <div class="f-row">
+              <div class="f-container">
+                <input
+                  v-model="fields.password"
+                  id="password"
+                  name="password"
+                  class="f-input filled"
+                  :class="active('password')"
+                  :type="passwords.main ? 'text' : 'password'"
+                />
+                <label for="password" class="f-label">Senha</label>
+                <div class="f-right">
+                  <button
+                    type="button"
+                    class="gn-button sc-button small"
+                    @click="togglePassword('main')"
+                    v-text="passwords.main ? 'Esconder' : 'Mostrar'"
+                  ></button>
+                </div>
+              </div>
+              {% if form.errors.password %}
+              <p class="f-helper error">{{form.errors.password.as_text}}</p>
+              {% endif %}
+            </div>
+          </div>
+          {% if form.non_field_errors %}
+          <div class="g-item-12">
+            <div class="f-row">
+              <p class="f-helper error center">
+                {{form.non_field_errors.as_text}}
+              </p>
+            </div>
+          </div>
+          {% endif %}
+          <div class="g-item-12">
+            <div class="f-row">
+              <button class="gn-button tt-button full">Entrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

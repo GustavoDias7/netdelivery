@@ -3,8 +3,14 @@
     Close menu
   </button>
   <nav>
-    <a class="link" href="/">Login</a>
+    {% if user.is_authenticated %}
+    <p class="link">Olá, {{user.first_name}}!</p>
+    <a class="link" href="{% url 'homepage' %}">Conta</a>
+    <a class="link" href="/" @click.prevent="openLogout">Sair</a>
+    {% else %}
+    <a class="link" href="{% url 'signin' %}">Login</a>
     <a class="link" href="{% url 'signup' %}">Cadastro</a>
+    {% endif %}
     <a class="link" href="/" @click.prevent="openCart">
       Carrinho
       <span class="badge active">

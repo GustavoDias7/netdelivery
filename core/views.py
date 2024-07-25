@@ -13,7 +13,7 @@ from core.models import (
     Address,
     User
 )
-from .forms import UserForm
+from .forms import UserForm, LoginForm
 import re
 
 import json
@@ -27,6 +27,39 @@ def homepage(request):
         if len(products): categories.append(products)
     
     return render(request, "pages/homepage.html", {"categories": categories})
+
+def signin(request):
+    next_page = request.GET.get('next', "")
+    context = {}
+    if next_page:
+        context["next_page"] = f"?next={next_page}"
+
+    if request.method == "POST":
+        login_form = LoginForm(request.POST)
+
+        if login_form.is_valid():
+            email = request.POST.get("email", "")
+            password = request.POST.get("password", "")
+
+            user = authenticate(email=email, password=password)
+
+            if user is not None:
+                login(request, user)
+
+                if next_page:
+                    return redirect(next_page)
+                else:
+                    return redirect("homepage")
+
+            else:
+                login_form.add_error(None, "E-mail or password was incorrect.")
+                context["form"] = login_form
+                return render(request, "pages/signin.html", context)
+        else:
+            context["form"] = login_form
+            return render(request, "pages/signin.html", context)
+
+    return render(request, "pages/signin.html", context)
 
 def signup(request):
     next_page = request.GET.get('next', "")
@@ -89,6 +122,7 @@ def order(request):
     context = {}
     
     try:
+        print(request.user)
         address = Address.objects.get(user=request.user)
         context["address"] = address
     except Address.DoesNotExist:

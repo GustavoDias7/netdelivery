@@ -1,0 +1,18 @@
+{% extends "../bases/base.html" %}
+{% load static %}
+
+{% block title %}
+  Login
+{% endblock %}
+
+{% block css %}
+<link href="{% static 'css/pages/signup.css' %}?{% now "U" %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+  {% include "../layouts/signin-form.html" %}
+{% endblock %}
+
+{% block js %}
+<script src="{% static "js/pages/signup.js" %}?{% now "U" %}"></script>
+{% endblock %}
