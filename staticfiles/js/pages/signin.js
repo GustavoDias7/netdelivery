@@ -1,0 +1,1 @@
+(()=>{"use strict";var r={674:(r,t,s)=>{r.exports=s.p+"staticfiles/img/signin.html"}},t={};function s(e){var i=t[e];if(void 0!==i)return i.exports;var o=t[e]={exports:{}};return r[e](o,o.exports,s),o.exports}s.p="/",s(674)})();
