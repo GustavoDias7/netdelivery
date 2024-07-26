@@ -26,4 +26,5 @@ urlpatterns = [
     path("logout/", views.logout_view, name="logout"),
     path("pedido/", views.order, name="order"),
     path("conta/", views.account, name="account"),
+    path("perfil/", views.profile, name="profile"),
 ]

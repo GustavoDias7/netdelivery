@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-  Página inicial
+  Sua conta
 {% endblock %}
 
 {% block css %}
@@ -18,13 +18,13 @@
                 <div class="g-row g-center">
                     <div class="g-item-12 sm:g-item-6">
                         <div class="topics">
-                            <a class="topic primary" href="{% url 'homepage' %}">
-                            <div class="left">
+                            <a class="topic primary" href="{% url 'profile' %}">
+                            <div class="topic-left">
                                 <div class="icon">
                                 <img src="{% static "img/user.svg" %}" alt="Icon" />
                                 </div>
                             </div>
-                            <div class="right">
+                            <div class="topic-right">
                                 <h3 class="title">Perfil</h3>
                                 <p>Acesse as informações do seu perfil.</p>
                             </div>
@@ -34,12 +34,12 @@
                     <div class="g-item-12 sm:g-item-6">
                         <div class="topics">
                             <a class="topic primary" href="{% url 'homepage' %}">
-                            <div class="left">
+                            <div class="topic-left">
                                 <div class="icon">
                                 <img src="{% static "img/order.svg" %}" alt="Icon" />
                                 </div>
                             </div>
-                            <div class="right">
+                            <div class="topic-right">
                                 <h3 class="title">Pedidos</h3>
                                 <p>Visualize seus pedidos feitos no site.</p>
                             </div>
@@ -49,12 +49,12 @@
                     <div class="g-item-12 sm:g-item-6">
                         <div class="topics">
                             <a class="topic primary" href="{% url 'homepage' %}">
-                            <div class="left">
+                            <div class="topic-left">
                                 <div class="icon">
                                 <img src="{% static "img/address.svg" %}" alt="Icon" />
                                 </div>
                             </div>
-                            <div class="right">
+                            <div class="topic-right">
                                 <h3 class="title">Endereço</h3>
                                 <p>Visualize ou edite seu endereço.</p>
                             </div>

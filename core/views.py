@@ -126,6 +126,10 @@ def account(request):
     return render(request, "pages/account.html")
 
 @login_required
+def profile(request):
+    return render(request, "pages/profile.html")
+
+@login_required
 def order(request):
     context = {}
     

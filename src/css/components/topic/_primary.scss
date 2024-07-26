@@ -4,7 +4,7 @@
   border-radius: 16px;
   padding: 16px;
 
-  .left {
+  .topic-left {
     margin-right: 12px;
 
     .icon {
@@ -19,7 +19,7 @@
     }
   }
 
-  .right {
+  .topic-right {
     color: $neutral-color-800;
 
     .title {
@@ -31,5 +31,4 @@
       font-size: 14px;
     }
   }
-
 }
