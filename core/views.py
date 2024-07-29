@@ -13,7 +13,8 @@ from core.models import (
     Address,
     User
 )
-from .forms import UserForm, LoginForm
+from core.forms import UserForm, LoginForm
+from core import forms
 import re
 
 import json
@@ -69,7 +70,6 @@ def signup(request):
     
     if request.method == "POST":
         user_form = UserForm(request.POST)
-        print(request.POST.get("first_name"))
 
         password = request.POST.get("password", "")
         confirm_password = request.POST.get("confirm_password", "")
@@ -128,6 +128,57 @@ def account(request):
 @login_required
 def profile(request):
     return render(request, "pages/profile.html")
+
+@login_required
+def edit(request):
+    context = {}
+    field = request.GET.get('field')
+
+    if field == "": return redirect('profile')
+    if field == "email": return redirect('profile')
+    
+    fields = {
+        "first_name": "nome",
+        "last_name": "sobrenome",
+        # "email": "e-mail",
+        "phone": "número de celular",
+        "username": "nome de usuário",
+    }
+    
+    if field not in fields: return redirect('profile')
+    
+    context["field"] = {
+        "name": field,
+        "label": fields[field],
+        "value": request.user.get(field)
+    }
+    
+    if request.method == "POST":
+        data = {}
+        data[field] = request.POST.get(field)
+        
+        form = None
+        match field:
+            case "first_name":
+                form = forms.FirstNameForm(data)
+            case "last_name":
+                form = forms.LastNameForm(data)
+            case "phone":
+                form = forms.PhoneForm(data)
+            case "username":
+                form = forms.UsernameForm(data)
+            case _:
+                print(None)
+        
+        context["form"] = form
+        if form.is_valid():
+            user = User.objects.get(pk=request.user.id)
+            user.set(field, data[field])
+            user.save()
+        
+        return redirect('profile')
+
+    return render(request, "pages/edit.html", context)
 
 @login_required
 def order(request):
