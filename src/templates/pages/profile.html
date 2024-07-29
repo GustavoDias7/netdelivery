@@ -23,7 +23,7 @@
               <p>{{user.first_name}}</p>
             </div>
             <div class="topic-right">
-              <a href="{% url 'homepage' %}">Editar</a>
+              <a href="{% url 'edit' %}?field=first_name">Editar</a>
             </div>
           </div>
         </div>
@@ -34,7 +34,7 @@
               <p>{{user.last_name}}</p>
             </div>
             <div class="topic-right">
-              <a href="{% url 'homepage' %}">Editar</a>
+              <a href="{% url 'edit' %}?field=last_name">Editar</a>
             </div>
           </div>
         </div>
@@ -44,19 +44,16 @@
               <h3>E-mail:</h3>
               <p>{{user.email}}</p>
             </div>
-            <div class="topic-right">
-              <a href="{% url 'homepage' %}">Editar</a>
-            </div>
           </div>
         </div>
         <div class="g-item-12">
           <div class="topic secondary">
             <div class="topic-left">
               <h3>Número de celular:</h3>
-              <p>{% firstof user.phone "*Sem número*" %}</p>
+              <p>{% firstof user.fphone "*Sem número*" %}</p>
             </div>
             <div class="topic-right">
-              <a href="{% url 'homepage' %}">Editar</a>
+              <a href="{% url 'edit' %}?field=phone">Editar</a>
             </div>
           </div>
         </div>
@@ -67,7 +64,7 @@
               <p>{{user.username}}</p>
             </div>
             <div class="topic-right">
-              <a href="{% url 'homepage' %}">Editar</a>
+              <a href="{% url 'edit' %}?field=username">Editar</a>
             </div>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import * as vue from "../vendor/vue";
+import VueMask from "@devindex/vue-mask";
 import { mainMixin } from "../mixins";
 import getInputValues from "../utils/getInputValues";
 const { createApp } = vue;
@@ -37,9 +38,11 @@ const app = createApp({
       "email",
       "password",
       "confirm_password",
+      "phone"
     ]);
     this.fields = { ...this.fields, ...fields };
   },
 });
 
+app.use(VueMask);
 app.mount("#app");

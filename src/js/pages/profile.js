@@ -14,5 +14,4 @@ const app = createApp({
   methods: {},
 });
 
-
 app.mount("#app");
