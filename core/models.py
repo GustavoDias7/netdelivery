@@ -178,6 +178,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         default=False,
         help_text=_("Designates whether this user has confirmed his account."),
     )
+    
+    phone = models.CharField(max_length=11, null=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username", "password"]
@@ -188,12 +190,22 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name = _("user")
         verbose_name_plural = _("users")
 
+    def fphone(self):
+        return f"({self.phone[0:2]}) {self.phone[2:7]}-{self.phone[7:]}"
+    
     def get_full_name(self):
         full_name = "%s %s" % (self.first_name, self.last_name)
         return full_name.strip()
 
     def get_short_name(self):
         return self.first_name
+    
+    def get(self, name):
+        return getattr(self, name)
+    
+    def set(self, name, value):
+        print(self, name, value)
+        setattr(self, name, value)
 
     # def email_user(self, subject, message, from_email=None):
     #     send_mail(subject, message, from_email, [self.email])
