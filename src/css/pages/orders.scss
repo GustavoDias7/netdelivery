@@ -1,0 +1,53 @@
+@import "../themes/theme";
+@import "../base/global";
+@import "../utilities/breakpoints";
+@import "../utilities/mixins";
+@import "../base/container";
+@import "../layout/grid";
+
+@import "../components/button";
+@import "../components/typography";
+@import "../components/aspect-ratio";
+@import "../components/counter";
+@import "../components/modal";
+@import "../components/badge";
+
+@import "../layout/header/secondary";
+@import "../layout/footer/primary";
+@import "../layout/menu";
+@import "../layout/cart";
+@import "../layout/order-item";
+
+section {
+  padding-top: 64px;
+
+  .container {
+    > h2 {
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+  }
+
+  .title-container {
+    @include flex-align-center;
+    margin-bottom: 16px;
+    gap: 8px;
+
+    a {
+      margin-top: 4px;
+      text-decoration: underline;
+    }
+  }
+
+  &:last-of-type {
+    padding-bottom: 64px;
+  }
+
+  @include sm {
+    padding-top: 40px;
+
+    &:last-of-type {
+      padding-bottom: 40px;
+    }
+  }
+}

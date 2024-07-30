@@ -1,5 +1,5 @@
 import * as vue from "../vendor/vue";
-import { mainMixin } from "../mixins";
+import { mainMixin } from "../utils/mixins";
 const { createApp } = vue;
 
 const app = createApp({

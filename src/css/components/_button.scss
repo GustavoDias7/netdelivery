@@ -41,6 +41,12 @@
     border-radius: 8px;
   }
 
+  &.qt-button {
+    background-color: transparent;
+    border: 1px solid $neutral-color-800;
+    border-radius: 8px;
+  }
+
   @include responsive("full",
     "fit",
     "left",

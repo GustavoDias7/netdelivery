@@ -1,6 +1,6 @@
 import * as vue from "../vendor/vue";
 import VueMask from "@devindex/vue-mask";
-import { mainMixin } from "../mixins";
+import { mainMixin } from "../utils/mixins";
 import { getAddress } from "../service/address";
 const { createApp, ref } = vue;
 

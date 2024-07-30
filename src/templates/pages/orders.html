@@ -1,0 +1,86 @@
+{% extends "../bases/base.html" %}
+{% load static %}
+
+{% block title %}
+  Seus pedidos
+{% endblock %}
+
+{% block css %}
+<link href="{% static 'css/pages/orders.css' %}?{% now "U" %}" rel="stylesheet">
+{% endblock %}
+
+{% load static %}
+{% block content %}
+    <section>
+        <div class="container md:container">
+            <h2 class="text-2xl sm:text-3xl">Seus pedidos</h2>
+            
+            <div class="g-root g-gap-4 sm:g-gap-5">
+                <div class="g-row">
+                    {% for order in orders %}
+                    <div class="g-item-12">
+                        <div class="order-item">
+                            <div class="top">
+                                {{order.order.created|date:"d/m/Y G:i:s"}}
+                            </div>
+                            <div class="bottom">
+                                <div class="img">
+                                    <a href="/">
+                                        <figure class="aspect-ratio aspect-1-1 fit">
+                                            <img src="" alt="Placeholder" />
+                                        </figure>
+                                    </a>
+                                </div>
+                                <div class="order-item-info">
+                                    <div class="order-item-info-left">
+                                        <h3>{{order.product.name}}</h3>
+                                        <p><strong class="{{order.order_item_status.code}}">{{order.order_item_status.name}}</strong></p>
+                                        {% if order.order_item_status.code == 'delivered' %}
+                                        <p>Entregue: {{order.order.received_date|date:"d/m/Y G:i:s"}}</p>
+                                        {% endif %}
+                                        <p>Total: <strong>{{order.ftotal_price}}</strong></p>
+                                        <p>Taxa de entrega <strong>{{order.order.fshipping_tax_value}}</strong></p>
+                                        {% if order.percentage_discount > 0 %}
+                                        <p>{{order.fpercentage_discount}} de desconto</p>
+                                        {% endif %}
+                                    </div>
+                                    <div class="order-item-info-right">
+                                        <p>{{order.fquantity}}</p>
+                                        <p>{{order.order.payment_type.name}}</p>
+                                        {% if order.order_item_status.code == 'delivered'  %}
+                                        <a 
+                                            class="gn-button tt-button small" 
+                                            href="{% url 'order' %}?repurchase=true&product_id={{order.product.id}}&quantity={{order.quantity}}"
+                                        >Comprar novamente</a>
+                                        {% elif order.order_item_status.code == 'canceled'  %}
+                                        <a 
+                                            class="gn-button tt-button small" 
+                                            href="{% url 'order' %}?repurchase=true&product_id={{order.product.id}}&quantity={{order.quantity}}"
+                                        >Comprar item</a>
+                                        {% elif order.order_item_status.code == 'wating' %}
+                                        <form action="{% url 'orders' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="cancel-order" value="{{order.id}}">
+                                        <button 
+                                            class="gn-button qt-button small"
+                                        >
+                                            Cancelar pedido
+                                        </button>
+                                        </form>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block js %}
+<script src="{% static "js/pages/orders.js" %}?{% now "U" %}"></script>
+{% endblock %}
+
