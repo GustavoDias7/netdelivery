@@ -45,5 +45,5 @@ admin.site.register(models.ShippingTax, ShippingTaxAdmin)
 admin.site.register(models.PaymentType, PaymentTypeAdmin)
 admin.site.register(models.Order, OrderAdmin)
 admin.site.register(models.OrderItem, OrderItemAdmin)
-admin.site.register(models.OrderStatus)
+admin.site.register(models.OrderItemStatus)
 
