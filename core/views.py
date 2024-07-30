@@ -11,8 +11,10 @@ from core.models import (
     ShippingTax,
     PaymentType,
     Address,
-    User
+    User,
+    OrderItemStatus
 )
+from django.core.paginator import Paginator
 from core.forms import UserForm, LoginForm
 from core import forms
 import re
@@ -179,6 +181,23 @@ def edit(request):
         return redirect('profile')
 
     return render(request, "pages/edit.html", context)
+
+def orders(request):
+    context = {}
+    order = OrderItem.objects.all().order_by('-id')
+    page_size = 10
+    paginated_order = Paginator(order, page_size).page(1)
+    context["orders"] = paginated_order
+    
+    if request.method == 'POST':
+        order_id = request.POST.get('cancel-order')
+        order_item = order.get(pk=order_id)
+        order_status = OrderItemStatus.objects.get(code="canceled")
+        if order_item.order_item_status.code == 'wating':
+            order_item.order_item_status = order_status
+            order_item.save()
+        
+    return render(request, 'pages/orders.html', context)
 
 @login_required
 def order(request):
