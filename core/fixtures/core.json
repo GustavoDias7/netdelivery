@@ -69,6 +69,46 @@
     }
   },
   {
+    "model": "core.orderitemstatus",
+    "pk": 1,
+    "fields": {
+      "name": "Em espera",
+      "code": "wating"
+    }
+  },
+  {
+    "model": "core.orderitemstatus",
+    "pk": 2,
+    "fields": {
+      "name": "Entregue",
+      "code": "delivered"
+    }
+  },
+  {
+    "model": "core.orderitemstatus",
+    "pk": 3,
+    "fields": {
+      "name": "Cancelado",
+      "code": "canceled"
+    }
+  },
+  {
+    "model": "core.orderitemstatus",
+    "pk": 4,
+    "fields": {
+      "name": "A caminho",
+      "code": "on-the-way"
+    }
+  },
+  {
+    "model": "core.orderitemstatus",
+    "pk": 5,
+    "fields": {
+      "name": "Preparando",
+      "code": "preparing"
+    }
+  },
+  {
     "model": "core.product",
     "pk": 1,
     "fields": {
