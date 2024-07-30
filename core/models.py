@@ -9,7 +9,10 @@ from django.contrib.auth.models import (
 from django.core import validators
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+import locale 
 import re
+
+locale.setlocale(locale.LC_MONETARY, 'pt_BR.UTF-8')
 
 class Product(models.Model):
     name = models.CharField(max_length=100)
@@ -46,13 +49,19 @@ class Order(models.Model):
     shipping_tax_name = models.CharField(max_length=50, null=True)
     shipping_tax_value = models.PositiveSmallIntegerField(null=True)
     created = models.DateTimeField(db_default=Now())
+    received_date = models.DateTimeField(null=True)
+    
+    def fshipping_tax_value(self):
+        float_value = self.shipping_tax_value / 100
+        formatted_value = locale.currency(float_value, grouping=True)
+        return formatted_value
     
     def __str__(self):
         return f"Order: {self.id}"
     
 class OrderItem(models.Model):
     order = models.ForeignKey("Order", on_delete=models.RESTRICT)
-    order_status = models.ForeignKey("OrderStatus", on_delete=models.RESTRICT, default=1)
+    order_item_status = models.ForeignKey("OrderItemStatus", on_delete=models.RESTRICT, default=1)
     product = models.ForeignKey("Product", on_delete=models.RESTRICT)
     product_price = models.PositiveSmallIntegerField()
     product_discount = models.DecimalField(
@@ -63,11 +72,31 @@ class OrderItem(models.Model):
     )
     quantity = models.PositiveSmallIntegerField()
     
+    def percentage_discount(self):
+        percentage = int(float(self.product_discount) * 100)
+        return percentage
+    
+    def fpercentage_discount(self):
+        return f"{self.percentage_discount()}%"
+    
+    def ftotal_price(self):
+        disc = float(self.product_discount * self.quantity) * self.product_price
+        tax = self.order.shipping_tax_value if self.order.shipping_tax_value != None else 0
+        total = ((self.product_price * self.quantity) - disc) + tax
+        formatted_total = locale.currency(total / 100, grouping=True)
+        return formatted_total
+    
+    def fquantity(self):
+        units = f"{self.quantity} unidades"
+        unit = f"{self.quantity} unidade"
+        return units if self.quantity > 1 else unit
+    
     def __str__(self):
         return f"Order item: {self.id}"
     
-class OrderStatus(models.Model):
-    name = models.CharField(max_length=50)
+class OrderItemStatus(models.Model):
+    name = models.CharField(max_length=30)
+    code = models.CharField(max_length=30)
     
     def __str__(self):
         return f"{self.name}"
