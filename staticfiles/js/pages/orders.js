@@ -9,25 +9,25 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/css/pages/homepage.scss":
-/*!*************************************!*\
-  !*** ./src/css/pages/homepage.scss ***!
-  \*************************************/
+/***/ "./src/css/pages/orders.scss":
+/*!***********************************!*\
+  !*** ./src/css/pages/orders.scss ***!
+  \***********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n\n\n//# sourceURL=webpack://delivery/./src/css/pages/homepage.scss?");
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n\n\n//# sourceURL=webpack://delivery/./src/css/pages/orders.scss?");
 
 /***/ }),
 
-/***/ "./src/js/pages/homepage.js":
-/*!**********************************!*\
-  !*** ./src/js/pages/homepage.js ***!
-  \**********************************/
+/***/ "./src/js/pages/orders.js":
+/*!********************************!*\
+  !*** ./src/js/pages/orders.js ***!
+  \********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _vendor_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../vendor/vue */ \"./src/js/vendor/vue.js\");\n/* harmony import */ var _utils_mixins__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/mixins */ \"./src/js/utils/mixins.js\");\n/* harmony import */ var _utils_mixins__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_utils_mixins__WEBPACK_IMPORTED_MODULE_1__);\n\n\nconst { createApp } = _vendor_vue__WEBPACK_IMPORTED_MODULE_0__;\n\nconst app = createApp({\n  mixins: [_utils_mixins__WEBPACK_IMPORTED_MODULE_1__.mainMixin],\n  delimiters: [\"[[\", \"]]\"],\n  setup() {\n    return {}\n  },\n  data() {\n    return {};\n  },\n  methods: {},\n});\n\n\napp.mount(\"#app\");\n\n\n//# sourceURL=webpack://delivery/./src/js/pages/homepage.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _vendor_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../vendor/vue */ \"./src/js/vendor/vue.js\");\n/* harmony import */ var _utils_mixins__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/mixins */ \"./src/js/utils/mixins.js\");\n/* harmony import */ var _utils_mixins__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_utils_mixins__WEBPACK_IMPORTED_MODULE_1__);\n\n\nconst { createApp } = _vendor_vue__WEBPACK_IMPORTED_MODULE_0__;\n\nconst app = createApp({\n  mixins: [_utils_mixins__WEBPACK_IMPORTED_MODULE_1__.mainMixin],\n  delimiters: [\"[[\", \"]]\"],\n  setup() {\n    return {}\n  },\n  data() {\n    return {};\n  },\n  methods: {},\n});\n\n\napp.mount(\"#app\");\n\n\n//# sourceURL=webpack://delivery/./src/js/pages/orders.js?");
 
 /***/ }),
 
@@ -62,14 +62,14 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
-/***/ "./src/templates/pages/homepage.html":
-/*!*******************************************!*\
-  !*** ./src/templates/pages/homepage.html ***!
-  \*******************************************/
+/***/ "./src/templates/pages/orders.html":
+/*!*****************************************!*\
+  !*** ./src/templates/pages/orders.html ***!
+  \*****************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
-eval("module.exports = __webpack_require__.p + \"staticfiles/img/homepage.html\";\n\n//# sourceURL=webpack://delivery/./src/templates/pages/homepage.html?");
+eval("module.exports = __webpack_require__.p + \"staticfiles/img/orders.html\";\n\n//# sourceURL=webpack://delivery/./src/templates/pages/orders.html?");
 
 /***/ })
 
@@ -162,9 +162,9 @@ eval("module.exports = __webpack_require__.p + \"staticfiles/img/homepage.html\"
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	__webpack_require__("./src/css/pages/homepage.scss");
-/******/ 	__webpack_require__("./src/js/pages/homepage.js");
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/templates/pages/homepage.html");
+/******/ 	__webpack_require__("./src/css/pages/orders.scss");
+/******/ 	__webpack_require__("./src/js/pages/orders.js");
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/templates/pages/orders.html");
 /******/ 	
 /******/ })()
 ;
