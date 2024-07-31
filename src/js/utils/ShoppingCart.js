@@ -91,10 +91,10 @@ class ShoppingCart {
     this.setLocal();
   }
   setLocal() {
-    window.sessionStorage.setItem("cart", JSON.stringify(this.cart));
+    window.localStorage.setItem("cart", JSON.stringify(this.cart));
   }
   getLocal() {
-    return JSON.parse(window.sessionStorage.getItem("cart")) || [];
+    return JSON.parse(window.localStorage.getItem("cart")) || [];
   }
   toString() {
     return JSON.stringify(
