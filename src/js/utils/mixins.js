@@ -20,21 +20,20 @@ const mainMixin = {
     },
     openLogout() {
       this.closeModal("menu");
-      this.modal.logout = true;
+      this.openModal("logout");
     },
     closeLogout() {
-      this.modal.logout = false;
+      this.closeModal("logout");
     },
     openCart() {
       this.closeModal("menu");
-      this.modal.cart = true;
+      this.openModal("cart");
     },
     closeCart() {
-      this.modal.cart = false;
+      this.closeModal("cart");
     },
     addToCart(obj) {
       this.cart.push(obj);
-      console.log(this.cart);
     },
     handleCountInput(e, id) {
       const value = e.target.value;

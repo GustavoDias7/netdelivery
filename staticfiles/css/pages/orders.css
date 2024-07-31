@@ -161,6 +161,9 @@ button:disabled {
 .gn-button.left {
   margin: 0px auto 0px 0px;
 }
+.gn-button.center {
+  margin: 0px auto;
+}
 .gn-button.right {
   margin: 0px 0px 0px auto;
 }
@@ -494,6 +497,9 @@ button:disabled {
 .modal.logout .modal-content p {
   margin-bottom: 16px;
 }
+.modal.cancel-order .modal-content p {
+  margin-bottom: 16px;
+}
 
 .badge {
   position: relative;
@@ -759,6 +765,12 @@ button:disabled {
 }
 .order-item .bottom .order-item-info .order-item-info-left p .wating {
   color: #f8bd00;
+}
+.order-item .bottom .order-item-info .order-item-info-left p .preparing {
+  color: #00c595;
+}
+.order-item .bottom .order-item-info .order-item-info-left p .on-the-way {
+  color: #007aea;
 }
 .order-item .bottom .order-item-info .order-item-info-left p .delivered {
   color: #00c52b;
