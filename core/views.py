@@ -190,7 +190,7 @@ def orders(request):
     context["orders"] = paginated_order
     
     if request.method == 'POST':
-        order_id = request.POST.get('cancel-order')
+        order_id = request.POST.get('cancel_order')
         order_item = order.get(pk=order_id)
         order_status = OrderItemStatus.objects.get(code="canceled")
         if order_item.order_item_status.code == 'wating':
