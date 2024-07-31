@@ -58,15 +58,12 @@
                                             href="{% url 'order' %}?repurchase=true&product_id={{order.product.id}}&quantity={{order.quantity}}"
                                         >Comprar item</a>
                                         {% elif order.order_item_status.code == 'wating' %}
-                                        <form action="{% url 'orders' %}" method="post">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="cancel-order" value="{{order.id}}">
                                         <button 
                                             class="gn-button qt-button small"
+                                             @click="openCancelOrder({{order.id}})"
                                         >
                                             Cancelar pedido
                                         </button>
-                                        </form>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -78,9 +75,14 @@
             </div>
         </div>
     </section>
+
+    {% block modals%}
+        {% include "../components/modals/cancel-order.html" %}
+    {% endblock %}
 {% endblock %}
 
 {% block js %}
 <script src="{% static "js/pages/orders.js" %}?{% now "U" %}"></script>
 {% endblock %}
 
+{% comment %} preparing on-the-way delivered wating canceled {% endcomment %}

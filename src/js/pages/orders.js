@@ -6,13 +6,25 @@ const app = createApp({
   mixins: [mainMixin],
   delimiters: ["[[", "]]"],
   setup() {
-    return {}
-  },
-  data() {
     return {};
   },
-  methods: {},
+  data() {
+    return {
+      modal: {
+        cancel_order: false,
+      },
+      order_id_to_cancel: null
+    };
+  },
+  methods: {
+    openCancelOrder(order_id) {
+      this.order_id_to_cancel = order_id
+      this.openModal("cancel_order");
+    },
+    closeCancelOrder(order_id) {
+      this.closeModal("cancel_order");
+    },
+  },
 });
-
 
 app.mount("#app");

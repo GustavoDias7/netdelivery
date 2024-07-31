@@ -1,0 +1,14 @@
+<div class="modal primary cancel-order" :class="{active: modal.cancel_order}">
+  <div class="modal-content">
+    <button class="modal-close" @click="closeCancelOrder"></button>
+    <div>
+      <h2>Cancelar Pedido</h2>
+      <p>Você deseja cancelar o seu pedido?</p>
+      <form action="{% url 'orders' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="cancel_order" :value="order_id_to_cancel">
+        <button class="gn-button pm-button center small">Confirmar</button>
+      </form>
+    </div>
+  </div>
+</div>
