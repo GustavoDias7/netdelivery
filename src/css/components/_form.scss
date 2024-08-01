@@ -534,6 +534,9 @@ $svg-dimention-large: $svg-dimention + 4px;
   &.success {
     color: $success-color-100;
   }
+  &.center {
+    text-align: center;
+  }
 }
 
 .f-container {

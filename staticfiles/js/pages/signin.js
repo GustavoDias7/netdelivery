@@ -10,6 +10,16 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/css/pages/signin.scss":
+/*!***********************************!*\
+  !*** ./src/css/pages/signin.scss ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n\n\n//# sourceURL=webpack://delivery/./src/css/pages/signin.scss?");
+
+/***/ }),
+
 /***/ "./src/templates/pages/signin.html":
 /*!*****************************************!*\
   !*** ./src/templates/pages/signin.html ***!
@@ -47,6 +57,17 @@ eval("module.exports = __webpack_require__.p + \"staticfiles/img/signin.html\";\
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/publicPath */
 /******/ 	(() => {
 /******/ 		__webpack_require__.p = "/";
@@ -56,7 +77,8 @@ eval("module.exports = __webpack_require__.p + \"staticfiles/img/signin.html\";\
 /******/ 	
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	// This entry module doesn't tell about it's top-level declarations so it can't be inlined
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	__webpack_require__("./src/css/pages/signin.scss");
 /******/ 	var __webpack_exports__ = __webpack_require__("./src/templates/pages/signin.html");
 /******/ 	
 /******/ })()
