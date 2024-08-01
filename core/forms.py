@@ -31,3 +31,14 @@ class UsernameForm(forms.Form):
             re.compile("^[a-zA-Z0-9_.-]+$"), _("Enter a valid username."), _("invalid")
         )
     ],)
+    
+class CepForm(forms.Form):
+    cep = forms.CharField(max_length=8, validators=[validators.MinLengthValidator(8)])
+class DistrictForm(forms.Form):
+    pass
+class AddressForm(forms.Form):
+    pass
+class NumberForm(forms.Form):
+    pass
+class ComplementForm(forms.Form):
+    pass

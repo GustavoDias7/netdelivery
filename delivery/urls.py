@@ -28,5 +28,7 @@ urlpatterns = [
     path("conta", views.account, name="account"),
     path("conta/perfil", views.profile, name="profile"),
     path("conta/perfil/editar", views.edit, name="edit"),
-    path("conta/perfil/pedidos", views.orders, name="orders"),
+    path("conta/pedidos", views.orders, name="orders"),
+    path("conta/endereco", views.address, name="address"),
+    path("conta/endereco/editar", views.address_edit, name="address_edit"),
 ]

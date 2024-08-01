@@ -1,0 +1,81 @@
+{% extends "../bases/base.html" %}
+{% load static %}
+
+{% block title %}
+  Endereço
+{% endblock %}
+
+{% block css %}
+<link href="{% static 'css/pages/address.css' %}?{% now "U" %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<section>
+  <div class="container sm:container">
+    <h2 class="text-2xl sm:text-3xl">Seu endereço</h2>
+    <div class="g-root g-gap-5">
+      <div class="g-row">
+        <div class="g-item-12">
+          <div class="topic secondary">
+            <div class="topic-left">
+              <h3>CEP:</h3>
+              <p>{% firstof address.fcep "*Sem CEP*" %}</p>
+            </div>
+            <div class="topic-right">
+              <a href="{% url 'address_edit' %}?field=cep">Editar</a>
+            </div>
+          </div>
+        </div>
+        <div class="g-item-12">
+          <div class="topic secondary">
+            <div class="topic-left">
+              <h3>Bairro:</h3>
+              <p>{% firstof address.district "*Sem bairro*" %}</p>
+            </div>
+            <div class="topic-right">
+              <a href="{% url 'address_edit' %}?field=district">Editar</a>
+            </div>
+          </div>
+        </div>
+        <div class="g-item-12">
+          <div class="topic secondary">
+            <div class="topic-left">
+              <h3>Endereço (Rua, avenida, praça...):</h3>
+              <p>{% firstof address.address "*Sem endereço*" %}</p>
+            </div>
+            <div class="topic-right">
+              <a href="{% url 'address_edit' %}?field=address">Editar</a>
+            </div>
+          </div>
+        </div>
+        <div class="g-item-12">
+          <div class="topic secondary">
+            <div class="topic-left">
+              <h3>Número:</h3>
+              <p>{% firstof address.number "*Sem número (s/n)*" %}</p>
+            </div>
+            <div class="topic-right">
+              <a href="{% url 'address_edit' %}?field=number">Editar</a>
+            </div>
+          </div>
+        </div>
+        <div class="g-item-12">
+          <div class="topic secondary">
+            <div class="topic-left">
+              <h3>Complemento:</h3>
+              <p>{% firstof address.complement "*Sem complemento*" %}</p>
+            </div>
+            <div class="topic-right">
+              <a href="{% url 'address_edit' %}?field=complement">Editar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block js %}
+<script src="{% static "js/pages/address.js" %}?{% now "U" %}"></script>
+{% endblock %}

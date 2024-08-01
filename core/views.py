@@ -18,6 +18,7 @@ from django.core.paginator import Paginator
 from core.forms import UserForm, LoginForm
 from core import forms
 import re
+import requests
 
 import json
 
@@ -182,6 +183,7 @@ def edit(request):
 
     return render(request, "pages/edit.html", context)
 
+@login_required
 def orders(request):
     context = {}
     order = OrderItem.objects.all().order_by('-id')
@@ -198,6 +200,96 @@ def orders(request):
             order_item.save()
         
     return render(request, 'pages/orders.html', context)
+
+@login_required
+def address(request):
+    context = {}
+    
+    try:
+        address = Address.objects.get(user=request.user)
+    except Address.DoesNotExist:
+        address = None
+        
+    context["address"] = address
+    return render(request, "pages/address.html", context)
+
+@login_required
+def address_edit(request):
+    context = {}
+    field = request.GET.get('field')
+
+    if field == "": return redirect('address')
+    if field == "email": return redirect('address')
+    
+    fields = {
+        "cep": "CEP",
+        "district": "bairro",
+        "address": "Endereço",
+        "number": "número",
+        "complement": "complemento",
+    }
+    
+    if field not in fields: return redirect('address')
+    
+    context["field"] = {
+        "name": field,
+        "label": fields[field],
+    }
+    
+    try:
+        address = Address.objects.get(user=request.user)
+        context["field"]["value"] = address.get(field)
+    except Address.DoesNotExist:
+        address = None
+    
+    if request.method == "POST":
+        data = {}
+        
+        if field == "cep":
+            cep = request.POST.get(field)
+            data[field] = re.sub(r"\D", "", cep)
+        else: 
+            data[field] = request.POST.get(field)
+        
+        form = None
+        match field:
+            case "cep":
+                form = forms.CepForm(data)
+            case "district":
+                form = forms.DistrictForm(data)
+            case "address":
+                form = forms.AddressForm(data)
+            case "number":
+                form = forms.NumberForm(data)
+            case "complement":
+                form = forms.ComplementForm(data)
+            case _:
+                print(None)
+        
+        context["form"] = form
+        if form.is_valid():
+            if address == None:
+                address = Address.objects.create(user=request.user)
+            
+            if field == "cep":
+                address.set("cep", data[field])
+                res = requests.get(f"http://viacep.com.br/ws/{data[field]}/json/")
+                res_json = json.loads(res.content)
+                print(res_json)
+                address.set("district", res_json["bairro"])
+                address.set("address", res_json["logradouro"])
+                address.set("locality", res_json["localidade"])
+                address.set("number", None)
+                address.set("uf", res_json["uf"])
+                address.set("complement", res_json["complemento"])
+            else:
+                address.set(field, data[field])
+                
+            address.save()
+        
+        return redirect('address')
+    
+    return render(request, "pages/address_edit.html", context)
 
 @login_required
 def order(request):

@@ -122,11 +122,17 @@ class Address(models.Model):
     address = models.CharField(max_length=50)
     locality = models.CharField(max_length=50)
     uf = models.CharField(max_length=2)
-    number = models.PositiveSmallIntegerField(null=True)
+    number = models.PositiveSmallIntegerField(null=True, validators=[MinValueValidator(1)])
     complement = models.CharField(max_length=50)
     
     def fcep(self):
         return f"{self.cep[0:5]}-{self.cep[5:]}"
+    
+    def get(self, name):
+        return getattr(self, name)
+    
+    def set(self, name, value):
+        setattr(self, name, value)
     
     def __str__(self):
         return f"{self.fcep()}"

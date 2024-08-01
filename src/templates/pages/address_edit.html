@@ -1,0 +1,65 @@
+{% extends "../bases/base.html" %}
+{% load static %}
+
+{% block title %}
+  Editar
+{% endblock %}
+
+{% block css %}
+<link href="{% static 'css/pages/edit.css' %}?{% now "U" %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<section>
+  <div class="container xs:container">
+    <h2 class="text-2xl sm:text-3xl">Edite seu {{field.label}}</h2>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="g-root g-gap-2 sm:g-gap-4">
+        <div class="g-row">
+            <div class="g-item-12">
+            <div class="f-row">
+                <input
+                    v-model="fields.{{field.name}}"
+                    id="{{field.name}}"
+                    name="{{field.name}}"
+                    type="text"
+                    class="f-input filled"
+                    :class="{...active(fields.{{field.name}})}"
+                    value="{% firstof field.value "" %}"
+                    {% if field.name == 'cep' %}
+                    v-mask="'00000-000'"
+                    {% elif field.name == 'number' %}
+                    v-mask="'00000'"
+                    {% endif %}
+                />
+                <label for="{{field.name}}" class="f-label">
+                  {% if field.name == 'cep' %}
+                  {{field.label}}
+                  {% else %}
+                  {{field.label.capitalize}}
+                  {% endif %}
+                </label>
+            </div>
+            </div>
+            <div class="g-item-12">
+              <div class="f-row">
+                <button class="gn-button tt-button full">Confirmar</button>
+              </div>
+            </div>
+            <div class="g-item-12">
+              <div class="f-row">
+                <a href={% url 'address' %} class="gn-button qt-button full">Voltar</a>
+              </div>
+            </div>
+        </div>
+        </div>
+    </form>
+  </div>
+</section>
+{% endblock %}
+
+{% block js %}
+<script src="{% static "js/pages/address_edit.js" %}?{% now "U" %}"></script>
+{% endblock %}
