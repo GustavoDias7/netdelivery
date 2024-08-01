@@ -226,7 +226,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = _("users")
 
     def fphone(self):
-        return f"({self.phone[0:2]}) {self.phone[2:7]}-{self.phone[7:]}"
+        if self.phone != None:
+            return f"({self.phone[0:2]}) {self.phone[2:7]}-{self.phone[7:]}"
+        else:
+            return self.phone
     
     def get_full_name(self):
         full_name = "%s %s" % (self.first_name, self.last_name)

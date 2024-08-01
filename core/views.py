@@ -167,6 +167,7 @@ def edit(request):
             case "last_name":
                 form = forms.LastNameForm(data)
             case "phone":
+                data[field] = re.sub(r"\D", "", request.POST.get(field))
                 form = forms.PhoneForm(data)
             case "username":
                 form = forms.UsernameForm(data)
@@ -175,6 +176,7 @@ def edit(request):
         
         context["form"] = form
         if form.is_valid():
+            print(field, data[field])
             user = User.objects.get(pk=request.user.id)
             user.set(field, data[field])
             user.save()
