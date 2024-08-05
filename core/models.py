@@ -1,12 +1,13 @@
 from django.db import models
 from django.db.models.functions import Now
-from django.core.validators import (MinValueValidator, MaxValueValidator, MinLengthValidator)
+from django.core.validators import (MinValueValidator, MaxValueValidator, MinLengthValidator, RegexValidator)
 from django.contrib.auth.models import (
     AbstractBaseUser,
     PermissionsMixin,
     BaseUserManager,
 )
 from django.core import validators
+from .validators import numeric_validator
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 import locale 
@@ -16,10 +17,11 @@ locale.setlocale(locale.LC_MONETARY, 'pt_BR.UTF-8')
 
 class Product(models.Model):
     name = models.CharField(max_length=100)
-    price = models.PositiveSmallIntegerField()
+    price = models.PositiveIntegerField(validators=[MaxValueValidator(2147483647)])
     # image = models.ImageField()
-    description = models.TextField(max_length=400)
-    stock = models.PositiveIntegerField()
+    description = models.TextField(max_length=400, validators=[MinLengthValidator(4)])
+    stock = models.PositiveIntegerField(blank=True, null=True, validators=[MaxValueValidator(2147483647)])
+    # stock == null/None == unlimited
     archived = models.BooleanField(default=False)
     discount = models.DecimalField(
         max_digits=3,
@@ -37,7 +39,12 @@ class Product(models.Model):
         return f"{self.name}"
     
 class ProductCategory(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=30)
+    code = models.CharField(max_length=30, unique=True)
+    
+    class Meta:
+        verbose_name = _("Product Category")
+        verbose_name_plural = _("Product Categories")
 
     def __str__(self):
         return f"{self.name}"
@@ -46,8 +53,8 @@ class Order(models.Model):
     user = models.ForeignKey("User", on_delete=models.RESTRICT)
     payment_type = models.ForeignKey("PaymentType", on_delete=models.RESTRICT)
     shipping_tax = models.ForeignKey("ShippingTax", on_delete=models.RESTRICT, null=True)
-    shipping_tax_name = models.CharField(max_length=50, null=True)
-    shipping_tax_value = models.PositiveSmallIntegerField(null=True)
+    shipping_tax_name = models.CharField(max_length=40, null=True)
+    shipping_tax_value = models.PositiveSmallIntegerField(null=True, validators=[MaxValueValidator(32767)])
     created = models.DateTimeField(db_default=Now())
     received_date = models.DateTimeField(null=True)
     
@@ -63,14 +70,18 @@ class OrderItem(models.Model):
     order = models.ForeignKey("Order", on_delete=models.RESTRICT)
     order_item_status = models.ForeignKey("OrderItemStatus", on_delete=models.RESTRICT, default=1)
     product = models.ForeignKey("Product", on_delete=models.RESTRICT)
-    product_price = models.PositiveSmallIntegerField()
+    product_price = models.PositiveIntegerField(validators=[MaxValueValidator(2147483647)])
     product_discount = models.DecimalField(
         max_digits=3,
         decimal_places=2,
         default=0.0,
         validators=[MinValueValidator(0), MaxValueValidator(1)],
     )
-    quantity = models.PositiveSmallIntegerField()
+    quantity = models.PositiveSmallIntegerField(validators=[MaxValueValidator(32767)])
+    
+    class Meta:
+        verbose_name = _("Order item")
+        verbose_name_plural = _("Order items")
     
     def percentage_discount(self):
         percentage = int(float(self.product_discount) * 100)
@@ -96,34 +107,43 @@ class OrderItem(models.Model):
     
 class OrderItemStatus(models.Model):
     name = models.CharField(max_length=30)
-    code = models.CharField(max_length=30)
+    code = models.CharField(max_length=30, unique=True)
+    
+    class Meta:
+        verbose_name = _("Order item status")
+        verbose_name_plural = _("Order item status")
     
     def __str__(self):
         return f"{self.name}"
 
 class PaymentType(models.Model):
-    name = models.CharField(max_length=50)
-    code = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=30)
+    code = models.CharField(max_length=30, unique=True)
     
     def __str__(self):
         return f"{self.name}"
 
 class ShippingTax(models.Model):
-    name = models.CharField(max_length=50)
-    value = models.PositiveSmallIntegerField()
+    name = models.CharField(max_length=40)
+    value = models.PositiveSmallIntegerField(validators=[MaxValueValidator(32767)])
     
     def __str__(self):
         return f"{self.name}"
-    
+
 class Address(models.Model):
     user = models.ForeignKey("User", on_delete=models.RESTRICT)
-    cep = models.CharField(max_length=8)
+    cep = models.CharField(_("CEP"), max_length=8, validators=[MinLengthValidator(8), numeric_validator])
     district = models.CharField(max_length=50)
     address = models.CharField(max_length=50)
     locality = models.CharField(max_length=50)
-    uf = models.CharField(max_length=2)
-    number = models.PositiveSmallIntegerField(null=True, validators=[MinValueValidator(1)])
-    complement = models.CharField(max_length=50)
+    uf = models.CharField(_("UF"), max_length=2, validators=[MinLengthValidator(2)])
+    number = models.PositiveSmallIntegerField(blank=True, null=True, validators=[MaxValueValidator(32767)]) 
+    # integer type validation
+    complement = models.CharField(max_length=50, blank=True, null=True)
+    
+    class Meta:
+        verbose_name = _("Address")
+        verbose_name_plural = _("Addresses")
     
     def fcep(self):
         return f"{self.cep[0:5]}-{self.cep[5:]}"
