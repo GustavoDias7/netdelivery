@@ -1,13 +1,13 @@
 from django.db import models
 from django.db.models.functions import Now
-from django.core.validators import (MinValueValidator, MaxValueValidator, MinLengthValidator, RegexValidator)
+from django.core.validators import (MinValueValidator, MaxValueValidator, MinLengthValidator)
 from django.contrib.auth.models import (
     AbstractBaseUser,
     PermissionsMixin,
     BaseUserManager,
 )
 from django.core import validators
-from .validators import numeric_validator
+from .validators import (numeric_validator, name_validator, phone_validator)
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 import locale 
@@ -19,7 +19,7 @@ class Product(models.Model):
     name = models.CharField(max_length=100)
     price = models.PositiveIntegerField(validators=[MaxValueValidator(2147483647)])
     # image = models.ImageField()
-    description = models.TextField(max_length=400, validators=[MinLengthValidator(4)])
+    description = models.TextField(max_length=400, validators=[MinLengthValidator(4, _("Mínimo de 4 caracteres."))])
     stock = models.PositiveIntegerField(blank=True, null=True, validators=[MaxValueValidator(2147483647)])
     # stock == null/None == unlimited
     archived = models.BooleanField(default=False)
@@ -136,7 +136,7 @@ class Address(models.Model):
     district = models.CharField(max_length=50)
     address = models.CharField(max_length=50)
     locality = models.CharField(max_length=50)
-    uf = models.CharField(_("UF"), max_length=2, validators=[MinLengthValidator(2)])
+    uf = models.CharField(_("UF"), max_length=2, validators=[MinLengthValidator(2, _("Digite 2 caracteres."))])
     number = models.PositiveSmallIntegerField(blank=True, null=True, validators=[MaxValueValidator(32767)]) 
     # integer type validation
     complement = models.CharField(max_length=50, blank=True, null=True)
@@ -206,9 +206,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         ],
     )
 
-    first_name = models.CharField(_("first name"), max_length=30, validators=[MinLengthValidator(3)])
+    first_name = models.CharField(_("first name"), max_length=30, validators=[name_validator])
 
-    last_name = models.CharField(_("last name"), max_length=30, validators=[MinLengthValidator(3)])
+    last_name = models.CharField(_("last name"), max_length=30, validators=[name_validator])
 
     email = models.EmailField(_("email address"), max_length=255, unique=True)
 
@@ -234,7 +234,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         help_text=_("Designates whether this user has confirmed his account."),
     )
     
-    phone = models.CharField(max_length=11, null=True)
+    phone = models.CharField(max_length=11, null=True, validators=[phone_validator])
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username", "password"]
