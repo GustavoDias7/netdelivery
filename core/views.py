@@ -150,15 +150,19 @@ def edit(request):
     
     if field not in fields: return redirect('profile')
     
+    context["field"] = {}
     context["field"] = {
         "name": field,
         "label": fields[field],
-        "value": request.user.get(field)
+        "value": request.user.get(field),
     }
     
     if request.method == "POST":
         data = {}
-        data[field] = request.POST.get(field)
+        if field == "phone":
+            data[field] = ''.join([e for e in request.POST.get(field) if e.isalnum()])
+        else:
+            data[field] = request.POST.get(field)
         
         form = None
         match field:
@@ -167,22 +171,24 @@ def edit(request):
             case "last_name":
                 form = forms.LastNameForm(data)
             case "phone":
-                data[field] = re.sub(r"\D", "", request.POST.get(field))
+                # print(data[field])
+                # data[field] = re.sub(r"\D", "", request.POST.get(field))
+                print(data[field])
                 form = forms.PhoneForm(data)
             case "username":
                 form = forms.UsernameForm(data)
             case _:
                 print(None)
-        
-        context["form"] = form
+                
         if form.is_valid():
-            print(field, data[field])
             user = User.objects.get(pk=request.user.id)
             user.set(field, data[field])
             user.save()
+            return redirect('profile')
+        else:
+            context["field"].update({"value": form[field].value})
+            context["field"].update({"errors": form.errors.get(field).as_text})
         
-        return redirect('profile')
-
     return render(request, "pages/edit.html", context)
 
 @login_required
