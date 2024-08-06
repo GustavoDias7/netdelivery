@@ -229,6 +229,9 @@ button:disabled {
 .f-input::placeholder {
   color: #486284;
 }
+.f-input.error {
+  border-color: #ff2115;
+}
 .f-input.small {
   padding: 10px;
   font-size: 14px;
@@ -302,6 +305,15 @@ button:disabled {
     font-size: 14px;
     top: 8px;
   }
+}
+
+.f-helper {
+  display: block;
+  font-size: 0.75rem;
+  padding: 2px 12px 0px;
+}
+.f-helper.error {
+  color: #ff2115;
 }
 
 .text-sm {
