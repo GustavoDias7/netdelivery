@@ -1,10 +1,20 @@
-from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 import re
 
-numeric_validator = RegexValidator(r'^\d+$', _('Only digit characters.'))
+def cep_validator(value: str):
+    if not value.isnumeric():
+        raise ValidationError(
+            _("Only digit characters"),
+            params={"value": value},
+        )
+    elif len(value) != 8:
+        raise ValidationError(
+            _("Must have 8 digits"),
+            params={"value": value},
+        )
     
+
 def name_validator(value: str):
     if not value.isalpha():
         raise ValidationError(
