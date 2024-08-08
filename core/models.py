@@ -145,7 +145,10 @@ class Address(models.Model):
         verbose_name_plural = _("Addresses")
     
     def fcep(self):
-        return f"{self.cep[0:5]}-{self.cep[5:]}"
+        if len(self.cep):
+            return f"{self.cep[0:5]}-{self.cep[5:]}"
+        else:
+            return self.cep
     
     def get(self, name):
         return getattr(self, name)
