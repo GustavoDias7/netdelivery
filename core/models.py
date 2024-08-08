@@ -7,7 +7,7 @@ from django.contrib.auth.models import (
     BaseUserManager,
 )
 from django.core import validators
-from .validators import (numeric_validator, name_validator, phone_validator)
+from .validators import (cep_validator, name_validator, phone_validator)
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 import locale 
@@ -132,14 +132,13 @@ class ShippingTax(models.Model):
 
 class Address(models.Model):
     user = models.ForeignKey("User", on_delete=models.RESTRICT)
-    cep = models.CharField(_("CEP"), max_length=8, validators=[MinLengthValidator(8), numeric_validator])
-    district = models.CharField(max_length=50)
-    address = models.CharField(max_length=50)
-    locality = models.CharField(max_length=50)
-    uf = models.CharField(_("UF"), max_length=2, validators=[MinLengthValidator(2, _("Digite 2 caracteres."))])
+    cep = models.CharField("CEP", max_length=8, validators=[cep_validator])
+    district = models.CharField(max_length=72)
+    address = models.CharField(max_length=100)
+    locality = models.CharField(max_length=72)
+    uf = models.CharField("UF", max_length=2, validators=[MinLengthValidator(2, _("Digite 2 caracteres."))])
     number = models.PositiveSmallIntegerField(blank=True, null=True, validators=[MaxValueValidator(32767)]) 
-    # integer type validation
-    complement = models.CharField(max_length=50, blank=True, null=True)
+    complement = models.CharField(max_length=100, blank=True, null=True)
     
     class Meta:
         verbose_name = _("Address")
