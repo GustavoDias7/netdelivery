@@ -19,6 +19,8 @@ from core.forms import UserForm, LoginForm
 from core import forms
 import re
 import requests
+from core.utils import remove_non_alphanumeric
+
 
 import json
 
@@ -160,7 +162,8 @@ def edit(request):
     if request.method == "POST":
         data = {}
         if field == "phone":
-            data[field] = ''.join([e for e in request.POST.get(field) if e.isalnum()])
+            phone = request.POST.get(field)
+            data[field] = remove_non_alphanumeric(phone)
         else:
             data[field] = request.POST.get(field)
         
@@ -171,9 +174,6 @@ def edit(request):
             case "last_name":
                 form = forms.LastNameForm(data)
             case "phone":
-                # print(data[field])
-                # data[field] = re.sub(r"\D", "", request.POST.get(field))
-                print(data[field])
                 form = forms.PhoneForm(data)
             case "username":
                 form = forms.UsernameForm(data)
@@ -223,16 +223,16 @@ def address(request):
 
 @login_required
 def address_edit(request):
+    
     context = {}
     field = request.GET.get('field')
 
     if field == "": return redirect('address')
-    if field == "email": return redirect('address')
     
     fields = {
         "cep": "CEP",
-        "district": "bairro",
-        "address": "Endereço",
+        # "district": "bairro",
+        # "address": "Endereço",
         "number": "número",
         "complement": "complemento",
     }
@@ -255,7 +255,7 @@ def address_edit(request):
         
         if field == "cep":
             cep = request.POST.get(field)
-            data[field] = re.sub(r"\D", "", cep)
+            data[field] = remove_non_alphanumeric(cep)
         else: 
             data[field] = request.POST.get(field)
         
@@ -280,23 +280,33 @@ def address_edit(request):
                 address = Address.objects.create(user=request.user)
             
             if field == "cep":
-                address.set("cep", data[field])
-                res = requests.get(f"http://viacep.com.br/ws/{data[field]}/json/")
-                res_json = json.loads(res.content)
-                print(res_json)
-                address.set("district", res_json["bairro"])
-                address.set("address", res_json["logradouro"])
-                address.set("locality", res_json["localidade"])
-                address.set("number", None)
-                address.set("uf", res_json["uf"])
-                address.set("complement", res_json["complemento"])
+                try:
+                    res = requests.get(f"http://viacep.com.br/ws/{data[field]}/json/")
+                    res_json = json.loads(res.content)
+                    
+                    if res_json.get('erro') != None:
+                        raise ValueError("CEP not found") 
+                    
+                    address.set("cep", data[field])
+                    address.set("district", res_json["bairro"])
+                    address.set("address", res_json["logradouro"])
+                    address.set("locality", res_json["localidade"])
+                    address.set("number", None)
+                    address.set("uf", res_json["uf"])
+                    address.set("complement", res_json["complemento"])
+                except ValueError:
+                    context["field"].update({"value": form[field].value})
+                    context["field"].update({"errors": "CEP not found"})
+                    return render(request, "pages/address_edit.html", context)
             else:
                 address.set(field, data[field])
                 
             address.save()
+            return redirect('address')
+        else:
+            context["field"].update({"value": form[field].value})
+            context["field"].update({"errors": form.errors.get(field).as_text})
         
-        return redirect('address')
-    
     return render(request, "pages/address_edit.html", context)
 
 @login_required

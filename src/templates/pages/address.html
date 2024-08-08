@@ -32,19 +32,13 @@
               <h3>Bairro:</h3>
               <p>{% firstof address.district "*Sem bairro*" %}</p>
             </div>
-            <div class="topic-right">
-              <a href="{% url 'address_edit' %}?field=district">Editar</a>
-            </div>
           </div>
         </div>
         <div class="g-item-12">
           <div class="topic secondary">
             <div class="topic-left">
-              <h3>Endereço (Rua, avenida, praça...):</h3>
+              <h3>Endereço:</h3>
               <p>{% firstof address.address "*Sem endereço*" %}</p>
-            </div>
-            <div class="topic-right">
-              <a href="{% url 'address_edit' %}?field=address">Editar</a>
             </div>
           </div>
         </div>
@@ -69,6 +63,11 @@
               <a href="{% url 'address_edit' %}?field=complement">Editar</a>
             </div>
           </div>
+        </div>
+        <div class="g-item-12">
+          <a href="{% url 'account' %}" class="gn-button qt-button full">
+            Voltar
+          </a>
         </div>
       </div>
     </div>

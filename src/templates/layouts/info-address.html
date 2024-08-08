@@ -10,10 +10,10 @@
       <p class="text-sm sm:text-lg"><strong>Bairro:</strong> {{address.district}}</p>
       <p class="text-sm sm:text-lg"><strong>Endereço:</strong> {{address.address}}</p>
       <p class="text-sm sm:text-lg">
-        <strong>Número:</strong> {% firstof address.number "s/n" %}
+        <strong>Número:</strong> {% firstof address.number "*Sem número (s/n)*" %}
       </p>
       <p class="text-sm sm:text-lg">
-        <strong>Complemento:</strong> {{address.complement}}
+        <strong>Complemento:</strong> {% firstof address.complement "*Sem complemento*" %}
       </p>
     </div>
   </div>

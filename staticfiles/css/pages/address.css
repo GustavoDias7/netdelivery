@@ -157,6 +157,11 @@ button:disabled {
   color: #fafafa;
   border-radius: 8px;
 }
+.gn-button.qt-button {
+  background-color: transparent;
+  border: 1px solid #151515;
+  border-radius: 8px;
+}
 .gn-button.full {
   width: 100%;
 }

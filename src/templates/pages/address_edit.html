@@ -41,6 +41,9 @@
                   {{field.label.capitalize}}
                   {% endif %}
                 </label>
+                {% if field.errors %}
+                <p class="f-helper error">{{field.errors}}</p>
+                {% endif %}
             </div>
             </div>
             <div class="g-item-12">
