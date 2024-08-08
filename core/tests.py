@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.core.exceptions import ValidationError
-from .validators import (name_validator, phone_validator)
+from .validators import (name_validator, phone_validator, cep_validator)
 
 # Create your tests here.
 class ValidatorsTestCase(TestCase):
@@ -30,3 +30,15 @@ class ValidatorsTestCase(TestCase):
         
         for number in eleven_digits_without_nine:
             self.assertRaises(ValidationError, phone_validator, value=number)
+            
+    
+    def test_cep_validator(self):
+        with_dash = "96418-200"
+        alphanumeric = "9641820A"
+        less_then_eight_digits = "9641820"
+        empty_string = ""
+        
+        self.assertRaises(ValidationError, cep_validator, value=with_dash)
+        self.assertRaises(ValidationError, cep_validator, value=alphanumeric)
+        self.assertRaises(ValidationError, cep_validator, value=less_then_eight_digits)
+        self.assertRaises(ValidationError, cep_validator, value=empty_string)
