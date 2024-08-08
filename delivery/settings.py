@@ -30,6 +30,8 @@ ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = "core.User"
 
+LOGIN_URL = "/login"
+
 # Application definition
 
 INSTALLED_APPS = [
