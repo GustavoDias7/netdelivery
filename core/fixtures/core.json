@@ -8,24 +8,43 @@
     }
   },
   {
-    "model": "core.orderstatus",
+    "model": "core.orderitemstatus",
     "pk": 1,
     "fields": {
-      "name": "EM_ABERTO"
+      "name": "Em espera",
+      "code": "wating"
     }
   },
   {
-    "model": "core.orderstatus",
+    "model": "core.orderitemstatus",
     "pk": 2,
     "fields": {
-      "name": "FINALIZADO"
+      "name": "Entregue",
+      "code": "delivered"
     }
   },
   {
-    "model": "core.orderstatus",
+    "model": "core.orderitemstatus",
     "pk": 3,
     "fields": {
-      "name": "CANCELADO"
+      "name": "Cancelado",
+      "code": "canceled"
+    }
+  },
+  {
+    "model": "core.orderitemstatus",
+    "pk": 4,
+    "fields": {
+      "name": "A caminho",
+      "code": "on-the-way"
+    }
+  },
+  {
+    "model": "core.orderitemstatus",
+    "pk": 5,
+    "fields": {
+      "name": "Preparando",
+      "code": "preparing"
     }
   },
   {
@@ -242,21 +261,103 @@
     "model": "core.productcategory",
     "pk": 1,
     "fields": {
-      "name": "Salgados Assados"
+      "name": "Salgados Assados",
+      "code": "salgados-assados"
     }
   },
   {
     "model": "core.productcategory",
     "pk": 2,
     "fields": {
-      "name": "Salgados Frito"
+      "name": "Salgados Fritos",
+      "code": "salgados-fritos"
     }
   },
   {
     "model": "core.productcategory",
     "pk": 3,
     "fields": {
-      "name": "Refrigerantes"
+      "name": "Refrigerantes",
+      "code": "refrigerantes"
+    }
+  },
+  {"model":"core.uf","pk":1,"fields":{"acronym":"AC"}},
+  {"model":"core.uf","pk":2,"fields":{"acronym":"AL"}},
+  {"model":"core.uf","pk":3,"fields":{"acronym":"AP"}},
+  {"model":"core.uf","pk":4,"fields":{"acronym":"AM"}},
+  {"model":"core.uf","pk":5,"fields":{"acronym":"BA"}},
+  {"model":"core.uf","pk":6,"fields":{"acronym":"CE"}},
+  {"model":"core.uf","pk":7,"fields":{"acronym":"DF"}},
+  {"model":"core.uf","pk":8,"fields":{"acronym":"ES"}},
+  {"model":"core.uf","pk":9,"fields":{"acronym":"GO"}},
+  {"model":"core.uf","pk":10,"fields":{"acronym":"MA"}},
+  {"model":"core.uf","pk":11,"fields":{"acronym":"MT"}},
+  {"model":"core.uf","pk":12,"fields":{"acronym":"MS"}},
+  {"model":"core.uf","pk":13,"fields":{"acronym":"MG"}},
+  {"model":"core.uf","pk":14,"fields":{"acronym":"PA"}},
+  {"model":"core.uf","pk":15,"fields":{"acronym":"PB"}},
+  {"model":"core.uf","pk":16,"fields":{"acronym":"PR"}},
+  {"model":"core.uf","pk":17,"fields":{"acronym":"PE"}},
+  {"model":"core.uf","pk":18,"fields":{"acronym":"PI"}},
+  {"model":"core.uf","pk":19,"fields":{"acronym":"RJ"}},
+  {"model":"core.uf","pk":20,"fields":{"acronym":"RN"}},
+  {"model":"core.uf","pk":21,"fields":{"acronym":"RS"}},
+  {"model":"core.uf","pk":22,"fields":{"acronym":"RO"}},
+  {"model":"core.uf","pk":23,"fields":{"acronym":"RR"}},
+  {"model":"core.uf","pk":24,"fields":{"acronym":"SC"}},
+  {"model":"core.uf","pk":25,"fields":{"acronym":"SP"}},
+  {"model":"core.uf","pk":26,"fields":{"acronym":"SE"}},
+  {"model":"core.uf","pk":27,"fields":{"acronym":"TO"}},
+  {
+    "model": "core.situacaolocalidade",
+    "pk": 0,
+    "fields": {
+      "definition": "Localidade não codificada em nível de Logradouro"
+    }
+  },
+  {
+    "model": "core.situacaolocalidade",
+    "pk": 1,
+    "fields": {
+      "definition": "Localidade codificada em nível de Logradouro"
+    }
+  },
+  {
+    "model": "core.situacaolocalidade",
+    "pk": 2,
+    "fields": {
+      "definition": "Distrito ou Povoado inserido na codificação em nível de Logradouro."
+    }
+  },
+  {
+    "model": "core.situacaolocalidade",
+    "pk": 3,
+    "fields": {
+      "definition": "Distrito/Povoado inserido na codificação em nível de Logr..."
+    }
+  },
+  {
+    "model": "core.tipolocalidade",
+    "pk": 1,
+    "fields": {
+      "code": "D",
+      "definition": "Distrito"
+    }
+  },
+  {
+    "model": "core.tipolocalidade",
+    "pk": 2,
+    "fields": {
+      "code": "M",
+      "definition": "Município"
+    }
+  },
+  {
+    "model": "core.tipolocalidade",
+    "pk": 3,
+    "fields": {
+      "code": "P",
+      "definition": "Povoado"
     }
   }
 ]
