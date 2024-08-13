@@ -1,0 +1,21 @@
+{% extends 'admin/base_site.html' %} {% load static %} {% block content %}
+<div>
+  <h1>{{form_title}}</h1>
+  <h2>{{description}}</h2>
+  <form method="POST" id="csv-form" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="bairros">Select a .txt file(bairros):</label>
+    <input type="file" name="bairros" />
+    <br />
+    <select name="uf" id="uf">
+      <option value="">Selecione o Estado:</option>
+      {% for uf in ufs %}
+        <option value="{{uf}}">{{uf}}</option>
+      {% endfor %}
+    </select>
+    <br />
+    <br />
+    <button id="submit">Upload .txt</button>
+  </form>
+</div>
+{% endblock %}
