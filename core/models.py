@@ -131,12 +131,8 @@ class ShippingTax(models.Model):
         return f"{self.name}"
 
 class Address(models.Model):
-    user = models.ForeignKey("User", on_delete=models.RESTRICT)
-    cep = models.CharField("CEP", max_length=8, validators=[cep_validator])
-    district = models.CharField(max_length=72)
-    address = models.CharField(max_length=100)
-    locality = models.CharField(max_length=72)
-    uf = models.CharField("UF", max_length=2, validators=[MinLengthValidator(2, _("Digite 2 caracteres."))])
+    user = models.ForeignKey("User", on_delete=models.RESTRICT, unique=True)
+    logradouro = models.ForeignKey("Logradouro", on_delete=models.RESTRICT, null=True)
     number = models.PositiveSmallIntegerField(blank=True, null=True, validators=[MaxValueValidator(32767)]) 
     complement = models.CharField(max_length=100, blank=True, null=True)
     
@@ -144,20 +140,14 @@ class Address(models.Model):
         verbose_name = _("Address")
         verbose_name_plural = _("Addresses")
     
-    def fcep(self):
-        if len(self.cep):
-            return f"{self.cep[0:5]}-{self.cep[5:]}"
-        else:
-            return self.cep
-    
     def get(self, name):
         return getattr(self, name)
     
     def set(self, name, value):
         setattr(self, name, value)
     
-    def __str__(self):
-        return f"{self.fcep()}"
+    # def __str__(self):
+    #     return f"{self.fcep()}"
 
 class UserManager(BaseUserManager):
     def _create_user(
@@ -273,13 +263,19 @@ class User(AbstractBaseUser, PermissionsMixin):
 class Logradouro(models.Model):
     id = models.PositiveSmallIntegerField(primary_key=True)
     uf = models.ForeignKey("UF", on_delete=models.RESTRICT)
-    localidade = models.ForeignKey("Localidade", on_delete=models.RESTRICT)
-    bairro = models.ForeignKey("Bairro", on_delete=models.RESTRICT)
+    localidade = models.ForeignKey("Localidade", null=True, on_delete=models.SET_NULL)
+    bairro = models.ForeignKey("Bairro", null=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=100)
     complement = models.CharField(null=True, max_length=100)
     cep = models.CharField(max_length=8, validators=[cep_validator])
     type = models.CharField(max_length=36)
-    
+        
+    def fcep(self):
+        if len(self.cep):
+            return f"{self.cep[0:5]}-{self.cep[5:]}"
+        else:
+            return self.cep
+        
     def __str__(self):
         return f"{self.type} {self.name}"
     
@@ -292,6 +288,7 @@ class UF(models.Model):
 class Bairro(models.Model):
     id = models.PositiveSmallIntegerField(primary_key=True)
     name = models.CharField(max_length=72)
+    localidade = models.ForeignKey("Localidade", null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return f"{self.name}"
