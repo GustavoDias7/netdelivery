@@ -1,5 +1,6 @@
 from django import forms
 from .models import User, Address
+from core.validators import cep_validator
 
 class UserForm(forms.ModelForm):
     confirm_password = forms.CharField(widget=forms.PasswordInput())
@@ -33,10 +34,8 @@ class UsernameForm(forms.ModelForm):
         model = User
         fields = ["username"]
     
-class CepForm(forms.ModelForm):
-    class Meta:
-        model = Address
-        fields = ["cep"]
+class CepForm(forms.Form):
+    cep = forms.CharField(max_length=8, validators=[cep_validator])
         
 class NumberForm(forms.ModelForm):
     class Meta:
