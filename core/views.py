@@ -12,13 +12,13 @@ from core.models import (
     PaymentType,
     Address,
     User,
-    OrderItemStatus
+    OrderItemStatus,
+    Logradouro
 )
 from django.core.paginator import Paginator
 from core.forms import UserForm, LoginForm
 from core import forms
 import re
-import requests
 from core.utils import remove_non_alphanumeric
 
 
@@ -215,7 +215,7 @@ def address(request):
     
     try:
         address = Address.objects.get(user=request.user)
-    except Address.DoesNotExist:
+    except:
         address = None
         
     context["address"] = address
@@ -231,8 +231,6 @@ def address_edit(request):
     
     fields = {
         "cep": "CEP",
-        # "district": "bairro",
-        # "address": "Endereço",
         "number": "número",
         "complement": "complemento",
     }
@@ -246,8 +244,11 @@ def address_edit(request):
     
     try:
         address = Address.objects.get(user=request.user)
-        context["field"]["value"] = address.get(field)
-    except Address.DoesNotExist:
+        if field == "cep":
+            context["field"]["value"] = address.logradouro.cep
+        else: 
+            context["field"]["value"] = address.get(field)
+    except:
         address = None
     
     if request.method == "POST":
@@ -263,10 +264,6 @@ def address_edit(request):
         match field:
             case "cep":
                 form = forms.CepForm(data)
-            case "district":
-                form = forms.DistrictForm(data)
-            case "address":
-                form = forms.AddressForm(data)
             case "number":
                 form = forms.NumberForm(data)
             case "complement":
@@ -281,22 +278,13 @@ def address_edit(request):
             
             if field == "cep":
                 try:
-                    res = requests.get(f"http://viacep.com.br/ws/{data[field]}/json/")
-                    res_json = json.loads(res.content)
-                    
-                    if res_json.get('erro') != None:
-                        raise ValueError("CEP not found") 
-                    
-                    address.set("cep", data[field])
-                    address.set("district", res_json["bairro"])
-                    address.set("address", res_json["logradouro"])
-                    address.set("locality", res_json["localidade"])
+                    log = Logradouro.objects.get(cep=data[field])
+                    address.set("logradouro", log)
                     address.set("number", None)
-                    address.set("uf", res_json["uf"])
-                    address.set("complement", res_json["complemento"])
-                except ValueError:
+                    address.set("complement", log.complement)
+                except Logradouro.DoesNotExist:
                     context["field"].update({"value": form[field].value})
-                    context["field"].update({"errors": "CEP not found"})
+                    context["field"].update({"errors": "Não operamos neste endereço."})
                     return render(request, "pages/address_edit.html", context)
             else:
                 address.set(field, data[field])
