@@ -6,9 +6,9 @@
     </div>
 
     <div>
-      <p class="text-sm sm:text-lg"><strong>CEP:</strong> {{address.fcep}}</p>
-      <p class="text-sm sm:text-lg"><strong>Bairro:</strong> {{address.district}}</p>
-      <p class="text-sm sm:text-lg"><strong>Endereço:</strong> {{address.address}}</p>
+      <p class="text-sm sm:text-lg"><strong>CEP:</strong> {{address.logradouro.fcep}}</p>
+      <p class="text-sm sm:text-lg"><strong>Bairro:</strong> {{address.logradouro.bairro.name}}</p>
+      <p class="text-sm sm:text-lg"><strong>Endereço:</strong> {{address.logradouro.type}} {{address.logradouro.name}}</p>
       <p class="text-sm sm:text-lg">
         <strong>Número:</strong> {% firstof address.number "*Sem número (s/n)*" %}
       </p>

@@ -19,7 +19,7 @@
           <div class="topic secondary">
             <div class="topic-left">
               <h3>CEP:</h3>
-              <p>{% firstof address.fcep "*Sem CEP*" %}</p>
+              <p>{% firstof address.logradouro.fcep "*Sem CEP*" %}</p>
             </div>
             <div class="topic-right">
               <a href="{% url 'address_edit' %}?field=cep">Editar</a>
@@ -30,7 +30,7 @@
           <div class="topic secondary">
             <div class="topic-left">
               <h3>Bairro:</h3>
-              <p>{% firstof address.district "*Sem bairro*" %}</p>
+              <p>{% firstof address.logradouro.bairro.name "*Sem bairro*" %}</p>
             </div>
           </div>
         </div>
@@ -38,7 +38,10 @@
           <div class="topic secondary">
             <div class="topic-left">
               <h3>Endereço:</h3>
-              <p>{% firstof address.address "*Sem endereço*" %}</p>
+              <p>
+                {% firstof address.logradouro.type "" %}
+                {% firstof address.logradouro.name "*Sem endereço*" %}
+              </p>
             </div>
           </div>
         </div>
