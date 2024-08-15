@@ -1,8 +1,9 @@
 from django.contrib import admin
-from . import models, forms
+from . import models
 from core.utils import (first_occurrence, last_occurrence)
 from import_export.admin import ImportExportModelAdmin
 from django.shortcuts import render
+import chardet
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ["name", "product_category", "id", "archived"]
@@ -40,7 +41,6 @@ class OrderItemAdmin(admin.ModelAdmin):
     readonly_fields = []
     
 admin.site.register(models.User)
-admin.site.register(models.Address)
 admin.site.register(models.Product, ProductAdmin)
 admin.site.register(models.ProductCategory)
 admin.site.register(models.ShippingTax, ShippingTaxAdmin)
@@ -53,6 +53,14 @@ admin.site.register(models.OrderItemStatus)
 class UFAdmin(admin.ModelAdmin):
     readonly_fields = ("acronym",)
     
+@admin.register(models.Address)
+class AddressAdmin(admin.ModelAdmin):
+    readonly_fields = (
+        "user",
+        "logradouro",
+        "number",
+        "complement"
+    )
     
 @admin.register(models.Logradouro)
 class LogradouroAdmin(ImportExportModelAdmin,admin.ModelAdmin):
@@ -77,15 +85,19 @@ class LogradouroAdmin(ImportExportModelAdmin,admin.ModelAdmin):
             rows = []
             
             if logradouros_file:
-                lines = logradouros_file.read().decode('latin1').splitlines()
-                uf_acronym = lines[0].split("@")[1]
+                
+                file = logradouros_file.read()
+                file_detected = chardet.detect(file)
+                decoded = file.decode(file_detected['encoding']).splitlines()
+                
+                uf_acronym = decoded[0].split("@")[1]
                     
                 try:
                     uf = models.UF.objects.get(acronym=uf_acronym)
                 except models.UF.DoesNotExist:
                     uf = None
                 
-                for line in lines:
+                for line in decoded:
                     splitted = line.split("@")
                     try:
                         localidade = models.Localidade.objects.get(id=splitted[2])
@@ -116,12 +128,13 @@ class LogradouroAdmin(ImportExportModelAdmin,admin.ModelAdmin):
 
 @admin.register(models.Bairro)
 class BairroAdmin(ImportExportModelAdmin,admin.ModelAdmin):
-    # list_display = ()
-    readonly_fields = (
+    list_display = (
         "id",
-        "name"
+        "name",
+        "localidade"
     )
-    search_fields = ["name"]
+    readonly_fields = list_display
+    search_fields = ["id", "name"]
     
     def import_action(self, request):
         context = {}
@@ -134,18 +147,27 @@ class BairroAdmin(ImportExportModelAdmin,admin.ModelAdmin):
             rows = []
             
             if bairros_file:
-                lines = bairros_file.read().decode('latin1').splitlines()
+                file = bairros_file.read()
+                file_detected = chardet.detect(file)
+                decoded = file.decode(file_detected['encoding']).splitlines()
                 
-                first = first_occurrence(lines, uf)
-                last = last_occurrence(lines, uf)
-                lines_by_uf = lines[first:last + 1]
+                first = first_occurrence(decoded, uf)
+                last = last_occurrence(decoded, uf)
+                lines = decoded[first:last + 1]
                 
-                for line in lines_by_uf:
+                for line in lines:
                     splitted = line.split("@")
+                    
+                    try:
+                        loc = models.Localidade.objects.get(id=splitted[2])
+                    except:
+                        loc = None
+                        
                     rows.append(
                         models.Bairro(
                             id=splitted[0],
                             name=splitted[3],
+                            localidade=loc
                         )
                     )
                     
@@ -168,6 +190,8 @@ class LocalidadeAdmin(ImportExportModelAdmin,admin.ModelAdmin):
         "cep",
     )
     
+    search_fields = ["id", "name", "cep"]
+    
     def import_action(self, request):
         context = {}
         ufs = models.UF.objects.all()
@@ -179,15 +203,16 @@ class LocalidadeAdmin(ImportExportModelAdmin,admin.ModelAdmin):
             rows = []
             
             if localidades_file and uf:
-                lines = localidades_file.read().decode('latin1').splitlines()
+                file = localidades_file.read()
+                file_detected = chardet.detect(file)
+                decoded = file.decode(file_detected['encoding']).splitlines()
                 
-                first = first_occurrence(lines, uf)
-                last = last_occurrence(lines, uf)
-                lines_by_uf = lines[first:last + 1]
+                first = first_occurrence(decoded, uf)
+                last = last_occurrence(decoded, uf)
+                lines = decoded[first:last + 1]
                 
-                for line in lines_by_uf:
+                for line in lines:
                     splitted = line.split("@")
-                
                     try:
                         if splitted[4]:
                             sit_localidade = models.SituacaoLocalidade.objects.get(id=splitted[4])
