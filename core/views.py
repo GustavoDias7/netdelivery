@@ -272,22 +272,22 @@ def address_edit(request):
                 print(None)
         
         context["form"] = form
+        
         if form.is_valid():
-            if address == None:
-                address = Address.objects.create(user=request.user)
-            
             if field == "cep":
                 try:
                     log = Logradouro.objects.get(cep=data[field])
-                    address.set("logradouro", log)
-                    address.set("number", None)
-                    address.set("complement", log.complement)
                 except Logradouro.DoesNotExist:
                     context["field"].update({"value": form[field].value})
                     context["field"].update({"errors": "Não operamos neste endereço."})
                     return render(request, "pages/address_edit.html", context)
+                
+                if address == None:
+                    address = Address.objects.create(user=request.user)
+                
+                address.setLog(log)
             else:
-                address.set(field, data[field])
+                address.set(field, data[field] if data[field] else None)
                 
             address.save()
             return redirect('address')

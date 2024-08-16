@@ -145,9 +145,14 @@ class Address(models.Model):
     
     def set(self, name, value):
         setattr(self, name, value)
+        
+    def setLog(self, log):
+        self.logradouro = log
+        self.number = None
+        self.complement = log.complement if log.complement else None
     
-    # def __str__(self):
-    #     return f"{self.fcep()}"
+    def __str__(self):
+        return f"{self.logradouro.type} {self.logradouro.name}"
 
 class UserManager(BaseUserManager):
     def _create_user(
