@@ -8,7 +8,7 @@ from core.models import (
     Product,
     Order,
     OrderItem,
-    ShippingTax,
+    ShippingFee,
     PaymentType,
     Address,
     User,
@@ -320,10 +320,10 @@ def order(request):
         
         if is_delivery:
             # find tax by Address model
-            shipping_tax = ShippingTax.objects.get(pk=1)
-            order.shipping_tax = shipping_tax
-            order.shipping_tax_name = shipping_tax.name
-            order.shipping_tax_value = shipping_tax.value
+            shipping_fee = ShippingFee.objects.get(pk=1)
+            order.shipping_fee = shipping_fee
+            order.shipping_fee_name = shipping_fee.name
+            order.shipping_fee_value = shipping_fee.value
             
             if not address:
                 address = Address()

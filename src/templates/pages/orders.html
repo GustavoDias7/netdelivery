@@ -39,7 +39,7 @@
                                         <p>Entregue: {{order.order.received_date|date:"d/m/Y G:i:s"}}</p>
                                         {% endif %}
                                         <p>Total: <strong>{{order.ftotal_price}}</strong></p>
-                                        <p>Taxa de entrega <strong>{{order.order.fshipping_tax_value}}</strong></p>
+                                        <p>Taxa de entrega <strong>{{order.order.fshipping_fee_value}}</strong></p>
                                         {% if order.percentage_discount > 0 %}
                                         <p>{{order.fpercentage_discount}} de desconto</p>
                                         {% endif %}

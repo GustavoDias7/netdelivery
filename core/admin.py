@@ -21,7 +21,7 @@ class ProductAdmin(admin.ModelAdmin):
     ]
     
 
-class ShippingTaxAdmin(admin.ModelAdmin):
+class ShippingFeeAdmin(admin.ModelAdmin):
     list_display = ["name", "value", "id"]
     
 class PaymentTypeAdmin(admin.ModelAdmin):
@@ -43,7 +43,7 @@ class OrderItemAdmin(admin.ModelAdmin):
 admin.site.register(models.User)
 admin.site.register(models.Product, ProductAdmin)
 admin.site.register(models.ProductCategory)
-admin.site.register(models.ShippingTax, ShippingTaxAdmin)
+admin.site.register(models.ShippingFee, ShippingFeeAdmin)
 admin.site.register(models.PaymentType, PaymentTypeAdmin)
 admin.site.register(models.Order, OrderAdmin)
 admin.site.register(models.OrderItem, OrderItemAdmin)

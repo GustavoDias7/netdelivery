@@ -52,14 +52,14 @@ class ProductCategory(models.Model):
 class Order(models.Model):
     user = models.ForeignKey("User", on_delete=models.RESTRICT)
     payment_type = models.ForeignKey("PaymentType", on_delete=models.RESTRICT)
-    shipping_tax = models.ForeignKey("ShippingTax", on_delete=models.RESTRICT, null=True)
-    shipping_tax_name = models.CharField(max_length=40, null=True)
-    shipping_tax_value = models.PositiveSmallIntegerField(null=True, validators=[MaxValueValidator(32767)])
+    shipping_fee = models.ForeignKey("ShippingFee", on_delete=models.RESTRICT, null=True)
+    shipping_fee_name = models.CharField(max_length=40, null=True)
+    shipping_fee_value = models.PositiveSmallIntegerField(null=True, validators=[MaxValueValidator(32767)])
     created = models.DateTimeField(db_default=Now())
     received_date = models.DateTimeField(null=True)
     
-    def fshipping_tax_value(self):
-        float_value = self.shipping_tax_value / 100
+    def fshipping_fee_value(self):
+        float_value = self.shipping_fee_value / 100
         formatted_value = locale.currency(float_value, grouping=True)
         return formatted_value
     
@@ -92,8 +92,8 @@ class OrderItem(models.Model):
     
     def ftotal_price(self):
         disc = float(self.product_discount * self.quantity) * self.product_price
-        tax = self.order.shipping_tax_value if self.order.shipping_tax_value != None else 0
-        total = ((self.product_price * self.quantity) - disc) + tax
+        fee = self.order.shipping_fee_value if self.order.shipping_fee_value != None else 0
+        total = ((self.product_price * self.quantity) - disc) + fee
         formatted_total = locale.currency(total / 100, grouping=True)
         return formatted_total
     
@@ -123,7 +123,7 @@ class PaymentType(models.Model):
     def __str__(self):
         return f"{self.name}"
 
-class ShippingTax(models.Model):
+class ShippingFee(models.Model):
     name = models.CharField(max_length=40)
     value = models.PositiveSmallIntegerField(validators=[MaxValueValidator(32767)])
     

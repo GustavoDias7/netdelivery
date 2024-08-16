@@ -1,6 +1,6 @@
 [
   {
-    "model": "core.shippingtax",
+    "model": "core.shippingfee",
     "pk": 1,
     "fields": {
       "name": "PADRAO",
