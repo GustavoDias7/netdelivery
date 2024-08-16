@@ -63,6 +63,12 @@ class Order(models.Model):
         formatted_value = locale.currency(float_value, grouping=True)
         return formatted_value
     
+    def setShippingFee(self, sf):
+        self.shipping_fee = sf
+        self.shipping_fee_name = sf.name
+        self.shipping_fee_value = sf.value
+        
+        
     def __str__(self):
         return f"Order: {self.id}"
     
