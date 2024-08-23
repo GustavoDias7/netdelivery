@@ -60,6 +60,7 @@ class ShippingFeeAdmin(admin.ModelAdmin):
 
 @admin.register(models.UF)
 class UFAdmin(admin.ModelAdmin):
+    search_fields = ("acronym",)
     readonly_fields = ("acronym",)
     
 @admin.register(models.Address)
@@ -250,3 +251,18 @@ class LocalidadeAdmin(ImportExportModelAdmin,admin.ModelAdmin):
                 models.Localidade.objects.bulk_create(rows)
             
         return render(request, "admin/import_loc.html", context)
+
+@admin.register(models.WhiteListUF)
+class WhiteListUFAdmin(admin.ModelAdmin):
+    list_display = ("uf",)
+    autocomplete_fields = ("uf",)
+    
+@admin.register(models.WhiteListLocalidade)
+class WhiteListLocalidadeAdmin(admin.ModelAdmin):
+    list_display = ("localidade",)
+    autocomplete_fields = ("localidade",)
+    
+@admin.register(models.WhiteListBairro)
+class WhiteListBairroAdmin(admin.ModelAdmin):
+    list_display = ("bairro",)
+    autocomplete_fields = ("bairro",)
