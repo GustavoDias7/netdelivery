@@ -130,11 +130,21 @@ class PaymentType(models.Model):
         return f"{self.name}"
 
 class ShippingFee(models.Model):
-    name = models.CharField(max_length=40)
     value = models.PositiveSmallIntegerField(validators=[MaxValueValidator(32767)])
+    bairro = models.ForeignKey("Bairro", on_delete=models.SET_NULL, null=True, blank=True)
+    is_default = models.BooleanField(_('Default'), default=False)
+    
+    class Meta:
+        verbose_name = _("Shipping fee")
+        verbose_name_plural = _("Shipping fees")
     
     def __str__(self):
-        return f"{self.name}"
+        if self.bairro:
+            return f"{self.id}: {self.bairro.name}"
+        elif self.is_default:
+            return f"{self.id}: {_('default')}"
+        else:
+            return f"{self.id}"
 
 class Address(models.Model):
     user = models.ForeignKey("User", on_delete=models.RESTRICT, unique=True)
