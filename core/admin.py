@@ -4,6 +4,7 @@ from core.utils import (first_occurrence, last_occurrence, custom_titled_filter)
 from import_export.admin import ImportExportModelAdmin
 from django.shortcuts import render
 import chardet
+from django.utils.translation import gettext_lazy as _
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ["name", "product_category", "id", "archived"]
@@ -50,7 +51,12 @@ admin.site.register(models.OrderItemStatus)
 
 @admin.register(models.ShippingFee)
 class ShippingFeeAdmin(admin.ModelAdmin):
+    list_display = ("bairro_", "value", "is_default")
     autocomplete_fields = ("bairro",)
+    
+    @admin.display(empty_value=_("Default"))
+    def bairro_(self, obj):
+        return obj.bairro
 
 @admin.register(models.UF)
 class UFAdmin(admin.ModelAdmin):
