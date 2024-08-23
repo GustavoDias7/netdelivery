@@ -131,7 +131,7 @@ class PaymentType(models.Model):
 
 class ShippingFee(models.Model):
     value = models.PositiveSmallIntegerField(validators=[MaxValueValidator(32767)])
-    bairro = models.ForeignKey("Bairro", on_delete=models.SET_NULL, null=True, blank=True)
+    bairro = models.OneToOneField("Bairro", on_delete=models.SET_NULL, null=True, blank=True)
     is_default = models.BooleanField(_('Default'), default=False)
     
     class Meta:
@@ -337,3 +337,20 @@ class TipoLocalidade(models.Model):
     def __str__(self):
         return f"{self.code} - {self.definition}"
     
+class WhiteListUF(models.Model):
+    uf = models.OneToOneField("UF", on_delete=models.SET_NULL, null=True)
+    
+    def __str__(self):
+        return f"{self.uf}"
+    
+class WhiteListLocalidade(models.Model):
+    localidade = models.OneToOneField("Localidade", on_delete=models.SET_NULL, null=True)
+    
+    def __str__(self):
+        return f"{self.localidade}"
+    
+class WhiteListBairro(models.Model):
+    bairro = models.OneToOneField("Bairro", on_delete=models.SET_NULL, null=True)
+    
+    def __str__(self):
+        return f"{self.bairro}"
