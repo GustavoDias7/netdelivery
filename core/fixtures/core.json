@@ -3,8 +3,8 @@
     "model": "core.shippingfee",
     "pk": 1,
     "fields": {
-      "name": "PADRAO",
-      "value": 600
+      "value": 0,
+      "is_default": true
     }
   },
   {
