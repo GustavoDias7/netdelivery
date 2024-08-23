@@ -1,3 +1,5 @@
+from django.contrib import admin
+
 def remove_non_alphanumeric(value: str):
     return "".join([e for e in value if e.isalnum()])
 
@@ -53,3 +55,11 @@ def last_occurrence(lines, value):
  
     # If we reach here, then the element was not present
     return -1
+
+def custom_titled_filter(title):
+    class Wrapper(admin.FieldListFilter):
+        def __new__(cls, *args, **kwargs):
+            instance = admin.FieldListFilter.create(*args, **kwargs)
+            instance.title = title
+            return instance
+    return Wrapper
