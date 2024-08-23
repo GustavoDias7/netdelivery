@@ -1,6 +1,6 @@
 from django.contrib import admin
 from . import models
-from core.utils import (first_occurrence, last_occurrence)
+from core.utils import (first_occurrence, last_occurrence, custom_titled_filter)
 from import_export.admin import ImportExportModelAdmin
 from django.shortcuts import render
 import chardet
@@ -43,11 +43,14 @@ class OrderItemAdmin(admin.ModelAdmin):
 admin.site.register(models.User)
 admin.site.register(models.Product, ProductAdmin)
 admin.site.register(models.ProductCategory)
-admin.site.register(models.ShippingFee, ShippingFeeAdmin)
 admin.site.register(models.PaymentType, PaymentTypeAdmin)
 admin.site.register(models.Order, OrderAdmin)
 admin.site.register(models.OrderItem, OrderItemAdmin)
 admin.site.register(models.OrderItemStatus)
+
+@admin.register(models.ShippingFee)
+class ShippingFeeAdmin(admin.ModelAdmin):
+    autocomplete_fields = ("bairro",)
 
 @admin.register(models.UF)
 class UFAdmin(admin.ModelAdmin):
@@ -75,7 +78,7 @@ class LogradouroAdmin(ImportExportModelAdmin,admin.ModelAdmin):
         "type"
     )
     readonly_fields = list_display
-    search_fields = ("cep", "name")
+    search_fields = ("cep", "name", "bairro__name")
     
     def import_action(self, request):
         context = {}
@@ -135,6 +138,7 @@ class BairroAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     )
     readonly_fields = list_display
     search_fields = ["id", "name"]
+    list_filter = [('localidade__name', custom_titled_filter('localidade'))]
     
     def import_action(self, request):
         context = {}
