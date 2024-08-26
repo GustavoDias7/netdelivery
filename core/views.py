@@ -13,7 +13,10 @@ from core.models import (
     Address,
     User,
     OrderItemStatus,
-    Logradouro
+    Logradouro,
+    WhiteListUF,
+    WhiteListLocalidade,
+    WhiteListBairro,
 )
 from django.core.paginator import Paginator
 from core.forms import UserForm, LoginForm
@@ -277,7 +280,10 @@ def address_edit(request):
             if field == "cep":
                 try:
                     log = Logradouro.objects.get(cep=data[field])
-                except Logradouro.DoesNotExist:
+                    WhiteListUF.objects.get(uf=log.uf)
+                    WhiteListLocalidade.objects.get(localidade=log.localidade)
+                    WhiteListBairro.objects.get(bairro=log.bairro)
+                except:
                     context["field"].update({"value": form[field].value})
                     context["field"].update({"errors": "Não operamos neste endereço."})
                     return render(request, "pages/address_edit.html", context)
