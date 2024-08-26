@@ -316,6 +316,7 @@ class Bairro(models.Model):
     
 class Localidade(models.Model):
     id = models.PositiveSmallIntegerField(primary_key=True)
+    uf = models.ForeignKey("UF", on_delete=models.SET_NULL, null=True)
     situacaolocalidade = models.ForeignKey("SituacaoLocalidade", on_delete=models.RESTRICT, null=True)
     tipolocalidade = models.ForeignKey("TipoLocalidade", on_delete=models.RESTRICT)
     name = models.CharField(max_length=72)

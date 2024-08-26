@@ -48,6 +48,18 @@
         <div class="g-item-12">
           <div class="topic secondary">
             <div class="topic-left">
+              <h3>Cidade:</h3>
+              <p>
+                {% firstof address.logradouro.localidade.name "*Sem cidade*" %}
+                {% if address.logradouro %} - {% endif %}
+                {% firstof address.logradouro.uf.acronym "" %}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="g-item-12">
+          <div class="topic secondary">
+            <div class="topic-left">
               <h3>Número:</h3>
               <p>{% firstof address.number "*Sem número (s/n)*" %}</p>
             </div>

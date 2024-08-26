@@ -21,10 +21,6 @@ class ProductAdmin(admin.ModelAdmin):
         "product_category"
     ]
     
-
-class ShippingFeeAdmin(admin.ModelAdmin):
-    list_display = ["name", "value", "id"]
-    
 class PaymentTypeAdmin(admin.ModelAdmin):
     list_display = ["name", "code"]
     
@@ -51,12 +47,26 @@ admin.site.register(models.OrderItemStatus)
 
 @admin.register(models.ShippingFee)
 class ShippingFeeAdmin(admin.ModelAdmin):
-    list_display = ("bairro_", "value", "is_default")
+    list_display = ("bairro_", "localidade", "value", "is_default")
     autocomplete_fields = ("bairro",)
     
     @admin.display(empty_value=_("Default"))
     def bairro_(self, obj):
         return obj.bairro
+    
+    @admin.display(description='Localidade')
+    def localidade(self, obj):
+        if obj.bairro:
+            return obj.bairro.localidade.name
+        else:
+            return "-"
+        
+    @admin.display(description='uf')
+    def uf(self, obj):
+        if obj.bairro:
+            return obj.bairro.localidade.uf.acronym
+        else:
+            return "-"
 
 @admin.register(models.UF)
 class UFAdmin(admin.ModelAdmin):
@@ -141,11 +151,23 @@ class BairroAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     list_display = (
         "id",
         "name",
-        "localidade"
+        "localidade",
+        "uf"
     )
-    readonly_fields = list_display
+    readonly_fields = (
+        "id",
+        "name",
+        "localidade",
+    )
     search_fields = ["id", "name"]
     list_filter = [('localidade__name', custom_titled_filter('localidade'))]
+    
+    
+    @admin.display(description='uf')
+    def uf(self, obj):
+        if obj.localidade: return obj.localidade.uf.acronym
+        else: return "-"
+            
     
     def import_action(self, request):
         context = {}
@@ -190,6 +212,7 @@ class BairroAdmin(ImportExportModelAdmin,admin.ModelAdmin):
 class LocalidadeAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     list_display = (
         "id",
+        "uf",
         "name",
         "cep",
     )
@@ -199,6 +222,7 @@ class LocalidadeAdmin(ImportExportModelAdmin,admin.ModelAdmin):
         "tipolocalidade",
         "name",
         "cep",
+        "uf",
     )
     
     search_fields = ["id", "name", "cep"]
@@ -237,10 +261,16 @@ class LocalidadeAdmin(ImportExportModelAdmin,admin.ModelAdmin):
                     except models.TipoLocalidade.DoesNotExist:
                         tipo_localidade = None
                     
-                    if sit_localidade and tipo_localidade:
+                    try:
+                        uf = models.UF.objects.get(acronym=splitted[1])
+                    except models.UF.DoesNotExist:
+                        uf = None
+                    
+                    if sit_localidade and tipo_localidade and uf:
                         rows.append(
                             models.Localidade(
                                 id=splitted[0],
+                                uf=uf,
                                 situacaolocalidade=sit_localidade,
                                 tipolocalidade=tipo_localidade,
                                 name=splitted[2],
