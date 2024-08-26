@@ -47,24 +47,25 @@ admin.site.register(models.OrderItemStatus)
 
 @admin.register(models.ShippingFee)
 class ShippingFeeAdmin(admin.ModelAdmin):
-    list_display = ("bairro_", "localidade", "value", "is_default")
-    autocomplete_fields = ("bairro",)
+    list_display = ("bairro_", "uf", "localidade", "value", "is_default")
+    autocomplete_fields = ("whitelistbairro",)
     
     @admin.display(empty_value=_("Default"))
     def bairro_(self, obj):
-        return obj.bairro
+        if obj.whitelistbairro:
+            return obj.whitelistbairro.bairro.name
     
     @admin.display(description='Localidade')
     def localidade(self, obj):
-        if obj.bairro:
-            return obj.bairro.localidade.name
+        if obj.whitelistbairro:
+            return obj.whitelistbairro.bairro.localidade.name
         else:
             return "-"
         
     @admin.display(description='uf')
     def uf(self, obj):
-        if obj.bairro:
-            return obj.bairro.localidade.uf.acronym
+        if obj.whitelistbairro:
+            return obj.whitelistbairro.bairro.localidade.uf.acronym
         else:
             return "-"
 
@@ -296,3 +297,4 @@ class WhiteListLocalidadeAdmin(admin.ModelAdmin):
 class WhiteListBairroAdmin(admin.ModelAdmin):
     list_display = ("bairro",)
     autocomplete_fields = ("bairro",)
+    search_fields = ("bairro",)
