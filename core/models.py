@@ -131,7 +131,7 @@ class PaymentType(models.Model):
 
 class ShippingFee(models.Model):
     value = models.PositiveSmallIntegerField(validators=[MaxValueValidator(32767)])
-    bairro = models.OneToOneField("Bairro", on_delete=models.SET_NULL, null=True, blank=True)
+    whitelistbairro = models.OneToOneField("WhiteListBairro", on_delete=models.SET_NULL, null=True, blank=True)
     is_default = models.BooleanField(_('Default'), default=False)
     
     class Meta:
@@ -139,8 +139,8 @@ class ShippingFee(models.Model):
         verbose_name_plural = _("Shipping fees")
     
     def __str__(self):
-        if self.bairro:
-            return f"{self.id}: {self.bairro.name}"
+        if self.whitelistbairro:
+            return f"{self.id}: {self.whitelistbairro.bairro.name}"
         elif self.is_default:
             return f"{self.id}: {_('default')}"
         else:
