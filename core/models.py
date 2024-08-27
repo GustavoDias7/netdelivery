@@ -287,7 +287,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     #     send_mail(subject, message, from_email, [self.email])
     
 class Logradouro(models.Model):
-    id = models.PositiveSmallIntegerField(primary_key=True)
+    id = models.PositiveIntegerField(primary_key=True)
     uf = models.ForeignKey("UF", on_delete=models.RESTRICT)
     localidade = models.ForeignKey("Localidade", null=True, on_delete=models.SET_NULL)
     bairro = models.ForeignKey("Bairro", null=True, on_delete=models.SET_NULL)
@@ -312,7 +312,7 @@ class UF(models.Model):
         return f"{self.acronym}"
 
 class Bairro(models.Model):
-    id = models.PositiveSmallIntegerField(primary_key=True)
+    id = models.PositiveIntegerField(primary_key=True)
     name = models.CharField(max_length=72)
     localidade = models.ForeignKey("Localidade", null=True, on_delete=models.SET_NULL)
 
@@ -320,7 +320,7 @@ class Bairro(models.Model):
         return f"{self.name} ({self.localidade.name} - {self.localidade.uf.acronym})"
     
 class Localidade(models.Model):
-    id = models.PositiveSmallIntegerField(primary_key=True)
+    id = models.PositiveIntegerField(primary_key=True)
     uf = models.ForeignKey("UF", on_delete=models.SET_NULL, null=True)
     situacaolocalidade = models.ForeignKey("SituacaoLocalidade", on_delete=models.RESTRICT, null=True)
     tipolocalidade = models.ForeignKey("TipoLocalidade", on_delete=models.RESTRICT)
