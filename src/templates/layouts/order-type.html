@@ -46,7 +46,7 @@
           <div class="order-description">
             <p v-if="is_delivery" class="text-base sm:text-xl">
               Você receberá o seu produto no conforto da sua casa pela taxa de
-              R$ 6,00.
+              {{shippingfee.fvalue}}.
             </p>
             <p v-if="!is_delivery" class="text-base sm:text-xl">
               Você pode retirar seu pedido no endereço do nosso estabelecimento.

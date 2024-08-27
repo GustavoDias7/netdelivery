@@ -15,11 +15,7 @@
     {% include "../components/hidden-fields.html" %}
     {% include "../layouts/cart.html" %}
     {% include "../layouts/order-type.html" %}
-    {% if address %}
-      {% include "../layouts/info-address.html" %}
-    {% else %}
-      {% include "../layouts/form-address.html" %}
-    {% endif %}
+    {% include "../layouts/info-address.html" %}
     {% include "../layouts/payment.html" %}
     {% include "../layouts/order-submit.html" %}
   </form>

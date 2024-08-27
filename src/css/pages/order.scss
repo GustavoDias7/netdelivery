@@ -43,6 +43,13 @@ section {
     }
   }
 
+  .no-address {
+    p {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+  }
+
   &:last-of-type {
     padding-bottom: 64px;
   }

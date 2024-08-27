@@ -23,9 +23,9 @@ from core.forms import UserForm, LoginForm
 from core import forms
 import re
 from core.utils import remove_non_alphanumeric
-
-
+from django.core.exceptions import ObjectDoesNotExist
 import json
+
 
 def homepage(request):
     product_categories = ProductCategory.objects.values("id", "name")
@@ -283,7 +283,7 @@ def address_edit(request):
                     WhiteListUF.objects.get(uf=log.uf)
                     WhiteListLocalidade.objects.get(localidade=log.localidade)
                     WhiteListBairro.objects.get(bairro=log.bairro)
-                except:
+                except ObjectDoesNotExist:
                     context["field"].update({"value": form[field].value})
                     context["field"].update({"errors": "Não operamos neste endereço."})
                     return render(request, "pages/address_edit.html", context)
@@ -308,11 +308,21 @@ def order(request):
     context = {}
     
     try:
-        print(request.user)
         address = Address.objects.get(user=request.user)
         context["address"] = address
+        
+        wl_bairro = WhiteListBairro.objects.get(bairro=address.logradouro.bairro)
+        shippingfee = ShippingFee.objects.get(whitelistbairro=wl_bairro)
+        context["shippingfee"] = shippingfee
     except Address.DoesNotExist:
         address = None
+        shippingfee = None
+    except ShippingFee.DoesNotExist:
+        try:
+            shippingfee = ShippingFee.objects.get(is_default=True)
+            context["shippingfee"] = shippingfee
+        except ShippingFee.DoesNotExist:
+            shippingfee = None
         
     if request.method == "POST":
         cart = json.loads(request.POST.get("cart")) # id, price, count(quantity), discount
@@ -324,24 +334,8 @@ def order(request):
         payment_type = PaymentType.objects.get(code=payment_code)
         order.payment_type = payment_type
         
-        if is_delivery:
-            # find tax by Address model
-            shipping_fee = ShippingFee.objects.get(pk=1)
-            order.setShippingFee(shipping_fee)
-            
-            if not address:
-                address = Address()
-                address.user = request.user
-                address.cep = re.sub(r"\D", "", request.POST.get("cep"))
-                address.district = request.POST.get("district")
-                address.address = request.POST.get("address")
-                address.complement = request.POST.get("complement")
-                
-                number = request.POST.get("number")
-                if number: address.number = int(number)
-                
-                address.save()
-        
+        if is_delivery and shippingfee:
+            order.setShippingFee(shippingfee)
         
         # validate all cart item with Product model
         

@@ -137,6 +137,11 @@ class ShippingFee(models.Model):
     class Meta:
         verbose_name = _("Shipping fee")
         verbose_name_plural = _("Shipping fees")
+        
+    def fvalue(self):
+        float_value = self.value / 100
+        formatted_value = locale.currency(float_value, grouping=True)
+        return formatted_value
     
     def __str__(self):
         if self.whitelistbairro:
@@ -312,7 +317,7 @@ class Bairro(models.Model):
     localidade = models.ForeignKey("Localidade", null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.name} ({self.localidade.name} - {self.localidade.uf.acronym})"
     
 class Localidade(models.Model):
     id = models.PositiveSmallIntegerField(primary_key=True)

@@ -17,6 +17,11 @@
             
             <div class="g-root g-gap-4 sm:g-gap-5">
                 <div class="g-row">
+                    {% if not orders %}
+                    <div class="g-item-12">
+                        <p>Não existe pedidos!</p>
+                    </div>
+                    {% endif %}
                     {% for order in orders %}
                     <div class="g-item-12">
                         <div class="order-item">
