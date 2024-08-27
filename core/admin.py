@@ -88,6 +88,16 @@ class LogradouroAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     list_display = (
         "id",
         "uf",
+        "bairro_",
+        "localidade",
+        "name",
+        "complement",
+        "cep",
+        "type"
+    )
+    readonly_fields = (
+        "id",
+        "uf",
         "bairro",
         "localidade",
         "name",
@@ -95,8 +105,12 @@ class LogradouroAdmin(ImportExportModelAdmin,admin.ModelAdmin):
         "cep",
         "type"
     )
-    readonly_fields = list_display
-    search_fields = ("cep", "name", "bairro__name")
+    search_fields = ("cep", "name", "localidade__name", "bairro__name")
+    
+    @admin.display(description='bairro')
+    def bairro_(self, obj):
+        return obj.bairro.name
+        
     
     def import_action(self, request):
         context = {}
@@ -160,9 +174,18 @@ class BairroAdmin(ImportExportModelAdmin,admin.ModelAdmin):
         "name",
         "localidade",
     )
-    search_fields = ["id", "name"]
+    search_fields = ("name", "localidade__name", "localidade__uf__acronym")
     list_filter = [('localidade__name', custom_titled_filter('localidade'))]
     
+    def get_search_results(self, request, queryset, search_term):
+        queryset, use_distinct = super().get_search_results(
+            request,
+            queryset,
+            search_term,
+        )
+        queryset = queryset.all()
+
+        return queryset, use_distinct
     
     @admin.display(description='uf')
     def uf(self, obj):
@@ -295,6 +318,18 @@ class WhiteListLocalidadeAdmin(admin.ModelAdmin):
     
 @admin.register(models.WhiteListBairro)
 class WhiteListBairroAdmin(admin.ModelAdmin):
-    list_display = ("bairro",)
-    autocomplete_fields = ("bairro",)
+    list_display = ("bairro_", "localidade", "uf")
     search_fields = ("bairro",)
+    autocomplete_fields = ("bairro",)
+    
+    @admin.display(description='bairro')
+    def bairro_(self, obj):
+        return obj.bairro.name
+    
+    @admin.display(description='localidade')
+    def localidade(self, obj):
+        return obj.bairro.localidade.name
+        
+    @admin.display(description='uf')
+    def uf(self, obj):
+        return obj.bairro.localidade.uf.acronym
