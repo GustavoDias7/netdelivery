@@ -24,26 +24,37 @@ class ProductAdmin(admin.ModelAdmin):
 class PaymentTypeAdmin(admin.ModelAdmin):
     list_display = ["name", "code"]
     
-class OrderAdmin(admin.ModelAdmin):
-    # list_display = []
-    readonly_fields = []
-    
-    # def get_readonly_fields(self, request, obj=None):
-    #     return list(self.readonly_fields) + \
-    #         [field.name for field in obj._meta.fields] + \
-    #         [field.name for field in obj._meta.many_to_many]
-    
-class OrderItemAdmin(admin.ModelAdmin):
-    # list_display = []
-    readonly_fields = []
-    
 admin.site.register(models.User)
 admin.site.register(models.Product, ProductAdmin)
 admin.site.register(models.ProductCategory)
 admin.site.register(models.PaymentType, PaymentTypeAdmin)
-admin.site.register(models.Order, OrderAdmin)
-admin.site.register(models.OrderItem, OrderItemAdmin)
 admin.site.register(models.OrderItemStatus)
+
+@admin.register(models.Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "user",
+        "payment_type",
+        "shipping_fee",
+        "shipping_fee_value",
+        "created",
+        "received_date",
+    )
+    readonly_fields = list_display
+    
+@admin.register(models.OrderItem)
+class OrderItemAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "order",
+        "order_item_status",
+        "product",
+        "product_price",
+        "product_discount",
+        "quantity",
+    )
+    readonly_fields = list_display
 
 @admin.register(models.ShippingFee)
 class ShippingFeeAdmin(admin.ModelAdmin):

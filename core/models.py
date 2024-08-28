@@ -53,7 +53,6 @@ class Order(models.Model):
     user = models.ForeignKey("User", on_delete=models.RESTRICT)
     payment_type = models.ForeignKey("PaymentType", on_delete=models.RESTRICT)
     shipping_fee = models.ForeignKey("ShippingFee", on_delete=models.RESTRICT, null=True)
-    shipping_fee_name = models.CharField(max_length=40, null=True)
     shipping_fee_value = models.PositiveSmallIntegerField(null=True, validators=[MaxValueValidator(32767)])
     created = models.DateTimeField(db_default=Now())
     received_date = models.DateTimeField(null=True)
@@ -65,12 +64,10 @@ class Order(models.Model):
     
     def setShippingFee(self, sf):
         self.shipping_fee = sf
-        self.shipping_fee_name = sf.name
         self.shipping_fee_value = sf.value
         
-        
     def __str__(self):
-        return f"Order: {self.id}"
+        return f"{self.id}"
     
 class OrderItem(models.Model):
     order = models.ForeignKey("Order", on_delete=models.RESTRICT)
@@ -109,7 +106,7 @@ class OrderItem(models.Model):
         return units if self.quantity > 1 else unit
     
     def __str__(self):
-        return f"Order item: {self.id}"
+        return f"{self.id}"
     
 class OrderItemStatus(models.Model):
     name = models.CharField(max_length=30)
