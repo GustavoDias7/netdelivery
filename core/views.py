@@ -331,8 +331,13 @@ def order(request):
         
         order = Order()
         order.user = request.user
-        payment_type = PaymentType.objects.get(code=payment_code)
-        order.payment_type = payment_type
+        
+        try:
+            payment_type = PaymentType.objects.get(code=payment_code)
+            order.setPaymentType(payment_type)
+        except PaymentType.DoesNotExist:
+            # response with 500 error
+            pass
         
         if is_delivery and shippingfee:
             order.setShippingFee(shippingfee)

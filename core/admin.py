@@ -41,7 +41,17 @@ class OrderAdmin(admin.ModelAdmin):
         "created",
         "received_date",
     )
-    readonly_fields = list_display
+    readonly_fields = (
+        "id",
+        "user",
+        "payment_type",
+        "payment_type_name",
+        "payment_type_code",
+        "shipping_fee",
+        "shipping_fee_value",
+        "created",
+        "received_date",
+    )
     
 @admin.register(models.OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):

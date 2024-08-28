@@ -52,6 +52,8 @@ class ProductCategory(models.Model):
 class Order(models.Model):
     user = models.ForeignKey("User", on_delete=models.RESTRICT)
     payment_type = models.ForeignKey("PaymentType", on_delete=models.RESTRICT)
+    payment_type_name = models.CharField(max_length=30)
+    payment_type_code = models.CharField(max_length=30)
     shipping_fee = models.ForeignKey("ShippingFee", on_delete=models.RESTRICT, null=True)
     shipping_fee_value = models.PositiveSmallIntegerField(null=True, validators=[MaxValueValidator(32767)])
     created = models.DateTimeField(db_default=Now())
@@ -65,6 +67,11 @@ class Order(models.Model):
     def setShippingFee(self, sf):
         self.shipping_fee = sf
         self.shipping_fee_value = sf.value
+        
+    def setPaymentType(self, pt):
+        self.payment_type = pt
+        self.payment_type_name = pt.name
+        self.payment_type_code = pt.code
         
     def __str__(self):
         return f"{self.id}"
