@@ -17,6 +17,7 @@ from core.models import (
     WhiteListUF,
     WhiteListLocalidade,
     WhiteListBairro,
+    OrderAddress
 )
 from django.core.paginator import Paginator
 from core.forms import UserForm, LoginForm
@@ -260,8 +261,12 @@ def address_edit(request):
         if field == "cep":
             cep = request.POST.get(field)
             data[field] = remove_non_alphanumeric(cep)
-        else: 
-            data[field] = request.POST.get(field)
+        elif field == "number":
+            num = None if request.POST.get(field) == "" else request.POST.get(field)
+            data[field] = int(num) if num != None else num 
+        elif field == "complement":
+            comp = None if request.POST.get(field) == "" else request.POST.get(field)
+            data[field] = comp
         
         form = None
         match field:
@@ -274,8 +279,9 @@ def address_edit(request):
             case _:
                 print(None)
         
-        context["form"] = form
-        
+        if address and address.is_equal(field, form[field].value()):
+            return redirect('address')
+            
         if form.is_valid():
             if field == "cep":
                 try:
@@ -329,6 +335,14 @@ def order(request):
         is_delivery = request.POST.get("is_delivery", False) == 'true'
         payment_code = request.POST.get("payment_type")
         
+        if len(cart) == 0:
+            context = {"notification": "Adicione itens ao carrinho."}
+            return render(request, "pages/order.html", context)
+        
+        if address == None:
+            context = {"notification": "Adicione seu endereço."}
+            return render(request, "pages/order.html", context)
+        
         order = Order()
         order.user = request.user
         
@@ -336,14 +350,26 @@ def order(request):
             payment_type = PaymentType.objects.get(code=payment_code)
             order.setPaymentType(payment_type)
         except PaymentType.DoesNotExist:
-            # response with 500 error
-            pass
+            context = {"notification": "Selecione uma forma de pagamento."}
+            return render(request, "pages/order.html", context)
         
         if is_delivery and shippingfee:
             order.setShippingFee(shippingfee)
-        
-        # validate all cart item with Product model
-        
+            
+            try:
+                if address.order_address:
+                    order.order_address = address.order_address
+                else:
+                    raise ObjectDoesNotExist()
+            except ObjectDoesNotExist:
+                order_address = OrderAddress()
+                order_address.set(address)
+                order_address.save()
+                
+                order.order_address = order_address
+                
+                address.order_address = order_address
+                address.save()
         
         order.save()
         

@@ -44,6 +44,7 @@ class OrderAdmin(admin.ModelAdmin):
     readonly_fields = (
         "id",
         "user",
+        "order_address",
         "payment_type",
         "payment_type_name",
         "payment_type_code",
@@ -98,10 +99,25 @@ class UFAdmin(admin.ModelAdmin):
 @admin.register(models.Address)
 class AddressAdmin(admin.ModelAdmin):
     readonly_fields = (
+        "order_address",
         "user",
         "logradouro",
         "number",
         "complement"
+    )
+    
+@admin.register(models.OrderAddress)
+class OrderAddressAdmin(admin.ModelAdmin):
+    readonly_fields = (
+        "id",
+        "address_number",
+        "address_complement",
+        "uf_acronym",
+        "logradouro_cep",
+        "logradouro_name",
+        "logradouro_type",
+        "localidade_name",
+        "bairro_name",
     )
     
 @admin.register(models.Logradouro)

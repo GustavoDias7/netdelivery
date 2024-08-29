@@ -14,13 +14,22 @@
     {% csrf_token %}
     {% include "../components/hidden-fields.html" %}
     {% include "../layouts/cart.html" %}
-    {% include "../layouts/order-type.html" %}
+    {% if address %}
+      {% include "../layouts/order-type.html" %}
+    {% endif %}
     {% include "../layouts/info-address.html" %}
     {% include "../layouts/payment.html" %}
     {% include "../layouts/order-submit.html" %}
   </form>
 {% endblock %}
 
+{% block notification %}
+{% include "../components/notification.html" %}
+{% endblock %}
+
 {% block js %}
+<script>
+  const hasNotification = {{ notification|yesno:"true,false" }}
+</script>
 <script src="{% static "js/pages/order.js" %}?{% now "U" %}"></script>
 {% endblock %}

@@ -233,6 +233,9 @@ button:disabled {
 .f-input::placeholder {
   color: #486284;
 }
+.f-input.error {
+  border-color: #ff2115;
+}
 .f-input.small {
   padding: 10px;
   font-size: 14px;
@@ -675,6 +678,47 @@ button:disabled {
 .badge.active .badge-item {
   opacity: 1;
   transform: scale(1);
+}
+
+.notification {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  max-width: calc(100% - 32px);
+}
+.notification .notif-content {
+  display: flex;
+  align-items: center;
+  position: relative;
+  left: calc(-100% - 16px);
+  bottom: 16px;
+  padding: 16px 16px 16px 22px;
+  background-color: #fafafa;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3);
+  transition: 0.3s ease-out;
+  border-radius: 8px;
+}
+.notification .notif-content.active {
+  left: 16px;
+}
+.notification .notif-content .notif-msg {
+  font-size: 16px;
+}
+@media (max-width: 480px) {
+  .notification .notif-content .notif-msg {
+    font-size: 14px;
+  }
+}
+.notification .notif-content .notif-line {
+  position: absolute;
+  left: 6px;
+  margin: auto;
+  width: 4px;
+  height: 80%;
+  border-radius: 4px;
+}
+.notification .notif-content .notif-line.error {
+  background-color: #ff2115;
 }
 
 .header.secondary {

@@ -1,7 +1,5 @@
 import * as vue from "../vendor/vue";
-import VueMask from "@devindex/vue-mask";
 import { mainMixin } from "../utils/mixins";
-import { getAddress } from "../service/address";
 const { createApp, ref } = vue;
 
 const app = createApp({
@@ -12,36 +10,28 @@ const app = createApp({
     const focusInput = () => {
       inputField.value.focus();
     };
-    return { focusInput, inputField };
+    
+    return { focusInput, inputField, notif: hasNotification };
   },
-  data() {
+  data({ notif }) {
     return {
       is_delivery: true,
       payment_type: "money",
-      form: {
-        cep: "",
-        district: "",
-        address: "",
-        number: "",
-        complement: "",
-      },
+      notification: notif,
     };
   },
-  methods: {},
-  computed: {
-    cep() {
-      return this.form.cep;
+  methods: {
+    setNotification() {
+      setTimeout(() => {
+        this.notification = false;
+      }, 3000);
     },
   },
-  watch: {
-    async cep() {
-      if (this.cep.length === 9) {
-        const data = await getAddress(this.form.cep);
-        this.form = {...this.form, ...data}
-      }
-    },
-  },
+  computed: {},
+  watch: {},
+  mounted() {
+    if (this.notification) this.setNotification()
+  }
 });
 
-app.use(VueMask);
 app.mount("#app");

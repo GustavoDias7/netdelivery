@@ -25,6 +25,7 @@
         
         {% include "../components/modals/logout.html" %}
         {% block modals %}{% endblock %}
+        {% block notification %}{% endblock %}
     </div>
     {% block js %}
         <script src="{% static "js/pages/main.js" %}?{% now "U" %}"></script>

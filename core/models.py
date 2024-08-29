@@ -51,6 +51,7 @@ class ProductCategory(models.Model):
     
 class Order(models.Model):
     user = models.ForeignKey("User", on_delete=models.RESTRICT)
+    order_address = models.ForeignKey("OrderAddress", on_delete=models.RESTRICT)
     payment_type = models.ForeignKey("PaymentType", on_delete=models.RESTRICT)
     payment_type_name = models.CharField(max_length=30)
     payment_type_code = models.CharField(max_length=30)
@@ -157,6 +158,7 @@ class ShippingFee(models.Model):
 
 class Address(models.Model):
     user = models.ForeignKey("User", on_delete=models.RESTRICT, unique=True)
+    order_address = models.ForeignKey("OrderAddress", null=True, on_delete=models.SET_NULL)
     logradouro = models.ForeignKey("Logradouro", on_delete=models.RESTRICT, null=True)
     number = models.PositiveSmallIntegerField(blank=True, null=True, validators=[MaxValueValidator(32767)]) 
     complement = models.CharField(max_length=100, blank=True, null=True)
@@ -175,9 +177,49 @@ class Address(models.Model):
         self.logradouro = log
         self.number = None
         self.complement = log.complement if log.complement else None
+        self.order_address = None
+        
+    def is_equal(self, key, value):
+        result = False
+        
+        match key:
+            case "cep":
+                result = self.logradouro.cep == value
+            case "number": 
+                result = self.number == value
+            case "complement":
+                result = self.complement == value
+            case _:
+                pass
+            
+        return result
+        
     
     def __str__(self):
         return f"{self.logradouro.type} {self.logradouro.name}"
+
+class OrderAddress(models.Model):
+    address_number = models.PositiveSmallIntegerField(_("Number"), blank=True, null=True, validators=[MaxValueValidator(32767)]) 
+    address_complement = models.CharField(_("Complement"), max_length=100, blank=True, null=True)
+    uf_acronym = models.CharField("UF", max_length=2, validators=[MinLengthValidator(2)])
+    logradouro_cep = models.CharField("CEP", max_length=8, validators=[cep_validator])
+    logradouro_name = models.CharField("Nome do logradouro", max_length=100)
+    logradouro_type = models.CharField("Tipo do logradouro", max_length=36)
+    localidade_name = models.CharField("Localidade", max_length=72)
+    bairro_name = models.CharField("Bairro", max_length=72)
+    
+    def set(self, addr: Address):
+        self.address_number = addr.number
+        self.address_complement = addr.complement
+        self.uf_acronym = addr.logradouro.uf.acronym
+        self.logradouro_cep = addr.logradouro.cep
+        self.logradouro_name = addr.logradouro.name
+        self.logradouro_type = addr.logradouro.type
+        self.localidade_name = addr.logradouro.localidade.name
+        self.bairro_name = addr.logradouro.bairro.name
+    
+    def __str__(self):
+        return f"{self.logradouro_type} {self.logradouro_name}, {self.localidade_name} - {self.uf_acronym}"
 
 class UserManager(BaseUserManager):
     def _create_user(
@@ -211,7 +253,6 @@ class UserManager(BaseUserManager):
         user.is_active = True
         user.save(using=self._db)
         return user
-
 
 class User(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(
