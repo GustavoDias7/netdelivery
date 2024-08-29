@@ -1,6 +1,7 @@
 class ShoppingCart {
   constructor() {
     this.cart = this.getLocal();
+    this.fee = 0
   }
   itemFactory(obj) {
     const item = {};
@@ -25,10 +26,17 @@ class ShoppingCart {
     this.cart[index].count -= 1;
   }
   totalPrice() {
-    return this.cart.reduce((acc, curr) => acc + curr.price * curr.count, 0);
+    return this.cart.reduce((acc, curr) => acc + curr.price * curr.count, 0) + this.fee;
   }
   ftotalPrice() {
     const price = this.totalPrice();
+    return (price / 100).toFixed(2).replace(".", ",");
+  }
+  subTotalPrice() {
+    return this.cart.reduce((acc, curr) => acc + curr.price * curr.count, 0);
+  }
+  fsubTotalPrice() {
+    const price = this.subTotalPrice();
     return (price / 100).toFixed(2).replace(".", ",");
   }
   totalPriceItem(index) {
@@ -57,6 +65,15 @@ class ShoppingCart {
     const item = this.itemFactory({ id });
     const itemIndex = this.findItemIndex(item.id);
     return itemIndex === -1 ? null : this.cart[itemIndex].count;
+  }
+  fgetFee() {
+    const shippingFee = this.fee;
+    return (shippingFee / 100).toFixed(2).replace(".", ",");
+  }
+  setFee(value) {
+    if (value != "" && (typeof value === "string" || typeof value === "number")) {
+      this.fee = Number(value)
+    }
   }
   addItem(id, name, price) {
     const item = this.itemFactory({ id, name, price, count: 1 });

@@ -336,11 +336,11 @@ def order(request):
         payment_code = request.POST.get("payment_type")
         
         if len(cart) == 0:
-            context = {"notification": "Adicione itens ao carrinho."}
+            context["notification"] = "Adicione itens ao carrinho."
             return render(request, "pages/order.html", context)
         
         if address == None:
-            context = {"notification": "Adicione seu endereço."}
+            context["notification"] = "Adicione seu endereço."
             return render(request, "pages/order.html", context)
         
         order = Order()

@@ -29,7 +29,8 @@
 
 {% block js %}
 <script>
-  const hasNotification = {{ notification|yesno:"true,false" }}
+  const hasNotification = {{ notification|yesno:"true,false" }};
+  const shippingFee = "{{shippingfee.value}}";
 </script>
 <script src="{% static "js/pages/order.js" %}?{% now "U" %}"></script>
 {% endblock %}

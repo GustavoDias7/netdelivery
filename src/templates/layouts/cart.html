@@ -4,6 +4,9 @@
 
     <div class="g-root g-gap-4 sm:g-gap-5">
       <div class="g-row">
+        <div v-if="cart.cart.length == 0" class="g-item-12">
+          <p>Não há itens no seu carrinho! </p>
+        </div>
         <div v-for="item in cart.cart" class="g-item-12">
           <div class="cart-item">
             <a href="/" class="img">
@@ -47,26 +50,17 @@
             ></button>
           </div>
         </div>
-        <div class="g-item-12"><hr /></div>
-        <div class="g-item-12">
+        <div v-if="cart.cart.length >= 1" class="g-item-12"><hr /></div>
+        <div v-if="cart.cart.length >= 1" class="g-item-12">
           <div class="cart-total">
             <div class="g-root g-gap-1">
               <div class="g-row">
-                <div class="g-item-12">
+                <div v-if="is_delivery" class="g-item-12">
                   <div class="cart-total-item">
-                    <p>Price</p>
+                    <p>Frete</p>
                     <p class="price tertiary">
                       <span class="left"> <span>R$</span> </span>
-                      <strong>0,00</strong>
-                    </p>
-                  </div>
-                </div>
-                <div class="g-item-12">
-                  <div class="cart-total-item">
-                    <p>Tax</p>
-                    <p class="price tertiary">
-                      <span class="left"> <span>R$</span> </span>
-                      <strong>0,00</strong>
+                      <strong v-text="cart.fgetFee()"></strong>
                     </p>
                   </div>
                 </div>
@@ -75,7 +69,8 @@
                     <p>Total</p>
                     <p class="price tertiary">
                       <span class="left"> <span>R$</span> </span>
-                      <strong v-text="cart.ftotalPrice()"></strong>
+                      <strong v-if="is_delivery" v-text="cart.ftotalPrice()"></strong>
+                      <strong v-else v-text="cart.fsubTotalPrice()"></strong>
                     </p>
                   </div>
                 </div>

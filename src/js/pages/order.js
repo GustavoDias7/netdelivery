@@ -10,14 +10,14 @@ const app = createApp({
     const focusInput = () => {
       inputField.value.focus();
     };
-    
+
     return { focusInput, inputField, notif: hasNotification };
   },
   data({ notif }) {
     return {
       is_delivery: true,
       payment_type: "money",
-      notification: notif,
+      notification: hasNotification,
     };
   },
   methods: {
@@ -29,9 +29,12 @@ const app = createApp({
   },
   computed: {},
   watch: {},
+  created() {
+    this.cart.setFee(shippingFee)
+  },
   mounted() {
-    if (this.notification) this.setNotification()
-  }
+    if (this.notification) this.setNotification();
+  },
 });
 
 app.mount("#app");
