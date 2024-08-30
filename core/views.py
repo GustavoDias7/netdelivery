@@ -22,11 +22,13 @@ from core.models import (
 from django.core.paginator import Paginator
 from core.forms import UserForm, LoginForm
 from core import forms
-import re
 from core.utils import remove_non_alphanumeric
+from core.validators import cart_validator
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ValidationError
 import json
-
+from django.db.models import Q
+from django.utils.translation import gettext_lazy as _
 
 def homepage(request):
     product_categories = ProductCategory.objects.values("id", "name")
@@ -331,7 +333,7 @@ def order(request):
             shippingfee = None
         
     if request.method == "POST":
-        cart = json.loads(request.POST.get("cart")) # id, price, count(quantity), discount
+        cart = json.loads(request.POST.get("cart")) 
         is_delivery = request.POST.get("is_delivery", False) == 'true'
         payment_code = request.POST.get("payment_type")
         
@@ -339,9 +341,44 @@ def order(request):
             context["notification"] = "Adicione itens ao carrinho."
             return render(request, "pages/order.html", context)
         
-        if address == None:
+        try:
+            cart_validator(cart)
+        except ValidationError as e:
+            context["notification"] = e.message
+            return render(request, "pages/order.html", context)
+        
+        if is_delivery and address == None:
             context["notification"] = "Adicione seu endereço."
             return render(request, "pages/order.html", context)
+            
+        filter_list = Q()
+        for item in cart:
+            filter_list |= Q(pk=item.get("id"))
+        
+        products = Product.objects.filter(filter_list)
+        
+        for item in cart:
+            try:
+                product_id = item.get('id')
+                product = products.get(pk=product_id)
+                if product.price != item.get("price"):
+                    raise ValidationError(
+                        _(f"O preço do produto {product.name} é de {product.fprice()}.")
+                    )
+                if product.stock == 0:
+                    raise ValidationError(
+                        _(f'"{product.name}" está sem estoque.')
+                    )
+                if product.stock < item.get("count"):
+                    raise ValidationError(
+                        _(f"{product.name} tem {product.stock} unidades em estoque.")
+                    )
+            except ValidationError as e:
+                context["notification"] = e.message
+                return render(request, "pages/order.html", context)
+            except ObjectDoesNotExist:
+                context["notification"] = f'O produto com id: "{product_id}" não existe.'
+                return render(request, "pages/order.html", context)
         
         order = Order()
         order.user = request.user
@@ -373,14 +410,14 @@ def order(request):
         
         order.save()
         
-        for cart_item in cart:
-            product = Product.objects.get(pk=cart_item.get("id"))
+        for item in cart:
+            product = products.get(pk=item.get("id"))
             order_item = OrderItem(
                 order=order,
                 product=product,
                 product_price=product.price,
                 product_discount=product.discount,
-                quantity=cart_item.get("count"),
+                quantity=item.get("count"),
             )
             product.stock -= order_item.quantity 
             

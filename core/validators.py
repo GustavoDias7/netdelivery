@@ -1,6 +1,5 @@
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-import re
 
 def cep_validator(value: str):
     if not value.isnumeric():
@@ -44,3 +43,12 @@ def phone_validator(value: str):
             params={"value": value},
         )
         
+def cart_validator(cart):
+    for item in cart:
+        required_keys = ("id", "price", "count")
+        for key in required_keys:
+            if not key in item.keys():
+                raise ValidationError(
+                    _(f'The key "{key}" is required.'),
+                    params={"value": key},
+                )

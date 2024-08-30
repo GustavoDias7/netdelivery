@@ -32,8 +32,7 @@ class Product(models.Model):
     product_category = models.ForeignKey("ProductCategory", on_delete=models.RESTRICT)
     
     def fprice(self):
-        cents = int(self.price) / 100
-        return f"{cents:.2f}".replace(".", ",")
+        return locale.currency(self.price / 100, grouping=True)
 
     def __str__(self):
         return f"{self.name}"
