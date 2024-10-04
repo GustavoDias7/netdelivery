@@ -30,6 +30,16 @@ admin.site.register(models.ProductCategory)
 admin.site.register(models.PaymentType, PaymentTypeAdmin)
 admin.site.register(models.OrderItemStatus)
 
+class PizzaVariantInline(admin.StackedInline):
+    model = models.PizzaVariant
+    extra = 0
+    min_num = 1
+
+
+@admin.register(models.Pizza)
+class PizzaAdmin(admin.ModelAdmin):
+    inlines = [PizzaVariantInline]
+
 @admin.register(models.Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = (

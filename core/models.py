@@ -37,6 +37,39 @@ class Product(models.Model):
     def __str__(self):
         return f"{self.name}"
     
+class Pizza(models.Model):
+    name = models.CharField(max_length=100)
+    discount = models.DecimalField(
+        max_digits=3,
+        decimal_places=2,
+        default=0.0,
+        validators=[MinValueValidator(0), MaxValueValidator(1)],
+    )
+    description = models.TextField(max_length=400, validators=[MinLengthValidator(4, _("Mínimo de 4 caracteres."))])
+    # image = models.ImageField()
+    
+    def __str__(self):
+        return f"{self.name}"
+    
+class PizzaVariant(models.Model):
+    pizza = models.ForeignKey("Pizza", on_delete=models.CASCADE)
+    size_name = models.CharField(max_length=40, help_text=_("Ex.: Pequena, Média, Grande"))
+    short_size_name = models.CharField(blank=True, null=True, max_length=5, help_text=_("Opcional. Ex.: P, M, G"))
+    diameter = models.PositiveSmallIntegerField(validators=[MaxValueValidator(32767)], help_text=_("Em centimetros"))
+    price = models.PositiveIntegerField(validators=[MaxValueValidator(2147483647)], help_text=_("Em inteiro. Ex.: 4999 para representar R$ 49,99"))
+    stock = models.PositiveIntegerField(blank=True, null=True, validators=[MaxValueValidator(2147483647)], help_text=_("Opcional. Se não for preenchido, o estoque será ilimitado para pedidos. 0 representa que o estoque está vazio."))
+    stuffed_edge = models.BooleanField(default=True)
+    archived = models.BooleanField(default=True)
+    default = models.BooleanField(default=False, help_text=_("A variante que representará a pizza e será mostrada no site. Se não houver uma variante padrão a primeira variante registrada será mostrada no site. Se existir duas ou mais variantes padrões a primeira variante registrada e marcada como padrão será mostrada no site."))
+    
+    class Meta:
+        verbose_name = _("Variante de Pizza")
+        verbose_name_plural = _("Variantes de Pizza")
+        
+    def __str__(self):
+        return f"{self.pizza.name} {self.size_name}"
+
+    
 class ProductCategory(models.Model):
     name = models.CharField(max_length=30)
     code = models.CharField(max_length=30, unique=True)
@@ -50,7 +83,7 @@ class ProductCategory(models.Model):
     
 class Order(models.Model):
     user = models.ForeignKey("User", on_delete=models.RESTRICT)
-    order_address = models.ForeignKey("OrderAddress", on_delete=models.RESTRICT)
+    order_address = models.ForeignKey("OrderAddress", on_delete=models.RESTRICT, null=True)
     payment_type = models.ForeignKey("PaymentType", on_delete=models.RESTRICT)
     payment_type_name = models.CharField(max_length=30)
     payment_type_code = models.CharField(max_length=30)
@@ -60,9 +93,12 @@ class Order(models.Model):
     received_date = models.DateTimeField(null=True)
     
     def fshipping_fee_value(self):
-        float_value = self.shipping_fee_value / 100
-        formatted_value = locale.currency(float_value, grouping=True)
-        return formatted_value
+        if self.shipping_fee_value:
+            float_value = self.shipping_fee_value / 100
+            formatted_value = locale.currency(float_value, grouping=True)
+            return formatted_value
+        else:
+            return self.shipping_fee_value
     
     def setShippingFee(self, sf):
         self.shipping_fee = sf

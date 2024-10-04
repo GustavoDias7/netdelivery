@@ -48,6 +48,22 @@
     }
   },
   {
+    "model": "core.orderitemstatus",
+    "pk": 6,
+    "fields": {
+      "name": "Pronto para retirada",
+      "code": "ready-for-pick-up"
+    }
+  },
+  {
+    "model": "core.orderitemstatus",
+    "pk": 7,
+    "fields": {
+      "name": "Retirado",
+      "code": "removed"
+    }
+  },
+  {
     "model": "core.paymenttype",
     "pk": 1,
     "fields": {
