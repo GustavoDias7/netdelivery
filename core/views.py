@@ -4,8 +4,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.utils.crypto import get_random_string
 from django.contrib.auth.password_validation import validate_password
 from core.models import (
-    ProductCategory,
-    Product,
     Order,
     OrderItem,
     ShippingFee,
@@ -19,6 +17,10 @@ from core.models import (
     WhiteListBairro,
     OrderAddress
 )
+# from product.models import (
+#     ProductCategory,
+#     Product,
+# )
 from django.core.paginator import Paginator
 from core.forms import UserForm, LoginForm
 from core import forms
@@ -31,12 +33,12 @@ from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 
 def homepage(request):
-    product_categories = ProductCategory.objects.values("id", "name")
+    # product_categories = ProductCategory.objects.values("id", "name")
     categories = []
     
-    for category in product_categories:
-        products = Product.objects.filter(product_category_id=category["id"])
-        if len(products): categories.append(products)
+    # for category in product_categories:
+    #     products = Product.objects.filter(product_category_id=category["id"])
+    #     if len(products): categories.append(products)
     
     return render(request, "pages/homepage.html", {"categories": categories})
 

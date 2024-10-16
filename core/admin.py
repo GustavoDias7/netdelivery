@@ -5,48 +5,13 @@ from import_export.admin import ImportExportModelAdmin
 from django.shortcuts import render
 import chardet
 from django.utils.translation import gettext_lazy as _
-
-class ProductAdmin(admin.ModelAdmin):
-    list_display = ["name", "product_category", "id", "archived"]
-    readonly_fields = ["id"]
-    fields = [
-        "id",
-        "name",
-        "price",
-        "discount",
-        "description",
-        "stock",
-        # "image",
-        "archived",
-        "product_category"
-    ]
     
 class PaymentTypeAdmin(admin.ModelAdmin):
     list_display = ["name", "code"]
     
 admin.site.register(models.User)
-admin.site.register(models.Product, ProductAdmin)
-admin.site.register(models.ProductCategory)
 admin.site.register(models.PaymentType, PaymentTypeAdmin)
 admin.site.register(models.OrderItemStatus)
-
-class SodaVariantInline(admin.StackedInline):
-    model = models.SodaVariant
-    extra = 0
-    min_num = 1
-
-@admin.register(models.Soda)
-class SodaAdmin(admin.ModelAdmin):
-    inlines = [SodaVariantInline]
-
-class PizzaVariantInline(admin.StackedInline):
-    model = models.PizzaVariant
-    extra = 0
-    min_num = 1
-
-@admin.register(models.Pizza)
-class PizzaAdmin(admin.ModelAdmin):
-    inlines = [PizzaVariantInline]
 
 @admin.register(models.Order)
 class OrderAdmin(admin.ModelAdmin):
@@ -59,18 +24,18 @@ class OrderAdmin(admin.ModelAdmin):
         "created",
         "received_date",
     )
-    readonly_fields = (
-        "id",
-        "user",
-        "order_address",
-        "payment_type",
-        "payment_type_name",
-        "payment_type_code",
-        "shipping_fee",
-        "shipping_fee_value",
-        "created",
-        "received_date",
-    )
+    # readonly_fields = (
+    #     "id",
+    #     "user",
+    #     "order_address",
+    #     "payment_type",
+    #     "payment_type_name",
+    #     "payment_type_code",
+    #     "shipping_fee",
+    #     "shipping_fee_value",
+    #     "created",
+    #     "received_date",
+    # )
     
 @admin.register(models.OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):
@@ -78,12 +43,12 @@ class OrderItemAdmin(admin.ModelAdmin):
         "id",
         "order",
         "order_item_status",
-        "product",
+        # "product",
         "product_price",
         "product_discount",
         "quantity",
     )
-    readonly_fields = list_display
+    # readonly_fields = list_display
 
 @admin.register(models.ShippingFee)
 class ShippingFeeAdmin(admin.ModelAdmin):
