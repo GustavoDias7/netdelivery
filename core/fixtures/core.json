@@ -32,7 +32,7 @@
     }
   },
   {
-    "model": "core.orderitemstatus",
+    "//model": "core.orderitemstatus",
     "pk": 4,
     "fields": {
       "name": "A caminho",
@@ -40,7 +40,7 @@
     }
   },
   {
-    "model": "core.orderitemstatus",
+    "//model": "core.orderitemstatus",
     "pk": 5,
     "fields": {
       "name": "Preparando",
@@ -48,7 +48,7 @@
     }
   },
   {
-    "model": "core.orderitemstatus",
+    "//model": "core.orderitemstatus",
     "pk": 6,
     "fields": {
       "name": "Pronto para retirada",
@@ -56,7 +56,7 @@
     }
   },
   {
-    "model": "core.orderitemstatus",
+    "//model": "core.orderitemstatus",
     "pk": 7,
     "fields": {
       "name": "Retirado",
