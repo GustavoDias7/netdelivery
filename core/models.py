@@ -12,21 +12,25 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 import locale 
 import re
-# from product.models import Product
+from product.models import (ProductVariant, Combo)
 
 locale.setlocale(locale.LC_MONETARY, 'pt_BR.UTF-8')
 
-
 class Order(models.Model):
-    user = models.ForeignKey("User", on_delete=models.RESTRICT)
-    order_address = models.ForeignKey("OrderAddress", on_delete=models.RESTRICT, null=True)
+    client = models.ForeignKey("Client", null=True, on_delete=models.SET_NULL)
     payment_type = models.ForeignKey("PaymentType", on_delete=models.RESTRICT)
     payment_type_name = models.CharField(max_length=30)
     payment_type_code = models.CharField(max_length=30)
     shipping_fee = models.ForeignKey("ShippingFee", on_delete=models.RESTRICT, null=True)
     shipping_fee_value = models.PositiveSmallIntegerField(null=True, validators=[MaxValueValidator(32767)])
     created = models.DateTimeField(db_default=Now())
-    received_date = models.DateTimeField(null=True)
+    received_date = models.DateTimeField(null=True, blank=True)
+        
+    def save(self, *args, **kwargs):
+        self.payment_type_name = self.payment_type.name
+        self.payment_type_code = self.payment_type.code
+        self.shipping_fee_value = self.shipping_fee.value
+        super(Order, self).save(*args, **kwargs)
     
     def fshipping_fee_value(self):
         if self.shipping_fee_value:
@@ -51,19 +55,32 @@ class Order(models.Model):
 class OrderItem(models.Model):
     order = models.ForeignKey("Order", on_delete=models.RESTRICT)
     order_item_status = models.ForeignKey("OrderItemStatus", on_delete=models.RESTRICT, default=1)
-    # product = models.ForeignKey(Product, on_delete=models.RESTRICT)
-    product_price = models.PositiveIntegerField(validators=[MaxValueValidator(2147483647)])
-    product_discount = models.DecimalField(
+    product = models.ForeignKey(ProductVariant, null=True, blank=True, on_delete=models.RESTRICT)
+    combo = models.ForeignKey(Combo, null=True, blank=True, on_delete=models.RESTRICT)
+    price = models.PositiveIntegerField(validators=[MaxValueValidator(2147483647)])
+    discount = models.DecimalField(
         max_digits=3,
         decimal_places=2,
         default=0.0,
         validators=[MinValueValidator(0), MaxValueValidator(1)],
     )
-    quantity = models.PositiveSmallIntegerField(validators=[MaxValueValidator(32767)])
+    quantity = models.PositiveSmallIntegerField(default=1, validators=[MaxValueValidator(32767)])
     
     class Meta:
         verbose_name = _("Order item")
         verbose_name_plural = _("Order items")
+        
+    def save(self, *args, **kwargs):
+        if self.product:
+            self.price = self.product.price
+            self.discount = self.product.discount
+            self.combo = None
+        elif self.combo:
+            self.price = self.combo.price
+            self.discount = self.combo.discount
+            self.product = None
+            
+        super(OrderItem, self).save(*args, **kwargs)
     
     def percentage_discount(self):
         percentage = int(float(self.product_discount) * 100)
@@ -319,7 +336,7 @@ class Logradouro(models.Model):
             return self.cep
         
     def __str__(self):
-        return f"{self.type} {self.name}"
+        return f"{self.cep}, {self.type} {self.name}, {self.localidade}"
     
 class UF(models.Model):
     acronym = models.CharField(max_length=2, validators=[MinLengthValidator(2)])
@@ -376,3 +393,21 @@ class WhiteListBairro(models.Model):
     
     def __str__(self):
         return f"{self.bairro}"
+    
+
+class Client(models.Model):
+    full_name = models.CharField(_("Full name"), max_length=60)
+    logradouro = models.ForeignKey("Logradouro", null=True, on_delete=models.SET_NULL)
+    number = models.PositiveSmallIntegerField(blank=True, null=True, validators=[MaxValueValidator(32767)]) 
+    complement = models.CharField(max_length=100, blank=True, null=True)
+    phone = models.CharField(_("Number Phone"), max_length=11, null=True, blank=True, validators=[phone_validator])
+    cpf = models.CharField("CPF", max_length=11, null=True, blank=True)
+    
+    def save(self, *args, **kwargs):
+        if self.full_name:
+            self.full_name = self.full_name.upper()
+        super(Client, self).save(*args, **kwargs)
+    
+    def __str__(self):
+        return f"{self.full_name} {self.cpf if self.cpf else ''}"
+    
