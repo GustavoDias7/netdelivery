@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.utils.crypto import get_random_string
 from django.contrib.auth.password_validation import validate_password
-from core.models import User
+from user.models import User
 from order.models import (
     Order,
     OrderItem,
@@ -23,7 +23,7 @@ from product.models import (
     Product,
 )
 from django.core.paginator import Paginator
-from core.forms import UserForm, LoginForm
+from user.forms import UserForm, LoginForm
 from core import forms
 from core.utils import remove_non_alphanumeric
 from core.validators import cart_validator

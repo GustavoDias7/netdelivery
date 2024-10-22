@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from core.validators import cep_validator
 from address.models import *
 from product.models import *
-from core.models import *
+from user.models import *
 
 import locale 
 

@@ -28,7 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-AUTH_USER_MODEL = "core.User"
+AUTH_USER_MODEL = "user.User"
 
 LOGIN_URL = "/login"
 
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'product.apps.ProductConfig',
     'address.apps.AddressConfig',
     'order.apps.OrderConfig',
+    'user.apps.UserConfig',
     'import_export',
 ]
 
