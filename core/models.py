@@ -13,6 +13,7 @@ from django.utils.translation import gettext_lazy as _
 import locale 
 import re
 from product.models import (ProductVariant, Combo)
+from address.models import (Logradouro, WhiteListBairro)
 
 locale.setlocale(locale.LC_MONETARY, 'pt_BR.UTF-8')
 
@@ -124,7 +125,7 @@ class PaymentType(models.Model):
 
 class ShippingFee(models.Model):
     value = models.PositiveSmallIntegerField(validators=[MaxValueValidator(32767)])
-    whitelistbairro = models.OneToOneField("WhiteListBairro", on_delete=models.SET_NULL, null=True, blank=True)
+    whitelistbairro = models.OneToOneField(WhiteListBairro, on_delete=models.SET_NULL, null=True, blank=True)
     is_default = models.BooleanField(_('Default'), default=False)
     
     class Meta:
@@ -144,48 +145,6 @@ class ShippingFee(models.Model):
         else:
             return f"{self.id}"
 
-class Address(models.Model):
-    user = models.ForeignKey("User", on_delete=models.RESTRICT, unique=True)
-    order_address = models.ForeignKey("OrderAddress", null=True, on_delete=models.SET_NULL)
-    logradouro = models.ForeignKey("Logradouro", on_delete=models.RESTRICT, null=True)
-    number = models.PositiveSmallIntegerField(blank=True, null=True, validators=[MaxValueValidator(32767)]) 
-    complement = models.CharField(max_length=100, blank=True, null=True)
-    
-    class Meta:
-        verbose_name = _("Address")
-        verbose_name_plural = _("Addresses")
-    
-    def get(self, name):
-        return getattr(self, name)
-    
-    def set(self, name, value):
-        setattr(self, name, value)
-        
-    def setLog(self, log):
-        self.logradouro = log
-        self.number = None
-        self.complement = log.complement if log.complement else None
-        self.order_address = None
-        
-    def is_equal(self, key, value):
-        result = False
-        
-        match key:
-            case "cep":
-                result = self.logradouro.cep == value
-            case "number": 
-                result = self.number == value
-            case "complement":
-                result = self.complement == value
-            case _:
-                pass
-            
-        return result
-        
-    
-    def __str__(self):
-        return f"{self.logradouro.type} {self.logradouro.name}"
-
 class OrderAddress(models.Model):
     address_number = models.PositiveSmallIntegerField(_("Number"), blank=True, null=True, validators=[MaxValueValidator(32767)]) 
     address_complement = models.CharField(_("Complement"), max_length=100, blank=True, null=True)
@@ -196,7 +155,7 @@ class OrderAddress(models.Model):
     localidade_name = models.CharField("Localidade", max_length=72)
     bairro_name = models.CharField("Bairro", max_length=72)
     
-    def set(self, addr: Address):
+    def set(self, addr):
         self.address_number = addr.number
         self.address_complement = addr.complement
         self.uf_acronym = addr.logradouro.uf.acronym
@@ -319,88 +278,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     # def email_user(self, subject, message, from_email=None):
     #     send_mail(subject, message, from_email, [self.email])
     
-class Logradouro(models.Model):
-    id = models.PositiveIntegerField(primary_key=True)
-    uf = models.ForeignKey("UF", on_delete=models.RESTRICT)
-    localidade = models.ForeignKey("Localidade", null=True, on_delete=models.SET_NULL)
-    bairro = models.ForeignKey("Bairro", null=True, on_delete=models.SET_NULL)
-    name = models.CharField(max_length=100)
-    complement = models.CharField(null=True, max_length=100)
-    cep = models.CharField(max_length=8, validators=[cep_validator])
-    type = models.CharField(max_length=36)
-        
-    def fcep(self):
-        if len(self.cep):
-            return f"{self.cep[0:5]}-{self.cep[5:]}"
-        else:
-            return self.cep
-    
-    def autocomplete(self):
-        return f"{self.cep}, {self.type} {self.name}, {self.bairro.name} ({self.localidade} - {self.uf})"
-    
-    def __str__(self):
-        return f"{self.type} {self.name}"
-    
-class UF(models.Model):
-    acronym = models.CharField(max_length=2, validators=[MinLengthValidator(2)])
-    
-    def __str__(self):
-        return f"{self.acronym}"
-
-class Bairro(models.Model):
-    id = models.PositiveIntegerField(primary_key=True)
-    name = models.CharField(max_length=72)
-    localidade = models.ForeignKey("Localidade", null=True, on_delete=models.SET_NULL)
-
-    def __str__(self):
-        return f"{self.name} ({self.localidade.name} - {self.localidade.uf.acronym})"
-    
-class Localidade(models.Model):
-    id = models.PositiveIntegerField(primary_key=True)
-    uf = models.ForeignKey("UF", on_delete=models.SET_NULL, null=True)
-    situacaolocalidade = models.ForeignKey("SituacaoLocalidade", on_delete=models.RESTRICT, null=True)
-    tipolocalidade = models.ForeignKey("TipoLocalidade", on_delete=models.RESTRICT)
-    name = models.CharField(max_length=72)
-    cep = models.CharField(max_length=8, validators=[cep_validator])
-    
-    def __str__(self):
-        return f"{self.name}"
-    
-class SituacaoLocalidade(models.Model):
-    definition = models.TextField(max_length=60)
-    
-    def __str__(self):
-        return f"Situação {self.id}"
-    
-class TipoLocalidade(models.Model):
-    code = models.CharField(max_length=1)
-    definition = models.CharField(max_length=15)
-    
-    def __str__(self):
-        return f"{self.code} - {self.definition}"
-    
-class WhiteListUF(models.Model):
-    uf = models.OneToOneField("UF", on_delete=models.SET_NULL, null=True)
-    
-    def __str__(self):
-        return f"{self.uf}"
-    
-class WhiteListLocalidade(models.Model):
-    localidade = models.OneToOneField("Localidade", on_delete=models.SET_NULL, null=True)
-    
-    def __str__(self):
-        return f"{self.localidade}"
-    
-class WhiteListBairro(models.Model):
-    bairro = models.OneToOneField("Bairro", on_delete=models.SET_NULL, null=True)
-    
-    def __str__(self):
-        return f"{self.bairro}"
-    
-
 class Client(models.Model):
     full_name = models.CharField(_("Full name"), max_length=60)
-    logradouro = models.ForeignKey("Logradouro", null=True, on_delete=models.SET_NULL, help_text="Pesquise pelo CEP, nome do logradouro, nome da localidade ou nome do bairro.")
+    logradouro = models.ForeignKey(Logradouro, null=True, on_delete=models.SET_NULL, help_text="Pesquise pelo CEP, nome do logradouro, nome da localidade ou nome do bairro.")
     number = models.PositiveSmallIntegerField(blank=True, null=True, validators=[MaxValueValidator(32767)]) 
     complement = models.CharField(max_length=100, blank=True, null=True)
     phone = models.CharField(_("Number Phone"), max_length=11, null=True, blank=True, validators=[phone_validator])

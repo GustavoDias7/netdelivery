@@ -8,19 +8,21 @@ from core.models import (
     OrderItem,
     ShippingFee,
     PaymentType,
-    Address,
     User,
     OrderItemStatus,
-    Logradouro,
-    WhiteListUF,
-    WhiteListLocalidade,
     WhiteListBairro,
     OrderAddress
 )
-# from product.models import (
-#     ProductCategory,
-#     Product,
-# )
+from address.models import (
+    Logradouro,
+    WhiteListUF,
+    WhiteListLocalidade,
+)
+
+from product.models import (
+    ProductCategory,
+    Product,
+)
 from django.core.paginator import Paginator
 from core.forms import UserForm, LoginForm
 from core import forms
@@ -222,7 +224,8 @@ def address(request):
     context = {}
     
     try:
-        address = Address.objects.get(user=request.user)
+        pass
+        # address = Address.objects.get(user=request.user)
     except:
         address = None
         
@@ -251,7 +254,7 @@ def address_edit(request):
     }
     
     try:
-        address = Address.objects.get(user=request.user)
+        # address = Address.objects.get(user=request.user)
         if field == "cep":
             context["field"]["value"] = address.logradouro.cep
         else: 
@@ -299,7 +302,8 @@ def address_edit(request):
                     return render(request, "pages/address_edit.html", context)
                 
                 if address == None:
-                    address = Address.objects.create(user=request.user)
+                    address = None
+                    # address = Address.objects.create(user=request.user)
                 
                 address.setLog(log)
             else:
@@ -318,15 +322,15 @@ def order(request):
     context = {}
     
     try:
-        address = Address.objects.get(user=request.user)
+        # address = Address.objects.get(user=request.user)
         context["address"] = address
         
         wl_bairro = WhiteListBairro.objects.get(bairro=address.logradouro.bairro)
         shippingfee = ShippingFee.objects.get(whitelistbairro=wl_bairro)
         context["shippingfee"] = shippingfee
-    except Address.DoesNotExist:
-        address = None
-        shippingfee = None
+    # except Address.DoesNotExist:
+    #     address = None
+    #     shippingfee = None
     except ShippingFee.DoesNotExist:
         try:
             shippingfee = ShippingFee.objects.get(is_default=True)

@@ -1,5 +1,5 @@
 from django import forms
-from .models import User, Address
+from .models import User
 from core.validators import cep_validator
 
 class UserForm(forms.ModelForm):
@@ -39,11 +39,11 @@ class CepForm(forms.Form):
         
 class NumberForm(forms.ModelForm):
     class Meta:
-        model = Address
+        # model = Address
         fields = ["number"]
         
 class ComplementForm(forms.ModelForm):
     class Meta:
-        model = Address
+        # model = Address
         fields = ["complement"]
        

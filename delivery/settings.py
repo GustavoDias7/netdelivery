@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core.apps.CoreConfig',
     'product.apps.ProductConfig',
+    'address.apps.AddressConfig',
     'import_export',
 ]
 
