@@ -1,6 +1,6 @@
 from django import forms
 from .models import User
-from core.validators import cep_validator
+from apps.core.validators import cep_validator
 
 class UserForm(forms.ModelForm):
     confirm_password = forms.CharField(widget=forms.PasswordInput())

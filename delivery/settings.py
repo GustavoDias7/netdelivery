@@ -41,11 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core.apps.CoreConfig',
-    'product.apps.ProductConfig',
-    'address.apps.AddressConfig',
-    'order.apps.OrderConfig',
-    'user.apps.UserConfig',
+    'apps.core.apps.CoreConfig',
+    'apps.product.apps.ProductConfig',
+    'apps.address.apps.AddressConfig',
+    'apps.order.apps.OrderConfig',
+    'apps.user.apps.UserConfig',
     'import_export',
 ]
 

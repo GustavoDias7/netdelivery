@@ -2,10 +2,10 @@ from django.db import models
 from django.db.models.functions import Now
 from django.core.validators import (MinValueValidator, MaxValueValidator, MinLengthValidator)
 from django.utils.translation import gettext_lazy as _
-from core.validators import cep_validator
-from address.models import *
-from product.models import *
-from user.models import *
+from apps.core.validators import cep_validator
+from apps.address.models import *
+from apps.product.models import *
+from apps.user.models import *
 
 import locale 
 

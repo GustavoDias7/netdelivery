@@ -6,11 +6,11 @@ from django.contrib.auth.models import (
     BaseUserManager,
 )
 from django.core import validators
-from core.validators import (name_validator, phone_validator)
+from apps.core.validators import (name_validator, phone_validator)
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 import re
-from address.models import Logradouro
+from apps.address.models import Logradouro
 
 class UserManager(BaseUserManager):
     def _create_user(

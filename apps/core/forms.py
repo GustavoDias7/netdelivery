@@ -1,5 +1,5 @@
 from django import forms
-from core.validators import cep_validator
+from apps.core.validators import cep_validator
     
 class CepForm(forms.Form):
     cep = forms.CharField(max_length=8, validators=[cep_validator])

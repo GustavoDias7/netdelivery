@@ -1,5 +1,5 @@
 from django.contrib import admin
-from core.utils import (first_occurrence, last_occurrence, custom_titled_filter)
+from apps.core.utils import (first_occurrence, last_occurrence, custom_titled_filter)
 from import_export.admin import ImportExportModelAdmin
 from django.shortcuts import render
 import chardet

@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.utils.crypto import get_random_string
 from django.contrib.auth.password_validation import validate_password
-from user.models import User
-from order.models import (
+from apps.user.models import User
+from apps.order.models import (
     Order,
     OrderItem,
     ShippingFee,
@@ -13,20 +13,20 @@ from order.models import (
     WhiteListBairro,
     OrderAddress
 )
-from address.models import (
+from apps.address.models import (
     Logradouro,
     WhiteListUF,
     WhiteListLocalidade,
 )
-from product.models import (
+from apps.product.models import (
     ProductCategory,
     Product,
 )
 from django.core.paginator import Paginator
-from user.forms import UserForm, LoginForm
-from core import forms
-from core.utils import remove_non_alphanumeric
-from core.validators import cart_validator
+from apps.user.forms import UserForm, LoginForm
+from apps.core import forms
+from apps.core.utils import remove_non_alphanumeric
+from apps.core.validators import cart_validator
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.exceptions import ValidationError
 import json

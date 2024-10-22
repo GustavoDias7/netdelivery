@@ -16,8 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from core import views
-from core.admin import autocomplete_view
+from apps.core import views
+from apps.core.admin import autocomplete_view
 
 # change the autocomplete text content
 admin.AdminSite.autocomplete_view = autocomplete_view
