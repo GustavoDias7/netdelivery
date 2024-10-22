@@ -5,50 +5,68 @@ from import_export.admin import ImportExportModelAdmin
 from django.shortcuts import render
 import chardet
 from django.utils.translation import gettext_lazy as _
-    
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.admin.views.autocomplete import AutocompleteJsonView
+
+class CustomAutocompleteJsonView(AutocompleteJsonView):
+    def serialize_result(self, obj, to_field_name):
+        text = str(obj.autocomplete() if obj.autocomplete else obj)
+        return {'id': str(getattr(obj, to_field_name)), 'text': text}  
+
+def autocomplete_view(self, request):
+    return CustomAutocompleteJsonView.as_view(admin_site=self)(request)
+
+@admin.register(models.PaymentType)
 class PaymentTypeAdmin(admin.ModelAdmin):
     list_display = ["name", "code"]
-    
-admin.site.register(models.User)
-admin.site.register(models.PaymentType, PaymentTypeAdmin)
+
+@admin.register(models.User)
+class CustomUserAdmin(UserAdmin):
+    list_display = ("email", "first_name", "last_name", "is_staff")
+    add_fieldsets = ((
+        None, 
+        { 'classes': ('wide',), 'fields': ('email', 'password1', 'password2')}
+    ))
+
 admin.site.register(models.OrderItemStatus)
 
+class OrderItemInline(admin.StackedInline):
+    model = models.OrderItem
+    extra = 0
+    min_num = 1
+    readonly_fields = (
+        "price",
+        "discount",
+    )
+    
+@admin.register(models.Client)
+class ClientAdmin(admin.ModelAdmin):
+    list_display = ("full_name", "logradouro", "phone", "cpf")
+    search_fields = ("full_name", "logradouro__cep", "logradouro__name", "phone", "cpf")
+    autocomplete_fields = ("logradouro",)
+    
 @admin.register(models.Order)
 class OrderAdmin(admin.ModelAdmin):
+    inlines = [OrderItemInline]
     list_display = (
         "id",
-        "user",
+        "client",
         "payment_type",
         "shipping_fee",
         "shipping_fee_value",
         "created",
         "received_date",
     )
-    # readonly_fields = (
-    #     "id",
-    #     "user",
-    #     "order_address",
-    #     "payment_type",
-    #     "payment_type_name",
-    #     "payment_type_code",
-    #     "shipping_fee",
-    #     "shipping_fee_value",
-    #     "created",
-    #     "received_date",
-    # )
-    
-@admin.register(models.OrderItem)
-class OrderItemAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "order",
-        "order_item_status",
-        # "product",
-        "product_price",
-        "product_discount",
-        "quantity",
+    readonly_fields = (
+        "payment_type_name",
+        "payment_type_code",
+        "shipping_fee_value",
+        "created",
     )
-    # readonly_fields = list_display
+    autocomplete_fields = ("client",)
+    def save_model(self, request, obj, form, change):
+        self.model.payment_type_name = "Test"
+        super().save_model(request, obj, form, change)
 
 @admin.register(models.ShippingFee)
 class ShippingFeeAdmin(admin.ModelAdmin):
@@ -125,13 +143,26 @@ class LogradouroAdmin(ImportExportModelAdmin,admin.ModelAdmin):
         "cep",
         "type"
     )
-    search_fields = ("cep", "name", "localidade__name", "bairro__name")
+    search_fields = ("cep", "type", "name", "localidade__name", "bairro__name")
+    wl_bairros = models.WhiteListBairro.objects.all()
+    
+    def get_search_results(self, request, queryset, search_term):
+        queryset, may_have_duplicates = super().get_search_results(
+            request,
+            queryset,
+            search_term,
+        )
+        
+        if request.GET.get('model_name') == 'client':
+            queryset = queryset.filter(bairro__in=self.wl_bairros.values_list("bairro"))
+            
+        return queryset, may_have_duplicates
+
     
     @admin.display(description='bairro')
     def bairro_(self, obj):
         return obj.bairro.name
         
-    
     def import_action(self, request):
         context = {}
         
