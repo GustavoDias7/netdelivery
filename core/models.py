@@ -334,9 +334,12 @@ class Logradouro(models.Model):
             return f"{self.cep[0:5]}-{self.cep[5:]}"
         else:
             return self.cep
-        
+    
+    def autocomplete(self):
+        return f"{self.cep}, {self.type} {self.name}, {self.bairro.name} ({self.localidade} - {self.uf})"
+    
     def __str__(self):
-        return f"{self.cep}, {self.type} {self.name}, {self.localidade}"
+        return f"{self.type} {self.name}"
     
 class UF(models.Model):
     acronym = models.CharField(max_length=2, validators=[MinLengthValidator(2)])
@@ -397,7 +400,7 @@ class WhiteListBairro(models.Model):
 
 class Client(models.Model):
     full_name = models.CharField(_("Full name"), max_length=60)
-    logradouro = models.ForeignKey("Logradouro", null=True, on_delete=models.SET_NULL)
+    logradouro = models.ForeignKey("Logradouro", null=True, on_delete=models.SET_NULL, help_text="Pesquise pelo CEP, nome do logradouro, nome da localidade ou nome do bairro.")
     number = models.PositiveSmallIntegerField(blank=True, null=True, validators=[MaxValueValidator(32767)]) 
     complement = models.CharField(max_length=100, blank=True, null=True)
     phone = models.CharField(_("Number Phone"), max_length=11, null=True, blank=True, validators=[phone_validator])
