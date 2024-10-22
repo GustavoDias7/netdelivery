@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'product.apps.ProductConfig',
     'address.apps.AddressConfig',
+    'order.apps.OrderConfig',
     'import_export',
 ]
 

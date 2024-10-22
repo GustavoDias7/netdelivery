@@ -3,12 +3,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.utils.crypto import get_random_string
 from django.contrib.auth.password_validation import validate_password
-from core.models import (
+from core.models import User
+from order.models import (
     Order,
     OrderItem,
     ShippingFee,
     PaymentType,
-    User,
     OrderItemStatus,
     WhiteListBairro,
     OrderAddress
@@ -18,7 +18,6 @@ from address.models import (
     WhiteListUF,
     WhiteListLocalidade,
 )
-
 from product.models import (
     ProductCategory,
     Product,
