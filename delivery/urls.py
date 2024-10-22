@@ -17,6 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from core import views
+from core.admin import autocomplete_view
+
+# change the autocomplete text content
+admin.AdminSite.autocomplete_view = autocomplete_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
