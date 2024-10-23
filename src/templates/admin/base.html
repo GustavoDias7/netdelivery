@@ -1,0 +1,6 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+
+{% block extrastyle %}{{ block.super }}
+<link href="{% static 'css/pages/admin.css' %}?{% now "U" %}" rel="stylesheet">
+{% endblock %}

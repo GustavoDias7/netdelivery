@@ -5,7 +5,6 @@
 /*!*************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/css/pages/profile.scss (1) ***!
   \*************************************************************************************************************************/
-/* color */
 /* transition */
 /* border */
 /* box-shadow */
@@ -16,7 +15,7 @@
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #151515;
+  color: #262626;
 }
 
 body,
@@ -132,12 +131,12 @@ button:disabled {
   font-size: 1rem;
   height: 48px;
   padding: 0px 20px;
-  color: #151515;
+  color: #262626;
   cursor: pointer;
   border-radius: 32px;
   border: none;
   outline: none;
-  background-color: #fafafa;
+  background-color: #f5f5f5;
   transition: all 0.2s ease 0s;
   user-select: none;
 }
@@ -149,17 +148,17 @@ button:disabled {
   cursor: not-allowed;
 }
 .gn-button.pm-button {
-  background-color: #151515;
-  color: #fafafa;
+  background-color: #262626;
+  color: #f5f5f5;
 }
 .gn-button.tt-button {
-  background-color: #151515;
-  color: #fafafa;
+  background-color: #262626;
+  color: #f5f5f5;
   border-radius: 8px;
 }
 .gn-button.qt-button {
   background-color: transparent;
-  border: 1px solid #151515;
+  border: 1px solid #262626;
   border-radius: 8px;
 }
 .gn-button.full {
@@ -250,7 +249,7 @@ button:disabled {
   padding: 0;
   height: 100%;
   background-color: rgba(0, 0, 0, 0);
-  border: 1px solid #bababa;
+  border: 1px solid #d4d4d4;
   cursor: pointer;
 }
 .counter .counter-button:first-of-type {
@@ -275,7 +274,7 @@ button:disabled {
   position: absolute;
   z-index: 1;
   margin: auto;
-  background-color: #151515;
+  background-color: #262626;
 }
 .counter .counter-button .sign::before {
   width: 12px;
@@ -302,7 +301,7 @@ button:disabled {
   background-color: transparent;
   border: none;
   cursor: pointer;
-  border: 1px solid #bababa;
+  border: 1px solid #d4d4d4;
   outline: none;
   width: 48px;
   height: 100%;
@@ -361,14 +360,14 @@ button:disabled {
   border-radius: 8px;
   padding: 16px 32px;
   min-height: 96px;
-  background-color: #d9d9d9;
+  background-color: #e5e5e5;
   gap: 8px;
 }
 .topic.secondary h3,
 .topic.secondary p,
 .topic.secondary a {
   font-size: 20px;
-  color: #151515;
+  color: #262626;
 }
 .topic.secondary h3 {
   margin-bottom: 8px;
@@ -424,7 +423,7 @@ button:disabled {
   padding: 20px;
   margin: 16px;
   border-radius: 16px;
-  background-color: #fafafa;
+  background-color: #f5f5f5;
   text-align: center;
 }
 .modal.primary .modal-content h2 {
@@ -458,7 +457,7 @@ button:disabled {
   margin-left: auto;
   height: 100vh;
   padding: 20px;
-  background-color: #fafafa;
+  background-color: #f5f5f5;
   transition: margin-right 0.2s ease 0s;
 }
 .modal.secondary.active .modal-content {
@@ -509,7 +508,7 @@ button:disabled {
   overflow: hidden;
   align-self: flex-start;
   flex-shrink: 0;
-  border: 1px solid #7b95b7;
+  border: 1px solid #3b82f6;
 }
 .modal.cart-modal .cart-item .cart-item-center {
   flex-grow: 1;
@@ -557,8 +556,8 @@ button:disabled {
   z-index: 1;
   min-width: 20px;
   height: 20px;
-  color: #fafafa;
-  background-color: #ff2115;
+  color: #f5f5f5;
+  background-color: #ef4444;
   text-align: center;
   font-size: 16px;
   border-radius: 20px;
@@ -573,8 +572,8 @@ button:disabled {
 
 .header.secondary {
   position: relative;
-  background-color: #fafafa;
-  box-shadow: 0px 4px 8px -4px rgba(0, 0, 0, 0.32);
+  background-color: #f5f5f5;
+  box-shadow: 0px 0px 6px 0px #a3a3a3;
 }
 .header.secondary .container {
   height: 64px;
@@ -584,7 +583,7 @@ button:disabled {
 }
 .header.secondary .logo {
   font-size: 1.75rem;
-  color: #151515;
+  color: #262626;
 }
 .header.secondary nav {
   display: flex;
@@ -596,7 +595,7 @@ button:disabled {
   display: flex;
   align-items: center;
   gap: 4px;
-  color: #151515;
+  color: #262626;
 }
 .header.secondary .menu-button {
   display: none;
@@ -622,7 +621,7 @@ button:disabled {
 }
 .footer {
   margin-top: auto;
-  background-color: #151515;
+  background-color: #262626;
 }
 .footer .container {
   padding: 20px 0px;
@@ -631,7 +630,7 @@ button:disabled {
   font-size: 16px;
   line-height: 24px;
   text-align: center;
-  color: #fafafa;
+  color: #f5f5f5;
 }
 
 @media (max-width: 768px) {
@@ -642,7 +641,7 @@ button:disabled {
     font-size: 14px;
     line-height: 20px;
     text-align: center;
-    color: #fafafa;
+    color: #f5f5f5;
   }
 }
 .menu {
@@ -654,8 +653,8 @@ button:disabled {
   width: 100%;
   max-width: 320px;
   height: 100vh;
-  background-color: #fafafa;
-  box-shadow: 0px 4px 8px -4px rgba(0, 0, 0, 0.32);
+  background-color: #f5f5f5;
+  box-shadow: 0px 0px 6px 0px #a3a3a3;
   transition: right 0.2s ease 0s;
 }
 .menu .menu-button {
@@ -678,7 +677,7 @@ button:disabled {
   align-items: center;
   gap: 4px;
   width: fit-content;
-  color: #151515;
+  color: #262626;
   margin-bottom: 1rem;
 }
 .menu nav .link:last-child {
@@ -751,7 +750,7 @@ button:disabled {
 }
 .cart hr {
   border: none;
-  border-bottom: 1px solid #9b9b9b;
+  border-bottom: 1px solid #a3a3a3;
 }
 .cart .cart-total .cart-total-item {
   display: flex;

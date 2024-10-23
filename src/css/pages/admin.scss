@@ -1,0 +1,122 @@
+@import "../themes/theme";
+
+
+html[data-theme="light"],
+:root {
+    --primary: #{$primary-color-200};
+    --secondary: #{$primary-color-500};
+    --accent: #{$amber-color-300};
+    --primary-fg: #{$neutral-color-50};
+
+    --body-fg: #{$neutral-color-700};
+    --body-bg: #{$neutral-color-100};
+    --body-quiet-color: #{$neutral-color-500};
+    --body-loud-color: #{$neutral-color-950};
+
+    --header-color: #{$amber-color-100};
+    --header-branding-color: var(--accent);
+    --header-bg: var(--secondary);
+    --header-link-color: var(--primary-fg);
+
+    --breadcrumbs-fg: #{$primary-color-100};
+    --breadcrumbs-link-fg: var(--body-bg);
+    --breadcrumbs-bg: #{$primary-color-800};
+
+    --link-fg: #{$primary-color-600};
+    --link-hover-color: #{$primary-color-800};
+    --link-selected-fg: var(--secondary);
+
+    --hairline-color: #{$neutral-color-200};
+    --border-color: #{$neutral-color-300};
+
+    --error-fg: #{$red-color-500};
+
+    --message-success-bg: #{$green-color-100};
+    --message-warning-bg: #{$amber-color-100};
+    --message-error-bg: #{$red-color-100};
+
+    --darkened-bg: #{$neutral-color-200}; /* A bit darker than --body-bg */
+    --selected-bg: #{$neutral-color-200}; /* E.g. selected table cells */
+    --selected-row: #{$amber-color-100};
+
+    --button-fg: #{$neutral-color-50};
+    --button-bg: var(--secondary);
+    --button-hover-bg: #{$primary-color-800};
+    --default-button-bg: #{$primary-color-800};
+    --default-button-hover-bg: var(--secondary);
+    --close-button-bg: #{$neutral-color-500};
+    --close-button-hover-bg: #{$neutral-color-700};
+    --delete-button-bg: #{$red-color-500};
+    --delete-button-hover-bg: #{$red-color-700};
+
+    --object-tools-fg: var(--button-fg);
+    --object-tools-bg: var(--close-button-bg);
+    --object-tools-hover-bg: var(--close-button-hover-bg);
+}
+
+html[data-theme="dark"] {
+    --primary: #{$primary-color-800};
+    --primary-fg: #{$neutral-color-100};
+
+    --body-fg: #{$neutral-color-200};
+    --body-bg: #{$neutral-color-900};
+    --body-quiet-color: #{$neutral-color-200};
+    --body-loud-color: #{$neutral-color-50};
+
+    --breadcrumbs-link-fg: #{$neutral-color-200};
+    --breadcrumbs-bg: var(--primary);
+
+    --link-fg: #{$primary-color-400};
+    --link-hover-color: #{$primary-color-600};
+    --link-selected-fg: #{$primary-color-400};
+
+    --hairline-color: #{$neutral-color-800};
+    --border-color: #{$neutral-color-700};
+
+    --error-fg: #{$red-color-400};
+    --message-success-bg: #{$green-color-800};
+    --message-warning-bg: #{$yellow-color-900};
+    --message-error-bg: #{$red-color-950};
+
+    --darkened-bg: #{$neutral-color-800};
+    --selected-bg: #{$neutral-color-900};
+    --selected-row: #{$primary-color-900};
+
+    --close-button-bg: #{$neutral-color-700};
+    --close-button-hover-bg: #{$neutral-color-500};
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+      --primary: #{$primary-color-800};
+      --primary-fg: #{$neutral-color-100};
+  
+      --body-fg: #{$neutral-color-200};
+      --body-bg: #{$neutral-color-900};
+      --body-quiet-color: #{$neutral-color-200};
+      --body-loud-color: #{$neutral-color-50};
+  
+      --breadcrumbs-link-fg: #{$neutral-color-200};
+      --breadcrumbs-bg: var(--primary);
+  
+      --link-fg: #{$primary-color-400};
+      --link-hover-color: #{$primary-color-600};
+      --link-selected-fg: #{$primary-color-400};
+  
+      --hairline-color: #{$neutral-color-800};
+      --border-color: #{$neutral-color-700};
+  
+      --error-fg: #{$red-color-400};
+      --message-success-bg: #{$green-color-800};
+      --message-warning-bg: #{$yellow-color-900};
+      --message-error-bg: #{$red-color-950};
+  
+      --darkened-bg: #{$neutral-color-800};
+      --selected-bg: #{$neutral-color-900};
+      --selected-row: #{$primary-color-900};
+  
+      --close-button-bg: #{$neutral-color-700};
+      --close-button-hover-bg: #{$neutral-color-500};
+    }
+  }
+

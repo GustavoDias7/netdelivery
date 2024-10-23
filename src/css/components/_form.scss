@@ -122,11 +122,11 @@ $svg-dimention-large: $svg-dimention + 4px;
   }
 
   &.error {
-    border-color: $error-color-100;
+    border-color: $red-color-500;
   }
 
   &.success {
-    border-color: $success-color-100;
+    border-color: $green-color-500;
   }
 
   @include responsive("small", "regular", "large") using ($class) {
@@ -279,7 +279,7 @@ $svg-dimention-large: $svg-dimention + 4px;
 
     ~.f-label::before,
     ~.f-label::after {
-      border-color: $error-color-100;
+      border-color: $red-color-500;
     }
   }
 
@@ -287,7 +287,7 @@ $svg-dimention-large: $svg-dimention + 4px;
 
     ~.f-label::before,
     ~.f-label::after {
-      border-color: $success-color-100;
+      border-color: $green-color-500;
     }
   }
 
@@ -528,11 +528,11 @@ $svg-dimention-large: $svg-dimention + 4px;
   padding: 2px 12px 0px;
 
   &.error {
-    color: $error-color-100;
+    color: $red-color-500;
   }
 
   &.success {
-    color: $success-color-100;
+    color: $green-color-500;
   }
   &.center {
     text-align: center;

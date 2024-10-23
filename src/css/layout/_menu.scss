@@ -8,7 +8,7 @@
   @include max-width($width);
   height: 100vh;
   background-color: $neutral-color-100;
-  box-shadow: $primary-box-shadow;
+  box-shadow: $box-shadow-200;
   transition: right $primary-transition;
 
   .menu-button {
