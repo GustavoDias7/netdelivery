@@ -1,0 +1,65 @@
+.primary-banner {
+  .container {
+    @include flex-center-between;
+    gap: 2rem;
+    // min-height: 368px;
+  }
+
+  .left {
+    width: 60%;
+
+    h2 {
+      font-weight: 700;
+      font-size: 3rem;
+      color: $primary-color-600;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.25rem;
+      line-height: 2rem;
+      color: $primary-color-600;
+      // margin-bottom: 1.5rem;
+    }
+  }
+
+  .right {
+    width: 40%;
+
+    img {
+      width: 100%;
+    }
+  }
+}
+
+
+@include md {
+  .primary-banner {
+    .container {
+      flex-direction: column-reverse;
+      justify-content: flex-start;
+    }
+
+    .left,
+    .right {
+      @include max-width(342px);
+      margin: 0px auto;
+    }
+
+    .left {
+      h2 {
+        font-weight: 500;
+        font-size: 2rem;
+      }
+
+      .gn-button {
+        width: 100%;
+      }
+
+      p {
+        font-size: 1.25rem;
+        // margin-bottom: 1.5rem;
+      }
+    }
+  }
+}

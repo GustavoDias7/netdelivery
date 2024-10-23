@@ -10,11 +10,14 @@
         Delivery | {% block title %}Default title{% endblock %}
     </title>
     {% block css %}
-        <link href="{% static 'css/pages/main.css' %}?{% now "U" %}" rel="stylesheet">
+        <link href="{% static 'css/pages/index.css' %}?{% now "U" %}" rel="stylesheet">
     {% endblock %}
 </head>
 <body>
     <div class="app{% block app_section %}{% endblock %}" id="app">
+        {% comment %} {% include "../layouts/menu.html" %} {% endcomment %}
+
+        {% include "../layouts/contact_bar.html" %}
         {% include "../layouts/header/secondary.html" %}
         {% include "../layouts/menu.html" %}
         {% include "../components/modals/cart.html" %}

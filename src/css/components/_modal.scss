@@ -1,9 +1,9 @@
 .modal {
   position: fixed;
-  z-index: 2;
+  z-index: 3;
   @include insert;
   @include opacity(false);
-  transition: $primary-transition;
+  transition: opacity $primary-transition;
   background-color: $opacity-color-100;
 
   &.active {
@@ -22,7 +22,7 @@
       padding: 20px;
       margin: 16px;
       border-radius: 16px;
-      background-color: $neutral-color-100;
+      background-color: $neutral-color-50;
 
       text-align: center;
 
@@ -54,20 +54,25 @@
 
   &.secondary {
     .modal-content {
+      $content-width: 480px;
+
+      position: absolute;
+      top: 0px;
+      right: -$content-width;
+
+      transform: translateX(0);
+      transition: transform 0.5s ease 0s;
+
       display: flex;
       flex-direction: column;
-      $content-width: 480px;
       @include max-width($content-width);
-      margin-right: -100%;
-      margin-left: auto;
       height: 100vh;
       padding: 20px;
-      background-color: $neutral-color-100;
-      transition: margin-right $primary-transition;
+      background-color: $neutral-color-50;
     }
 
     &.active .modal-content {
-      margin-right: 0px;
+      transform: translateX(-480px);
     }
 
     $section-margin-bottom: 20px;
@@ -86,7 +91,7 @@
         &:hover,
         &:focus {
           opacity: 0.6;
-          transition: $primary-transition;
+          transition: opacity $primary-transition;
         }
       }
     }
@@ -117,14 +122,44 @@
         overflow: hidden;
         align-self: flex-start;
         flex-shrink: 0;
-        border: $primary-border;
+
+        @include sm {
+          @include square(48px);
+        }
       }
 
       .cart-item-center {
-        flex-grow: 1;
-        h3,
+        flex: auto;
+
+        h3 {
+          a {
+            color: $neutral-color-800;
+          }
+        }
+
         .counter {
           margin-bottom: 8px;
+        }
+
+        .price {
+          @include flex-align-center;
+          gap: 6px;
+
+          s {
+            text-decoration-color: $red-color-500;
+            text-decoration-thickness: 2px;
+          }
+
+          .discount {
+            font-size: .75rem;
+            line-height: 1rem;
+
+            user-select: none;
+            padding: 2px 4px;
+            color: $neutral-color-50;
+            background-color: $primary-color-600;
+            border-radius: 4px;
+          }
         }
       }
 
@@ -134,6 +169,11 @@
         @include background-image(pathImages("circle-close.svg"));
         flex-shrink: 0;
       }
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid $neutral-color-400;
     }
 
     .modal-footer {
@@ -163,22 +203,6 @@
             }
           }
         }
-      }
-    }
-  }
-
-  &.logout {
-    .modal-content {
-      p {
-        margin-bottom: 16px;
-      }
-    }
-  }
-
-  &.cancel-order {
-    .modal-content {
-      p {
-        margin-bottom: 16px;
       }
     }
   }

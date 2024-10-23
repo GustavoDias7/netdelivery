@@ -1,0 +1,41 @@
+.details {
+  .main-infos {
+    .gn-button {
+      margin-top: 1rem;
+    }
+
+    article {
+      padding: 1.5rem;
+      box-shadow: $box-shadow-300;
+    }
+
+    header {
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid $neutral-color-300;
+
+      @include sm {
+        margin-bottom: 16px;
+        padding-bottom: 16px;
+      }
+    }
+
+    footer {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid $neutral-color-300;
+
+      li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      @include sm {
+        margin-top: 16px;
+        padding-top: 16px;
+      }
+    }
+  }
+
+}

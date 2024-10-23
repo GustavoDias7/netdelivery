@@ -10,9 +10,12 @@
 {% endblock %}
 
 {% block content %}
-  {% for category in categories %}
-      {% include "../layouts/product-category.html"  with category=category%}
-  {% endfor %}
+  {% include "../layouts/banner.html" %}
+  {% include "../layouts/about/primary.html" %}
+  {% include "../layouts/products.html" %}
+  {% include "../layouts/about/senary.html" %}
+  {% include "../layouts/faq.html" %}
+  {% include "../layouts/contacts.html" %}
 {% endblock %}
 
 {% block js %}

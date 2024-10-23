@@ -1,0 +1,36 @@
+.simple-cta {
+  padding: 40px 0;
+
+  &.color {
+    background-color: $slate-color-500;
+    color: $neutral-color-50;
+
+    .gn-button {
+      color: $neutral-color-50;
+    }
+  }
+
+  .title {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  @include md {
+    .title {
+      font-size: 1.5rem;
+      margin-bottom: 16px;
+    }
+
+    .subtitle {
+      margin-bottom: 20px;
+    }
+  }
+}

@@ -10,15 +10,13 @@
   color: $neutral-color-800;
 }
 
-body,
-html,
-#app {
-  min-height: 100vh;
+html {
+  scroll-behavior: smooth;
 }
 
-#app {
-  display: flex;
-  flex-direction: column;
+body,
+html {
+  min-height: 100%;
 }
 
 a {

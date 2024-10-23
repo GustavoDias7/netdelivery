@@ -1,0 +1,37 @@
+.contact-bar {
+  background-color: $primary-color-50;
+  box-shadow: $box-shadow-200;
+  padding: 8px 0px;
+
+  .container {
+    @include flex-center-between;
+
+    @include sm {
+      flex-direction: column;
+      row-gap: 8px;
+    }
+  }
+
+  .contact-bar-left {
+    @include flex-center-center;
+    column-gap: 16px;
+    row-gap: 4px;
+    flex-wrap: wrap;
+
+    a {
+      @include flex-align-center;
+      gap: 8px;
+      color: $primary-color-600;
+
+      p {
+        color: $primary-color-600;
+      }
+    }
+
+    img {
+      $area: 20px;
+      width: $area;
+      height: $area;
+    }
+  }
+}

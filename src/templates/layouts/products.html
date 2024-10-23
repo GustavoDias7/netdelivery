@@ -1,0 +1,51 @@
+{% for category in products %}
+<section class="section" id="{{category.code}}">
+  <div class="container md:container">
+    <h2 class="title-line text-2xl sm:text-3xl text-color-primary text-align-center text-mb-2 sm:text-mb-4">
+      {{category.title}}
+    </h2>
+    <div class="g-root g-no-hidden g-gap-4">
+      <div class="g-row">
+        {% for product in category.items %}
+        {% if product.default_variant or product.size == None %}
+        <div class="g-item-12 sm:g-item-6 md:g-item-4">
+          <article class="card secondary">
+            <p class="cart-count" :class="{active: cart.getCount('{{product.id}}')}"
+              v-text="cart.getCount('{{product.id}}')">
+            </p>
+            <a href="/product?id={{product.id}}&size={{product.size.id}}">
+              <figure class="aspect-ratio aspect-1-1 fit">
+                <img src="{{product.img}}" alt="Card Image" />
+              </figure>
+            </a>
+            <div class="description">
+              <a href="{{product.link}}">
+                <h3 class="text-xl text-color-primary">{{product.name}} {{product.size.name}}</h3>
+              </a>
+              <p class="price text-lg">
+                {{product.ftotal}}
+                {% if product.discount %}
+                <span class="discount text-sm">{{product.fdiscount}}</span>
+                {% endif %}
+              </p>
+              <button class="gn-button pm-button small full" @click="cart.addItem(
+                  '{{product.id}}',
+                  '{{product.name}} {{product.size.name}}',
+                  '{{product.price}}',
+                  '{{product.img}}',
+                  '{{product.discount}}',
+                  '{{product.link}}',
+                )">Adicionar ao carrinho</button>
+              <button class="gn-button sc-button small full" @click="openCart">
+                Abrir carrinho
+              </button>
+            </div>
+          </article>
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endfor %}

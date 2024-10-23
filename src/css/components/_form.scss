@@ -98,10 +98,10 @@ $svg-dimention-large: $svg-dimention + 4px;
   border-radius: $f-border-radius;
   padding: $f-padding;
   outline: none;
-  border: 1px solid $neutral-color-800;
+  border: $f-primary-border;
   transition: border $primary-transition;
   background-color: transparent;
-  border-color: $primary-color-500;
+  border-color: $slate-color-500;
 
   &:disabled {
     opacity: 0.4;
@@ -109,7 +109,7 @@ $svg-dimention-large: $svg-dimention + 4px;
   }
 
   &::placeholder {
-    color: $primary-color-500;
+    color: $blue-color-200;
   }
 
   &.transparent {
@@ -117,16 +117,16 @@ $svg-dimention-large: $svg-dimention + 4px;
     user-select: none;
 
     &::placeholder {
-      color: $primary-color-200;
+      color: $blue-color-200;
     }
   }
 
   &.error {
-    border-color: $red-color-500;
+    border-color: $red-color-600;
   }
 
   &.success {
-    border-color: $green-color-500;
+    border-color: $green-color-700;
   }
 
   @include responsive("small", "regular", "large") using ($class) {
@@ -202,14 +202,14 @@ $svg-dimention-large: $svg-dimention + 4px;
     &::before {
       border-left: $f-primary-border;
       border-top-left-radius: $f-border-radius;
-      border-color: $primary-color-500;
+      border-color: $slate-color-500;
       width: $f-width-left;
     }
 
     &::after {
       border-right: $f-primary-border;
       border-top-right-radius: $f-border-radius;
-      border-color: $primary-color-500;
+      border-color: $slate-color-500;
       flex: 1;
     }
 
@@ -279,7 +279,7 @@ $svg-dimention-large: $svg-dimention + 4px;
 
     ~.f-label::before,
     ~.f-label::after {
-      border-color: $red-color-500;
+      border-color: $red-color-600;
     }
   }
 
@@ -287,7 +287,7 @@ $svg-dimention-large: $svg-dimention + 4px;
 
     ~.f-label::before,
     ~.f-label::after {
-      border-color: $green-color-500;
+      border-color: $green-color-700;
     }
   }
 
@@ -528,14 +528,11 @@ $svg-dimention-large: $svg-dimention + 4px;
   padding: 2px 12px 0px;
 
   &.error {
-    color: $red-color-500;
+    color: $red-color-600;
   }
 
   &.success {
-    color: $green-color-500;
-  }
-  &.center {
-    text-align: center;
+    color: $green-color-700;
   }
 }
 
@@ -569,17 +566,17 @@ $svg-dimention-large: $svg-dimention + 4px;
   /* for Chrome */
   -webkit-appearance: none;
 
-  /* For IE10 */
-  &::-ms-expand {
-    display: none;
-  }
-
   cursor: pointer;
   background-image: url(pathImages("select-arrow.svg"));
   background-repeat: no-repeat;
   background-size: 10px;
   background-position: calc(100% - $f-padding) center;
 
+
+  /* For IE10 */
+  &::-ms-expand {
+    display: none;
+  }
   option:first-of-type {
     display: none;
   }
@@ -603,7 +600,7 @@ textarea.f-input {
       height: $f-input-height;
       border: $f-primary-border;
       border-left: none;
-      border-color: $primary-color-500;
+      border-color: $slate-color-500;
       transition: border $primary-transition, opacity $primary-transition;
       border-top-right-radius: $f-border-radius;
       border-bottom-right-radius: $f-border-radius;
@@ -615,17 +612,17 @@ textarea.f-input {
         height: $svg-dimention;
 
         path {
-          fill: $primary-color-500;
+          fill: $slate-color-500;
         }
       }
 
       &.color {
         border: none;
-        background-color: $primary-color-500;
+        background-color: $slate-color-500;
 
         svg {
           path {
-            fill: $neutral-color-100;
+            fill: $neutral-color-50;
           }
         }
       }

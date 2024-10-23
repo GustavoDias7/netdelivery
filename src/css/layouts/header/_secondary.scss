@@ -1,0 +1,56 @@
+.header.secondary {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  background-color: $neutral-color-50;
+  box-shadow: $box-shadow-200;
+
+  .container {
+    height: 64px;
+    @include flex-center-between;
+  }
+
+  .logo {
+    font-size: 1.75rem;
+    color: $primary-color-600;
+  }
+
+  nav {
+    @include flex-center-center;
+    gap: 1rem;
+
+    .link {
+      color: $primary-color-600;
+    }
+  }
+
+  .menu-button {
+    display: none;
+    font-size: 0px;
+    @include reset-button;
+    @include square(20px);
+    @include background-image(pathImages("menu.svg"));
+  }
+
+  @include md {
+    nav .link {
+      display: none;
+    }
+
+    .menu-button {
+      display: block;
+    }
+  }
+
+  @include sm {
+    .container {
+      height: 48px;
+    }
+
+    .logo {
+      font-size: 1.25rem;
+      color: $primary-color-600;
+    }
+  }
+}

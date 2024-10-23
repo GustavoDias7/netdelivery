@@ -1,0 +1,101 @@
+<section class="section" id="faq">
+  <div class="container md:container">
+    <h2
+      class="text-2xl sm:text-3xl text-color-primary text-align-center text-mb-2 sm:text-mb-4"
+    >
+      Perguntas Frequentes
+    </h2>
+    <button class="accordion secondary"  :class="{active: 0 == accordion.index}"
+      @click="handleAccordion(0)">
+      <div class="label">
+        <h3 class="text-lg sm:text-xl">Quais são os preços das pizzas?</h3>
+        <span class="arrow"></span>
+      </div>
+      <div class="content">
+        <div>
+          <p class="text-base sm:text-lg">
+            Nossas pizzas variam de R$ 30 a R$ 70, dependendo do tamanho e dos
+            ingredientes escolhidos. Oferecemos opções individuais, médias e
+            grandes para atender a diferentes apetite. Além disso, você pode
+            conferir nosso cardápio online para ver todos os preços e escolher a
+            sua favorita!
+          </p>
+        </div>
+      </div></button
+    ><button class="accordion secondary"  :class="{active: 1 == accordion.index}"
+      @click="handleAccordion(1)">
+      <div class="label">
+        <h3 class="text-lg sm:text-xl">
+          Vocês oferecem descontos ou promoções?
+        </h3>
+        <span class="arrow"></span>
+      </div>
+      <div class="content">
+        <div>
+          <p class="text-base sm:text-lg">
+            Sim, temos promoções especiais durante a semana e descontos para
+            pedidos em grupo! Fique de olho nas nossas redes sociais para
+            ofertas exclusivas e cupons de desconto. Também temos um programa de
+            fidelidade, onde você acumula pontos a cada compra que podem ser
+            trocados por recompensas.
+          </p>
+        </div>
+      </div></button
+    ><button class="accordion secondary"  :class="{active: 2 == accordion.index}"
+      @click="handleAccordion(2)">
+      <div class="label">
+        <h3 class="text-lg sm:text-xl">
+          Qual é o tempo de entrega e a taxa de entrega?
+        </h3>
+        <span class="arrow"></span>
+      </div>
+      <div class="content">
+        <div>
+          <p class="text-base sm:text-lg">
+            O tempo médio de entrega é de 30 a 45 minutos, dependendo da sua
+            localização. A taxa de entrega varia conforme a distância, mas
+            estamos sempre buscando manter os valores acessíveis. Oferecemos
+            também entrega grátis em pedidos acima de R$ 100, para que você
+            possa aproveitar ainda mais!
+          </p>
+        </div>
+      </div></button
+    ><button class="accordion secondary"  :class="{active: 3 == accordion.index}"
+      @click="handleAccordion(3)">
+      <div class="label">
+        <h3 class="text-lg sm:text-xl">
+          Quais formas de pagamento vocês aceitam?
+        </h3>
+        <span class="arrow"></span>
+      </div>
+      <div class="content">
+        <div>
+          <p class="text-base sm:text-lg">
+            Aceitamos diversas formas de pagamento para sua conveniência! Você
+            pode pagar em dinheiro, cartões de crédito e débito, além de opções
+            de pagamento online como Pix e aplicativos de entrega. Garantimos
+            uma transação segura para que você possa desfrutar da sua pizza sem
+            preocupações!
+          </p>
+        </div>
+      </div></button
+    ><button class="accordion secondary"  :class="{active: 4 == accordion.index}"
+      @click="handleAccordion(4)">
+      <div class="label">
+        <h3 class="text-lg sm:text-xl">Quais são os sabores mais populares?</h3>
+        <span class="arrow"></span>
+      </div>
+      <div class="content">
+        <div>
+          <p class="text-base sm:text-lg">
+            Nossos sabores mais populares incluem a clássica Margherita,
+            Pepperoni, e a Pizza de Frango com Catupiry. Além disso, temos
+            combinações exclusivas que mudam semanalmente! Não deixe de
+            experimentar nossos sabores sazonais e pedir sugestões ao nosso
+            time, sempre prontos para ajudar na escolha!
+          </p>
+        </div>
+      </div>
+    </button>
+  </div>
+</section>

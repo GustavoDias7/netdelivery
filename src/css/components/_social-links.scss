@@ -1,0 +1,21 @@
+.social-links {
+  @include flex-align-center;
+  gap: 8px;
+
+  a {
+    font-size: 0px;
+  }
+
+  img {
+    $area: 20px;
+    width: $area;
+    height: $area;
+    font-size: 12px;
+  }
+
+  .line {
+    width: 1px;
+    height: 16px;
+    background-color: $primary-color-600;
+  }
+}

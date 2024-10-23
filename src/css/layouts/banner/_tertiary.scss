@@ -1,0 +1,63 @@
+.tertiary-banner {
+  background-color: $neutral-color-50;
+
+  .container {
+    @include flex-center-center;
+    @include max-width(570px);
+    min-height: 610px;
+    text-align: center;
+  }
+
+  img {
+    @include max-width(312px);
+    height: auto;
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-weight: 700;
+    font-size: 4rem;
+    color: $slate-color-500;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1.25rem;
+    line-height: 2rem;
+    color: $slate-color-400;
+    margin-bottom: 1.5rem;
+  }
+
+  .buttons {
+    @include flex-center-center;
+    gap: 1rem;
+  }
+}
+
+@include md {
+  .tertiary-banner {
+    .container {
+      align-items: flex-start;
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
+
+    h2 {
+      font-weight: 500;
+      font-size: 2rem;
+    }
+
+    p {
+      font-size: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .gn-button {
+      width: 100%;
+    }
+
+    .buttons {
+      flex-direction: column;
+    }
+  }
+}

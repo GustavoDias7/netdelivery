@@ -1,0 +1,12 @@
+.card.quaternary {
+  @include max-width(272px);
+  padding: 32px;
+  text-align: center;
+  color: $neutral-color-700;
+  box-shadow: $box-shadow-200;
+  border-radius: 8px;
+
+  .icon {
+    @include square(96px);
+  }
+}

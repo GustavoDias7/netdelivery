@@ -1,12 +1,8 @@
 <div class="modal secondary cart-modal" :class="{active: modal.cart}">
   <div class="modal-content">
     <div class="modal-header">
-      <h2 class="modal-title text-2xl sm:text-3xl">Carrinho</h2>
-      <button
-        class="modal-close"
-        @click.prevent="closeCart"
-        type="button"
-      ></button>
+      <h2 class="text-2xl sm:text-3xl">Carrinho</h2>
+      <button class="modal-close" @click.prevent="closeCart" type="button"></button>
     </div>
     <div class="modal-body">
       <p class="text-sm sm:text-base" v-if="cart.cart.length === 0">
@@ -16,55 +12,58 @@
         <div class="g-row">
           <div v-for="item in cart.cart" class="g-item-12">
             <div class="cart-item">
-              <a href="/" class="img">
+              <a :href="item.link" class="img">
                 <figure class="aspect-ratio aspect-1-1 fit">
-                  <img
-                    src="static/media/placeholder-1.svg"
-                    alt="Placeholder"
-                  />
+                  <img :src="item.img" alt="Placeholder" />
                 </figure>
               </a>
               <div class="cart-item-center">
-                <h3 class="text-sm" v-text="item.name"></h3>
+                <h3 class="text-sm text-mb-2">
+                  <a :href="item.link" v-text="item.name"></a>
+                </h3>
                 <div class="counter small">
-                  <button
-                    class="counter-button"
-                    @click="cart.removeItem(item.id)"
-                    :disabled="cart.getCount(item.id) === 1"
-                  >
+                  <button class="counter-button" @click="cart.removeItem(item.id)"
+                    :disabled="cart.getCount(item.id) === 1">
                     <span class="sign minus"></span>
                   </button>
-                  <p
-                    class="counter-input"
-                    v-text="cart.getCount(item.id)"
-                  ></p>
-                  <button
-                    class="counter-button"
-                    @click="cart.addItem(item.id, item.name, item.price)"
-                  >
+                  <p class="counter-input" v-text="cart.getCount(item.id)"></p>
+                  <button class="counter-button" @click="cart.addItem(item.id)">
                     <span class="sign"></span>
                   </button>
                 </div>
-                <p class="text-base">R$ <span v-text="item.fprice"></span></p>
+                <p class="price">
+                  <s class="text-xs xs:text-sm sm:text-base"
+                    v-if="cart.fgetPrice(item.id) !== cart.fgetPriceWithDiscount(item.id)"
+                    v-text="cart.fgetPrice(item.id)"></s>
+
+                  <span class="text-xs xs:text-sm sm:text-base" v-text="cart.fgetPriceWithDiscount(item.id)"></span>
+
+                  <span v-if="cart.getDiscount(item.id)" v-text="cart.fgetDiscount(item.id)"
+                    class="discount text-xs"></span>
+                </p>
               </div>
-              <button
-                class="delete"
-                type="button"
-                @click="cart.deleteItem(item.id)"
-              ></button>
+              <button class="delete" type="button" @click="cart.deleteItem(item.id)"></button>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="modal-footer">
-      <div class="g-root g-gap-4 sm:g-gap-5">
+      <div class="g-root g-gap-2 sm:g-gap-4">
         <div class="g-row">
-          <div class="g-item-12"><hr /></div>
+          <div class="g-item-12">
+            <hr />
+          </div>
           <div class="g-item-12">
             <div class="cart-total">
               <div class="g-root g-gap-2">
                 <div class="g-row">
+                  <div v-if="false" class="g-item-12">
+                    <div class="cart-total-item">
+                      <p>Taxa de entrega</p>
+                      <p>R$ <strong>99,99</strong></p>
+                    </div>
+                  </div>
                   <div class="g-item-12">
                     <div class="cart-total-item">
                       <p>Total</p>
@@ -76,12 +75,16 @@
             </div>
           </div>
           <div class="g-item-12">
-            <a
-              class="gn-button tt-button full small sm:regular"
-              href="{% url 'order' %}"
-            >
-              Comprar
+            <a class="gn-button pm-button full small sm:regular"
+              :href="`https://wa.me/552199999999?text=Olá, eu gostaria de fazer o pedido dos produtos: ${cart.getItemNames()}`"
+              target="_blank">
+              Pedir agora
             </a>
+          </div>
+          <div class="g-item-12">
+            <button class="gn-button sc-button full small sm:regular" @click="closeCart">
+              Fechar carrinho
+            </button>
           </div>
         </div>
       </div>

@@ -1,5 +1,76 @@
-<footer class="footer">
-  <div class="container">
-    <p>© 2023 Copyright: Hello World</p>
+{% load static %}
+<footer class="footer secondary">
+  <div class="container md:container">
+    <div class="footer-top">
+      <div class="g-root g-gap-8">
+        <div class="g-row">
+          <div class="g-item-12 sm:g-item-6 lg:g-item-3">
+            <div>
+              <h3 class="text-xl text-mb-1">Endereço</h3>
+              <a class="text-sm"
+                href="https://maps.google.com/maps?ll=-22.914131,-43.445982&z=9&t=m&hl=en&gl=BR&mapclient=embed&q=Rio%20de%20Janeiro%20State%20of%20Rio%20de%20Janeiro"
+                target="_blank" rel="noopener noreferrer">Rio de Janeiro-RJ, Brasil</a>
+            </div>
+          </div>
+
+          <div class="g-item-12 sm:g-item-6 lg:g-item-3">
+            <div>
+              <h3 class="text-xl text-mb-1">Contatos</h3>
+              <p>
+                <strong>Telefone: </strong>
+                <a class="text-sm" href="tel:2140028922">(21) 4002-8922</a>
+              </p>
+              <p>
+                <strong>E-mail: </strong>
+                <a class="text-sm" href="mailto:email@email.com">email@email.com</a>
+              </p>
+            </div>
+          </div>
+
+          <div class="g-item-12 sm:g-item-6 lg:g-item-3">
+            <div>
+              <h3 class="text-xl text-mb-1">Funcionamento</h3>
+              <p class="text-sm">
+                <strong>Ter-Dom:</strong> 19h às 00h
+              </p>
+              <p class="text-sm">
+                <strong>Segunda:</strong> Fechado
+              </p>
+            </div>
+          </div>
+
+          <div class="g-item-12 sm:g-item-6 lg:g-item-3">
+            <div>
+              <h3 class="text-xl text-mb-1">Siga-nos</h3>
+              <div class="social-links">
+                <a href="https://wa.me/552199999999" target="_blank" title="WhatsApp">
+                  <img src="{% static 'img/whatsapp-white.svg' %}" alt="WhatsApp">
+                </a>
+                <span class="line"></span>
+                <a href="https://www.facebook.com/" target="_blank" title="Facebook">
+                  <img src="{% static 'img/facebook-white.svg' %}" alt="Facebook">
+                </a>
+                <span class="line"></span>
+                <a href="https://www.instagram.com/" target="_blank" title="Instagram">
+                  <img src="{% static 'img/instagram-white.svg' %}" alt="Instagram">
+                </a>
+                <span class="line"></span>
+                <a href="https://www.linkedin.com/" target="_blank" title="LinkedIn">
+                  <img src="{% static 'img/linkedin-white.svg' %}" alt="LinkedIn">
+                </a>
+                <span class="line"></span>
+                <a href="https://x.com/" target="_blank" title="X">
+                  <img src="{% static 'img/x-white.svg' %}" alt="X">
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="footer-bottom">
+      <p>© 2024 Copyright: Pizzaria Nobreza.</p>
+    </div>
   </div>
 </footer>

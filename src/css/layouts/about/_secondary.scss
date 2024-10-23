@@ -1,0 +1,15 @@
+.about.secondary {
+  .img {
+    display: block;
+    width: 100%;
+    min-height: 360px;
+    @include background-image(pathImages("chad-montano-MqT0asuoIcU-unsplash.jpg"));
+  }
+
+  .about-right {
+    background-color: $primary-color-50;
+    @include flex-center-center;
+    padding: 32px;
+    height: 100%;
+  }
+}

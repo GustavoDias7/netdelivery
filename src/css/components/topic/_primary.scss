@@ -1,6 +1,6 @@
 .topic.primary {
   display: flex;
-  border: 1px solid $neutral-color-600;
+  border: $primary-border;
   border-radius: 16px;
   padding: 16px;
 
@@ -8,14 +8,7 @@
     margin-right: 12px;
 
     .icon {
-      @include flex-center-center;
       @include square(64px);
-      background-color: $neutral-color-200;
-      border-radius: 64px;
-
-      img {
-        @include square(40px);
-      }
     }
   }
 
@@ -31,4 +24,5 @@
       font-size: 14px;
     }
   }
+
 }

@@ -8,7 +8,7 @@
   cursor: pointer;
   border: none;
   outline: none;
-  background-color: $neutral-color-100;
+  background-color: $neutral-color-50;
   transition: all 0.2s ease 0s;
   user-select: none;
 
@@ -23,8 +23,8 @@
   }
 
   &.pm-button {
-    background-color: $primary-color-500;
-    color: $neutral-color-100;
+    background-color: $slate-color-500;
+    color: $neutral-color-50;
   }
 
   &.sc-button {

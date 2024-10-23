@@ -1,0 +1,29 @@
+.footer {
+  background-color: $primary-color-600;
+
+  .container {
+    padding: 20px 0px;
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: $neutral-color-50;
+  }
+}
+
+@include md {
+  .footer {
+    .container {
+      padding: 14px 0px;
+    }
+
+    p {
+      font-size: 14px;
+      line-height: 20px;
+      text-align: center;
+      color: $neutral-color-50;
+    }
+  }
+}

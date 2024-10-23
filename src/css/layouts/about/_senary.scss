@@ -1,0 +1,45 @@
+.about.senary {
+  // padding: 64px 0px;
+
+  .img {
+    display: block;
+    width: 100%;
+    background-color: $neutral-color-100;
+    @include background-image(pathImages("chad-montano-MqT0asuoIcU-unsplash.jpg"));
+  }
+
+  .about-content {
+    .about-subtext {
+      p:nth-of-type(1) {
+        color: $neutral-color-500;
+        @include max-width(80%, true);
+        margin-bottom: 24px;
+      }
+
+      hr {
+        display: block;
+        border: unset;
+        border-bottom: 2px solid $primary-color-500;
+        @include max-width(64px, true);
+        margin-bottom: 24px;
+      }
+    }
+  }
+
+  @include sm {
+    // padding: 32px 0px;
+
+    .about-content {
+      .about-subtext {
+        p:nth-of-type(1) {
+          max-width: 100%;
+          margin-bottom: 16px;
+        }
+
+        hr {
+          margin-bottom: 16px;
+        }
+      }
+    }
+  }
+}

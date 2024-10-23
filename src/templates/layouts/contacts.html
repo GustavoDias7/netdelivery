@@ -1,0 +1,48 @@
+{% load static %}
+<section class="contacts section" id="contacts">
+  <div class="container md:container">
+    <h2 class="text-2xl sm:text-3xl text-color-primary text-align-center text-mb-2 sm:text-mb-4">
+      Contate-nos
+    </h2>
+    <p class="text-base text-align-center text-mb-4">
+      Estamos prontos para ouvir você! Para dúvidas, sugestões ou pedidos, entre em contato conosco e teremos o prazer
+      em ajudar.
+    </p>
+    <div class="g-root g-gap-0">
+      <div class="g-row">
+        <div class="g-item-12 md:g-item-4">
+          <div class="contact-item">
+            <img src="{% static 'img/marker.svg'%}" alt="Address" class="icon" />
+            <h3 class="text-xl text-color-primary text-align-center">
+              Endereço
+            </h3>
+            <a href="https://maps.google.com/maps?ll=-22.914131,-43.445982&z=9&t=m&hl=en&gl=BR&mapclient=embed&q=Rio%20de%20Janeiro%20State%20of%20Rio%20de%20Janeiro"
+              target="_blank" rel="noopener noreferrer">Rio de Janeiro-RJ, Brasil</a>
+          </div>
+        </div>
+        <div class="g-item-12 md:g-item-4">
+          <div class="contact-item dividers">
+            <img src="{% static 'img/phone.svg'%}" alt="Telephone" class="icon" />
+            <h3 class="text-xl text-color-primary text-align-center">
+              Telefone
+            </h3>
+            <a href="tel:2140028922">(21) 4002-8922</a>
+          </div>
+        </div>
+        <div class="g-item-12 md:g-item-4">
+          <div class="contact-item">
+            <img src="{% static 'img/mail.svg'%}" alt="E-mail" class="icon" />
+            <h3 class="text-xl text-color-primary text-align-center">E-mail</h3>
+            <a href="mailto:">email@email.com</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="map">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d470400.7386830834!2d-43.77565508292252!3d-22.91315798611381!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9bde559108a05b%3A0x50dc426c672fd24e!2sRio%20de%20Janeiro%2C%20State%20of%20Rio%20de%20Janeiro!5e0!3m2!1sen!2sbr!4v1725457331794!5m2!1sen!2sbr"
+        width="600" height="312" style="border: 0" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>

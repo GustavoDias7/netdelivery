@@ -26,7 +26,7 @@ const mainMixin = {
       this.closeModal("logout");
     },
     openCart() {
-      this.closeModal("menu");
+      this.cart.syncCart();
       this.openModal("cart");
     },
     closeCart() {
@@ -41,8 +41,8 @@ const mainMixin = {
       this.cart.setCount(id, numValue);
     },
     active(data) {
-      return {active: data !== ""}
-    }
+      return { active: data !== "" };
+    },
   },
 };
 

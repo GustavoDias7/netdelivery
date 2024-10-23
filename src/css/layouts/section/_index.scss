@@ -1,0 +1,13 @@
+.section {
+  padding-top: 64px;
+  padding-bottom: 64px;
+
+  &:nth-child(even) {
+    background-color: $neutral-color-100;
+  }
+
+  @include sm {
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+}

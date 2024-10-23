@@ -6,13 +6,13 @@
   font-size: 1rem;
   height: $height;
   padding: 0px $padding;
-  color: $neutral-color-800;
+  color: $primary-color-600;
   cursor: pointer;
-  border-radius: 32px;
+  border-radius: 4px;
   border: none;
   outline: none;
-  background-color: $neutral-color-100;
-  transition: all 0.2s ease 0s;
+  background-color: $neutral-color-50;
+  transition: opacity 0.2s ease 0s;
   user-select: none;
 
   &:focus,
@@ -26,25 +26,13 @@
   }
 
   &.pm-button {
-    background-color: $neutral-color-800;
-    color: $neutral-color-100;
+    background-color: $primary-color-600;
+    color: $neutral-color-50;
   }
 
   &.sc-button {
     background-color: transparent;
-    border: 1px solid $neutral-color-800;
-  }
-
-  &.tt-button {
-    background-color: $neutral-color-800;
-    color: $neutral-color-100;
-    border-radius: 8px;
-  }
-
-  &.qt-button {
-    background-color: transparent;
-    border: 1px solid $neutral-color-800;
-    border-radius: 8px;
+    border: 1px solid $primary-color-600;
   }
 
   @include responsive("full",
@@ -105,6 +93,26 @@
       font-size: 1.25rem;
       height: $height + 12px;
       padding: 0px $padding + 4px;
+    }
+  }
+}
+
+.multi-buttons {
+  @include flex-align-center;
+  gap: 4px;
+  flex-wrap: wrap;
+  user-select: none;
+
+  .size {
+    @include flex-center-center;
+    width: fit-content;
+    padding: 4px 8px;
+    background-color: $neutral-color-300;
+    border-radius: 4px;
+
+    &.active {
+      color: $neutral-color-50;
+      background-color: $primary-color-600;
     }
   }
 }

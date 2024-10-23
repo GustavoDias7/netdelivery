@@ -1,22 +1,13 @@
+{% load static %}
 <aside class="menu" :class="{active: modal.menu}">
-  <button type="button" class="menu-button" @click="closeModal('menu')">
-    Close menu
-  </button>
-  <nav>
-    {% if user.is_authenticated %}
-    <p class="link">Olá, {{user.first_name}}!</p>
-    <a class="link" href="{% url 'account' %}">Conta</a>
-    <a class="link" href="/" @click.prevent="openLogout">Sair</a>
-    {% else %}
-    <a class="link" href="{% url 'signin' %}">Login</a>
-    <a class="link" href="{% url 'signup' %}">Cadastro</a>
-    {% endif %}
-    <a class="link" href="/" @click.prevent="openCart">
-      Carrinho
-      <span class="badge active">
-        <p class="badge-item" v-text="cart.totalCount(99)"></p>
-        <img src="../../staticfiles/img/shopping-cart.svg" alt="Carrinho" />
-      </span>
-    </a>
-  </nav>
+  <div class="menu-content">
+    <button class="menu-button" @click="closeModal('menu')">Close menu</button>
+    <nav>
+      <a class="link" href="#about" @click="closeModal('menu')">Sobre Nós</a>
+      <a class="link" href="#pizza" @click="closeModal('menu')">Pizzas</a>
+      <a class="link" href="#drinks" @click="closeModal('menu')">Bebidas</a>
+      <a class="link" href="#faq" @click="closeModal('menu')">Perguntas</a>
+      <a class="link" href="#contacts" @click="closeModal('menu')">Contatos</a>
+    </nav>
+  </div>
 </aside>

@@ -1,8 +1,8 @@
 .card.primary {
   @include max-width(272px);
   color: $neutral-color-700;
-  background-color: $neutral-color-100;
-  box-shadow: $primary-border;
+  background-color: $neutral-color-50;
+  box-shadow: $box-shadow-200;
 
   $mb: 16px;
 
@@ -37,6 +37,6 @@
   }
 
   .link {
-    color: $primary-color-500;
+    color: $slate-color-500;
   }
 }

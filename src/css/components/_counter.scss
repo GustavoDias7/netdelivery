@@ -29,7 +29,7 @@ $f-border-radius-large: $f-border-radius + 2px;
 
         &::before,
         &::after {
-          background-color: $neutral-color-100;
+          background-color: $neutral-color-50;
         }
       }
     }
@@ -43,7 +43,7 @@ $f-border-radius-large: $f-border-radius + 2px;
     padding: 0;
     height: 100%;
     background-color: $transparent-color;
-    border: 1px solid $neutral-color-300;
+    border: 1px solid $neutral-color-400;
     cursor: pointer;
 
     &:first-of-type {
@@ -69,7 +69,6 @@ $f-border-radius-large: $f-border-radius + 2px;
         content: "";
         display: block;
         position: absolute;
-        z-index: 1;
         margin: auto;
         background-color: $neutral-color-800;
       }
@@ -92,15 +91,12 @@ $f-border-radius-large: $f-border-radius + 2px;
         display: none;
       }
     }
-    &:disabled {
-      cursor: not-allowed
-    }
   }
 
   .counter-input {
     @include flex-center-center;
     @include reset-button;
-    border: 1px solid $neutral-color-300;
+    border: 1px solid $neutral-color-400;
     outline: none;
     width: $area;
     height: 100%;

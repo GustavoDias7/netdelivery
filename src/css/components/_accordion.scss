@@ -10,17 +10,24 @@
   text-align: left;
   background-color: transparent;
 
+
+  &:hover,
+  &:focus {
+    opacity: 1;
+  }
+
   &.primary {
     margin-bottom: 10px;
-    border: 2px solid $primary-color-500;
+    border: 2px solid $primary-color-600;
 
     &:last-child {
       margin-bottom: 0px;
     }
   }
+
   &.secondary {
     border: none;
-    border-bottom: 1px solid $primary-color-500;
+    border-bottom: 1px solid $primary-color-600;
 
     &:last-child {
       border-bottom: none;
@@ -40,6 +47,7 @@
 
     .arrow {
       @include square(18px);
+      min-width: 18px;
       margin-left: 20px;
       background-image: url(pathImages("arrow.svg"));
       background-repeat: no-repeat;
@@ -52,7 +60,7 @@
   &.active .label h3,
   &:focus .label h3,
   &:hover .label h3 {
-    color: $primary-color-500
+    color: $primary-color-600
   }
 
   &.active .arrow {
@@ -63,7 +71,7 @@
     height: 0;
     overflow: hidden;
 
-    & > div {
+    &>div {
       padding: 0 20px 20px;
     }
   }
@@ -79,6 +87,7 @@
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0px);

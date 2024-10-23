@@ -3,41 +3,54 @@
 @import "../utilities/breakpoints";
 @import "../utilities/mixins";
 @import "../base/container";
-@import "../layout/grid";
+@import "../layouts/grid";
+@import "../components/typography";
 
 @import "../components/button";
+@import "../components/circle-button";
 @import "../components/form";
-@import "../components/typography";
+@import "../components/checkbox";
+@import "../components/accordion";
+@import "../components/price/primary";
+@import "../components/price/secondary";
+@import "../components/price/tertiary";
+@import "../components/list";
+
+@import "../components/badge";
+@import "../components/card/primary";
+@import "../components/card/secondary";
+@import "../components/card/tertiary";
+@import "../components/card/quaternary";
+@import "../components/topic/primary";
+@import "../components/topic/secondary";
+@import "../components/topic/tertiary";
+@import "../components/topic/quaternary";
+@import "../components/see-more";
 @import "../components/aspect-ratio";
 @import "../components/counter";
 @import "../components/modal";
-@import "../components/badge";
+@import "../components/notification";
+@import "../components/social-links";
+@import "../components/floating-link";
+@import "../components/title-line";
 
-@import "../layout/header/secondary";
-@import "../layout/footer/primary";
-@import "../layout/menu";
-
-
-section {
-    padding-top: 64px;
-  
-    .container {
-      > h2 {
-        font-weight: 500;
-        margin-bottom: 16px;
-        text-align: center;
-      }
-    }
-  
-    &:last-of-type {
-      padding-bottom: 64px;
-    }
-  
-    @include sm {
-      padding-top: 40px;
-  
-      &:last-of-type {
-        padding-bottom: 40px;
-      }
-    }
-  }
+@import "../layouts/header/primary";
+@import "../layouts/header/secondary";
+@import "../layouts/footer/secondary";
+@import "../layouts/banner/primary";
+@import "../layouts/banner/secondary";
+@import "../layouts/banner/tertiary";
+@import "../layouts/section/index";
+// @import "../layouts/section/primary";
+// @import "../layouts/section/secondary";
+@import "../layouts/menu";
+@import "../layouts/hero";
+@import "../layouts/details";
+@import "../layouts/cart";
+@import "../layouts/order-item";
+@import "../layouts/contact-bar";
+@import "../layouts/contacts";
+@import "../layouts/simple-cta";
+@import "../layouts/about/primary";
+// @import "../layouts/about/secondary";
+@import "../layouts/about/senary";

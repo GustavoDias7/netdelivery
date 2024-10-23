@@ -15,7 +15,7 @@
       max-width: $vl !important;
     }
 
-    $not-mobile: bp('sm');
+    $not-mobile: bp('md');
 
     @if ($vl >=$not-mobile) {
       .container {
