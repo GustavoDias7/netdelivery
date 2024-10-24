@@ -1,13 +1,13 @@
 {% load l10n %}
-{% for category_name, products in categories.items %}
-<section class="section" id="{{products.0.product.category.get_code}}">
+{% if combos|length %}
+<section class="section" id="combos">
   <div class="container md:container">
     <h2 class="title-line text-2xl sm:text-3xl text-color-primary text-align-center text-mb-2 sm:text-mb-4">
-      {{category_name}}
+      Combos
     </h2>
     <div class="g-root g-no-hidden g-gap-4">
       <div class="g-row">
-        {% for product in products %}
+        {% for product in combos %}
         <div class="g-item-12 sm:g-item-6 md:g-item-4">
           <article class="card secondary">
             <p class="cart-count" :class="{active: cart.getCount('{{product.id}}')}"
@@ -15,12 +15,12 @@
             </p>
             <a href="{{product.link}}">
               <figure class="aspect-ratio aspect-1-1 fit">
-                <img src="{{product.product.img}}" alt="Card Image" />
+                <img src="{{product.img}}" alt="Card Image" />
               </figure>
             </a>
             <div class="description">
               <a href="{{product.link}}">
-                <h3 class="text-xl text-color-primary">{{product.product.name}} {{product.size_name}}</h3>
+                <h3 class="text-xl text-color-primary">{{product.name}}</h3>
               </a>
               <p class="price text-lg">
                 {{product.ftotal}}
@@ -30,7 +30,7 @@
               </p>
               <button class="gn-button pm-button small full" @click="cart.addItem(
                   '{{product.id}}',
-                  '{{product.full_name}}',
+                  '{{product.name}}',
                   '{{product.price}}',
                   '{{product.img}}',
                   '{{product.discount|unlocalize}}',
@@ -47,4 +47,4 @@
     </div>
   </div>
 </section>
-{% endfor %}
+{% endif %}

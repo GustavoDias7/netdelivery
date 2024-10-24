@@ -3,8 +3,10 @@ from . import models
 
 # Register your models here.
 
-admin.site.register(models.ProductCategory)
-
+@admin.register(models.Category)
+class ProductCategoryAdmin(admin.ModelAdmin):
+    pass
+    
 class ProductVariantInline(admin.StackedInline):
     model = models.ProductVariant
     extra = 0

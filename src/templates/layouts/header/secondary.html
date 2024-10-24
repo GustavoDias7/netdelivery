@@ -4,9 +4,13 @@
     <div class="left"><a class="logo" href="/">Logo</a></div>
     <div class="right">
       <nav>
-        <a class="link" href="/#about">Sobre Nós</a>
-        <a class="link" href="/#pizza">Pizzas</a>
-        <a class="link" href="/#drinks">Bebidas</a>
+        {# <a class="link" href="/#about">Sobre Nós</a> #}
+        {% for category_name, products in categories.items %}
+          <a class="link" href="/#{{products.0.product.category.get_code}}">{{category_name}}</a>
+        {% endfor %}
+        {% if combos|length %}
+          <a class="link" href="/#combos">Combos</a>
+        {% endif %}
         <a class="link" href="/#faq">Perguntas</a>
         <a class="link" href="/#contacts">Contatos</a>
         <a class="" href="/" @click.prevent="openCart">

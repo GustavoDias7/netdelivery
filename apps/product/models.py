@@ -1,17 +1,32 @@
+import urllib.parse as urlparse
+
 from django.db import models
 from django.core.validators import (MinValueValidator, MaxValueValidator, MinLengthValidator)
 from django.utils.translation import gettext_lazy as _
 import locale 
+from django.template.defaultfilters import slugify
 
 locale.setlocale(locale.LC_MONETARY, 'pt_BR.UTF-8')
 
-# Create your models here.
+
+class Category(models.Model):
+    name = models.CharField(max_length=30, unique=True)
+    
+    class Meta:
+        verbose_name = _("Category")
+        verbose_name_plural = _("Categories")
+    
+    def get_code(self):
+        return slugify(self.name) + f'-{self.id}'
+
+    def __str__(self):
+        return f"{self.name}"
+
 class Product(models.Model):
     name = models.CharField(max_length=100)
     # image = models.ImageField()
     description = models.TextField(max_length=400, validators=[MinLengthValidator(4, _("Mínimo de 4 caracteres."))])
-    product_category = models.ForeignKey("ProductCategory", on_delete=models.RESTRICT)
-    combo = models.BooleanField(default=False)
+    category = models.ForeignKey(Category, on_delete=models.RESTRICT)
     
     class Meta:
         verbose_name = _("Produto")
@@ -44,20 +59,28 @@ class ProductVariant(models.Model):
     
     def fprice(self):
         return locale.currency(self.price / 100, grouping=True)
+    
+    def fdiscount(self):
+        return f"-{int(self.discount * 100)}%"
+    
+    def total(self):
+        return int(self.price - self.price * self.discount)
+        
+    def ftotal(self):
+        total = self.total()
+        return locale.currency(total / 100, grouping=True)
+
+    def link(self):
+        params = {"id": self.product.id, "variant": self.id}
+        query_string = urlparse.urlencode(params)
+        return "/product?" + query_string
+    
+    def full_name(self):
+        return f"{self.product.name} {self.size_name}"
         
     def __str__(self):
         return f"{self.product.name} {self.size_name}"
-    
-class ProductCategory(models.Model):
-    name = models.CharField(max_length=30)
-    code = models.SlugField(max_length=30, unique=True)
-    
-    class Meta:
-        verbose_name = _("Product Category")
-        verbose_name_plural = _("Product Categories")
 
-    def __str__(self):
-        return f"{self.name}"
     
 class Combo(models.Model):
     name = models.CharField(max_length=100)
@@ -71,6 +94,25 @@ class Combo(models.Model):
         validators=[MinValueValidator(0), MaxValueValidator(1)],
         help_text="Em decimal. Ex.: 0.1 para representar 10%. 0.0 quando não há desconto."
     )
+    archived = models.BooleanField(default=True)
+    
+    def fprice(self):
+        return locale.currency(self.price / 100, grouping=True)
+    
+    def fdiscount(self):
+        return f"-{int(self.discount * 100)}%"
+    
+    def total(self):
+        return int(self.price - self.price * self.discount)
+        
+    def ftotal(self):
+        total = self.total()
+        return locale.currency(total / 100, grouping=True)
+
+    def link(self):
+        params = {"id": self.id}
+        query_string = urlparse.urlencode(params)
+        return "/combo?" + query_string
     
     def __str__(self):
         return f"{self.name}"

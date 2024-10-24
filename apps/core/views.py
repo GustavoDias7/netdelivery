@@ -19,8 +19,9 @@ from apps.address.models import (
     WhiteListLocalidade,
 )
 from apps.product.models import (
-    ProductCategory,
+    Combo,
     Product,
+    ProductVariant
 )
 from django.core.paginator import Paginator
 from apps.user.forms import UserForm, LoginForm
@@ -34,14 +35,26 @@ from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 
 def homepage(request):
-    # product_categories = ProductCategory.objects.values("id", "name")
-    categories = []
+    queryset_variants = ProductVariant.objects.filter(archived=False, default=True)
     
-    # for category in product_categories:
-    #     products = Product.objects.filter(product_category_id=category["id"])
-    #     if len(products): categories.append(products)
+    categories = {}
+    for variant in queryset_variants:
+        category = variant.product.category.name
+        if categories.get(category) == None:
+            categories[category] = []
+        categories[category].append(variant)
     
-    return render(request, "pages/homepage.html", {"categories": categories})
+    queryset_combos = Combo.objects.filter(archived=False)
+    combos = []
+    for combo in queryset_combos:
+        combos.append(combo)
+        
+    context = {
+        "categories": categories,
+        "combos": combos
+    }
+    
+    return render(request, "pages/homepage.html", context)
 
 def signin(request):
     next_page = request.GET.get('next', "")
