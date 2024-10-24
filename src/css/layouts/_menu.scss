@@ -19,7 +19,7 @@
     $width: 320px;
     padding: 2rem;
     @include max-width($width);
-    margin-right: -100%;
+    margin-right: -$width;
     margin-left: auto;
     height: 100vh;
     background-color: $neutral-color-50;
@@ -40,6 +40,7 @@
       .link {
         display: block;
         width: fit-content;
+        font-size: 1rem;
         color: $primary-color-600;
         margin-bottom: 1rem;
 

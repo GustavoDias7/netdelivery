@@ -4,13 +4,20 @@
     <div class="left"><a class="logo" href="/">Logo</a></div>
     <div class="right">
       <nav>
-        {# <a class="link" href="/#about">Sobre Nós</a> #}
-        {% for category_name, products in categories.items %}
-          <a class="link" href="/#{{products.0.product.category.get_code}}">{{category_name}}</a>
-        {% endfor %}
-        {% if combos|length %}
-          <a class="link" href="/#combos">Combos</a>
-        {% endif %}
+        <a class="link" href="/#about">Sobre Nós</a> 
+        <div class="dropdown-desktop">
+          <button class="link">Produtos</button>
+          <div class="dropdown-content">
+            {% for category_name, products in categories.items %}
+            <a class="link text-mb-2" href="/#{{products.0.product.category.get_code}}">
+              {{category_name}}
+            </a>
+            {% endfor %}
+            {% if combos|length %}
+            <a class="link text-mb-2" href="/#combos">Combos</a>
+            {% endif %}
+          </div>
+        </div>
         <a class="link" href="/#faq">Perguntas</a>
         <a class="link" href="/#contacts">Contatos</a>
         <a class="" href="/" @click.prevent="openCart">
@@ -19,7 +26,9 @@
             <img src="{% static 'img/shopping-cart.svg' %}" alt="Carrinho" />
           </span>
         </a>
-        <button class="menu-button" @click="openModal('menu')">Open menu</button>
+        <button class="menu-button" @click="openModal('menu')">
+          Open menu
+        </button>
       </nav>
     </div>
   </div>

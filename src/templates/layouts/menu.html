@@ -3,17 +3,23 @@
   <div class="menu-content">
     <button class="menu-button" @click="closeModal('menu')">Close menu</button>
     <nav>
-      {# <a class="link" href="#about" @click="closeModal('menu')">Sobre Nós</a> #}
-      {% for category_name, products in categories.items %}
-        <a 
-          class="link" 
-          href="/#{{products.0.product.category.get_code}}"
-          @click="closeModal('menu')"
-        >{{category_name}}</a>
-      {% endfor %}
-      {% if combos|length %}
-        <a class="link" href="/#combos" @click="closeModal('menu')">Combos</a>
-      {% endif %}
+      <a class="link" href="#about" @click="closeModal('menu')">Sobre Nós</a>
+      <div class="dropdown-mobile">
+        <button class="link" @click="toggleModal('dropdown')">Produtos</button>
+        <div class="dropdown-content" :class="{active: modal.dropdown}">
+          {% for category_name, products in categories.items %}
+          <a
+            class="link"
+            href="/#{{products.0.product.category.get_code}}"
+            @click="closeModal('menu')"
+            >{{category_name}}
+          </a>
+          {% endfor %}
+          {% if combos|length %}
+          <a class="link" href="/#combos" @click="closeModal('menu')">Combos</a>
+          {% endif %}
+        </div>
+      </div>
       <a class="link" href="#faq" @click="closeModal('menu')">Perguntas</a>
       <a class="link" href="#contacts" @click="closeModal('menu')">Contatos</a>
     </nav>

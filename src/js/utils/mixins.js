@@ -7,6 +7,7 @@ const mainMixin = {
         menu: false,
         logout: false,
         cart: false,
+        dropdown: false,
       },
       cart: new ShoppingCart(),
     };
@@ -17,6 +18,9 @@ const mainMixin = {
     },
     closeModal(name = "") {
       this.modal[name] = false;
+    },
+    toggleModal(name = "") {
+      this.modal[name] = !this.modal[name];
     },
     openLogout() {
       this.closeModal("menu");

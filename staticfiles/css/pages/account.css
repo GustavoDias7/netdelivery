@@ -708,6 +708,71 @@ button:disabled {
   background-color: #2563eb;
 }
 
+.dropdown-desktop {
+  position: relative;
+  display: inline-block;
+}
+.dropdown-desktop:hover .dropdown-content {
+  opacity: 1;
+  pointer-events: all;
+}
+.dropdown-desktop button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  cursor: pointer;
+}
+.dropdown-desktop button:hover + .dropdown-content, .dropdown-desktop button:focus + .dropdown-content {
+  opacity: 1;
+  pointer-events: all;
+}
+.dropdown-desktop .dropdown-content {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  background-color: #fafafa;
+  min-width: 160px;
+  box-shadow: 0px 0px 4px 0px #a3a3a3;
+  padding: 12px 16px;
+  z-index: 1;
+  transition: opacity 0.2s ease 0s;
+}
+.dropdown-desktop .dropdown-content a {
+  display: inline-block;
+}
+.dropdown-desktop .dropdown-content .text-mb-2:last-of-type {
+  margin-bottom: 0;
+}
+@media (max-width: 767px) {
+  .dropdown-desktop {
+    display: none;
+  }
+}
+
+.dropdown-mobile {
+  margin-bottom: 1rem;
+}
+.dropdown-mobile .dropdown-content {
+  display: none;
+  width: 100%;
+  max-width: 200px;
+  padding: 12px 16px;
+  box-shadow: 0px 0px 4px 0px #a3a3a3;
+  background-color: #fafafa;
+}
+.dropdown-mobile .dropdown-content.active {
+  display: inline-block;
+}
+.dropdown-mobile .dropdown-content > a {
+  display: block;
+}
+.dropdown-mobile button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  cursor: pointer;
+}
+
 .header.primary {
   position: relative;
   background-color: #fafafa;
@@ -749,6 +814,7 @@ button:disabled {
 }
 .header.secondary nav .link {
   color: #2563eb;
+  font-size: 1rem;
 }
 .header.secondary .menu-button {
   display: none;
@@ -853,7 +919,7 @@ button:disabled {
   padding: 2rem;
   width: 100%;
   max-width: 320px;
-  margin-right: -100%;
+  margin-right: -320px;
   margin-left: auto;
   height: 100vh;
   background-color: #fafafa;
@@ -878,6 +944,7 @@ button:disabled {
 .menu .menu-content nav .link {
   display: block;
   width: fit-content;
+  font-size: 1rem;
   color: #2563eb;
   margin-bottom: 1rem;
 }
