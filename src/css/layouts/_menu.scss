@@ -38,15 +38,8 @@
 
     nav {
       .link {
-        display: block;
-        width: fit-content;
         font-size: 1rem;
         color: $primary-color-600;
-        margin-bottom: 1rem;
-
-        &:last-child {
-          margin-bottom: 0;
-        }
       }
     }
   }

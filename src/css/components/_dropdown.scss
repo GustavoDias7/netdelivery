@@ -20,14 +20,17 @@
     @include opacity(false);
     position: absolute;
     background-color: $neutral-color-50;
-    min-width: 160px;
+    min-width: 180px;
+    @include max-width(200px);
     box-shadow: $box-shadow-100;
     padding: 12px 16px;
     z-index: 1;
-    transition: opacity $primary-transition;
+    transition: opacity 0.2s ease 0.3s;
 
-    a {
-      display: inline-block;
+    p {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .text-mb-2:last-of-type {
@@ -41,21 +44,27 @@
 }
 
 .dropdown-mobile {
-  margin-bottom: 1rem;
-
   .dropdown-content {
     display: none;
     @include max-width(200px);
     padding: 12px 16px;
     box-shadow: $box-shadow-100;
     background-color: $neutral-color-50;
+    margin-bottom: 16px;
 
     &.active {
       display: inline-block;
     }
 
-    > a {
-      display: block;
+    p {
+      // width: auto;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .text-mb-4:last-of-type {
+        margin-bottom: 0;
     }
   }
 

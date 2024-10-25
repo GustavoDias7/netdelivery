@@ -185,6 +185,10 @@ button:disabled {
 .text-mb-2 {
   margin-bottom: 8px;
 }
+
+.text-mb-4 {
+  margin-bottom: 16px;
+}
 .gn-button {
   display: flex;
   align-items: center;
@@ -736,14 +740,18 @@ button:disabled {
   pointer-events: none;
   position: absolute;
   background-color: #fafafa;
-  min-width: 160px;
+  min-width: 180px;
+  width: 100%;
+  max-width: 200px;
   box-shadow: 0px 0px 4px 0px #a3a3a3;
   padding: 12px 16px;
   z-index: 1;
-  transition: opacity 0.2s ease 0s;
+  transition: opacity 0.2s ease 0.3s;
 }
-.dropdown-desktop .dropdown-content a {
-  display: inline-block;
+.dropdown-desktop .dropdown-content p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .dropdown-desktop .dropdown-content .text-mb-2:last-of-type {
   margin-bottom: 0;
@@ -754,9 +762,6 @@ button:disabled {
   }
 }
 
-.dropdown-mobile {
-  margin-bottom: 1rem;
-}
 .dropdown-mobile .dropdown-content {
   display: none;
   width: 100%;
@@ -764,12 +769,18 @@ button:disabled {
   padding: 12px 16px;
   box-shadow: 0px 0px 4px 0px #a3a3a3;
   background-color: #fafafa;
+  margin-bottom: 16px;
 }
 .dropdown-mobile .dropdown-content.active {
   display: inline-block;
 }
-.dropdown-mobile .dropdown-content > a {
-  display: block;
+.dropdown-mobile .dropdown-content p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.dropdown-mobile .dropdown-content .text-mb-4:last-of-type {
+  margin-bottom: 0;
 }
 .dropdown-mobile button {
   background-color: transparent;
@@ -947,14 +958,8 @@ button:disabled {
   background-repeat: no-repeat;
 }
 .menu .menu-content nav .link {
-  display: block;
-  width: fit-content;
   font-size: 1rem;
   color: #2563eb;
-  margin-bottom: 1rem;
-}
-.menu .menu-content nav .link:last-child {
-  margin-bottom: 0;
 }
 
 .cart .cart-item {

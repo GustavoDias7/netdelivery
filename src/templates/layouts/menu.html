@@ -3,25 +3,39 @@
   <div class="menu-content">
     <button class="menu-button" @click="closeModal('menu')">Close menu</button>
     <nav>
-      <a class="link" href="#about" @click="closeModal('menu')">Sobre Nós</a>
+      <p class="text-mb-4">
+        <a class="link" href="#about" @click="closeModal('menu')">Sobre Nós</a>
+      </p>
+      
+      {% if categories.items|length or combos|length %}
       <div class="dropdown-mobile">
-        <button class="link" @click="toggleModal('dropdown')">Produtos</button>
+        <button class="link text-mb-4" @click="toggleModal('dropdown')">Produtos</button>
         <div class="dropdown-content" :class="{active: modal.dropdown}">
           {% for category_name, products in categories.items %}
-          <a
-            class="link"
-            href="/#{{products.0.product.category.get_code}}"
-            @click="closeModal('menu')"
-            >{{category_name}}
-          </a>
+          <p class="text-mb-4">
+            <a
+              class="link"
+              href="/#{{products.0.product.category.get_code}}"
+              @click="closeModal('menu')"
+              >{{category_name}}
+            </a>
+          </p>
           {% endfor %}
           {% if combos|length %}
-          <a class="link" href="/#combos" @click="closeModal('menu')">Combos</a>
+          <p class="text-mb-4">
+            <a class="link" href="/#combos" @click="closeModal('menu')">Combos</a>
+          </p>
           {% endif %}
         </div>
       </div>
-      <a class="link" href="#faq" @click="closeModal('menu')">Perguntas</a>
-      <a class="link" href="#contacts" @click="closeModal('menu')">Contatos</a>
+      {% endif %}
+
+      <p class="text-mb-4">
+        <a class="link" href="#faq" @click="closeModal('menu')">Perguntas</a>
+      </p>
+      <p class="text-mb-4">
+        <a class="link" href="#contacts" @click="closeModal('menu')">Contatos</a>
+      </p>
     </nav>
   </div>
 </aside>
