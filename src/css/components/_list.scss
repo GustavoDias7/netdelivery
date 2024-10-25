@@ -1,22 +1,8 @@
-.list {
-  li {
-    margin-bottom: 16px;
-
-    @include sm {
-      margin-bottom: 8px;
-    }
-  }
-}
-
 .list.primary {
   padding-left: 20px;
 
   li {
     list-style: disc outside;
-
-    &:last-child {
-      margin-bottom: 0px;
-    }
   }
 }
 
@@ -28,10 +14,6 @@
     background-repeat: no-repeat;
     background-size: $dimention;
     background-position: 0px 4px;
-
-    &:last-child {
-      margin-bottom: 0px;
-    }
   }
 }
 
@@ -40,10 +22,6 @@
 
   li {
     list-style: decimal outside;
-
-    &:last-child {
-      margin-bottom: 0px;
-    }
   }
 }
 
@@ -52,9 +30,5 @@
 
   li {
     list-style: upper-alpha outside;
-
-    &:last-child {
-      margin-bottom: 0px;
-    }
   }
 }

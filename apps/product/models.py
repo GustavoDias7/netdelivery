@@ -73,7 +73,7 @@ class ProductVariant(models.Model):
     def link(self):
         params = {"id": self.product.id, "variant": self.id}
         query_string = urlparse.urlencode(params)
-        return "/product?" + query_string
+        return "/produto?" + query_string
     
     def full_name(self):
         return f"{self.product.name} {self.size_name}"

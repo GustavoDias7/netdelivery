@@ -1,5 +1,6 @@
 from django.contrib import admin
 from . import models
+from django.utils.translation import gettext_lazy as _
 
 # Register your models here.
 
@@ -15,6 +16,8 @@ class ProductVariantInline(admin.StackedInline):
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductVariantInline]
+    list_display = ("name", "category",)
+    list_filter = ("category__name",)
 
 class ComboItemInline(admin.StackedInline):
     model = models.ComboItem

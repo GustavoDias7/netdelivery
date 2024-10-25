@@ -1,0 +1,19 @@
+{% extends "../bases/base.html" %}
+{% load static %}
+
+{% block title %}
+  Combo
+{% endblock %}
+
+{% block css %}
+<link href="{% static 'css/pages/combo.css' %}?{% now "U" %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+{% include "../layouts/combo_details.html" %}
+{% endblock %}
+
+{% block js %}
+<script src="{% static "js/pages/combo.js" %}?{% now "U" %}"></script>
+{% endblock %}
+

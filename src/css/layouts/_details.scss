@@ -1,4 +1,7 @@
 .details {
+  .product-image {
+    background-color: $neutral-color-200;
+  }
   .main-infos {
     .gn-button {
       margin-top: 1rem;
@@ -7,6 +10,10 @@
     article {
       padding: 1.5rem;
       box-shadow: $box-shadow-300;
+
+      .list a {
+        text-decoration: underline;
+      }
     }
 
     header {

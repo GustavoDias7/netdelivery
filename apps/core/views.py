@@ -36,7 +36,6 @@ from django.utils.translation import gettext_lazy as _
 
 def homepage(request):
     queryset_variants = ProductVariant.objects.filter(archived=False, default=True)
-    
     categories = {}
     for variant in queryset_variants:
         category = variant.product.category.name

@@ -1,0 +1,76 @@
+{% load l10n %}
+<section class="section">
+    <div class="container md:container">
+      <div class="details">
+        <div class="container">
+          <div class="g-root g-no-hidden g-gap-2 sm:g-gap-4">
+            <div class="g-row">
+              <div class="g-item-12 md:g-item-7">
+                <figure class="aspect-ratio aspect-1-1 fit">
+                  <img class="product-image" src="{{combo.img}}" alt="{{combo.name}}" />
+                </figure>
+              </div>
+              <div class="g-item-12 md:g-item-5">
+                <aside class="main-infos">
+                  <article>
+                    <header>
+                      <h2 class="text-xl sm:text-2xl text-color-primary">
+                        {{combo.name}}
+                      </h2>
+                    </header>
+                    <section>
+                      <ul>
+                        <li class="text-base text-mb-2">
+                          <strong>Descrição:</strong> <span>{{combo.description}}</span>
+                        </li>
+                        <li class="text-base text-mb-2">
+                          <strong>Preço:</strong> <span>{{combo.fprice}}</span>
+                        </li>
+                        {% if combo.discount %}
+                        <li class="text-base text-mb-2">
+                          <strong>Desconto:</strong> <span>{{combo.fdiscount}}</span>
+                        </li>
+                        {% endif %}
+                        <li class="text-base text-mb-1">
+                          <strong>Itens:</strong>
+                        </li>
+                        <li>
+                          <ul class="list primary">
+                            {% for item in items %}
+                            <li class="text-sm text-mb-1">
+                              <a href="{{item.product_variant.link}}">
+                                {{item.product_variant.full_name}}
+                              </a>
+                            </li>
+                            {% endfor %}
+                          </ul>
+                        </li>
+                      </ul>
+                    </section>
+                    <footer>
+                        <li> 
+                            <strong>Total:</strong>
+                            <span>{{combo.ftotal}}</span>
+                        </li>
+                    </footer>
+                  </article>
+                  <button class="gn-button pm-button full small sm:regular" @click="cart.addItem(
+                    '{{combo.id}}',
+                    '{{combo.name}}',
+                    '{{combo.price}}',
+                    '{{combo.img}}',
+                    '{{combo.discount|unlocalize}}',
+                    '{{combo.link}}',
+                    )">Adicionar ao carrinho
+                  </button>
+                  <button class="gn-button sc-button full small sm:regular" @click="openCart">
+                    Abrir carrinho
+                  </button>
+                </aside>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

@@ -1,0 +1,91 @@
+{% load l10n %}
+<section class="section">
+    <div class="container md:container">
+      <div class="details">
+        <div class="container">
+          <div class="g-root g-no-hidden g-gap-2 sm:g-gap-4">
+            <div class="g-row">
+              <div class="g-item-12 md:g-item-7">
+                <figure class="aspect-ratio aspect-1-1 fit">
+                  <img class="product-image" src="{{variant.product.img}}" alt="{{variant.product.name}}" />
+                </figure>
+              </div>
+              <div class="g-item-12 md:g-item-5">
+                <aside class="main-infos">
+                  <article>
+                    <header>
+                      <h2 class="text-xl sm:text-2xl text-color-primary">
+                        {{variant.full_name}}
+                      </h2>
+                    </header>
+                    <section>
+                      <ul>
+                        <li class="text-base text-mb-2">
+                          <strong>Descrição:</strong> <span>{{variant.product.description}}</span>
+                        </li>
+                        <li class="text-base text-mb-2">
+                          <strong>Preço:</strong> <span>{{variant.fprice}}</span>
+                        </li>
+                        {% if variant.discount %}
+                        <li class="text-base text-mb-2">
+                          <strong>Desconto:</strong> <span>{{variant.fdiscount}}</span>
+                        </li>
+                        {% endif %}
+
+                        {% if variants|length %}
+                        <li class="text-base">
+                          <strong>Tamanho:</strong> <br>
+                          <ul class="multi-buttons">
+                            {% for var in variants %}
+                                <li>
+                                    {% if var.id != variant.id %}
+                                    <a href="/produto?id={{var.product__id}}&variant={{var.id}}" class="size" title="{{var.size_name}}">
+                                        {% if var.short_size_name %}
+                                        {{var.short_size_name}}
+                                        {% else %}
+                                        {{var.size_name}}
+                                        {% endif %}
+                                    </a>
+                                    {% else %}
+                                    <p class="size active" title="{{var.size_name}}">
+                                        {% if var.short_size_name %}
+                                        {{var.short_size_name}}
+                                        {% else %}
+                                        {{var.size_name}}
+                                        {% endif %}
+                                    </p>
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+                          </ul>
+                        </li>
+                        {% endif %}
+                      </ul>
+                    </section>
+                    <footer>
+                        <li> 
+                            <strong>Total:</strong>
+                            <span>{{variant.ftotal}}</span>
+                        </li>
+                    </footer>
+                  </article>
+                  <button class="gn-button pm-button full small sm:regular" @click="cart.addItem(
+                    '{{variant.id}}',
+                    '{{variant.full_name}}',
+                    '{{variant.price}}',
+                    '{{variant.img}}',
+                    '{{variant.discount|unlocalize}}',
+                    '{{variant.link}}',
+                    )">Adicionar ao carrinho
+                  </button>
+                  <button class="gn-button sc-button full small sm:regular" @click="openCart">
+                    Abrir carrinho
+                  </button>
+                </aside>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
