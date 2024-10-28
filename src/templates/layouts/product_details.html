@@ -31,6 +31,11 @@
                           <strong>Desconto:</strong> <span>{{variant.fdiscount}}</span>
                         </li>
                         {% endif %}
+                        {% if variant.stuffed_edge != None %}
+                        <li class="text-base text-mb-2">
+                          <strong>Borda:</strong> <span>{{variant.stuffed_edge|yesno:"Recheada,Não recheada"}}</span>
+                        </li>
+                        {% endif %}
 
                         {% if variants|length %}
                         <li class="text-base">

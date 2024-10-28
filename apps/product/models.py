@@ -1,5 +1,4 @@
 import urllib.parse as urlparse
-
 from django.db import models
 from django.core.validators import (MinValueValidator, MaxValueValidator, MinLengthValidator)
 from django.utils.translation import gettext_lazy as _
@@ -13,8 +12,8 @@ class Category(models.Model):
     name = models.CharField(max_length=30, unique=True)
     
     class Meta:
-        verbose_name = _("Category")
-        verbose_name_plural = _("Categories")
+        verbose_name = _("category")
+        verbose_name_plural = _("categories")
     
     def get_code(self):
         return slugify(self.name) + f'-{self.id}'
@@ -29,8 +28,8 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.RESTRICT)
     
     class Meta:
-        verbose_name = _("Produto")
-        verbose_name_plural = _("Produtos")
+        verbose_name = _("produto")
+        verbose_name_plural = _("produtos")
 
     def __str__(self):
         return f"{self.name}"
@@ -54,8 +53,8 @@ class ProductVariant(models.Model):
     default = models.BooleanField(default=False, help_text=_("A variante que representará o produto no site."))
     
     class Meta:
-        verbose_name = _("Variante do produto")
-        verbose_name_plural = _("Variantes do produto")
+        verbose_name = _("variante do produto")
+        verbose_name_plural = _("variantes do produto")
     
     def fprice(self):
         return locale.currency(self.price / 100, grouping=True)
@@ -120,3 +119,6 @@ class Combo(models.Model):
 class ComboItem(models.Model):
     combo = models.ForeignKey("Combo", on_delete=models.CASCADE)
     product_variant = models.ForeignKey("ProductVariant", on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return f"{self.product_variant.product.name}"

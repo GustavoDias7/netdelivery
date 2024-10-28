@@ -21,7 +21,8 @@ from apps.address.models import (
 from apps.product.models import (
     Combo,
     Product,
-    ProductVariant
+    ProductVariant,
+    Category
 )
 from django.core.paginator import Paginator
 from apps.user.forms import UserForm, LoginForm
@@ -33,6 +34,22 @@ from django.core.exceptions import ValidationError
 import json
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
+
+def header_categories(request):
+    context = {
+        "header_categories": [],
+        "header_combos": False
+    }
+    qs_categories = Category.objects.all()
+    
+    for category in qs_categories:
+        variant = ProductVariant.objects.filter(archived=False, product__category=category).first()
+        if variant: context["header_categories"].append(variant.product.category)
+        
+    qs_combos = Combo.objects.filter(archived=False).first()
+    if qs_combos: context["header_combos"] = True
+    
+    return context
 
 def homepage(request):
     queryset_variants = ProductVariant.objects.filter(archived=False, default=True)

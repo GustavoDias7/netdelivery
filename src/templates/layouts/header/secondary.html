@@ -6,18 +6,18 @@
       <nav>
         <a class="link" href="/#about">Sobre Nós</a> 
 
-        {% if categories.items|length or combos|length %}
+        {% if header_categories|length or header_combos %}
         <div class="dropdown-desktop">
           <button class="link">Produtos</button>
           <div class="dropdown-content">
-            {% for category_name, products in categories.items %}
+            {% for category in header_categories %}
             <p class="text-mb-2">
-              <a class="link" href="/#{{products.0.product.category.get_code}}">
-                {{category_name}}
+              <a class="link" href="/#{{category.get_code}}">
+                {{category.name}}
               </a>
             </p>
             {% endfor %}
-            {% if combos|length %}
+            {% if combos %}
             <p class="text-mb-2">
               <a class="link" href="/#combos">Combos</a>
             </p>

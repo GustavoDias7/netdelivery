@@ -723,7 +723,7 @@ li {
   box-shadow: 0px 0px 4px 0px #a3a3a3;
   padding: 12px 16px;
   z-index: 1;
-  transition: opacity 0.2s ease 0.3s;
+  transition: opacity 0.2s ease 0.1s;
 }
 .dropdown-desktop .dropdown-content p {
   overflow: hidden;
