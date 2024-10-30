@@ -1,16 +1,65 @@
 from django.db import models
-from django.core.validators import MaxValueValidator
+from django.core.validators import MaxValueValidator, MinLengthValidator
 from django.contrib.auth.models import (
     AbstractBaseUser,
     PermissionsMixin,
     BaseUserManager,
 )
 from django.core import validators
-from apps.core.validators import (name_validator, phone_validator)
+from apps.core.validators import (name_validator, phone_validator, cellphone_number)
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 import re
 from apps.address.models import Logradouro
+from apps.core.utils import remove_non_numeric
+
+class Contacts(models.Model):
+    whatsapp_number = models.CharField(_("WhatsApp number"), max_length=11, validators=[cellphone_number])
+    whatsapp_message = models.URLField(_("WhatsApp message"), max_length=100)
+    facebook_link = models.URLField(_("Facebook link"))
+    instagram_link = models.URLField(_("Instagram link"))
+    linkedin_link = models.URLField(_("LinkedIn link"))
+    x_link = models.URLField(_("X link"))
+    phone_number = models.CharField(_("Telephone number"), max_length=11, validators=[phone_validator])
+    email = models.EmailField(_("E-mail"), max_length=255)
+    address_text = models.CharField(_("Address text"), max_length=30)
+    address_link = models.URLField(_("Address link"))
+    
+    def clean_fields(self, exclude=None):
+        self.whatsapp_number = remove_non_numeric(self.whatsapp_number)
+        self.phone_number = remove_non_numeric(self.phone_number)
+        super().clean_fields(exclude=exclude)
+    
+    def fphone_number(self):
+        if not self.phone_number:
+            ddd = self.phone[0:2]
+            
+            if len(self.phone_number) == 11:
+                part1 = self.phone[2:7]
+                part2 = self.phone[7:]
+            else:
+                part1 = self.phone[2:6]
+                part2 = self.phone[6:]
+            
+            return f"({ddd}) {part1}-{part2}"
+        else:
+            return self.phone_number
+    
+    def fwhatsapp_number(self):
+        if not self.whatsapp_number:
+            ddd = self.phone[0:2]
+            part1 = self.phone[2:7]
+            part2 = self.phone[7:]
+            return f"({ddd}) {part1}-{part2}"
+        else:
+            return self.whatsapp_number
+    
+    class Meta:
+        verbose_name = _("contact")
+        verbose_name_plural = _("contacts")
+        
+    def __str__(self):
+        return f"Contacts id {self.id}"
 
 class UserManager(BaseUserManager):
     def _create_user(

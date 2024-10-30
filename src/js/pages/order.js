@@ -1,4 +1,4 @@
-import * as vue from "../vendor/vue";
+import * as vue from "vue/dist/vue.esm-bundler.js";
 import { mainMixin } from "../utils/mixins";
 const { createApp, ref } = vue;
 

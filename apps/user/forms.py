@@ -1,6 +1,5 @@
 from django import forms
-from .models import User
-from apps.core.validators import cep_validator
+from .models import User, Contacts
 
 class UserForm(forms.ModelForm):
     confirm_password = forms.CharField(widget=forms.PasswordInput())
@@ -33,3 +32,27 @@ class UsernameForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ["username"]
+        
+        
+class ContactsForm(forms.ModelForm):
+    whatsapp_number = forms.CharField(
+        max_length=15,
+        widget=forms.TextInput(
+            attrs={
+                'v-model': 'fields.whatsapp_number',
+                'v-mask':"'(##) #####-####'", 
+            }
+        )
+    )
+    phone_number = forms.CharField(
+        max_length=15,
+        widget=forms.TextInput(
+            attrs={
+                'v-model': 'fields.phone_number',
+                'v-mask':"['(##) ####-####', '(##) #####-####']", 
+            }
+        )
+    )
+    class Meta:
+        model = Contacts
+        fields = "__all__"

@@ -18,6 +18,7 @@ class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductVariantInline]
     list_display = ("name", "category",)
     list_filter = ("category__name",)
+    change_form_template = "admin/product_change_form.html"
 
 class ComboItemInline(admin.StackedInline):
     model = models.ComboItem

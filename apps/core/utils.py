@@ -1,5 +1,8 @@
 from django.contrib import admin
 
+def remove_non_numeric(value:str):
+    return "".join(e for e in value if e.isdigit())
+
 def remove_non_alphanumeric(value: str):
     return "".join([e for e in value if e.isalnum()])
 

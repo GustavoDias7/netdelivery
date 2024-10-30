@@ -138,3 +138,5 @@ GitHub.sublime-settings
 
 node_modules
 example/db.sqlite3
+/staticfiles/*
+!/staticfiles/img

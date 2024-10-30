@@ -1,12 +1,11 @@
 import * as vue from "vue/dist/vue.esm-bundler.js";
-import { mainMixin } from "../utils/mixins";
+// import { Money3Directive } from 'v-money3'
 const { createApp } = vue;
 
 const app = createApp({
-  mixins: [mainMixin],
   delimiters: ["[[", "]]"],
   setup() {
-    return {}
+    return {};
   },
   data() {
     return {};
@@ -14,4 +13,5 @@ const app = createApp({
   methods: {},
 });
 
-app.mount("#app");
+// app.directive('money', Money3Directive)
+app.mount("#content-start");

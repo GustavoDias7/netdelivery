@@ -1,17 +1,14 @@
-const fs = require("fs");
 const path = require("path");
 const globAll = require("glob-all");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { PurgeCSSPlugin } = require("purgecss-webpack-plugin");
-const BundleTracker = require("webpack-bundle-tracker");
 const { getPaths } = require("./utils/recursive-path.js");
+const { DefinePlugin } = require("webpack");
 
 module.exports = {
-  watch: true,
   context: __dirname,
-
   entry: globAll
-    .sync("./src/**/pages/**/*.{js,css,scss,html}")
+    .sync(["./src/**/pages/**/*.{js,css,scss}"])
     .reduce((obj, el = "") => {
       const name = path.parse(el).name;
       if (!obj[name]) obj[name] = [];
@@ -21,10 +18,9 @@ module.exports = {
 
   output: {
     path: path.resolve(__dirname, "./staticfiles/js/pages/"),
-    // publicPath: "auto",
     publicPath: "/",
-    assetModuleFilename: "staticfiles/img/[name][ext]",
     filename: "[name].js",
+    clean: true,
   },
 
   module: {
@@ -34,28 +30,39 @@ module.exports = {
         use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
       },
       {
-        test: /\.html/,
+        test: /\.html$/,
         type: "asset/resource",
         generator: {
           emit: false,
+          filename: ({ runtime }) =>
+            runtime === "index"
+              ? "../../[name][ext]"
+              : "../../[name]/index[ext]",
         },
       },
       {
-        test: /\.svg/,
+        test: /\.(svg|png|jpg|gif)$/i,
         type: "asset/resource",
         generator: {
           emit: false,
+          filename: "staticfiles/img/[name][ext]",
         },
       },
     ],
   },
 
   plugins: [
+    new DefinePlugin({
+      __VUE_OPTIONS_API__: true,
+      __VUE_PROD_DEVTOOLS__: true,
+      __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: "false",
+    }),
+
     new MiniCssExtractPlugin({
       filename: "../../css/pages/[name].css",
     }),
 
-    ...globAll.sync("./src/templates/pages/**.html").map((src) => {
+    ...globAll.sync("./src/templates/pages/{*,**/*}.{html}").map((src) => {
       return new PurgeCSSPlugin({
         paths: globAll.sync(getPaths(src), { nodir: true }),
         only: [`/${path.parse(src).name}.`],
@@ -64,11 +71,6 @@ module.exports = {
         keyframes: true,
         defaultExtractor: (content) => content.match(/[\w-/:]+(?<!:)/g) || [],
       });
-    }),
-
-    new BundleTracker({
-      path: __dirname,
-      filename: "./webpack-stats.json",
     }),
   ],
 };

@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "npx webpack --config webpack.config.js --mode=development",
+    "dev": "npx webpack --watch --config webpack.config.js --mode=development",
     "build": "npx webpack --config webpack.config.js --mode=production"
   },
   "devDependencies": {
@@ -19,7 +19,9 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "@devindex/vue-mask": "^2.0.3",
-    "axios": "^1.7.2"
+    "axios": "^1.7.2",
+    "v-money3": "^3.24.1",
+    "vue": "^3.5.3",
+    "vue-the-mask": "^0.11.1"
   }
 }

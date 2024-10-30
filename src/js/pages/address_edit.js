@@ -1,5 +1,5 @@
-import * as vue from "../vendor/vue";
-import VueMask from "@devindex/vue-mask";
+import * as vue from "vue/dist/vue.esm-bundler.js";
+import { mask } from "vue-the-mask";
 import { mainMixin } from "../utils/mixins";
 import getInputValues from "../utils/getInputValues";
 const { createApp } = vue;
@@ -34,5 +34,5 @@ const app = createApp({
   },
 });
 
-app.use(VueMask);
+app.directive("mask", mask);
 app.mount("#app");
