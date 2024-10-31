@@ -1,21 +1,38 @@
 .social-links {
   @include flex-align-center;
-  gap: 8px;
 
   a {
+    @include flex-align-center;
     font-size: 0px;
+
+    &::after {
+      content: "";
+      display: block;
+      width: 1px;
+      height: 16px;
+      margin: 0px 8px;
+      background-color: $primary-color-600;
+    }
+
+    &:last-of-type::after {
+      display: none;
+    }
+
+    &:hover,
+    &:focus {
+      opacity: 1;
+
+      img {
+        opacity: 0.6;
+      }
+    }
   }
 
   img {
+    transition: opacity 0.3s;
     $area: 20px;
     width: $area;
     height: $area;
     font-size: 12px;
-  }
-
-  .line {
-    width: 1px;
-    height: 16px;
-    background-color: $primary-color-600;
   }
 }

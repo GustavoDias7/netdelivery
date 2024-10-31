@@ -19,8 +19,8 @@
   }
 
   .footer-top {
-    .line {
-      background-color: #ffffff;
+    .social-links a::after{
+      background-color: $neutral-color-50;
     }
   }
 

@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.utils.crypto import get_random_string
 from django.contrib.auth.password_validation import validate_password
-from apps.user.models import User
+from apps.user.models import (User, Contacts)
 from apps.order.models import (
     Order,
     OrderItem,
@@ -48,6 +48,14 @@ def header_categories(request):
         
     qs_combos = Combo.objects.filter(archived=False).first()
     if qs_combos: context["header_combos"] = True
+    
+    return context
+
+def contacts(request):
+    context = {}
+    
+    qs_contacts = Contacts.objects.all()[0]
+    context["contacts"] = qs_contacts
     
     return context
 

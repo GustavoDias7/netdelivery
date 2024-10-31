@@ -25,7 +25,7 @@ a {
 
 a,
 button {
-  transition: 0.3s;
+  transition: opacity 0.3s;
   outline: none;
 
   &:focus,

@@ -2,31 +2,45 @@
 <section class="contact-bar">
   <div class="container md:container">
     <div class="contact-bar-left">
-      <a href="tel:2140028922" target="_blank">
-        <img src="{% static 'img/phone.svg' %}" alt="Telefone/WhatsApp" />
-        <p>(21) 4002-8922</p>
-      </a>
+      {% if contacts.email %}
+        <a href="mailto:{{contacts.email}}" target="_blank">
+          <img src="{% static 'img/mail.svg' %}" alt="E-mail" />
+          <p>{{contacts.email}}</p>
+        </a>
+      {% endif %}
+      {% if contacts.phone_number %}
+        <a href="tel:{{contacts.phone_number}}" target="_blank">
+          <img src="{% static 'img/phone.svg' %}" alt="Telefone" />
+          <p>{{contacts.fphone_number}}</p>
+        </a>
+      {% endif %}
     </div>
     <div class="social-links">
-      <a href="https://wa.me/552199999999" target="_blank" title="WhatsApp">
-        <img src="{% static 'img/whatsapp.svg' %}" alt="WhatsApp" />
-      </a>
-      <span class="line"></span>
-      <a href="https://www.facebook.com/" target="_blank" title="Facebook">
-        <img src="{% static 'img/facebook.svg' %}" alt="Facebook" />
-      </a>
-      <span class="line"></span>
-      <a href="https://www.instagram.com/" target="_blank" title="Instagram">
-        <img src="{% static 'img/instagram.svg' %}" alt="Instagram" />
-      </a>
-      <span class="line"></span>
-      <a href="https://www.linkedin.com/" target="_blank" title="LinkedIn">
-        <img src="{% static 'img/linkedin.svg' %}" alt="LinkedIn" />
-      </a>
-      <span class="line"></span>
-      <a href="https://x.com/" target="_blank" title="X">
-        <img src="{% static 'img/x.svg' %}" alt="X" />
-      </a>
+      {% if contacts.whatsapp_number %}
+        <a href="https://wa.me/{{contacts.whatsapp_number}}?text={{contacts.whatsapp_message}}" target="_blank" title="WhatsApp">
+          <img src="{% static 'img/whatsapp.svg' %}" alt="WhatsApp" />
+        </a>
+      {% endif %}
+      {% if contacts.facebook_link %}
+        <a href="{{contacts.facebook_link}}" target="_blank" title="Facebook">
+          <img src="{% static 'img/facebook.svg' %}" alt="Facebook" />
+        </a>
+      {% endif %}
+      {% if contacts.instagram_link %}
+        <a href="{{contacts.instagram_link}}" target="_blank" title="Instagram">
+          <img src="{% static 'img/instagram.svg' %}" alt="Instagram" />
+        </a>
+      {% endif %}
+      {% if contacts.linkedin_link %}
+        <a href="{{contacts.linkedin_link}}" target="_blank" title="LinkedIn">
+          <img src="{% static 'img/linkedin.svg' %}" alt="LinkedIn" />
+        </a>
+      {% endif %}
+      {% if contacts.x_link %}
+        <a href="{{contacts.x_link}}" target="_blank" title="X">
+          <img src="{% static 'img/x.svg' %}" alt="X" />
+        </a>
+      {% endif %}
     </div>
   </div>
 </section>

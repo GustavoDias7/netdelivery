@@ -33,7 +33,7 @@ a {
 
 a,
 button {
-  transition: 0.3s;
+  transition: opacity 0.3s;
   outline: none;
 }
 a:focus, a:hover,
@@ -4990,20 +4990,34 @@ textarea.f-input {
 .social-links {
   display: flex;
   align-items: center;
-  gap: 8px;
 }
 .social-links a {
+  display: flex;
+  align-items: center;
   font-size: 0px;
 }
+.social-links a::after {
+  content: "";
+  display: block;
+  width: 1px;
+  height: 16px;
+  margin: 0px 8px;
+  background-color: #2563eb;
+}
+.social-links a:last-of-type::after {
+  display: none;
+}
+.social-links a:hover, .social-links a:focus {
+  opacity: 1;
+}
+.social-links a:hover img, .social-links a:focus img {
+  opacity: 0.6;
+}
 .social-links img {
+  transition: opacity 0.3s;
   width: 20px;
   height: 20px;
   font-size: 12px;
-}
-.social-links .line {
-  width: 1px;
-  height: 16px;
-  background-color: #2563eb;
 }
 
 .floating-link {
@@ -5214,8 +5228,8 @@ textarea.f-input {
   padding-top: 64px;
   padding-bottom: 64px;
 }
-.footer.secondary .footer-top .line {
-  background-color: #ffffff;
+.footer.secondary .footer-top .social-links a::after {
+  background-color: #fafafa;
 }
 .footer.secondary hr {
   border: none;

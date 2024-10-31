@@ -10,37 +10,50 @@
     </p>
     <div class="g-root g-gap-0">
       <div class="g-row">
+
+        {% if contacts.address_text %}
         <div class="g-item-12 md:g-item-4">
           <div class="contact-item">
             <img src="{% static 'img/marker.svg'%}" alt="Address" class="icon" />
             <h3 class="text-xl text-color-primary text-align-center">
               Endereço
             </h3>
-            <a href="https://maps.google.com/maps?ll=-22.914131,-43.445982&z=9&t=m&hl=en&gl=BR&mapclient=embed&q=Rio%20de%20Janeiro%20State%20of%20Rio%20de%20Janeiro"
-              target="_blank" rel="noopener noreferrer">Rio de Janeiro-RJ, Brasil</a>
+            <a href="{{contacts.address_link}}"
+              target="_blank" rel="noopener noreferrer">{{contacts.address_text }}</a>
           </div>
         </div>
+        {% endif %}
+
+        {% if contacts.phone_number %}
         <div class="g-item-12 md:g-item-4">
           <div class="contact-item dividers">
             <img src="{% static 'img/phone.svg'%}" alt="Telephone" class="icon" />
             <h3 class="text-xl text-color-primary text-align-center">
               Telefone
             </h3>
-            <a href="tel:2140028922">(21) 4002-8922</a>
+            <a href="tel:{{contacts.phone_number}}">{{contacts.fphone_number}}</a>
           </div>
         </div>
+        {% endif %}
+
+
+        {% if contacts.email %}
         <div class="g-item-12 md:g-item-4">
           <div class="contact-item">
             <img src="{% static 'img/mail.svg'%}" alt="E-mail" class="icon" />
-            <h3 class="text-xl text-color-primary text-align-center">E-mail</h3>
-            <a href="mailto:">email@email.com</a>
+            <h3 class="text-xl text-color-primary text-align-center">
+              E-mail
+            </h3>
+            <a href="mailto:{{contacts.email}}">{{contacts.email}}</a>
           </div>
         </div>
+        {% endif %}
+
       </div>
     </div>
     <div class="map">
       <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d470400.7386830834!2d-43.77565508292252!3d-22.91315798611381!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9bde559108a05b%3A0x50dc426c672fd24e!2sRio%20de%20Janeiro%2C%20State%20of%20Rio%20de%20Janeiro!5e0!3m2!1sen!2sbr!4v1725457331794!5m2!1sen!2sbr"
+        src="{{contacts.google_maps}}"
         width="600" height="312" style="border: 0" allowfullscreen="" loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>

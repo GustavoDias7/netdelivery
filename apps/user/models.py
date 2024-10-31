@@ -14,16 +14,17 @@ from apps.address.models import Logradouro
 from apps.core.utils import remove_non_numeric
 
 class Contacts(models.Model):
-    whatsapp_number = models.CharField(_("WhatsApp number"), max_length=11, validators=[cellphone_number])
-    whatsapp_message = models.URLField(_("WhatsApp message"), max_length=100)
-    facebook_link = models.URLField(_("Facebook link"))
-    instagram_link = models.URLField(_("Instagram link"))
-    linkedin_link = models.URLField(_("LinkedIn link"))
-    x_link = models.URLField(_("X link"))
-    phone_number = models.CharField(_("Phone number"), max_length=11, validators=[phone_validator])
-    email = models.EmailField(_("E-mail"), max_length=255)
-    address_text = models.CharField(_("Address text"), max_length=30)
-    address_link = models.URLField(_("Address link"))
+    whatsapp_number = models.CharField(_("WhatsApp number"), null=True, blank=True, max_length=11, validators=[cellphone_number])
+    whatsapp_message = models.TextField(_("WhatsApp message"), null=True, blank=True, max_length=100)
+    facebook_link = models.URLField(_("Facebook link"), null=True, blank=True)
+    instagram_link = models.URLField(_("Instagram link"), null=True, blank=True)
+    linkedin_link = models.URLField(_("LinkedIn link"), null=True, blank=True)
+    x_link = models.URLField(_("X link"), null=True, blank=True)
+    phone_number = models.CharField(_("Phone number"), null=True, blank=True, max_length=11, validators=[phone_validator])
+    email = models.EmailField(_("E-mail"), null=True, blank=True, max_length=255)
+    address_text = models.CharField(_("Address text"), null=True, blank=True, max_length=40)
+    address_link = models.URLField(_("Address link"), null=True, blank=True)
+    google_maps = models.URLField(_("Google Maps"), max_length=250, null=True, blank=True)
     
     def clean_fields(self, exclude=None):
         self.whatsapp_number = remove_non_numeric(self.whatsapp_number)
@@ -31,25 +32,25 @@ class Contacts(models.Model):
         super().clean_fields(exclude=exclude)
     
     def fphone_number(self):
-        if not self.phone_number:
-            ddd = self.phone[0:2]
+        if self.phone_number:
+            ddd = self.phone_number[0:2]
             
             if len(self.phone_number) == 11:
-                part1 = self.phone[2:7]
-                part2 = self.phone[7:]
+                part1 = self.phone_number[2:7]
+                part2 = self.phone_number[7:]
             else:
-                part1 = self.phone[2:6]
-                part2 = self.phone[6:]
+                part1 = self.phone_number[2:6]
+                part2 = self.phone_number[6:]
             
             return f"({ddd}) {part1}-{part2}"
         else:
             return self.phone_number
     
     def fwhatsapp_number(self):
-        if not self.whatsapp_number:
-            ddd = self.phone[0:2]
-            part1 = self.phone[2:7]
-            part2 = self.phone[7:]
+        if self.whatsapp_number:
+            ddd = self.whatsapp_number[0:2]
+            part1 = self.whatsapp_number[2:7]
+            part2 = self.whatsapp_number[7:]
             return f"({ddd}) {part1}-{part2}"
         else:
             return self.whatsapp_number

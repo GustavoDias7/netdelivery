@@ -36,13 +36,21 @@ class UsernameForm(forms.ModelForm):
 class ContactsForm(forms.ModelForm):
     whatsapp_number = forms.CharField(
         label=_("WhatsApp number"),
+        required=False,
         max_length=15,
         widget=forms.TextInput(attrs={ 'data-mask': 'cellphone' })
     )
     phone_number = forms.CharField(
         label=_("Phone number"),
+        required=False,
         max_length=15,
         widget=forms.TextInput(attrs={ 'data-mask': 'phone' })
+    )
+    whatsapp_message = forms.CharField(
+        label=_("WhatsApp message"),
+        required=False,
+        max_length=100,
+        widget=forms.Textarea(attrs={ 'rows': '3' })
     )
     class Meta:
         model = Contacts
