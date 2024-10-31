@@ -4,9 +4,9 @@ from django.core.validators import (MinValueValidator, MaxValueValidator, MinLen
 from django.utils.translation import gettext_lazy as _
 import locale 
 from django.template.defaultfilters import slugify
+from apps.core.utils import remove_non_numeric
 
 locale.setlocale(locale.LC_MONETARY, 'pt_BR.UTF-8')
-
 
 class Category(models.Model):
     name = models.CharField(max_length=30, unique=True)
@@ -55,6 +55,10 @@ class ProductVariant(models.Model):
     class Meta:
         verbose_name = _("variante do produto")
         verbose_name_plural = _("variantes do produto")
+        
+    def clean_fields(self, exclude=None):
+        self.price = int(remove_non_numeric(self.price))
+        super().clean_fields(exclude=exclude)
     
     def fprice(self):
         return locale.currency(self.price / 100, grouping=True)

@@ -1,8 +1,7 @@
 from django.contrib import admin
 from . import models
+from . import forms
 from django.utils.translation import gettext_lazy as _
-
-# Register your models here.
 
 @admin.register(models.Category)
 class ProductCategoryAdmin(admin.ModelAdmin):
@@ -12,6 +11,7 @@ class ProductVariantInline(admin.StackedInline):
     model = models.ProductVariant
     extra = 0
     min_num = 1
+    form = forms.ProductVariantForm
 
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
