@@ -20,4 +20,3 @@ class ClientAdmin(admin.ModelAdmin):
 @admin.register(models.Contacts)
 class ContactsAdmin(admin.ModelAdmin):
     form = forms.ContactsForm
-    change_form_template = "admin/contacts_change_form.html"

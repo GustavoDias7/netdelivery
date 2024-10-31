@@ -46,3 +46,6 @@ class ContactsForm(forms.ModelForm):
     class Meta:
         model = Contacts
         fields = "__all__"
+    
+    class Media:
+        js = ('js/pages/admin_contacts.js',)
