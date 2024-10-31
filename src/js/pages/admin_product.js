@@ -1,3 +1,5 @@
+import IMask from "imask";
+
 window.addEventListener("load", function () {
   (function ($) {
     const currency_mask = [
@@ -15,13 +17,18 @@ window.addEventListener("load", function () {
     const id = [];
 
     document.querySelectorAll("[data-mask=currency]").forEach((input) => {
-      IMask(input, { mask: currency_mask });
-      if (!input.id.includes("__prefix__")) id.push(input.id);
+      if (!input.id.includes("__prefix__")) {
+        IMask(input, { mask: currency_mask });
+        id.push(input.id);
+      }
     });
 
     $("body").on("click", ".add-row a", () => {
       document.querySelectorAll("[data-mask=currency]").forEach((input) => {
-        if (!id.includes(input.id)) IMask(input, { mask: currency_mask });
+        if (!id.includes(input.id) && !input.id.includes("__prefix__")) {
+          IMask(input, { mask: currency_mask });
+          id.push(input.id);
+        }
       });
     });
   })(django.jQuery);
