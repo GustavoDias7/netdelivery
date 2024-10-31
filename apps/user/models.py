@@ -6,7 +6,7 @@ from django.contrib.auth.models import (
     BaseUserManager,
 )
 from django.core import validators
-from apps.core.validators import (name_validator, phone_validator, cellphone_number)
+from apps.core.validators import (name_validator, phone_validator, cellphone_number, cpf_validator)
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 import re
@@ -20,7 +20,7 @@ class Contacts(models.Model):
     instagram_link = models.URLField(_("Instagram link"))
     linkedin_link = models.URLField(_("LinkedIn link"))
     x_link = models.URLField(_("X link"))
-    phone_number = models.CharField(_("Telephone number"), max_length=11, validators=[phone_validator])
+    phone_number = models.CharField(_("Phone number"), max_length=11, validators=[phone_validator])
     email = models.EmailField(_("E-mail"), max_length=255)
     address_text = models.CharField(_("Address text"), max_length=30)
     address_link = models.URLField(_("Address link"))
@@ -176,14 +176,22 @@ class Client(models.Model):
     logradouro = models.ForeignKey(Logradouro, null=True, on_delete=models.SET_NULL, help_text="Pesquise pelo CEP, nome do logradouro, nome da localidade ou nome do bairro.")
     number = models.PositiveSmallIntegerField(blank=True, null=True, validators=[MaxValueValidator(32767)]) 
     complement = models.CharField(max_length=100, blank=True, null=True)
-    phone = models.CharField(_("Number Phone"), max_length=11, null=True, blank=True, validators=[phone_validator])
-    cpf = models.CharField("CPF", max_length=11, null=True, blank=True)
+    phone = models.CharField(_("Phone Number"), max_length=11, null=True, blank=True, validators=[phone_validator])
+    cpf = models.CharField("CPF", max_length=11, null=True, blank=True, validators=[cpf_validator])
+    
+    def clean_fields(self, exclude=None):
+        self.phone = remove_non_numeric(self.phone)
+        self.cpf = remove_non_numeric(self.cpf)
+        super().clean_fields(exclude=exclude)
     
     def save(self, *args, **kwargs):
         if self.full_name:
             self.full_name = self.full_name.upper()
         super(Client, self).save(*args, **kwargs)
+        
+    def fcep(self):
+        return f'******{self.cpf[6:]}' if self.cpf else ''
     
     def __str__(self):
-        return f"{self.full_name} {self.cpf if self.cpf else ''}"
+        return f"{self.full_name} {self.fcep()}"
     

@@ -1,5 +1,6 @@
 from django import forms
-from .models import User, Contacts
+from .models import User, Contacts, Client
+from django.utils.translation import gettext_lazy as _
 
 class UserForm(forms.ModelForm):
     confirm_password = forms.CharField(widget=forms.PasswordInput())
@@ -7,8 +8,7 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ["first_name", "last_name", "email", "password"]
-        
-
+       
 class LoginForm(forms.Form):
     email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput())
@@ -33,13 +33,14 @@ class UsernameForm(forms.ModelForm):
         model = User
         fields = ["username"]
         
-        
 class ContactsForm(forms.ModelForm):
     whatsapp_number = forms.CharField(
+        label=_("WhatsApp number"),
         max_length=15,
         widget=forms.TextInput(attrs={ 'data-mask': 'cellphone' })
     )
     phone_number = forms.CharField(
+        label=_("Phone number"),
         max_length=15,
         widget=forms.TextInput(attrs={ 'data-mask': 'phone' })
     )
@@ -49,3 +50,21 @@ class ContactsForm(forms.ModelForm):
     
     class Media:
         js = ('js/pages/admin_contacts.js',)
+        
+class ClientsForm(forms.ModelForm):
+    phone = forms.CharField(
+        label=_("Phone Number"),
+        max_length=15,
+        widget=forms.TextInput(attrs={ 'data-mask': 'phone' })
+    )
+    cpf = forms.CharField(
+        label="CPF",
+        max_length=14,
+        widget=forms.TextInput(attrs={ 'data-mask': 'cpf' })
+    )
+    class Meta:
+        model = Client
+        fields = "__all__"
+    
+    class Media:
+        js = ('js/pages/admin_client.js',)

@@ -27,3 +27,4 @@ class ComboItemInline(admin.StackedInline):
 @admin.register(models.Combo)
 class ComboAdmin(admin.ModelAdmin):
     inlines = [ComboItemInline]
+    form = forms.ComboForm

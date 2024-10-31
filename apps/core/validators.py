@@ -93,3 +93,38 @@ def cart_validator(cart):
                     _(f'The key "{key}" is required.'),
                     params={"value": key},
                 )
+                
+def cpf_validator(value:str):
+    numbers = [int(digit) for digit in value if digit.isdigit()]
+
+    # Verifica se o CPF possui 11 números:
+    if len(numbers) != 11:
+        raise ValidationError(
+            _("Must have 11 digits."),
+            params={"value": numbers},
+        )
+    
+    # Verifica se todos são iguais:
+    if len(set(numbers)) == 1:
+        raise ValidationError(
+            _("All digits are equal."),
+            params={"value": numbers},
+        )
+
+    # Validação do primeiro dígito verificador:
+    sum_of_products = sum(a*b for a, b in zip(numbers[0:9], range(10, 1, -1)))
+    expected_digit = (sum_of_products * 10 % 11) % 10
+    if numbers[9] != expected_digit:
+        raise ValidationError(
+            _("This CPF is invalid."),
+            params={"value": numbers},
+        )
+
+    # Validação do segundo dígito verificador:
+    sum_of_products = sum(a*b for a, b in zip(numbers[0:10], range(11, 1, -1)))
+    expected_digit = (sum_of_products * 10 % 11) % 10
+    if numbers[10] != expected_digit:
+        raise ValidationError(
+            _("This CPF is invalid."),
+            params={"value": numbers},
+        )

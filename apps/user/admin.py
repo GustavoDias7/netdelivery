@@ -16,6 +16,7 @@ class ClientAdmin(admin.ModelAdmin):
     list_display = ("full_name", "logradouro", "phone", "cpf")
     search_fields = ("full_name", "logradouro__cep", "logradouro__name", "phone", "cpf")
     autocomplete_fields = ("logradouro",)
+    form = forms.ClientsForm
 
 @admin.register(models.Contacts)
 class ContactsAdmin(admin.ModelAdmin):
