@@ -1,26 +1,9 @@
-import * as vue from "vue/dist/vue.esm-bundler.js";
-import { mask } from "vue-the-mask";
-import { Money3Directive } from 'v-money3'
-const { createApp } = vue;
-import getInputValues from "../utils/getInputValues";
+import IMask from "imask";
 
-const app = createApp({
-  delimiters: ["[[", "]]"],
-  setup() {
-    return {};
-  },
-  data() {
-    return {
-      fields: { whatsapp_number: "", phone_number: "" },
-    };
-  },
-  methods: {},
-  mounted() {
-    const fields = getInputValues(["whatsapp_number", "phone_number"]);
-    this.fields = { ...this.fields, ...fields };
-  },
+window.addEventListener("load", function () {
+  const $cellphone = document.querySelector("[data-mask=cellphone]");
+  const $phone = document.querySelector("[data-mask=phone]");
+  const phone_masks = ["(00) 0000-0000", "(00) 00000-0000"];
+  IMask($cellphone, { mask: phone_masks[1] });
+  IMask($phone, { mask: phone_masks });
 });
-
-app.directive("mask", mask);
-app.directive('money', Money3Directive)
-app.mount("#contacts_form fieldset");

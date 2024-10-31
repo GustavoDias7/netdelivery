@@ -37,21 +37,11 @@ class UsernameForm(forms.ModelForm):
 class ContactsForm(forms.ModelForm):
     whatsapp_number = forms.CharField(
         max_length=15,
-        widget=forms.TextInput(
-            attrs={
-                'v-model': 'fields.whatsapp_number',
-                'v-mask':"'(##) #####-####'", 
-            }
-        )
+        widget=forms.TextInput(attrs={ 'data-mask': 'cellphone' })
     )
     phone_number = forms.CharField(
         max_length=15,
-        widget=forms.TextInput(
-            attrs={
-                'v-model': 'fields.phone_number',
-                'v-mask':"['(##) ####-####', '(##) #####-####']", 
-            }
-        )
+        widget=forms.TextInput(attrs={ 'data-mask': 'phone' })
     )
     class Meta:
         model = Contacts

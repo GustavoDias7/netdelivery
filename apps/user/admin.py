@@ -2,7 +2,6 @@ from django.contrib import admin
 from . import models
 from . import forms
 from django.contrib.auth.admin import UserAdmin
-from apps.core.utils import remove_non_numeric
 
 @admin.register(models.User)
 class CustomUserAdmin(UserAdmin):
