@@ -70,9 +70,6 @@ class OpeningHours(models.Model):
     inital_hour = models.TimeField(_("Initial hour"), null=True, blank=True)
     final_hour = models.TimeField(_("Final hour"), null=True, blank=True)
     closed = models.BooleanField(_("Closed"), default=False)
-
-    def clean_fields(self, exclude=None):
-        super().clean_fields(exclude=exclude)
         
     def days(self):
         inital_day_display = self.get_inital_day_display()
@@ -92,9 +89,10 @@ class OpeningHours(models.Model):
         if self.closed:
             return _('Closed')
         else:
-            fhour = "{:02d}h{:02d}".format(self.inital_hour.hour, self.inital_hour.minute)
-            fminute = "{:02d}h{:02d}".format(self.final_hour.hour, self.final_hour.minute)
-            return f"{fhour} às {fminute}"
+            template = "{:02d}h{:02d}"
+            hour = template.format(self.inital_hour.hour, self.inital_hour.minute)
+            minute = template.format(self.final_hour.hour, self.final_hour.minute)
+            return f"{hour} às {minute}"
         
     class Meta:
         verbose_name = _("opening hours")

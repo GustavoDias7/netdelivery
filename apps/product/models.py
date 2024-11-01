@@ -57,7 +57,8 @@ class ProductVariant(models.Model):
         verbose_name_plural = _("variantes do produto")
         
     def clean_fields(self, exclude=None):
-        self.price = int(remove_non_numeric(self.price))
+        if self.price and type(self.price) == str:
+            self.price = int(remove_non_numeric(self.price))
         super().clean_fields(exclude=exclude)
     
     def fprice(self):
@@ -100,7 +101,8 @@ class Combo(models.Model):
     archived = models.BooleanField(default=True)
     
     def clean_fields(self, exclude=None):
-        self.price = int(remove_non_numeric(self.price))
+        if self.price and type(self.price) == str:
+            self.price = int(remove_non_numeric(self.price))
         super().clean_fields(exclude=exclude)
     
     def fprice(self):
