@@ -17,7 +17,18 @@ class ClientAdmin(admin.ModelAdmin):
     search_fields = ("full_name", "logradouro__cep", "logradouro__name", "phone", "cpf")
     autocomplete_fields = ("logradouro",)
     form = forms.ClientsForm
+    
+# @admin.register(models.OpeningHours)
+class OpeningHoursAdmin(admin.StackedInline):
+    form = forms.OpeningHoursForm
+    model = models.OpeningHours
+    extra = 0
+    min_num = 1
 
 @admin.register(models.Contacts)
 class ContactsAdmin(admin.ModelAdmin):
+    inlines = [OpeningHoursAdmin]
     form = forms.ContactsForm
+    
+    def has_add_permission(self, request):
+        return not models.Contacts.objects.exists()

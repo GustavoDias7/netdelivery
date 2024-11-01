@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.validators import MaxValueValidator, MinLengthValidator
+from django.core.validators import MaxValueValidator
 from django.contrib.auth.models import (
     AbstractBaseUser,
     PermissionsMixin,
@@ -12,6 +12,7 @@ from django.utils import timezone
 import re
 from apps.address.models import Logradouro
 from apps.core.utils import remove_non_numeric
+from delivery.constants import DAY_OF_THE_WEEK
 
 class Contacts(models.Model):
     whatsapp_number = models.CharField(_("WhatsApp number"), null=True, blank=True, max_length=11, validators=[cellphone_number])
@@ -60,7 +61,44 @@ class Contacts(models.Model):
         verbose_name_plural = _("contacts")
         
     def __str__(self):
-        return f"Contacts id {self.id}"
+        return "Contacts"
+
+class OpeningHours(models.Model):
+    contacts = models.ForeignKey(Contacts, on_delete=models.CASCADE)
+    inital_day = models.CharField(_("Initial day"), max_length=1, choices=DAY_OF_THE_WEEK)
+    final_day = models.CharField(_("Final day"), null=True, blank=True, max_length=1, choices=DAY_OF_THE_WEEK)
+    inital_hour = models.TimeField(_("Initial hour"), null=True, blank=True)
+    final_hour = models.TimeField(_("Final hour"), null=True, blank=True)
+    closed = models.BooleanField(_("Closed"), default=False)
+
+    def clean_fields(self, exclude=None):
+        super().clean_fields(exclude=exclude)
+        
+    def days(self):
+        inital_day_display = self.get_inital_day_display()
+        final_day_display = self.get_final_day_display()
+        
+        inital_day = inital_day_display[0:3] if inital_day_display else inital_day_display
+        final_day = final_day_display[0:3] if final_day_display else final_day_display
+        
+        if inital_day and final_day:
+            return f"{inital_day}-{final_day}"
+        elif inital_day or final_day:
+            return inital_day_display or final_day_display
+        else:
+            return None
+    
+    def hours(self):
+        if self.closed:
+            return _('Closed')
+        else:
+            fhour = "{:02d}h{:02d}".format(self.inital_hour.hour, self.inital_hour.minute)
+            fminute = "{:02d}h{:02d}".format(self.final_hour.hour, self.final_hour.minute)
+            return f"{fhour} às {fminute}"
+        
+    class Meta:
+        verbose_name = _("opening hours")
+        verbose_name_plural = _("opening hours")
 
 class UserManager(BaseUserManager):
     def _create_user(

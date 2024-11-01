@@ -25,7 +25,6 @@
               <h3 class="text-xl text-mb-1">Contatos</h3>
               {% if contacts.phone_number %}
                 <p>
-                  <strong>Telefone: </strong>
                   <a class="text-sm" href="tel:{{contacts.phone_number}}">
                     {{contacts.fphone_number}}
                   </a>
@@ -33,7 +32,6 @@
               {% endif %}
               {% if contacts.email %}
                 <p>
-                  <strong>E-mail: </strong>
                   <a class="text-sm" href="mailto:{{contacts.email}}">
                     {{contacts.email}}
                   </a>
@@ -45,12 +43,11 @@
           <div class="g-item-12 sm:g-item-6 lg:g-item-3">
             <div>
               <h3 class="text-xl text-mb-1">Funcionamento</h3>
-              <p class="text-sm">
-                <strong>Ter-Dom:</strong> 19h às 00h
-              </p>
-              <p class="text-sm">
-                <strong>Segunda:</strong> Fechado
-              </p>
+              {% for item in opening_hours %}
+                <p class="text-sm">
+                  <strong>{{item.days}}</strong>: {{item.hours}}
+                </p>
+              {% endfor %}
             </div>
           </div>
 

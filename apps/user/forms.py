@@ -76,3 +76,30 @@ class ClientsForm(forms.ModelForm):
     
     class Media:
         js = ('js/pages/admin_client.js',)
+        
+class OpeningHoursForm(forms.ModelForm):
+    inital_hour = forms.TimeField(
+        label=_("Initial hour"), 
+        required=False, 
+        widget=forms.TimeInput(format='%H:%M', attrs={ 'data-mask': 'time' })
+    )
+    final_hour = forms.TimeField(
+        label=_("Final hour"), 
+        required=False, 
+        widget=forms.TimeInput(format='%H:%M', attrs={ 'data-mask': 'time' })
+    )
+    def clean(self):
+        data = self.cleaned_data
+        
+        final_day = data.get('final_day', None)
+        inital_hour = data.get('inital_hour', None)
+        final_hour = data.get('final_hour', None)
+        closed = data.get('closed', None)
+        
+        fields = [final_day, inital_hour, final_hour]
+        
+        if closed == False and None in fields:
+            if final_day == None: self.add_error("final_day", _('This field is required.'))
+            if inital_hour == None: self.add_error("inital_hour", _('This field is required.'))
+            if final_hour == None: self.add_error("final_hour", _('This field is required.'))
+        
