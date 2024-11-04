@@ -17,45 +17,60 @@ def header_categories(request):
     }
     
     categories_cache = cache.get("header_categories")
-    
-    if not categories_cache:
+    if categories_cache == None:
         try:
             qs_categories = Category.objects.all()
             for category in qs_categories:
                 variant = ProductVariant.objects.filter(archived=False, product__category=category).first()
-                if variant: context["header_categories"].append(variant.product.category)
-                
-            qs_combos = Combo.objects.filter(archived=False).first()
-            if qs_combos: context["header_combos"] = True
-            
-            cache.set("header_categories", context)
+                if variant:
+                    context["header_categories"].append(variant.product.category)
+            cache.set("header_categories", context["header_categories"])
         except ObjectDoesNotExist:
-            context["qs_categories"] = None
             context["header_categories"] = None
     else:
-        context = categories_cache
-        
+        context["header_categories"] = categories_cache
+    
+    combos_cache = cache.get("header_combos")
+    if combos_cache == None:
+        try:
+            qs_combos = Combo.objects.filter(archived=False).first()
+            if qs_combos:
+                context["header_combos"] = True
+                cache.set("header_combos", context["header_combos"])
+        except ObjectDoesNotExist:
+            context["header_combos"] = None
+    else:
+        context["header_combos"] = combos_cache
+    
     return context
 
 def contacts(request):
-    context = {}
+    context = {
+        "contacts": None,
+        "opening_hours": None
+    }
     
     contacts_cache = cache.get("contacts")
-    if not contacts_cache:
+    if contacts_cache == None:
         try:
             qs_contacts = Contacts.objects.filter().first()
             context["contacts"] = qs_contacts
+            cache.set("contacts", context["contacts"])
         except ObjectDoesNotExist:
             context["contacts"] = None
+    else:
+        context["contacts"] = contacts_cache
         
+    opening_hours_cache = cache.get("opening_hours")
+    if opening_hours_cache == None:
         try:
             qs_opening_hours = OpeningHours.objects.filter(contacts=qs_contacts)
             context["opening_hours"] = qs_opening_hours
+            cache.set("opening_hours", context["opening_hours"])
         except ObjectDoesNotExist:
             context["opening_hours"] = None
-        
-        cache.set("contacts", context)
     else:
-        context = contacts_cache
+        context["opening_hours"] = opening_hours_cache
+        
     
     return context
