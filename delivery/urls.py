@@ -19,6 +19,7 @@ from django.urls import path
 from apps.core import views as core_views
 from apps.product import views as product_views
 from apps.order import views as order_views
+from apps.address import views as address_views
 from apps.core.admin import autocomplete_view
 
 # change the autocomplete text content
@@ -37,6 +38,6 @@ urlpatterns = [
     path("conta/perfil", core_views.profile, name="profile"),
     path("conta/perfil/editar", core_views.edit, name="edit"),
     # path("conta/pedidos", order_views.orders, name="orders"),
-    path("conta/endereco", core_views.address, name="address"),
-    path("conta/endereco/editar", core_views.address_edit, name="address_edit"),
+    # path("conta/endereco", address_views.address, name="address"),
+    # path("conta/endereco/editar", address_views.address_edit, name="address_edit"),
 ]
