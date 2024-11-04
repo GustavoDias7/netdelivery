@@ -20,6 +20,7 @@ from apps.core import views as core_views
 from apps.product import views as product_views
 from apps.order import views as order_views
 from apps.address import views as address_views
+from apps.user import views as user_views
 from apps.core.admin import autocomplete_view
 
 # change the autocomplete text content
@@ -30,13 +31,13 @@ urlpatterns = [
     path("", core_views.homepage, name="homepage"),
     path("produto", product_views.product, name="product"),
     path("combo", product_views.combo, name="combo"),
-    path("cadastro", core_views.signup, name="signup"),
-    path("login", core_views.signin, name="signin"),
-    path("logout", core_views.logout_view, name="logout"),
+    # path("cadastro", user_views.signup, name="signup"),
+    # path("login", user_views.signin, name="signin"),
+    path("logout", user_views.logout_view, name="logout"),
     # path("pedido", order_views.order, name="order"),
-    path("conta", core_views.account, name="account"),
-    path("conta/perfil", core_views.profile, name="profile"),
-    path("conta/perfil/editar", core_views.edit, name="edit"),
+    # path("conta", user_views.account, name="account"),
+    # path("conta/perfil", user_views.profile, name="profile"),
+    # path("conta/perfil/editar", user_views.edit, name="edit"),
     # path("conta/pedidos", order_views.orders, name="orders"),
     # path("conta/endereco", address_views.address, name="address"),
     # path("conta/endereco/editar", address_views.address_edit, name="address_edit"),
