@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from apps.core import views as core_views
 from apps.product import views as product_views
+from apps.order import views as order_views
 from apps.core.admin import autocomplete_view
 
 # change the autocomplete text content
@@ -31,11 +32,11 @@ urlpatterns = [
     path("cadastro", core_views.signup, name="signup"),
     path("login", core_views.signin, name="signin"),
     path("logout", core_views.logout_view, name="logout"),
-    path("pedido", core_views.order, name="order"),
+    # path("pedido", order_views.order, name="order"),
     path("conta", core_views.account, name="account"),
     path("conta/perfil", core_views.profile, name="profile"),
     path("conta/perfil/editar", core_views.edit, name="edit"),
-    path("conta/pedidos", core_views.orders, name="orders"),
+    # path("conta/pedidos", order_views.orders, name="orders"),
     path("conta/endereco", core_views.address, name="address"),
     path("conta/endereco/editar", core_views.address_edit, name="address_edit"),
 ]

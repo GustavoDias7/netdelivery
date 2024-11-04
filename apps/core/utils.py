@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.crypto import get_random_string
 
 def remove_non_numeric(value:str):
     return "".join(e for e in value if e.isdigit())
@@ -66,3 +67,7 @@ def custom_titled_filter(title):
             instance.title = title
             return instance
     return Wrapper
+
+def create_username(fn, ln):
+    random_number = get_random_string(length=6, allowed_chars='0123456789')
+    return f"{fn[:2]}{ln[:2]}{random_number}".upper()
