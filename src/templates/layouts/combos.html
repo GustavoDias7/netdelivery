@@ -15,7 +15,7 @@
             </p>
             <a href="{{product.link}}">
               <figure class="aspect-ratio aspect-1-1 fit">
-                <img src="{{product.img}}" alt="Card Image" />
+                <img src="{{product.image.url}}" alt="Card Image" />
               </figure>
             </a>
             <div class="description">
@@ -32,7 +32,7 @@
                   '{{product.id}}',
                   '{{product.name}}',
                   '{{product.price}}',
-                  '{{product.img}}',
+                  '{{product.image.url}}',
                   '{{product.discount|unlocalize}}',
                   '{{product.link}}',
                 )">Adicionar ao carrinho</button>

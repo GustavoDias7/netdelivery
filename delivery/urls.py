@@ -22,6 +22,8 @@ from apps.order import views as order_views
 from apps.address import views as address_views
 from apps.user import views as user_views
 from apps.core.admin import autocomplete_view
+from django.conf import settings
+from django.conf.urls.static import static
 
 # change the autocomplete text content
 admin.AdminSite.autocomplete_view = autocomplete_view
@@ -42,3 +44,5 @@ urlpatterns = [
     # path("conta/endereco", address_views.address, name="address"),
     # path("conta/endereco/editar", address_views.address_edit, name="address_edit"),
 ]
+
+urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

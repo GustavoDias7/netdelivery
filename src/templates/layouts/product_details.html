@@ -7,7 +7,7 @@
             <div class="g-row">
               <div class="g-item-12 md:g-item-7">
                 <figure class="aspect-ratio aspect-1-1 fit">
-                  <img class="product-image" src="{{variant.product.img}}" alt="{{variant.product.name}}" />
+                  <img class="product-image" src="{{variant.product.image.url}}" alt="{{variant.product.name}}" />
                 </figure>
               </div>
               <div class="g-item-12 md:g-item-5">
@@ -78,7 +78,7 @@
                     '{{variant.id}}',
                     '{{variant.full_name}}',
                     '{{variant.price}}',
-                    '{{variant.img}}',
+                    '{{variant.product.image.url}}',
                     '{{variant.discount|unlocalize}}',
                     '{{variant.link}}',
                     )">Adicionar ao carrinho

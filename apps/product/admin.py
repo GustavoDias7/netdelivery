@@ -2,6 +2,8 @@ from django.contrib import admin
 from . import models
 from . import forms
 from django.utils.translation import gettext_lazy as _
+import os
+from pprint import pprint
 
 @admin.register(models.Category)
 class ProductCategoryAdmin(admin.ModelAdmin):

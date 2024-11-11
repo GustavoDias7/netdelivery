@@ -1,10 +1,14 @@
-import urllib.parse as urlparse
+from urllib.parse import urlencode
 from django.db import models
 from django.core.validators import (MinValueValidator, MaxValueValidator, MinLengthValidator)
 from django.utils.translation import gettext_lazy as _
 import locale 
 from django.template.defaultfilters import slugify
 from apps.core.utils import remove_non_numeric
+from django.core.files.storage import FileSystemStorage
+from django.conf import settings
+
+fs_storage = FileSystemStorage(location=settings.MEDIA_ROOT)
 
 locale.setlocale(locale.LC_MONETARY, 'pt_BR.UTF-8')
 
@@ -23,14 +27,14 @@ class Category(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=100)
-    # image = models.ImageField()
+    image = models.ImageField(storage=fs_storage, help_text=_("Add square images, with 1:1 dimension."))
     description = models.TextField(max_length=400, validators=[MinLengthValidator(4, _("Mínimo de 4 caracteres."))])
     category = models.ForeignKey(Category, on_delete=models.RESTRICT)
     
     class Meta:
         verbose_name = _("produto")
         verbose_name_plural = _("produtos")
-
+    
     def __str__(self):
         return f"{self.name}"
     
@@ -76,7 +80,7 @@ class ProductVariant(models.Model):
 
     def link(self):
         params = {"id": self.product.id, "variant": self.id}
-        query_string = urlparse.urlencode(params)
+        query_string = urlencode(params)
         return "/produto?" + query_string
     
     def full_name(self):
@@ -88,7 +92,7 @@ class ProductVariant(models.Model):
     
 class Combo(models.Model):
     name = models.CharField(max_length=100)
-    # image = models.ImageField()
+    image = models.ImageField(storage=fs_storage, help_text=_("Add square images, with 1:1 dimension."))
     description = models.TextField(max_length=400, validators=[MinLengthValidator(4, _("Mínimo de 4 caracteres."))])
     price = models.PositiveIntegerField(validators=[MaxValueValidator(2147483647)], help_text=_("Em inteiro. Ex.: 4999 para representar R$ 49,99"))
     discount = models.DecimalField(
@@ -120,7 +124,7 @@ class Combo(models.Model):
 
     def link(self):
         params = {"id": self.id}
-        query_string = urlparse.urlencode(params)
+        query_string = urlencode(params)
         return "/combo?" + query_string
     
     def __str__(self):
