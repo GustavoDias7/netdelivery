@@ -1,0 +1,81 @@
+[
+  { "model": "address.uf", "pk": 1, "fields": { "acronym": "AC" } },
+  { "model": "address.uf", "pk": 2, "fields": { "acronym": "AL" } },
+  { "model": "address.uf", "pk": 3, "fields": { "acronym": "AP" } },
+  { "model": "address.uf", "pk": 4, "fields": { "acronym": "AM" } },
+  { "model": "address.uf", "pk": 5, "fields": { "acronym": "BA" } },
+  { "model": "address.uf", "pk": 6, "fields": { "acronym": "CE" } },
+  { "model": "address.uf", "pk": 7, "fields": { "acronym": "DF" } },
+  { "model": "address.uf", "pk": 8, "fields": { "acronym": "ES" } },
+  { "model": "address.uf", "pk": 9, "fields": { "acronym": "GO" } },
+  { "model": "address.uf", "pk": 10, "fields": { "acronym": "MA" } },
+  { "model": "address.uf", "pk": 11, "fields": { "acronym": "MT" } },
+  { "model": "address.uf", "pk": 12, "fields": { "acronym": "MS" } },
+  { "model": "address.uf", "pk": 13, "fields": { "acronym": "MG" } },
+  { "model": "address.uf", "pk": 14, "fields": { "acronym": "PA" } },
+  { "model": "address.uf", "pk": 15, "fields": { "acronym": "PB" } },
+  { "model": "address.uf", "pk": 16, "fields": { "acronym": "PR" } },
+  { "model": "address.uf", "pk": 17, "fields": { "acronym": "PE" } },
+  { "model": "address.uf", "pk": 18, "fields": { "acronym": "PI" } },
+  { "model": "address.uf", "pk": 19, "fields": { "acronym": "RJ" } },
+  { "model": "address.uf", "pk": 20, "fields": { "acronym": "RN" } },
+  { "model": "address.uf", "pk": 21, "fields": { "acronym": "RS" } },
+  { "model": "address.uf", "pk": 22, "fields": { "acronym": "RO" } },
+  { "model": "address.uf", "pk": 23, "fields": { "acronym": "RR" } },
+  { "model": "address.uf", "pk": 24, "fields": { "acronym": "SC" } },
+  { "model": "address.uf", "pk": 25, "fields": { "acronym": "SP" } },
+  { "model": "address.uf", "pk": 26, "fields": { "acronym": "SE" } },
+  { "model": "address.uf", "pk": 27, "fields": { "acronym": "TO" } },
+  {
+    "model": "address.situacaolocalidade",
+    "pk": 0,
+    "fields": {
+      "definition": "Localidade não codificada em nível de Logradouro"
+    }
+  },
+  {
+    "model": "address.situacaolocalidade",
+    "pk": 1,
+    "fields": {
+      "definition": "Localidade codificada em nível de Logradouro"
+    }
+  },
+  {
+    "model": "address.situacaolocalidade",
+    "pk": 2,
+    "fields": {
+      "definition": "Distrito ou Povoado inserido na codificação em nível de Logradouro."
+    }
+  },
+  {
+    "model": "address.situacaolocalidade",
+    "pk": 3,
+    "fields": {
+      "definition": "Distrito/Povoado inserido na codificação em nível de Logr..."
+    }
+  },
+  {
+    "model": "address.tipolocalidade",
+    "pk": 1,
+    "fields": {
+      "code": "D",
+      "definition": "Distrito"
+    }
+  },
+  {
+    "model": "address.tipolocalidade",
+    "pk": 2,
+    "fields": {
+      "code": "M",
+      "definition": "Município"
+    }
+  },
+  {
+    "model": "address.tipolocalidade",
+    "pk": 3,
+    "fields": {
+      "code": "P",
+      "definition": "Povoado"
+    }
+  }
+]

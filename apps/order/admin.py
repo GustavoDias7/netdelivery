@@ -31,13 +31,14 @@ class OrderAdmin(admin.ModelAdmin):
         "created",
         "received_date",
     )
-    readonly_fields = (
+    exclude = (
         "payment_type_name",
         "payment_type_code",
         "shipping_fee_value",
         "created",
     )
     autocomplete_fields = ("client",)
+    
     def save_model(self, request, obj, form, change):
         self.model.payment_type_name = "Test"
         super().save_model(request, obj, form, change)

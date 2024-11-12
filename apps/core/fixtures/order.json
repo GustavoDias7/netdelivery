@@ -1,0 +1,108 @@
+[
+  {
+    "model": "order.shippingfee",
+    "pk": 1,
+    "fields": {
+      "value": 0,
+      "is_default": true
+    }
+  },
+  {
+    "model": "order.paymenttype",
+    "pk": 1,
+    "fields": {
+      "name": "PIX",
+      "code": "pix"
+    }
+  },
+  {
+    "model": "order.paymenttype",
+    "pk": 2,
+    "fields": {
+      "name": "Cartão de Débito",
+      "code": "debit"
+    }
+  },
+  {
+    "model": "order.paymenttype",
+    "pk": 3,
+    "fields": {
+      "name": "Cartão de Crédito",
+      "code": "credit"
+    }
+  },
+  {
+    "model": "order.paymenttype",
+    "pk": 4,
+    "fields": {
+      "name": "Dinheiro sem troco",
+      "code": "money"
+    }
+  },
+  {
+    "model": "order.paymenttype",
+    "pk": 5,
+    "fields": {
+      "name": "Dinheiro com troco",
+      "code": "change_money"
+    }
+  },
+  {
+    "model": "order.orderitemstatus",
+    "pk": 1,
+    "fields": {
+      "name": "Em espera",
+      "code": "wating"
+    }
+  },
+  {
+    "model": "order.orderitemstatus",
+    "pk": 2,
+    "fields": {
+      "name": "Entregue",
+      "code": "delivered"
+    }
+  },
+  {
+    "model": "order.orderitemstatus",
+    "pk": 3,
+    "fields": {
+      "name": "Cancelado",
+      "code": "canceled"
+    },
+    "_comment": [
+      {
+        "model": "order.orderitemstatus",
+        "pk": 4,
+        "fields": {
+          "name": "A caminho",
+          "code": "on-the-way"
+        }
+      },
+      {
+        "model": "order.orderitemstatus",
+        "pk": 5,
+        "fields": {
+          "name": "Preparando",
+          "code": "preparing"
+        }
+      },
+      {
+        "model": "order.orderitemstatus",
+        "pk": 6,
+        "fields": {
+          "name": "Pronto para retirada",
+          "code": "ready-for-pick-up"
+        }
+      },
+      {
+        "model": "order.orderitemstatus",
+        "pk": 7,
+        "fields": {
+          "name": "Retirado",
+          "code": "removed"
+        }
+      }
+    ]
+  }
+]

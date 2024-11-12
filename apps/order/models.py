@@ -10,7 +10,6 @@ from apps.user.models import *
 import locale 
 
 locale.setlocale(locale.LC_MONETARY, 'pt_BR.UTF-8')
-# Create your models here.
 
 class Order(models.Model):
     client = models.ForeignKey(Client, null=True, on_delete=models.SET_NULL)

@@ -9,7 +9,15 @@ from . import models
 @admin.register(models.UF)
 class UFAdmin(admin.ModelAdmin):
     search_fields = ("acronym",)
-    readonly_fields = ("acronym",)
+    
+    def has_add_permission(self, request):
+        return False
+    
+    def has_change_permission(self, request, obj=None):
+        return False
+    
+    def has_delete_permission(self, request, obj=None):
+        return False
   
 @admin.register(models.Logradouro)
 class LogradouroAdmin(ImportExportModelAdmin,admin.ModelAdmin):
@@ -28,13 +36,22 @@ class LogradouroAdmin(ImportExportModelAdmin,admin.ModelAdmin):
         "uf",
         "bairro",
         "localidade",
+        "type",
         "name",
         "complement",
         "cep",
-        "type"
     )
     search_fields = ("cep", "type", "name", "localidade__name", "bairro__name")
     wl_bairros = models.WhiteListBairro.objects.all()
+    
+    def has_add_permission(self, request):
+        return False
+    
+    def has_change_permission(self, request, obj=None):
+        return False
+    
+    def has_delete_permission(self, request, obj=None):
+        return False
     
     def get_search_results(self, request, queryset, search_term):
         queryset, may_have_duplicates = super().get_search_results(
@@ -110,13 +127,17 @@ class BairroAdmin(ImportExportModelAdmin,admin.ModelAdmin):
         "localidade",
         "uf"
     )
-    readonly_fields = (
-        "id",
-        "name",
-        "localidade",
-    )
     search_fields = ("name", "localidade__name", "localidade__uf__acronym")
     list_filter = [('localidade__name', custom_titled_filter('localidade'))]
+    
+    def has_add_permission(self, request):
+        return False
+    
+    def has_change_permission(self, request, obj=None):
+        return False
+    
+    def has_delete_permission(self, request, obj=None):
+        return False
     
     def get_search_results(self, request, queryset, search_term):
         queryset, use_distinct = super().get_search_results(
@@ -181,16 +202,17 @@ class LocalidadeAdmin(ImportExportModelAdmin,admin.ModelAdmin):
         "name",
         "cep",
     )
-    readonly_fields = (
-        "id",
-        "situacaolocalidade",
-        "tipolocalidade",
-        "name",
-        "cep",
-        "uf",
-    )
     
     search_fields = ["id", "name", "cep"]
+    
+    def has_add_permission(self, request):
+        return False
+    
+    def has_change_permission(self, request, obj=None):
+        return False
+    
+    def has_delete_permission(self, request, obj=None):
+        return False
     
     def import_action(self, request):
         context = {}

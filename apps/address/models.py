@@ -37,7 +37,10 @@ class Bairro(models.Model):
     localidade = models.ForeignKey("Localidade", null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
-        return f"{self.name} ({self.localidade.name} - {self.localidade.uf.acronym})"
+        if self.name and self.localidade:
+            return f"{self.name} ({self.localidade.name} - {self.localidade.uf.acronym})"
+        else:
+            return self.name
     
 class Localidade(models.Model):
     id = models.PositiveIntegerField(primary_key=True)
