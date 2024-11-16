@@ -65,63 +65,16 @@ class TipoLocalidade(models.Model):
     
     def __str__(self):
         return f"{self.code} - {self.definition}"
-    
-class WhiteListUF(models.Model):
-    uf = models.OneToOneField("UF", on_delete=models.SET_NULL, null=True)
-    
-    def __str__(self):
-        return f"{self.uf}"
-    
-class WhiteListLocalidade(models.Model):
-    localidade = models.OneToOneField("Localidade", on_delete=models.SET_NULL, null=True)
-    
-    def __str__(self):
-        return f"{self.localidade}"
-    
-class WhiteListBairro(models.Model):
-    bairro = models.OneToOneField("Bairro", on_delete=models.SET_NULL, null=True)
-    
-    def __str__(self):
-        return f"{self.bairro}"
   
-# class Address(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.RESTRICT, unique=True)
-#     order_address = models.ForeignKey(OrderAddress, null=True, on_delete=models.SET_NULL)
-#     logradouro = models.ForeignKey("Logradouro", on_delete=models.RESTRICT, null=True)
-#     number = models.PositiveSmallIntegerField(blank=True, null=True, validators=[MaxValueValidator(32767)]) 
-#     complement = models.CharField(max_length=100, blank=True, null=True)
+class WhiteList(models.Model):
+    ufs = models.ManyToManyField(UF, null=True, blank=True)
+    localidades = models.ManyToManyField(Localidade, null=True, blank=True)
+    bairros = models.ManyToManyField(Bairro, null=True, blank=True)
     
-#     class Meta:
-#         verbose_name = _("Address")
-#         verbose_name_plural = _("Addresses")
+    class Meta:
+        verbose_name = _("whiteList")
+        verbose_name_plural = _("whiteLists")
     
-#     def get(self, name):
-#         return getattr(self, name)
-    
-#     def set(self, name, value):
-#         setattr(self, name, value)
-        
-#     def setLog(self, log):
-#         self.logradouro = log
-#         self.number = None
-#         self.complement = log.complement if log.complement else None
-#         self.order_address = None
-        
-#     def is_equal(self, key, value):
-#         result = False
-        
-#         match key:
-#             case "cep":
-#                 result = self.logradouro.cep == value
-#             case "number": 
-#                 result = self.number == value
-#             case "complement":
-#                 result = self.complement == value
-#             case _:
-#                 pass
-            
-#         return result
-        
-    
-#     def __str__(self):
-#         return f"{self.logradouro.type} {self.logradouro.name}"
+    def __str__(self):
+        return "WhiteList"
+  

@@ -2,10 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from apps.core.utils import remove_non_alphanumeric
 from apps.address.models import (
-    Logradouro,
-    WhiteListUF,
-    WhiteListLocalidade,
-    WhiteListBairro
+    Logradouro
 )
 from django.core.exceptions import ObjectDoesNotExist
 from . import forms
@@ -85,9 +82,9 @@ def address_edit(request):
             if field == "cep":
                 try:
                     log = Logradouro.objects.get(cep=data[field])
-                    WhiteListUF.objects.get(uf=log.uf)
-                    WhiteListLocalidade.objects.get(localidade=log.localidade)
-                    WhiteListBairro.objects.get(bairro=log.bairro)
+                    # WhiteListUF.objects.get(uf=log.uf)
+                    # WhiteListLocalidade.objects.get(localidade=log.localidade)
+                    # WhiteListBairro.objects.get(bairro=log.bairro)
                 except ObjectDoesNotExist:
                     context["field"].update({"value": form[field].value})
                     context["field"].update({"errors": "Não operamos neste endereço."})

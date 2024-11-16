@@ -119,7 +119,7 @@ class PaymentType(models.Model):
 
 class ShippingFee(models.Model):
     value = models.PositiveSmallIntegerField(validators=[MaxValueValidator(32767)])
-    whitelistbairro = models.OneToOneField(WhiteListBairro, on_delete=models.SET_NULL, null=True, blank=True)
+    # whitelistbairro = models.OneToOneField(WhiteListBairro, on_delete=models.SET_NULL, null=True, blank=True)
     is_default = models.BooleanField(_('Default'), default=False)
     
     class Meta:

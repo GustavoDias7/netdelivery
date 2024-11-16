@@ -6,7 +6,6 @@ from .models import (
     ShippingFee,
     PaymentType,
     OrderItemStatus,
-    WhiteListBairro,
     OrderAddress
 )
 from apps.product.models import Product
@@ -45,8 +44,8 @@ def order(request):
         address = None
         context["address"] = address
         
-        wl_bairro = WhiteListBairro.objects.get(bairro=address.logradouro.bairro)
-        shippingfee = ShippingFee.objects.get(whitelistbairro=wl_bairro)
+        # wl_bairro = WhiteListBairro.objects.get(bairro=address.logradouro.bairro)
+        # shippingfee = ShippingFee.objects.get(whitelistbairro=wl_bairro)
         context["shippingfee"] = shippingfee
     # except Address.DoesNotExist:
     #     address = None

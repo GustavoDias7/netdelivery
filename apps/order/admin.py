@@ -46,7 +46,7 @@ class OrderAdmin(admin.ModelAdmin):
 @admin.register(models.ShippingFee)
 class ShippingFeeAdmin(admin.ModelAdmin):
     list_display = ("bairro_", "uf", "localidade", "value", "is_default")
-    autocomplete_fields = ("whitelistbairro",)
+    # autocomplete_fields = ("whitelistbairro",)
     
     @admin.display(empty_value=_("Default"))
     def bairro_(self, obj):

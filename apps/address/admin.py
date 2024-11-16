@@ -5,7 +5,58 @@ from django.shortcuts import render
 import chardet
 from . import models
 
-# Register your models here.
+@admin.register(models.WhiteList)
+class WhiteListAdmin(admin.ModelAdmin):
+    filter_horizontal = ('ufs','localidades','bairros',)
+    
+    def has_add_permission(self, request):
+        return not self.model.objects.exists()
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        
+        if (request.method == "POST"):
+            acronyms = qs.first().ufs.values("id")
+            qs_localidades = qs.first().localidades.filter(uf__id__in=acronyms)
+            qs.first().localidades.set(qs_localidades)
+            
+            localidades = qs.first().localidades.values("id")
+            qs_bairros = qs.first().bairros.filter(localidade__id__in=localidades)
+            qs.first().bairros.set(qs_bairros)
+        
+        return qs
+    
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if db_field.name == "localidades":
+            qs_whitelist = self.model.objects.all()
+            
+            if len(qs_whitelist) > 0:
+                acronyms = qs_whitelist.first().ufs.values("id")
+                
+                qs_localidades = models.Localidade.objects.filter(uf__id__in=acronyms)
+                
+                kwargs["queryset"] = qs_localidades
+            else:
+                kwargs["queryset"] = qs_whitelist
+                
+        if db_field.name == "bairros":
+            qs_whitelist = self.model.objects.all()
+            
+            if len(qs_whitelist) > 0:
+                localidades_id = qs_whitelist.first().localidades.values("id")
+                acronyms = qs_whitelist.first().ufs.values("id")
+                
+                qs_bairros = models.Bairro.objects.filter(
+                    localidade__id__in=localidades_id,
+                    localidade__uf__id__in=acronyms
+                )
+                
+                kwargs["queryset"] = qs_bairros
+            else:
+                kwargs["queryset"] = qs_whitelist
+                
+        return super().formfield_for_manytomany(db_field, request, **kwargs)
+    
 @admin.register(models.UF)
 class UFAdmin(admin.ModelAdmin):
     search_fields = ("acronym",)
@@ -42,7 +93,7 @@ class LogradouroAdmin(ImportExportModelAdmin,admin.ModelAdmin):
         "cep",
     )
     search_fields = ("cep", "type", "name", "localidade__name", "bairro__name")
-    wl_bairros = models.WhiteListBairro.objects.all()
+    # wl_bairros = models.WhiteListBairro.objects.all()
     
     def has_add_permission(self, request):
         return False
@@ -268,33 +319,3 @@ class LocalidadeAdmin(ImportExportModelAdmin,admin.ModelAdmin):
                 models.Localidade.objects.bulk_create(rows)
             
         return render(request, "admin/import_loc.html", context)
-
-@admin.register(models.WhiteListUF)
-class WhiteListUFAdmin(admin.ModelAdmin):
-    list_display = ("uf",)
-    autocomplete_fields = ("uf",)
-    
-@admin.register(models.WhiteListLocalidade)
-class WhiteListLocalidadeAdmin(admin.ModelAdmin):
-    list_display = ("localidade",)
-    autocomplete_fields = ("localidade",)
-    
-@admin.register(models.WhiteListBairro)
-class WhiteListBairroAdmin(admin.ModelAdmin):
-    list_display = ("bairro_", "localidade", "uf")
-    search_fields = ("bairro",)
-    autocomplete_fields = ("bairro",)
-    
-    @admin.display(description='bairro')
-    def bairro_(self, obj):
-        return obj.bairro.name
-    
-    @admin.display(description='localidade')
-    def localidade(self, obj):
-        return obj.bairro.localidade.name
-        
-    @admin.display(description='uf')
-    def uf(self, obj):
-        return obj.bairro.localidade.uf.acronym
-    
-
