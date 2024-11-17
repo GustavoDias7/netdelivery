@@ -180,6 +180,7 @@ class BairroAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     )
     search_fields = ("name", "localidade__name", "localidade__uf__acronym")
     list_filter = [('localidade__name', custom_titled_filter('localidade'))]
+    whitelist_bairros = models.WhiteList.objects.all().first().bairros.values("id")
     
     def has_add_permission(self, request):
         return False
@@ -196,8 +197,13 @@ class BairroAdmin(ImportExportModelAdmin,admin.ModelAdmin):
             queryset,
             search_term,
         )
-        queryset = queryset.all()
-
+        
+        is_shippingfee = request.GET.get('model_name') == 'shippingfee'
+        if is_shippingfee:
+            if not self.whitelist_bairros:
+                self.whitelist_bairros = models.WhiteList.objects.all().first().bairros.values("id")
+            queryset = queryset.filter(id__in=self.whitelist_bairros)
+        
         return queryset, use_distinct
     
     @admin.display(description='uf')
