@@ -93,7 +93,7 @@ class LogradouroAdmin(ImportExportModelAdmin,admin.ModelAdmin):
         "cep",
     )
     search_fields = ("cep", "type", "name", "localidade__name", "bairro__name")
-    # wl_bairros = models.WhiteListBairro.objects.all()
+    whitelist_bairros = models.WhiteList.objects.all().first().bairros.values("id")
     
     def has_add_permission(self, request):
         return False
@@ -111,8 +111,11 @@ class LogradouroAdmin(ImportExportModelAdmin,admin.ModelAdmin):
             search_term,
         )
         
-        if request.GET.get('model_name') == 'client':
-            queryset = queryset.filter(bairro__in=self.wl_bairros.values_list("bairro"))
+        is_client = request.GET.get('model_name') == 'client'
+        if is_client:
+            if not self.whitelist_bairros:
+                self.whitelist_bairros = models.WhiteList.objects.all().first().bairros.values("id")
+            queryset = queryset.filter(bairro__id__in=self.whitelist_bairros)
             
         return queryset, may_have_duplicates
 
