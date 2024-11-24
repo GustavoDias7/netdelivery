@@ -71,3 +71,27 @@ def custom_titled_filter(title):
 def create_username(fn, ln):
     random_number = get_random_string(length=6, allowed_chars='0123456789')
     return f"{fn[:2]}{ln[:2]}{random_number}".upper()
+
+def fphone_number(number: str) -> str:
+    is_str = number and type(number) == str
+    if is_str:
+        ddd = number[0:2]
+        
+        if len(number) == 11:
+            part1 = number[2:7]
+            part2 = number[7:]
+        else:
+            part1 = number[2:6]
+            part2 = number[6:]
+        
+        return f"({ddd}) {part1}-{part2}"
+    else:
+        return ""
+    
+def fcpf(cpf: str) -> str:
+    if (cpf and type(cpf) == str):
+        part1 = cpf[3:6]
+        part2 = cpf[6:9]
+        return f"***.{part1}.{part2}-**"
+    else:
+        return ""

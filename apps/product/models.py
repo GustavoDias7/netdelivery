@@ -4,7 +4,7 @@ from django.core.validators import (MinValueValidator, MaxValueValidator, MinLen
 from django.utils.translation import gettext_lazy as _
 import locale 
 from django.template.defaultfilters import slugify
-from apps.core.utils import remove_non_numeric
+from delivery.utils import remove_non_numeric
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 

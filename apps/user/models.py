@@ -11,7 +11,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 import re
 from apps.address.models import Logradouro
-from apps.core.utils import remove_non_numeric
+from delivery.utils import (remove_non_numeric, fphone_number)
 from delivery.constants import DAY_OF_THE_WEEK
 
 class Contacts(models.Model):
@@ -214,7 +214,7 @@ class Client(models.Model):
     number = models.PositiveSmallIntegerField(blank=True, null=True, validators=[MaxValueValidator(32767)]) 
     complement = models.CharField(max_length=100, blank=True, null=True)
     phone = models.CharField(_("Phone Number"), max_length=11, null=True, blank=True, validators=[phone_validator])
-    cpf = models.CharField("CPF", max_length=11, null=True, blank=True, validators=[cpf_validator])
+    cpf = models.CharField("CPF", max_length=11, null=True, blank=True, unique=True, validators=[cpf_validator])
     
     def clean_fields(self, exclude=None):
         self.phone = remove_non_numeric(self.phone)
@@ -226,9 +226,14 @@ class Client(models.Model):
             self.full_name = self.full_name.upper()
         super(Client, self).save(*args, **kwargs)
         
-    def fcep(self):
-        return f'******{self.cpf[6:]}' if self.cpf else ''
+    def fcpf(self):
+        part1 = self.cpf[3:6]
+        part2 = self.cpf[6:9]
+        return f"***.{part1}.{part2}-**"
+
+    def fphone(self):
+        return fphone_number(self.phone)
     
     def __str__(self):
-        return f"{self.full_name} {self.fcep()}"
+        return f"{self.full_name}: {self.fcpf()}"
     

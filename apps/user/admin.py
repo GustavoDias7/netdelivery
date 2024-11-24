@@ -9,14 +9,22 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = ((
         None, 
         { 'classes': ('wide',), 'fields': ('email', 'password1', 'password2')}
-    ))
+    ),)
 
 @admin.register(models.Client)
 class ClientAdmin(admin.ModelAdmin):
-    list_display = ("full_name", "logradouro", "phone", "cpf")
+    list_display = ("full_name", "logradouro", "phone_", "cpf_")
     search_fields = ("full_name", "logradouro__cep", "logradouro__name", "phone", "cpf")
     autocomplete_fields = ("logradouro",)
     form = forms.ClientsForm
+    
+    @admin.display(description='phone')
+    def phone_(self, obj):
+        return obj.fphone()
+    
+    @admin.display(description='cpf')
+    def cpf_(self, obj):
+        return obj.fcpf()
     
 # @admin.register(models.OpeningHours)
 class OpeningHoursAdmin(admin.StackedInline):
