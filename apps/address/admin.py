@@ -5,17 +5,38 @@ from django.shortcuts import render
 import chardet
 from . import models
 
-@admin.register(models.WhiteList)
-class WhiteListAdmin(admin.ModelAdmin):
-    filter_horizontal = ('ufs','localidades','bairros',)
+
+@admin.register(models.Address)
+class AddressAdmin(admin.ModelAdmin):
+    readonly_fields = (
+        "user",
+        "logradouro",
+        "number",
+        "complement"
+    )
     
     def has_add_permission(self, request):
-        return not self.model.objects.exists()
+        return False
+    
+@admin.register(models.WhiteList)
+class WhiteListAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user',)
+    filter_horizontal = ('ufs','localidades','bairros',)
+    exclude = ("user",)
+    
+    def save_model(self, request, obj, form, change):
+        obj.user = request.user
+        super().save_model(request, obj, form, change)
+    
+    def has_add_permission(self, request):
+        return not self.model.objects.filter(user=request.user).exists()
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         
-        if (request.method == "POST"):
+        qs = qs.filter(user=request.user)
+        
+        if request.method == "POST":
             acronyms = qs.first().ufs.values("id")
             qs_localidades = qs.first().localidades.filter(uf__id__in=acronyms)
             qs.first().localidades.set(qs_localidades)
@@ -93,7 +114,7 @@ class LogradouroAdmin(ImportExportModelAdmin,admin.ModelAdmin):
         "cep",
     )
     search_fields = ("cep", "type", "name", "localidade__name", "bairro__name")
-    whitelist_bairros = models.WhiteList.objects.all().first().bairros.values("id")
+    whitelist_bairros = None
     
     def has_add_permission(self, request):
         return False
@@ -183,7 +204,7 @@ class BairroAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     )
     search_fields = ("name", "localidade__name", "localidade__uf__acronym")
     list_filter = [('localidade__name', custom_titled_filter('localidade'))]
-    whitelist_bairros = models.WhiteList.objects.all().first().bairros.values("id")
+    whitelist_bairros = None
     
     def has_add_permission(self, request):
         return False
