@@ -1,7 +1,48 @@
 from django.db import models
 from apps.core.validators import (cep_validator)
-from django.core.validators import (MinLengthValidator)
+from django.core.validators import (MaxValueValidator, MinLengthValidator)
 from django.utils.translation import gettext_lazy as _
+
+class Address(models.Model):
+    user = models.OneToOneField("user.User", on_delete=models.CASCADE)
+    logradouro = models.ForeignKey("Logradouro", on_delete=models.RESTRICT, null=True)
+    number = models.PositiveSmallIntegerField(blank=True, null=True, validators=[MaxValueValidator(32767)]) 
+    complement = models.CharField(max_length=100, blank=True, null=True)
+    
+    class Meta:
+        verbose_name = _("Address")
+        verbose_name_plural = _("Addresses")
+    
+    def get(self, name):
+        return getattr(self, name)
+    
+    def set(self, name, value):
+        setattr(self, name, value)
+        
+    def setLog(self, log):
+        self.logradouro = log
+        self.number = None
+        self.complement = log.complement if log.complement else None
+        self.order_address = None
+        
+    def is_equal(self, key, value):
+        result = False
+        
+        match key:
+            case "cep":
+                result = self.logradouro.cep == value
+            case "number": 
+                result = self.number == value
+            case "complement":
+                result = self.complement == value
+            case _:
+                pass
+            
+        return result
+        
+    
+    def __str__(self):
+        return f"{self.logradouro.type} {self.logradouro.name}"
 
 class Logradouro(models.Model):
     id = models.PositiveIntegerField(primary_key=True)
@@ -67,14 +108,15 @@ class TipoLocalidade(models.Model):
         return f"{self.code} - {self.definition}"
   
 class WhiteList(models.Model):
+    user = models.OneToOneField("user.User", on_delete=models.CASCADE)
     ufs = models.ManyToManyField(UF, null=True, blank=True)
     localidades = models.ManyToManyField(Localidade, null=True, blank=True)
     bairros = models.ManyToManyField(Bairro, null=True, blank=True)
-    
+
     class Meta:
         verbose_name = _("whiteList")
         verbose_name_plural = _("whiteLists")
     
     def __str__(self):
-        return "WhiteList"
+        return f"WhiteList {self.id}"
   
