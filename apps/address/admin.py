@@ -20,7 +20,6 @@ class AddressAdmin(admin.ModelAdmin):
     
 @admin.register(models.WhiteList)
 class WhiteListAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user',)
     filter_horizontal = ('ufs','localidades','bairros',)
     exclude = ("user",)
     
@@ -49,7 +48,7 @@ class WhiteListAdmin(admin.ModelAdmin):
     
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == "localidades":
-            qs_whitelist = self.model.objects.all()
+            qs_whitelist = self.model.objects.filter(user=request.user)
             
             if len(qs_whitelist) > 0:
                 acronyms = qs_whitelist.first().ufs.values("id")
@@ -61,7 +60,7 @@ class WhiteListAdmin(admin.ModelAdmin):
                 kwargs["queryset"] = qs_whitelist
                 
         if db_field.name == "bairros":
-            qs_whitelist = self.model.objects.all()
+            qs_whitelist = self.model.objects.filter(user=request.user)
             
             if len(qs_whitelist) > 0:
                 localidades_id = qs_whitelist.first().localidades.values("id")
@@ -284,7 +283,7 @@ class LocalidadeAdmin(ImportExportModelAdmin,admin.ModelAdmin):
         "cep",
     )
     
-    search_fields = ["id", "name", "cep"]
+    search_fields = ("id", "name", "cep")
     
     def has_add_permission(self, request):
         return False

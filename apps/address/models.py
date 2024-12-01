@@ -109,9 +109,9 @@ class TipoLocalidade(models.Model):
   
 class WhiteList(models.Model):
     user = models.OneToOneField("user.User", on_delete=models.CASCADE)
-    ufs = models.ManyToManyField(UF, null=True, blank=True)
-    localidades = models.ManyToManyField(Localidade, null=True, blank=True)
-    bairros = models.ManyToManyField(Bairro, null=True, blank=True)
+    ufs = models.ManyToManyField(UF, blank=True)
+    localidades = models.ManyToManyField(Localidade, blank=True)
+    bairros = models.ManyToManyField(Bairro, blank=True)
 
     class Meta:
         verbose_name = _("whiteList")
