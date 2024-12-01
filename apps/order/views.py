@@ -9,6 +9,7 @@ from .models import (
     OrderAddress
 )
 from apps.product.models import Product
+from apps.address.models import Address
 from django.core.paginator import Paginator
 from django.core.exceptions import ValidationError
 import json
@@ -40,16 +41,17 @@ def order(request):
     context = {}
     
     try:
-        # address = Address.objects.get(user=request.user)
+        address = Address.objects.get(user=request.user)
         address = None
         context["address"] = address
         
         # wl_bairro = WhiteListBairro.objects.get(bairro=address.logradouro.bairro)
         # shippingfee = ShippingFee.objects.get(whitelistbairro=wl_bairro)
+        shippingfee = None
         context["shippingfee"] = shippingfee
-    # except Address.DoesNotExist:
-    #     address = None
-    #     shippingfee = None
+    except Address.DoesNotExist:
+        address = None
+        shippingfee = None
     except ShippingFee.DoesNotExist:
         try:
             shippingfee = ShippingFee.objects.get(is_default=True)

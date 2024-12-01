@@ -28,10 +28,11 @@ class OrderAdmin(admin.ModelAdmin):
         "payment_type",
         "shipping_fee",
         "shipping_fee_value",
-        "created",
-        "received_date",
+        # "created",
+        # "received_date",
     )
     exclude = (
+        "user",
         "payment_type_name",
         "payment_type_code",
         "shipping_fee_value",
@@ -39,9 +40,18 @@ class OrderAdmin(admin.ModelAdmin):
     )
     autocomplete_fields = ("client",)
     
+    def has_change_permission(self, request, obj=None):
+        return False
+    
+    def has_delete_permission(self, request, obj=None):
+        return False
+    
     def save_model(self, request, obj, form, change):
         self.model.payment_type_name = "Test"
         super().save_model(request, obj, form, change)
+        
+    def get_form(self, request, obj=None, **kwargs):
+        return super().get_form(request, obj, **kwargs)
 
 @admin.register(models.ShippingFee)
 class ShippingFeeAdmin(admin.ModelAdmin):
