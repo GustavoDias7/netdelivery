@@ -29,9 +29,9 @@
                     :class="{...active(fields.{{field.name}})}"
                     value="{% firstof field.value "" %}"
                     {% if field.name == 'cep' %}
-                    v-mask="'00000-000'"
+                    v-mask="'#####-###'"
                     {% elif field.name == 'number' %}
-                    v-mask="'00000'"
+                    v-mask="'#####'"
                     {% endif %}
                 />
                 <label for="{{field.name}}" class="f-label">
@@ -53,7 +53,7 @@
             </div>
             <div class="g-item-12">
               <div class="f-row">
-                <a href={% url 'address' %} class="gn-button qt-button full">Voltar</a>
+                <a href={% url 'address' username=username %} class="gn-button qt-button full">Voltar</a>
               </div>
             </div>
         </div>

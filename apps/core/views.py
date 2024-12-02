@@ -1,13 +1,22 @@
 from django.shortcuts import render
 from apps.product.models import (Combo, ProductVariant)
+from apps.user.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.cache import cache
 
-def homepage(request):
+def homepage(request, username):
     context = {
         "categories": {},
-        "combos": []
+        "combos": [],
+        "username": username,
     }
+    
+    try:
+        query_user = User.objects.get(username=username, is_superuser=False)
+        print(query_user.__dict__)
+    except ObjectDoesNotExist:
+        print("This user do not exist!")
+        
     
     categories_cache = cache.get("categories")
     if categories_cache == None:

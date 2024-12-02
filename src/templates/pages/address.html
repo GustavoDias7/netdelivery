@@ -22,7 +22,7 @@
               <p>{% firstof address.logradouro.fcep "*Sem CEP*" %}</p>
             </div>
             <div class="topic-right">
-              <a href="{% url 'address_edit' %}?field=cep">Editar</a>
+              <a href="{% url 'address_edit' username=username %}?field=cep">Editar</a>
             </div>
           </div>
         </div>
@@ -64,7 +64,7 @@
               <p>{% firstof address.number "*Sem número (s/n)*" %}</p>
             </div>
             <div class="topic-right">
-              <a href="{% url 'address_edit' %}?field=number">Editar</a>
+              <a href="{% url 'address_edit' username=username %}?field=number">Editar</a>
             </div>
           </div>
         </div>
@@ -75,12 +75,12 @@
               <p>{% firstof address.complement "*Sem complemento*" %}</p>
             </div>
             <div class="topic-right">
-              <a href="{% url 'address_edit' %}?field=complement">Editar</a>
+              <a href="{% url 'address_edit' username=username %}?field=complement">Editar</a>
             </div>
           </div>
         </div>
         <div class="g-item-12">
-          <a href="{% url 'account' %}" class="gn-button qt-button full">
+          <a href="{% url 'account' username=username %}" class="gn-button qt-button full">
             Voltar
           </a>
         </div>

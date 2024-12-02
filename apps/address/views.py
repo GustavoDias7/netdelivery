@@ -2,19 +2,20 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from delivery.utils import remove_non_alphanumeric
 from apps.address.models import (
-    Logradouro
+    Address,
+    Logradouro,
 )
 from django.core.exceptions import ObjectDoesNotExist
 from . import forms
 
 
 @login_required
-def address(request):
-    context = {}
+def address(request, username):
+    context = {'username': username}
     
     try:
         pass
-        # address = Address.objects.get(user=request.user)
+        address = Address.objects.get(user=request.user)
     except:
         address = None
         
@@ -22,12 +23,11 @@ def address(request):
     return render(request, "pages/address.html", context)
 
 @login_required
-def address_edit(request):
-    
-    context = {}
+def address_edit(request, username):
+    context = {'username': username}
     field = request.GET.get('field')
 
-    if field == "": return redirect('address')
+    if field == "": return redirect('address', username)
     
     fields = {
         "cep": "CEP",
@@ -35,7 +35,7 @@ def address_edit(request):
         "complement": "complemento",
     }
     
-    if field not in fields: return redirect('address')
+    if field not in fields: return redirect('address', username)
     
     context["field"] = {
         "name": field,
@@ -43,7 +43,7 @@ def address_edit(request):
     }
     
     try:
-        # address = Address.objects.get(user=request.user)
+        address = Address.objects.get(user=request.user)
         if field == "cep":
             context["field"]["value"] = address.logradouro.cep
         else: 
@@ -76,30 +76,26 @@ def address_edit(request):
                 print(None)
         
         if address and address.is_equal(field, form[field].value()):
-            return redirect('address')
+            return redirect('address', username)
             
         if form.is_valid():
             if field == "cep":
                 try:
                     log = Logradouro.objects.get(cep=data[field])
-                    # WhiteListUF.objects.get(uf=log.uf)
-                    # WhiteListLocalidade.objects.get(localidade=log.localidade)
-                    # WhiteListBairro.objects.get(bairro=log.bairro)
                 except ObjectDoesNotExist:
                     context["field"].update({"value": form[field].value})
                     context["field"].update({"errors": "Não operamos neste endereço."})
                     return render(request, "pages/address_edit.html", context)
                 
                 if address == None:
-                    address = None
-                    # address = Address.objects.create(user=request.user)
+                    address = Address.objects.create(user=request.user)
                 
                 address.setLog(log)
             else:
                 address.set(field, data[field] if data[field] else None)
                 
             address.save()
-            return redirect('address')
+            return redirect('address', username)
         else:
             context["field"].update({"value": form[field].value})
             context["field"].update({"errors": form.errors.get(field).as_text})
