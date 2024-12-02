@@ -18,7 +18,7 @@
                 <div class="g-row g-center">
                     <div class="g-item-12 sm:g-item-6">
                         <div class="topics">
-                            <a class="topic primary" href="{% url 'profile' %}">
+                            <a class="topic primary" href="{% url 'profile' username %}">
                             <div class="topic-left">
                                 <div class="icon">
                                 <img src="{% static "img/user.svg" %}" alt="Icon" />
@@ -33,7 +33,7 @@
                     </div>
                     <div class="g-item-12 sm:g-item-6">
                         <div class="topics">
-                            <a class="topic primary" href="{% url 'orders' %}">
+                            <a class="topic primary" href="{% url 'orders' username %}">
                             <div class="topic-left">
                                 <div class="icon">
                                 <img src="{% static "img/order.svg" %}" alt="Icon" />
@@ -48,7 +48,7 @@
                     </div>
                     <div class="g-item-12 sm:g-item-6">
                         <div class="topics">
-                            <a class="topic primary" href="{% url 'address' %}">
+                            <a class="topic primary" href="{% url 'address' username %}">
                             <div class="topic-left">
                                 <div class="icon">
                                 <img src="{% static "img/address.svg" %}" alt="Icon" />

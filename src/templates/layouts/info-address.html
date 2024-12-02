@@ -3,7 +3,7 @@
   <div class="container sm:container">
     <div class="title-container">
       <h2 class="text-2xl sm:text-3xl">Endereço</h2>
-      <a class="text-sm" href="{% url 'address' %}">Editar</a>
+      <a class="text-sm" href="{% url 'address' username %}">Editar</a>
     </div>
 
     <div>
@@ -32,7 +32,7 @@
         Clique no botão abaixo para adicionar
         seu endereço.
       </p>
-      <a  class="gn-button pm-button center" href="{% url 'address_edit' %}">Adicionar endereço</a>
+      <a  class="gn-button pm-button center" href="{% url 'address_edit' username=username %}">Adicionar endereço</a>
     </div>
   </div>
 </section>

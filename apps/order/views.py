@@ -19,8 +19,8 @@ from apps.core.validators import cart_validator
 from django.core.exceptions import ObjectDoesNotExist
 
 @login_required
-def orders(request):
-    context = {}
+def orders(request, username):
+    context = {"username": username}
     order = OrderItem.objects.all().order_by('-id')
     page_size = 10
     paginated_order = Paginator(order, page_size).page(1)
@@ -37,8 +37,8 @@ def orders(request):
     return render(request, 'pages/orders.html', context)
 
 @login_required
-def order(request):
-    context = {}
+def order(request, username):
+    context = {"username": username}
     
     try:
         address = Address.objects.get(user=request.user)

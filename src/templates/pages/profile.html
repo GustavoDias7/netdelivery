@@ -23,7 +23,7 @@
               <p>{{user.first_name}}</p>
             </div>
             <div class="topic-right">
-              <a href="{% url 'edit' %}?field=first_name">Editar</a>
+              <a href="{% url 'edit' username %}?field=first_name">Editar</a>
             </div>
           </div>
         </div>
@@ -34,7 +34,7 @@
               <p>{{user.last_name}}</p>
             </div>
             <div class="topic-right">
-              <a href="{% url 'edit' %}?field=last_name">Editar</a>
+              <a href="{% url 'edit' username %}?field=last_name">Editar</a>
             </div>
           </div>
         </div>
@@ -53,7 +53,7 @@
               <p>{% firstof user.fphone "*Sem número*" %}</p>
             </div>
             <div class="topic-right">
-              <a href="{% url 'edit' %}?field=phone">Editar</a>
+              <a href="{% url 'edit' username %}?field=phone">Editar</a>
             </div>
           </div>
         </div>
@@ -64,12 +64,12 @@
               <p>{{user.username}}</p>
             </div>
             <div class="topic-right">
-              <a href="{% url 'edit' %}?field=username">Editar</a>
+              <a href="{% url 'edit' username %}?field=username">Editar</a>
             </div>
           </div>
         </div>
         <div class="g-item-12">
-          <a href="{% url 'account' %}" class="gn-button qt-button full">
+          <a href="{% url 'account' username %}" class="gn-button qt-button full">
             Voltar
           </a>
         </div>

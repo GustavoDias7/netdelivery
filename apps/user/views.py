@@ -7,9 +7,9 @@ from . import forms
 from delivery.utils import (remove_non_alphanumeric, create_username)
 
 # Create your views here.
-def signin(request):
+def signin(request, username):
     next_page = request.GET.get('next', "")
-    context = {}
+    context = {"username": username}
     if next_page:
         context["next_page"] = f"?next={next_page}"
 
@@ -40,9 +40,9 @@ def signin(request):
 
     return render(request, "pages/signin.html", context)
 
-def signup(request):
+def signup(request, username):
     next_page = request.GET.get('next', "")
-    context = {}
+    context = {"username": username}
     if next_page:
         context["next_page"] = f"?next={next_page}"
     
@@ -91,21 +91,24 @@ def signup(request):
 
     return render(request, "pages/signup.html", context)
 
-def logout_view(request):
+def logout_view(request, username):
+    context = {"username": username}
     logout(request)
-    return redirect("signin")
+    return redirect("signin", context)
 
 @login_required
-def account(request):
-    return render(request, "pages/account.html")
+def account(request, username):
+    context = {"username": username}
+    return render(request, "pages/account.html", context)
 
 @login_required
-def profile(request):
-    return render(request, "pages/profile.html")
+def profile(request, username):
+    context = {"username": username}
+    return render(request, "pages/profile.html", context)
 
 @login_required
-def edit(request):
-    context = {}
+def edit(request, username):
+    context = {"username": username}
     field = request.GET.get('field')
 
     if field == "": return redirect('profile')
