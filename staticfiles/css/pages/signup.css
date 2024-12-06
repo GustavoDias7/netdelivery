@@ -1395,7 +1395,7 @@ li {
 }
 
 .text-color-primary {
-  color: #2563eb;
+  color: #dc2626;
 }
 
 .text-color-secondary {
@@ -1410,7 +1410,7 @@ li {
     color: #171717;
   }
   .xs\:text-color-primary {
-    color: #2563eb;
+    color: #dc2626;
   }
   .xs\:text-color-secondary {
     color: #d97706;
@@ -1424,7 +1424,7 @@ li {
     color: #171717;
   }
   .sm\:text-color-primary {
-    color: #2563eb;
+    color: #dc2626;
   }
   .sm\:text-color-secondary {
     color: #d97706;
@@ -1438,7 +1438,7 @@ li {
     color: #171717;
   }
   .md\:text-color-primary {
-    color: #2563eb;
+    color: #dc2626;
   }
   .md\:text-color-secondary {
     color: #d97706;
@@ -1452,7 +1452,7 @@ li {
     color: #171717;
   }
   .lg\:text-color-primary {
-    color: #2563eb;
+    color: #dc2626;
   }
   .lg\:text-color-secondary {
     color: #d97706;
@@ -1466,7 +1466,7 @@ li {
     color: #171717;
   }
   .xl\:text-color-primary {
-    color: #2563eb;
+    color: #dc2626;
   }
   .xl\:text-color-secondary {
     color: #d97706;
@@ -1804,7 +1804,7 @@ li {
   font-size: 1rem;
   height: 48px;
   padding: 0px 20px;
-  color: #2563eb;
+  color: #dc2626;
   cursor: pointer;
   border-radius: 4px;
   border: none;
@@ -1821,12 +1821,12 @@ li {
   cursor: not-allowed;
 }
 .gn-button.pm-button {
-  background-color: #2563eb;
+  background-color: #dc2626;
   color: #fafafa;
 }
 .gn-button.sc-button {
   background-color: transparent;
-  border: 1px solid #2563eb;
+  border: 1px solid #dc2626;
 }
 .gn-button.full {
   width: 100%;
@@ -2085,7 +2085,7 @@ li {
 }
 .multi-buttons .size.active {
   color: #fafafa;
-  background-color: #2563eb;
+  background-color: #dc2626;
 }
 
 .circle-button {
@@ -2115,7 +2115,7 @@ li {
 }
 .circle-button.sc-button {
   background-color: transparent;
-  border: 1px solid #3b82f6;
+  border: 1px solid #ef4444;
 }
 .circle-button.left {
   margin: 0px auto 0px 0px;
@@ -3798,14 +3798,14 @@ textarea.f-input {
 }
 .accordion.primary {
   margin-bottom: 10px;
-  border: 2px solid #2563eb;
+  border: 2px solid #dc2626;
 }
 .accordion.primary:last-child {
   margin-bottom: 0px;
 }
 .accordion.secondary {
   border: none;
-  border-bottom: 1px solid #2563eb;
+  border-bottom: 1px solid #dc2626;
 }
 .accordion.secondary:last-child {
   border-bottom: none;
@@ -3832,7 +3832,7 @@ textarea.f-input {
   transition: 0.2s ease 0s;
 }
 .accordion.active .label h3, .accordion:focus .label h3, .accordion:hover .label h3 {
-  color: #2563eb;
+  color: #dc2626;
 }
 .accordion.active .arrow {
   transform: rotate(-180deg);
@@ -4043,7 +4043,7 @@ textarea.f-input {
   user-select: none;
   padding: 2px 4px;
   color: #fafafa;
-  background-color: #2563eb;
+  background-color: #dc2626;
   border-radius: 4px;
 }
 .card.secondary .cart-count {
@@ -4056,7 +4056,7 @@ textarea.f-input {
   z-index: 1;
   height: 20px;
   min-width: 20px;
-  background-color: #2563eb;
+  background-color: #dc2626;
   color: #fafafa;
   border: 1px solid #fafafa;
   border-radius: 10px;
@@ -4118,7 +4118,7 @@ textarea.f-input {
 
 .topic.primary {
   display: flex;
-  border: 1px solid #3b82f6;
+  border: 1px solid #ef4444;
   border-radius: 16px;
   padding: 16px;
 }
@@ -4898,7 +4898,7 @@ textarea.f-input {
   user-select: none;
   padding: 2px 4px;
   color: #fafafa;
-  background-color: #2563eb;
+  background-color: #dc2626;
   border-radius: 4px;
 }
 .modal.cart-modal .cart-item .delete {
@@ -5000,7 +5000,7 @@ textarea.f-input {
   width: 1px;
   height: 16px;
   margin: 0px 8px;
-  background-color: #2563eb;
+  background-color: #dc2626;
 }
 .social-links a:last-of-type::after {
   display: none;
@@ -5025,7 +5025,7 @@ textarea.f-input {
   width: 48px;
   height: 48px;
   border-radius: 50px;
-  background-color: #2563eb;
+  background-color: #dc2626;
   box-shadow: 0px 0px 10px 0px #a3a3a3;
   background-image: url(/staticfiles/img/whatsapp-white.svg);
   background-size: cover;
@@ -5035,7 +5035,7 @@ textarea.f-input {
 }
 .floating-link:focus, .floating-link:hover {
   opacity: 1;
-  background-color: #60a5fa;
+  background-color: #f87171;
 }
 
 .title-line {
@@ -5046,7 +5046,7 @@ textarea.f-input {
   content: "";
   flex-grow: 1;
   height: 1px;
-  background: #2563eb;
+  background: #dc2626;
 }
 .title-line::before {
   margin-right: 16px;
@@ -5166,7 +5166,7 @@ textarea.f-input {
 }
 .header.secondary .logo {
   font-size: 1.75rem;
-  color: #2563eb;
+  color: #dc2626;
 }
 .header.secondary nav {
   display: flex;
@@ -5175,7 +5175,7 @@ textarea.f-input {
   gap: 1rem;
 }
 .header.secondary nav .link {
-  color: #2563eb;
+  color: #dc2626;
   font-size: 1rem;
 }
 .header.secondary .menu-button {
@@ -5205,12 +5205,12 @@ textarea.f-input {
   }
   .header.secondary .logo {
     font-size: 1.25rem;
-    color: #2563eb;
+    color: #dc2626;
   }
 }
 
 .footer.secondary {
-  background-color: #2563eb;
+  background-color: #dc2626;
 }
 .footer.secondary p,
 .footer.secondary h3,
@@ -5256,13 +5256,13 @@ textarea.f-input {
 .primary-banner .left h2 {
   font-weight: 700;
   font-size: 3rem;
-  color: #2563eb;
+  color: #dc2626;
   margin-bottom: 1rem;
 }
 .primary-banner .left p {
   font-size: 1.25rem;
   line-height: 2rem;
-  color: #2563eb;
+  color: #dc2626;
 }
 .primary-banner .right {
   width: 40%;
@@ -5478,7 +5478,7 @@ textarea.f-input {
 }
 .menu .menu-content nav .link {
   font-size: 1rem;
-  color: #2563eb;
+  color: #dc2626;
 }
 
 .hero {
@@ -5742,7 +5742,7 @@ textarea.f-input {
 }
 
 .contact-bar {
-  background-color: #eff6ff;
+  background-color: #fef2f2;
   box-shadow: 0px 0px 6px 0px #a3a3a3;
   padding: 8px 0px;
 }
@@ -5769,10 +5769,10 @@ textarea.f-input {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #2563eb;
+  color: #dc2626;
 }
 .contact-bar .contact-bar-left a p {
-  color: #2563eb;
+  color: #dc2626;
 }
 .contact-bar .contact-bar-left img {
   width: 20px;
@@ -5872,7 +5872,7 @@ textarea.f-input {
 .about.senary .about-content .about-subtext hr {
   display: block;
   border: unset;
-  border-bottom: 2px solid #3b82f6;
+  border-bottom: 2px solid #ef4444;
   width: 100%;
   max-width: 64px;
   margin: 0px auto;
