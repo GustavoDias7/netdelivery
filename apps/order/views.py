@@ -9,7 +9,7 @@ from .models import (
     OrderAddress
 )
 from apps.product.models import Product
-from apps.address.models import Address
+from apps.address.models import (Address, WhiteList, Bairro)
 from django.core.paginator import Paginator
 from django.core.exceptions import ValidationError
 import json
@@ -39,22 +39,24 @@ def orders(request, username):
 @login_required
 def order(request, username):
     context = {"username": username}
+    context["field"] = {}
     
     try:
         address = Address.objects.get(user=request.user)
-        address = None
         context["address"] = address
         
-        # wl_bairro = WhiteListBairro.objects.get(bairro=address.logradouro.bairro)
-        # shippingfee = ShippingFee.objects.get(whitelistbairro=wl_bairro)
-        shippingfee = None
+        whitelist = WhiteList.objects.get(user__username=username)
+        wl_bairro = whitelist.bairros.get(id=address.logradouro.bairro.id)
+        shippingfee = ShippingFee.objects.get(user__username=username, bairro=wl_bairro)
         context["shippingfee"] = shippingfee
+    except Bairro.DoesNotExist:
+        context["field"].update({"address": {"errors": "Não operamos neste endereço."}})
     except Address.DoesNotExist:
         address = None
         shippingfee = None
     except ShippingFee.DoesNotExist:
         try:
-            shippingfee = ShippingFee.objects.get(is_default=True)
+            shippingfee = ShippingFee.objects.get(user__username=username, is_default=True)
             context["shippingfee"] = shippingfee
         except ShippingFee.DoesNotExist:
             shippingfee = None

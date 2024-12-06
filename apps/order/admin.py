@@ -1,8 +1,7 @@
 from django.contrib import admin
 from . import models
+from .forms import ShippingFeeForm
 from django.utils.translation import gettext_lazy as _
-
-# Register your models here.
 
 @admin.register(models.PaymentType)
 class PaymentTypeAdmin(admin.ModelAdmin):
@@ -28,8 +27,6 @@ class OrderAdmin(admin.ModelAdmin):
         "payment_type",
         "shipping_fee",
         "shipping_fee_value",
-        # "created",
-        # "received_date",
     )
     exclude = (
         "user",
@@ -55,8 +52,32 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(models.ShippingFee)
 class ShippingFeeAdmin(admin.ModelAdmin):
-    list_display = ("bairro", "uf", "localidade", "value", "is_default")
+    list_display = ("bairro_", "uf", "localidade", "value", "is_default")
     autocomplete_fields = ("bairro",)
+    form = ShippingFeeForm
+    
+    def get_changeform_initial_data(self, request):
+        return {"user": request.user}
+    
+    def save_model(self, request, obj, form, change):
+        obj.user = request.user
+        super().save_model(request, obj, form, change)
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        
+        qs = qs.filter(user=request.user)
+        
+        return qs
+    
+    @admin.display(description='Bairro')
+    def bairro_(self, obj):
+        if obj.bairro:
+            return obj.bairro
+        elif obj.is_default:
+            return _("Default")
+        else:
+            return "-"
     
     @admin.display(description='Localidade')
     def localidade(self, obj):

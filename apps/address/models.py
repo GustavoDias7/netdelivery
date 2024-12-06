@@ -56,9 +56,9 @@ class Logradouro(models.Model):
         
     def fcep(self):
         if len(self.cep):
-            return f"{self.cep[0:5]}-{self.cep[5:]}"
+            return f"**{self.cep[2:5]}-{self.cep[5:6]}**"
         else:
-            return self.cep
+            return ""
     
     def select2(self):
         return f"{self.cep}, {self.type} {self.name}, {self.bairro.name} ({self.localidade} - {self.uf})"
@@ -90,6 +90,9 @@ class Localidade(models.Model):
     tipolocalidade = models.ForeignKey("TipoLocalidade", on_delete=models.RESTRICT)
     name = models.CharField(max_length=72)
     cep = models.CharField(max_length=8, validators=[cep_validator])
+    
+    def select2(self):
+        return f"{self.name} ({self.uf})"
     
     def __str__(self):
         return f"{self.name}"

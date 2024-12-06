@@ -119,13 +119,15 @@ class PaymentType(models.Model):
         return f"{self.name}"
 
 class ShippingFee(models.Model):
+    user = models.ForeignKey("user.User", null=True, on_delete=models.CASCADE)
     value = models.PositiveSmallIntegerField(validators=[MaxValueValidator(32767)])
-    bairro = models.OneToOneField(Bairro, on_delete=models.SET_NULL, null=True, blank=True)
+    bairro = models.ForeignKey(Bairro, on_delete=models.SET_NULL, null=True, blank=True)
     is_default = models.BooleanField(_('Default'), default=False)
     
     class Meta:
         verbose_name = _("Shipping fee")
         verbose_name_plural = _("Shipping fees")
+        unique_together = ('bairro', 'user',)
         
     def fvalue(self):
         float_value = self.value / 100
@@ -134,11 +136,11 @@ class ShippingFee(models.Model):
     
     def __str__(self):
         if self.bairro:
-            return f"{self.id}: {self.bairro.name}"
+            return f"{self.bairro.name}"
         elif self.is_default:
-            return f"{self.id}: {_('default')}"
+            return f"{_('default')}"
         else:
-            return f"{self.id}"
+            return f"ShippingFee {self.id}"
 
 class OrderAddress(models.Model):
     address_number = models.PositiveSmallIntegerField(_("Number"), blank=True, null=True, validators=[MaxValueValidator(32767)]) 

@@ -524,8 +524,8 @@ $svg-dimention-large: $svg-dimention + 4px;
 
 .f-helper {
   display: block;
-  font-size: 0.75rem;
-  padding: 2px 12px 0px;
+  // font-size: 0.75rem;
+  // padding: 2px 12px 0px;
 
   &.error {
     color: $red-color-600;
