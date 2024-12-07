@@ -55,6 +55,7 @@ class ContactsForm(forms.ModelForm):
     class Meta:
         model = Contacts
         fields = "__all__"
+        widgets = {'user': forms.HiddenInput()}
     
     class Media:
         js = ('js/pages/admin_contacts.js',)

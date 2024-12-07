@@ -65,10 +65,7 @@ class ShippingFeeAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        
-        qs = qs.filter(user=request.user)
-        
-        return qs
+        return qs.filter(user=request.user)
     
     @admin.display(description='Bairro')
     def bairro_(self, obj):

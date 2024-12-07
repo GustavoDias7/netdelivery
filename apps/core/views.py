@@ -13,7 +13,6 @@ def homepage(request, username):
     
     try:
         query_user = User.objects.get(username=username, is_superuser=False)
-        print(query_user.__dict__)
     except ObjectDoesNotExist:
         print("This user do not exist!")
         

@@ -15,6 +15,7 @@ from delivery.utils import (remove_non_numeric, fphone_number)
 from delivery.constants import DAY_OF_THE_WEEK
 
 class Contacts(models.Model):
+    user = models.ForeignKey("user.User", on_delete=models.CASCADE)
     whatsapp_number = models.CharField(_("WhatsApp number"), null=True, blank=True, max_length=11, validators=[cellphone_number])
     whatsapp_message = models.TextField(_("WhatsApp message"), null=True, blank=True, max_length=100)
     facebook_link = models.URLField(_("Facebook link"), null=True, blank=True)

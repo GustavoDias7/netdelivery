@@ -38,5 +38,16 @@ class ContactsAdmin(admin.ModelAdmin):
     inlines = [OpeningHoursAdmin]
     form = forms.ContactsForm
     
+    def get_changeform_initial_data(self, request):
+        return {"user": request.user}
+    
+    def save_model(self, request, obj, form, change):
+        obj.user = request.user
+        super().save_model(request, obj, form, change)
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.filter(user=request.user)
+    
     def has_add_permission(self, request):
-        return not models.Contacts.objects.exists()
+        return not self.model.objects.filter(user=request.user).exists()
