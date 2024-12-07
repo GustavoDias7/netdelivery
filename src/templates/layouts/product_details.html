@@ -44,7 +44,7 @@
                             {% for var in variants %}
                                 <li>
                                     {% if var.id != variant.id %}
-                                    <a href="/produto?id={{var.product__id}}&variant={{var.id}}" class="size" title="{{var.size_name}}">
+                                    <a href="/{{username}}/produto?id={{var.product__id}}&variant={{var.id}}" class="size" title="{{var.size_name}}">
                                         {% if var.short_size_name %}
                                         {{var.short_size_name}}
                                         {% else %}

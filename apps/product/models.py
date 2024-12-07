@@ -26,6 +26,7 @@ class Category(models.Model):
         return f"{self.name}"
 
 class Product(models.Model):
+    user = models.ForeignKey("user.User", null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     image = models.ImageField(storage=fs_storage, help_text=_("Add square images, with 1:1 dimension."))
     description = models.TextField(max_length=400, validators=[MinLengthValidator(4, _("Mínimo de 4 caracteres."))])
@@ -53,7 +54,7 @@ class ProductVariant(models.Model):
     )
     stock = models.PositiveIntegerField(blank=True, null=True, validators=[MaxValueValidator(2147483647)], help_text=_("Opcional. Se não for preenchido, o estoque será ilimitado para pedidos. 0 representa que o estoque está vazio."))
     stuffed_edge = models.BooleanField(blank=True, null=True, choices=[(None, "Sem borda"), (True, "Sim"), (False, "Não")])
-    archived = models.BooleanField(default=True)
+    archived = models.BooleanField(default=False)
     default = models.BooleanField(default=False, help_text=_("A variante que representará o produto no site."))
     
     class Meta:
@@ -81,7 +82,7 @@ class ProductVariant(models.Model):
     def link(self):
         params = {"id": self.product.id, "variant": self.id}
         query_string = urlencode(params)
-        return "/produto?" + query_string
+        return f"/{self.product.user.username}/produto?{query_string}" 
     
     def full_name(self):
         return f"{self.product.name} {self.size_name}"
@@ -91,6 +92,7 @@ class ProductVariant(models.Model):
 
     
 class Combo(models.Model):
+    user = models.ForeignKey("user.User", null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     image = models.ImageField(storage=fs_storage, help_text=_("Add square images, with 1:1 dimension."))
     description = models.TextField(max_length=400, validators=[MinLengthValidator(4, _("Mínimo de 4 caracteres."))])
@@ -125,14 +127,17 @@ class Combo(models.Model):
     def link(self):
         params = {"id": self.id}
         query_string = urlencode(params)
-        return "/combo?" + query_string
+        return f"/{self.user.username}/combo?{query_string}" 
     
     def __str__(self):
         return f"{self.name}"
     
 class ComboItem(models.Model):
     combo = models.ForeignKey("Combo", on_delete=models.CASCADE)
-    product_variant = models.ForeignKey("ProductVariant", on_delete=models.CASCADE)
+    product_variant = models.ForeignKey("ProductVariant", null=True, on_delete=models.SET_NULL)
     
     def __str__(self):
-        return f"{self.product_variant.product.name}"
+        if self.product_variant.product:
+            return f"{self.product_variant.product.name}"
+        else:
+            return ""

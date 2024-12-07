@@ -51,7 +51,7 @@ class Order(models.Model):
 class OrderItem(models.Model):
     order = models.ForeignKey("Order", on_delete=models.RESTRICT)
     order_item_status = models.ForeignKey("OrderItemStatus", on_delete=models.RESTRICT, default=1)
-    product = models.ForeignKey(ProductVariant, null=True, blank=True, on_delete=models.RESTRICT)
+    product = models.ForeignKey(ProductVariant, null=True, blank=True, on_delete=models.SET_NULL)
     combo = models.ForeignKey(Combo, null=True, blank=True, on_delete=models.RESTRICT)
     price = models.PositiveIntegerField(validators=[MaxValueValidator(2147483647)])
     discount = models.DecimalField(

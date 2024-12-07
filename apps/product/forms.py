@@ -1,5 +1,11 @@
 from django import forms
-from .models import (ProductVariant, Combo)
+from .models import (Product, ProductVariant, Combo)
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = "__all__"
+        widgets = {'user': forms.HiddenInput()}
 
 class ProductVariantForm(forms.ModelForm):
     price = forms.CharField(
@@ -23,6 +29,7 @@ class ComboForm(forms.ModelForm):
     class Meta:
         model = Combo
         fields = "__all__"
+        widgets = {'user': forms.HiddenInput()}
         
     class Media:
         js = ('js/pages/admin_combos.js',)

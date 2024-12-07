@@ -2,31 +2,70 @@ from django.contrib import admin
 from . import models
 from . import forms
 from django.utils.translation import gettext_lazy as _
-import os
-from pprint import pprint
 
 @admin.register(models.Category)
 class ProductCategoryAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(models.ProductVariant)
+class ProductVariantAdmin(admin.ModelAdmin):
+    search_fields = ("product__name", "size_name", "short_size_name")
+    
+    def has_module_permission(self, request):
+        return False
+    
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.filter(product__user=request.user)
+    
     
 class ProductVariantInline(admin.StackedInline):
     model = models.ProductVariant
     extra = 0
     min_num = 1
     form = forms.ProductVariantForm
-
+    
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductVariantInline]
     list_display = ("name", "category",)
     list_filter = ("category__name",)
+    form = forms.ProductForm
+    
+    def get_changeform_initial_data(self, request):
+        return {"user": request.user}
+    
+    def save_model(self, request, obj, form, change):
+        obj.user = request.user
+        super().save_model(request, obj, form, change)
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.filter(user=request.user)
+
+
+class ComboItemAdmin(admin.ModelAdmin):
+    pass
 
 class ComboItemInline(admin.StackedInline):
     model = models.ComboItem
     extra = 0
     min_num = 1
+    autocomplete_fields = ("product_variant",)
 
 @admin.register(models.Combo)
 class ComboAdmin(admin.ModelAdmin):
     inlines = [ComboItemInline]
     form = forms.ComboForm
+    
+    def get_changeform_initial_data(self, request):
+        return {"user": request.user}
+    
+    def save_model(self, request, obj, form, change):
+        obj.user = request.user
+        super().save_model(request, obj, form, change)
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.filter(user=request.user)
