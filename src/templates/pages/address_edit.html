@@ -10,9 +10,9 @@
 {% endblock %}
 
 {% block content %}
-<section>
+<section class="section">
   <div class="container xs:container">
-    <h2 class="text-2xl sm:text-3xl">Edite seu {{field.label}}</h2>
+    <h2 class="text-2xl sm:text-3xl text-color-primary text-align-center text-mb-2 sm:text-mb-4">Editar {{field.label}}</h2>
 
     <form action="" method="post">
         {% csrf_token %}
@@ -48,12 +48,12 @@
             </div>
             <div class="g-item-12">
               <div class="f-row">
-                <button class="gn-button tt-button full">Confirmar</button>
+                <button class="gn-button pm-button full">Confirmar</button>
               </div>
             </div>
             <div class="g-item-12">
               <div class="f-row">
-                <a href={% url 'address' username=username %} class="gn-button qt-button full">Voltar</a>
+                <a href={% url 'address' username %} class="gn-button sc-button full">Voltar</a>
               </div>
             </div>
         </div>

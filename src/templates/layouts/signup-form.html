@@ -1,8 +1,8 @@
-<section>
+<section class="section">
   <div class="container xs:container">
-    <h2 class="text-2xl sm:text-3xl">Cadastro</h2>
+    <h2 class="text-2xl sm:text-3xl text-color-primary text-align-center text-mb-2 sm:text-mb-4">Cadastro</h2>
 
-    <form action="{% url 'signup' %}{{next_page}}" method="post">
+    <form action="{% url 'signup' username %}{{next_page}}" method="post">
       {% csrf_token %}
 
       <div class="g-root g-gap-2 sm:g-gap-4">
@@ -132,7 +132,7 @@
           </div>
           <div class="g-item-12">
             <div class="f-row">
-              <button class="gn-button tt-button full">Cadastrar</button>
+              <button class="gn-button pm-button full">Cadastrar</button>
             </div>
           </div>
         </div>
