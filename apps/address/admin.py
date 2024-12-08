@@ -27,8 +27,8 @@ class WhiteListAdmin(admin.ModelAdmin):
         obj.user = request.user
         super().save_model(request, obj, form, change)
     
-    def has_add_permission(self, request):
-        return not self.model.objects.filter(user=request.user).exists()
+    # def has_add_permission(self, request):
+    #     return not self.model.objects.filter(user=request.user).exists()
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)

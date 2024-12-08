@@ -3,13 +3,24 @@ from . import models
 from . import forms
 from django.contrib.auth.admin import UserAdmin
 
+class EmployeerInline(admin.StackedInline):
+    model = models.User
+    extra = 0
+    min_num = 1
+    autocomplete_fields = ("owner",)
+
 @admin.register(models.User)
 class CustomUserAdmin(UserAdmin):
+    inlines = [EmployeerInline]
     list_display = ("email", "first_name", "last_name", "is_staff")
     add_fieldsets = ((
         None, 
         { 'classes': ('wide',), 'fields': ('email', 'password1', 'password2')}
     ),)
+    fieldsets = UserAdmin.fieldsets + (
+        (None, {'fields': ('phone', 'owner',)}),
+    )
+    autocomplete_fields = ("owner",)
 
 @admin.register(models.Client)
 class ClientAdmin(admin.ModelAdmin):
@@ -49,5 +60,5 @@ class ContactsAdmin(admin.ModelAdmin):
         qs = super().get_queryset(request)
         return qs.filter(user=request.user)
     
-    def has_add_permission(self, request):
-        return not self.model.objects.filter(user=request.user).exists()
+    # def has_add_permission(self, request):
+    #     return not self.model.objects.filter(user=request.user).exists()
