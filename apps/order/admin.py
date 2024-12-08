@@ -30,7 +30,6 @@ class OrderAdmin(admin.ModelAdmin):
     )
     exclude = (
         "user_owner",
-        "user_request",
         "payment_type_name",
         "payment_type_code",
         "shipping_fee_value",

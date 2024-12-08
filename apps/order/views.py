@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import (
     Order,
@@ -7,8 +7,9 @@ from .models import (
     PaymentType,
     OrderItemStatus
 )
-from apps.product.models import Product
+from apps.product.models import ProductVariant
 from apps.address.models import (Address, WhiteList, Bairro)
+from apps.user.models import User
 from django.core.paginator import Paginator
 from django.core.exceptions import ValidationError
 import json
@@ -83,24 +84,26 @@ def order(request, username):
         for item in cart:
             filter_list |= Q(pk=item.get("id"))
         
-        products = Product.objects.filter(filter_list)
+        product_variants = ProductVariant.objects.filter(filter_list)
         
         for item in cart:
             try:
                 product_id = item.get('id')
-                product = products.get(pk=product_id)
-                if product.price != item.get("price"):
+                variant = product_variants.get(pk=product_id)
+                if variant.price != item.get("price"):
                     raise ValidationError(
-                        _(f"O preço do produto {product.name} é de {product.fprice()}.")
+                        _(f"O preço do produto {variant.full_name()} é de {variant.fprice()}.")
                     )
-                if product.stock == 0:
-                    raise ValidationError(
-                        _(f'"{product.name}" está sem estoque.')
-                    )
-                if product.stock < item.get("count"):
-                    raise ValidationError(
-                        _(f"{product.name} tem {product.stock} unidades em estoque.")
-                    )
+                if variant.stock != None:
+                    if variant.stock == 0:
+                        raise ValidationError(
+                            _(f'"{variant.full_name()}" está sem estoque.')
+                        )
+                    if variant.stock < item.get("count"):
+                        raise ValidationError(
+                            _(f"{variant.full_name()} tem {variant.stock} unidades em estoque.")
+                        )
+                        
             except ValidationError as e:
                 context["notification"] = e.message
                 return render(request, "pages/order.html", context)
@@ -109,7 +112,8 @@ def order(request, username):
                 return render(request, "pages/order.html", context)
         
         order = Order()
-        order.user = request.user
+        order.user_request = request.user
+        order.user_owner = User.objects.get(username=username)
         
         try:
             payment_type = PaymentType.objects.get(code=payment_code)
@@ -120,36 +124,26 @@ def order(request, username):
         
         if is_delivery and shippingfee:
             order.setShippingFee(shippingfee)
-            
-            # try:
-            #     if address.order_address:
-            #         order.order_address = address.order_address
-            #     else:
-            #         raise ObjectDoesNotExist()
-            # except ObjectDoesNotExist:
-            #     order_address = OrderAddress()
-            #     order_address.set(address)
-            #     order_address.save()
-                
-            #     order.order_address = order_address
-                
-            #     address.order_address = order_address
-            #     address.save()
         
         order.save()
         
         for item in cart:
-            product = products.get(pk=item.get("id"))
-            order_item = OrderItem(
-                order=order,
-                product=product,
-                product_price=product.price,
-                product_discount=product.discount,
-                quantity=item.get("count"),
-            )
-            product.stock -= order_item.quantity 
+            variant = product_variants.get(pk=item.get("id"))
+            order_item = OrderItem()
+            
+            order_item.order=order
+            order_item.product=variant
+            order_item.price=variant.price
+            order_item.discount=variant.discount
+            order_item.quantity=item.get("count")
+            
+            if variant.stock != None:
+                variant.stock -= order_item.quantity 
             
             order_item.save()
-            product.save()
+            variant.save()
+        
+        # reset cart
+        # return redirect('success', username)
         
     return render(request, "pages/order.html", context)
