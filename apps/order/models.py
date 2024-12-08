@@ -143,25 +143,25 @@ class ShippingFee(models.Model):
         else:
             return f"ShippingFee {self.id}"
 
-class OrderAddress(models.Model):
-    address_number = models.PositiveSmallIntegerField(_("Number"), blank=True, null=True, validators=[MaxValueValidator(32767)]) 
-    address_complement = models.CharField(_("Complement"), max_length=100, blank=True, null=True)
-    uf_acronym = models.CharField("UF", max_length=2, validators=[MinLengthValidator(2)])
-    logradouro_cep = models.CharField("CEP", max_length=8, validators=[cep_validator])
-    logradouro_name = models.CharField("Nome do logradouro", max_length=100)
-    logradouro_type = models.CharField("Tipo do logradouro", max_length=36)
-    localidade_name = models.CharField("Localidade", max_length=72)
-    bairro_name = models.CharField("Bairro", max_length=72)
+# class OrderAddress(models.Model):
+#     address_number = models.PositiveSmallIntegerField(_("Number"), blank=True, null=True, validators=[MaxValueValidator(32767)]) 
+#     address_complement = models.CharField(_("Complement"), max_length=100, blank=True, null=True)
+#     uf_acronym = models.CharField("UF", max_length=2, validators=[MinLengthValidator(2)])
+#     logradouro_cep = models.CharField("CEP", max_length=8, validators=[cep_validator])
+#     logradouro_name = models.CharField("Nome do logradouro", max_length=100)
+#     logradouro_type = models.CharField("Tipo do logradouro", max_length=36)
+#     localidade_name = models.CharField("Localidade", max_length=72)
+#     bairro_name = models.CharField("Bairro", max_length=72)
     
-    def set(self, addr):
-        self.address_number = addr.number
-        self.address_complement = addr.complement
-        self.uf_acronym = addr.logradouro.uf.acronym
-        self.logradouro_cep = addr.logradouro.cep
-        self.logradouro_name = addr.logradouro.name
-        self.logradouro_type = addr.logradouro.type
-        self.localidade_name = addr.logradouro.localidade.name
-        self.bairro_name = addr.logradouro.bairro.name
+#     def set(self, addr):
+#         self.address_number = addr.number
+#         self.address_complement = addr.complement
+#         self.uf_acronym = addr.logradouro.uf.acronym
+#         self.logradouro_cep = addr.logradouro.cep
+#         self.logradouro_name = addr.logradouro.name
+#         self.logradouro_type = addr.logradouro.type
+#         self.localidade_name = addr.logradouro.localidade.name
+#         self.bairro_name = addr.logradouro.bairro.name
     
-    def __str__(self):
-        return f"{self.logradouro_type} {self.logradouro_name}, {self.localidade_name} - {self.uf_acronym}"
+#     def __str__(self):
+#         return f"{self.logradouro_type} {self.logradouro_name}, {self.localidade_name} - {self.uf_acronym}"

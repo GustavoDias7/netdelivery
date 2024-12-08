@@ -100,17 +100,17 @@ class ShippingFeeAdmin(admin.ModelAdmin):
         else:
             return "-"
 
-@admin.register(models.OrderAddress)
-class OrderAddressAdmin(admin.ModelAdmin):
-    readonly_fields = (
-        "id",
-        "address_number",
-        "address_complement",
-        "uf_acronym",
-        "logradouro_cep",
-        "logradouro_name",
-        "logradouro_type",
-        "localidade_name",
-        "bairro_name",
-    )
+# @admin.register(models.OrderAddress)
+# class OrderAddressAdmin(admin.ModelAdmin):
+#     readonly_fields = (
+#         "id",
+#         "address_number",
+#         "address_complement",
+#         "uf_acronym",
+#         "logradouro_cep",
+#         "logradouro_name",
+#         "logradouro_type",
+#         "localidade_name",
+#         "bairro_name",
+#     )
 

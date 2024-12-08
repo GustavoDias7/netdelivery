@@ -5,8 +5,7 @@ from .models import (
     OrderItem,
     ShippingFee,
     PaymentType,
-    OrderItemStatus,
-    OrderAddress
+    OrderItemStatus
 )
 from apps.product.models import Product
 from apps.address.models import (Address, WhiteList, Bairro)
@@ -122,20 +121,20 @@ def order(request, username):
         if is_delivery and shippingfee:
             order.setShippingFee(shippingfee)
             
-            try:
-                if address.order_address:
-                    order.order_address = address.order_address
-                else:
-                    raise ObjectDoesNotExist()
-            except ObjectDoesNotExist:
-                order_address = OrderAddress()
-                order_address.set(address)
-                order_address.save()
+            # try:
+            #     if address.order_address:
+            #         order.order_address = address.order_address
+            #     else:
+            #         raise ObjectDoesNotExist()
+            # except ObjectDoesNotExist:
+            #     order_address = OrderAddress()
+            #     order_address.set(address)
+            #     order_address.save()
                 
-                order.order_address = order_address
+            #     order.order_address = order_address
                 
-                address.order_address = order_address
-                address.save()
+            #     address.order_address = order_address
+            #     address.save()
         
         order.save()
         
