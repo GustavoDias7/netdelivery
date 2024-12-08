@@ -92,6 +92,13 @@ class ShoppingCart {
       currency: "BRL",
     });
   }
+  subTotalPrice() {
+    return this.cart.reduce((acc, curr) => acc + curr.price * curr.count, 0);
+  }
+  fsubTotalPrice() {
+    const price = this.subTotalPrice();
+    return (price / 100).toFixed(2).replace(".", ",");
+  }
   totalCount(limit = null) {
     const total = this.cart.reduce((acc, curr) => acc + curr.count, 0);
     const int_limit = Number(limit);

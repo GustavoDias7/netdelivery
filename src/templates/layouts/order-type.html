@@ -44,15 +44,15 @@
         </div>
         <div class="g-item-12">
           <div class="order-description">
-            <p v-if="is_delivery" class="text-base sm:text-xl">
+            <p v-if="is_delivery" class="text-base sm:text-xl text-align-center">
               Você receberá o seu produto no conforto da sua casa pela taxa de
               {{shippingfee.fvalue}}.
             </p>
-            <p v-if="!is_delivery" class="text-base sm:text-xl">
+            <p v-if="!is_delivery" class="text-base sm:text-xl text-align-center">
               Você pode retirar seu pedido no endereço do nosso estabelecimento.
-              Rua alguma coisa, bairro Pirirí Pororó, cidade de Algum Lugar,
-              estado AL, próximo ao buteco do Seu Quincas. CEP
-              <a href="">12345-678</a>.
+              <a href="{{contacts.address_link}}" target="_blank" rel="noopener noreferrer">
+               {{contacts.address_text}}
+              </a>
             </p>
           </div>
         </div>

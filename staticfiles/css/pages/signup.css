@@ -5584,6 +5584,17 @@ textarea.f-input {
   flex: 0 0 auto;
   width: auto;
 }
+.cart .cart-item .cart-item-center .cart-item-center-right p {
+  display: flex;
+  flex-direction: column;
+}
+.cart .cart-item .cart-item-center .cart-item-center-right p s, .cart .cart-item .cart-item-center .cart-item-center-right p span {
+  line-height: 16px;
+}
+.cart .cart-item .cart-item-center .cart-item-center-right p s {
+  text-decoration-color: #ef4444;
+  text-decoration-thickness: 2px;
+}
 .cart .cart-item .delete {
   background-color: transparent;
   border: none;

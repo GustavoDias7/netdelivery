@@ -40,6 +40,19 @@
         justify-self: flex-end;
         flex: 0 0 auto;
         width: auto;
+
+        p {
+          display: flex;
+          flex-direction: column;
+
+          s, span {
+            line-height: 16px;
+          }
+          s {
+            text-decoration-color: #ef4444;
+            text-decoration-thickness: 2px;
+          }
+        }
       }
     }
 

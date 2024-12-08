@@ -88,3 +88,8 @@ input[name=change_to] {
     margin-top: 8px;
     width: 180px;
 }
+.order-description a {
+    color: $blue-color-500;
+    text-decoration: underline;
+    font-style: italic;
+}

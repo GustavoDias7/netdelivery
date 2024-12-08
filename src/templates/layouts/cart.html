@@ -11,7 +11,7 @@
           <div class="cart-item">
             <a href="/" class="img">
               <figure class="aspect-ratio aspect-1-1 fit">
-                <img {% comment %} src="" {% endcomment %} alt="Placeholder" />
+                <img :src="item.img" :alt="item.name" />
               </figure>
             </a>
             <div class="cart-item-center">
@@ -40,7 +40,12 @@
                 </div>
               </div>
               <div class="cart-item-center-right">
-                <p class="text-base">R$ <span v-text="item.fprice"></span></p>
+                <p>
+                  <s class="text-xs xs:text-sm sm:text-base"
+                      v-if="cart.fgetPrice(item.id) !== cart.fgetPriceWithDiscount(item.id)"
+                      v-text="cart.fgetPrice(item.id)"></s>
+                  <span class="text-xs xs:text-sm sm:text-base" v-text="cart.fgetPriceWithDiscount(item.id)"></span>
+                </p>
               </div>
             </div>
             <button
