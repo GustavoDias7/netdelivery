@@ -33,7 +33,8 @@ class WhiteListAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         
-        qs = qs.filter(user=request.user)
+        user = request.user.owner if request.user.owner else request.user
+        qs = qs.filter(user=user)
         
         if request.method == "POST":
             acronyms = qs.first().ufs.values("id")

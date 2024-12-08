@@ -17,7 +17,8 @@ class ProductVariantAdmin(admin.ModelAdmin):
     
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        return qs.filter(product__user=request.user)
+        user = request.user.owner if request.user.owner else request.user
+        return qs.filter(product__user=user)
     
     
 class ProductVariantInline(admin.StackedInline):
@@ -42,7 +43,8 @@ class ProductAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        return qs.filter(user=request.user)
+        user = request.user.owner if request.user.owner else request.user
+        return qs.filter(user=user)
 
 
 class ComboItemAdmin(admin.ModelAdmin):
@@ -68,4 +70,5 @@ class ComboAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        return qs.filter(user=request.user)
+        user = request.user.owner if request.user.owner else request.user
+        return qs.filter(user=user)

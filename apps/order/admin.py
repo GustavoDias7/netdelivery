@@ -29,7 +29,8 @@ class OrderAdmin(admin.ModelAdmin):
         "shipping_fee_value",
     )
     exclude = (
-        "user",
+        "user_owner",
+        "user_request",
         "payment_type_name",
         "payment_type_code",
         "shipping_fee_value",
@@ -43,12 +44,20 @@ class OrderAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         return False
     
+    def get_changeform_initial_data(self, request):
+        user = request.user.owner if request.user.owner else request.user
+        return {"user_owner": user}
+    
     def save_model(self, request, obj, form, change):
-        self.model.payment_type_name = "Test"
+        # self.model.payment_type_name = self.model.payment_type
+        obj.user_owner = request.user.owner if request.user.owner else request.user
         super().save_model(request, obj, form, change)
+    
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        user = request.user.owner if request.user.owner else request.user
+        return qs.filter(user_owner=user)
         
-    def get_form(self, request, obj=None, **kwargs):
-        return super().get_form(request, obj, **kwargs)
 
 @admin.register(models.ShippingFee)
 class ShippingFeeAdmin(admin.ModelAdmin):
@@ -65,7 +74,8 @@ class ShippingFeeAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        return qs.filter(user=request.user)
+        user = request.user.owner if request.user.owner else request.user
+        return qs.filter(user=user)
     
     @admin.display(description='Bairro')
     def bairro_(self, obj):

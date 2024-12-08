@@ -12,8 +12,9 @@ import locale
 locale.setlocale(locale.LC_MONETARY, 'pt_BR.UTF-8')
 
 class Order(models.Model):
+    user_owner = models.ForeignKey(User, on_delete=models.PROTECT, related_name='user_owner')
+    user_request = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name='user_request')
     client = models.ForeignKey(Client, null=True, blank=True, on_delete=models.SET_NULL)
-    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
     payment_type = models.ForeignKey("PaymentType", on_delete=models.RESTRICT)
     payment_type_name = models.CharField(max_length=30)
     payment_type_code = models.CharField(max_length=30)

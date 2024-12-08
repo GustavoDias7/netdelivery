@@ -58,7 +58,8 @@ class ContactsAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        return qs.filter(user=request.user)
+        user = request.user.owner if request.user.owner else request.user
+        return qs.filter(user=user)
     
     # def has_add_permission(self, request):
     #     return not self.model.objects.filter(user=request.user).exists()
