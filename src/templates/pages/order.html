@@ -9,6 +9,8 @@
 <link href="{% static 'css/pages/order.css' %}?{% now "U" %}" rel="stylesheet">
 {% endblock %}
 
+{% block app_section %} order{% endblock %}
+
 {% block content %}
   <form method="POST" action="{% url 'order' username %}">
     {% csrf_token %}
@@ -32,5 +34,5 @@
   const hasNotification = {{ notification|yesno:"true,false" }};
   const shippingFee = "{{shippingfee.value}}";
 </script>
-<script src="{% static "js/pages/order.js" %}?{% now "U" %}"></script>
+<script src="{% static 'js/pages/order.js' %}?{% now 'U' %}"></script>
 {% endblock %}

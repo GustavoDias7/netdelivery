@@ -11,7 +11,7 @@
     width: $dimentions;
     height: $dimentions;
     border-radius: $border-radius;
-    border: 1px solid $slate-color-500;
+    border: 1px solid $primary-color-500;
     margin-right: 10px;
 
     &::before {
@@ -27,7 +27,7 @@
       border-radius: $border-radius;
       transform: scale(0);
       transition: 0.2s ease-in-out;
-      background-color: $slate-color-500;
+      background-color: $primary-color-500;
     }
   }
 

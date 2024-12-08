@@ -80,16 +80,16 @@ class OrderItem(models.Model):
         super(OrderItem, self).save(*args, **kwargs)
     
     def percentage_discount(self):
-        percentage = int(float(self.product_discount) * 100)
+        percentage = int(float(self.discount) * 100)
         return percentage
     
     def fpercentage_discount(self):
         return f"{self.percentage_discount()}%"
     
     def ftotal_price(self):
-        disc = float(self.product_discount * self.quantity) * self.product_price
+        disc = float(self.discount * self.quantity) * self.price
         fee = self.order.shipping_fee_value if self.order.shipping_fee_value != None else 0
-        total = ((self.product_price * self.quantity) - disc) + fee
+        total = ((self.price * self.quantity) - disc) + fee
         formatted_total = locale.currency(total / 100, grouping=True)
         return formatted_total
     

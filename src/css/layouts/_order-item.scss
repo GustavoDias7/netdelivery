@@ -1,8 +1,12 @@
 .order-item {
-  display: flex;
   padding: 24px;
   background-color: #EFEFEF;
   border-radius: 8px;
+
+
+  .bottom {
+    display: flex;
+  }
 
   .img {
     min-width: 64px;

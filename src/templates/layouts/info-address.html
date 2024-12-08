@@ -1,10 +1,7 @@
 {% if address %}
-<section class="address" v-if="is_delivery">
+<section class="address section" v-if="is_delivery">
   <div class="container sm:container">
-    <div class="title-container">
-      <h2 class="text-2xl sm:text-3xl">Endereço</h2>
-      <a class="text-sm" href="{% url 'address' username %}">Editar</a>
-    </div>
+    <h2 class="title-container text-2xl sm:text-3xl text-mb-5 text-color-primary">Endereço <a class="text-sm" href="{% url 'address' username %}">Editar</a></h2>   
 
     <div>
       <p class="text-sm sm:text-lg"><strong>CEP:</strong> {{address.logradouro.fcep}}</p>
@@ -25,13 +22,13 @@
   </div>
 </section>
 {% else %}
-<section class="address">
+<section class="address section">
   <div class="container sm:container">
     <div class="title-container">
-      <h2 class="text-2xl sm:text-3xl">Endereço</h2>
+      <h2 class="text-2xl sm:text-3xl text-mb-5 text-color-primary">Endereço</h2>
     </div>
     <div class="no-address">
-      <p class="text-base sm:text-xl">
+      <p class="text-base sm:text-xl text-align-center text-mb-4">
         Você não possue um endereço registrado. 
         Clique no botão abaixo para adicionar
         seu endereço.

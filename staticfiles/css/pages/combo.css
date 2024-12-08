@@ -3742,7 +3742,7 @@ textarea.f-input {
   width: 16px;
   height: 16px;
   border-radius: 2px;
-  border: 1px solid #64748b;
+  border: 1px solid #ef4444;
   margin-right: 10px;
 }
 .check .marker::before {
@@ -3758,7 +3758,7 @@ textarea.f-input {
   border-radius: 2px;
   transform: scale(0);
   transition: 0.2s ease-in-out;
-  background-color: #64748b;
+  background-color: #ef4444;
 }
 .check.radio .marker {
   border-radius: 16px;
@@ -4126,8 +4126,8 @@ textarea.f-input {
   margin-right: 12px;
 }
 .topic.primary .topic-left .icon {
-  width: 64px;
-  height: 64px;
+  width: 32px;
+  height: 32px;
 }
 .topic.primary .topic-right {
   color: #262626;
@@ -5652,10 +5652,12 @@ textarea.f-input {
 }
 
 .order-item {
-  display: flex;
   padding: 24px;
   background-color: #EFEFEF;
   border-radius: 8px;
+}
+.order-item .bottom {
+  display: flex;
 }
 .order-item .img {
   min-width: 64px;

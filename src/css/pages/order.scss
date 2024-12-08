@@ -55,3 +55,36 @@
 @import "../layouts/about/primary";
 // @import "../layouts/about/secondary";
 @import "../layouts/about/senary";
+
+.section {
+    padding-bottom: 0px;
+  
+    &:nth-child(even) {
+      background-color: unset;
+    }
+
+    &:last-of-type {
+        padding-bottom: 64px;
+    }
+  
+    @include sm {
+      padding-bottom: 0px;
+    }
+
+    &:last-of-type {
+        padding-bottom: 32px;
+    }
+}
+.gn-button {
+    input {
+        display: none;
+    }
+}
+.title-container {
+    @include flex-align-center;
+    gap: 8px;
+}
+input[name=change_to] {
+    margin-top: 8px;
+    width: 180px;
+}

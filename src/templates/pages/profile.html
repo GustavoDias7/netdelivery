@@ -11,9 +11,9 @@
 
 {% load static %}
 {% block content %}
-<section>
+<section class="section">
   <div class="container sm:container">
-    <h2 class="text-2xl sm:text-3xl">Seu perfil</h2>
+    <h2 class="text-2xl sm:text-3xl text-mb-5 text-color-primary">Seu perfil</h2>
     <div class="g-root g-gap-5">
       <div class="g-row">
         <div class="g-item-12">
@@ -69,7 +69,7 @@
           </div>
         </div>
         <div class="g-item-12">
-          <a href="{% url 'account' username %}" class="gn-button qt-button full">
+          <a href="{% url 'account' username %}" class="gn-button pm-button full">
             Voltar
           </a>
         </div>

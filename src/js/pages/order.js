@@ -1,5 +1,6 @@
 import * as vue from "vue/dist/vue.esm-bundler.js";
 import { mainMixin } from "../utils/mixins";
+import { Money3Directive } from 'v-money3'
 const { createApp, ref } = vue;
 
 const app = createApp({
@@ -18,7 +19,22 @@ const app = createApp({
       is_delivery: true,
       payment_type: "money",
       notification: hasNotification,
-    };
+      config: {
+        prefix: 'R$ ',
+        suffix: '',
+        thousands: '.',
+        decimal: ',',
+        precision: 2,
+        disableNegative: true,
+        disabled: false,
+        min: null,
+        max: null,
+        allowBlank: false,
+        minimumNumberOfCharacters: 0,
+        shouldRound: true,
+        focusOnRight: false,
+      }
+    }
   },
   methods: {
     setNotification() {
@@ -37,4 +53,5 @@ const app = createApp({
   },
 });
 
+app.directive("money", Money3Directive);
 app.mount("#app");
