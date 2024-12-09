@@ -1,26 +1,20 @@
 .footer.secondary {
-  background-color: $primary-color-600;
-
-  p,
-  h3,
-  strong,
-  img,
-  a {
-    color: $neutral-color-50 !important;
-  }
-
-  a {
-    text-decoration: underline;
-  }
+  background-color: $primary-color-800;
+  color: $neutral-color-50;
 
   .container {
-    padding-top: 64px;
-    padding-bottom: 64px;
+    padding-top: 32px;
+    padding-bottom: 32px;
   }
 
   .footer-top {
-    .social-links a::after{
+    .social-links a::after {
       background-color: $neutral-color-50;
+    }
+
+    a {
+      text-decoration: underline;
+      color: $neutral-color-50;
     }
   }
 
@@ -30,14 +24,10 @@
     margin: 32px 0px;
   }
 
-  .footer-bottom {
-    text-align: center;
-  }
-
   @include md {
     .container {
-      padding-top: 48px;
-      padding-bottom: 48px;
+      padding-top: 64px;
+      padding-bottom: 64px;
     }
   }
 }

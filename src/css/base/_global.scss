@@ -7,11 +7,7 @@
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: $neutral-color-800;
-}
-
-html {
-  scroll-behavior: smooth;
+  // color: $neutral-color-800;
 }
 
 body,
@@ -25,13 +21,14 @@ a {
 
 a,
 button {
-  transition: opacity 0.3s;
+  transition: 0.3s;
   outline: none;
 
   &:focus,
   &:hover {
     opacity: 0.6;
   }
+
   &:disabled {
     opacity: 0.4;
   }

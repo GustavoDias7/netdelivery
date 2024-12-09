@@ -1,10 +1,9 @@
 {% load static %}
-<header class="header secondary">
-  <div class="container md:container">
-    <div class="left"><a class="logo" href="{% url 'homepage' username %}">Logo</a></div>
-    <div class="right">
-      <nav>
-
+<header class="header">
+  <div class="container md:container between">
+    <div> <a class="logo" href="{% url 'homepage' username %}"> Logo </a> </div>
+    <div class="header-right">
+      <nav> 
         {% if header_categories|length or header_combos %}
         <div class="dropdown-desktop">
           <button class="link">Produtos</button>
@@ -25,18 +24,25 @@
         </div>
         {% endif %}
 
-        <a class="link" href="{% url 'account' username %}">Conta</a>
-        <a class="link" href="{% url 'order' username %}">Pedido</a>
-        <a class="" href="/" @click.prevent="openCart">
-          <span class="badge active">
-            <p class="badge-item" v-text="cart.totalCount(99)"></p>
-            <img src="{% static 'img/shopping-cart.svg' %}" alt="Carrinho" />
-          </span>
-        </a>
-        <button class="menu-button" @click="openModal('menu')">
-          Open menu
-        </button>
-      </nav>
+        {% if user.is_authenticated %}
+          <a class="link" href="{% url 'account' username %}">Conta</a>
+          <a class="link" href="{% url 'order' username %}">Pedido</a>
+          <a class="link" href="/" @click.prevent="openLogout">Sair</a>
+        {% endif %}
+      </nav> 
+      <a class="" href="/" @click.prevent="openCart">
+        <span class="badge active">
+          <p class="badge-item" v-text="cart.totalCount(99)"></p>
+          <img src="{% static 'img/shopping-cart.svg' %}" alt="Carrinho" />
+        </span>
+      </a>
+      {% if not user.is_authenticated %}
+        <div class="buttons"> 
+          <a class="gn-button pm-button small" href="{% url 'signin' username %}">Login</a> 
+          <a class="gn-button sc-button small" href="{% url 'signup' username %}">Cadastrar</a>
+        </div>
+      {% endif %}
+      <button class="menu-button">Open menu</button>
     </div>
   </div>
 </header>

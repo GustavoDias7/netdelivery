@@ -6,13 +6,13 @@
   font-size: 1rem;
   height: $height;
   padding: 0px $padding;
-  color: $primary-color-600;
+  color: $primary-color-500;
   cursor: pointer;
   border-radius: 4px;
   border: none;
   outline: none;
   background-color: $neutral-color-50;
-  transition: opacity 0.2s ease 0s;
+  transition: all 0.2s ease 0s;
   user-select: none;
 
   &:focus,
@@ -26,13 +26,13 @@
   }
 
   &.pm-button {
-    background-color: $primary-color-600;
+    background-color: $primary-color-500;
     color: $neutral-color-50;
   }
 
   &.sc-button {
     background-color: transparent;
-    border: 1px solid $primary-color-600;
+    border: 1px solid $primary-color-500;
   }
 
   @include responsive("full",
@@ -93,26 +93,6 @@
       font-size: 1.25rem;
       height: $height + 12px;
       padding: 0px $padding + 4px;
-    }
-  }
-}
-
-.multi-buttons {
-  @include flex-align-center;
-  gap: 4px;
-  flex-wrap: wrap;
-  user-select: none;
-
-  .size {
-    @include flex-center-center;
-    width: fit-content;
-    padding: 4px 8px;
-    background-color: $neutral-color-300;
-    border-radius: 4px;
-
-    &.active {
-      color: $neutral-color-50;
-      background-color: $primary-color-600;
     }
   }
 }

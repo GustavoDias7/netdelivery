@@ -32,20 +32,18 @@
 @import "../components/notification";
 @import "../components/social-links";
 @import "../components/floating-link";
-@import "../components/title-line";
 @import "../components/dropdown";
 
-@import "../layouts/header/primary";
-@import "../layouts/header/secondary";
+@import "../layouts/header";
 @import "../layouts/footer/secondary";
 @import "../layouts/banner/primary";
 @import "../layouts/banner/secondary";
 @import "../layouts/banner/tertiary";
-@import "../layouts/section/index";
+@import "../layouts/section";
 // @import "../layouts/section/primary";
 // @import "../layouts/section/secondary";
 @import "../layouts/menu";
-@import "../layouts/hero";
+
 @import "../layouts/details";
 @import "../layouts/cart";
 @import "../layouts/order-item";

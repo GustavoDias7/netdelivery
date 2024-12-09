@@ -1,0 +1,126 @@
+.header {
+  position: relative;
+  background-color: $neutral-color-50;
+  box-shadow: $box-shadow-200;
+
+  &.color {
+    background-color: $primary-color-500;
+
+    nav {
+      .link {
+        color: $neutral-color-50;
+      }
+    }
+
+    .social-links {
+      a {
+        &::after {
+          background-color: $neutral-color-50;
+        }
+      }
+    }
+
+    .pm-button {
+      background-color: $neutral-color-50;
+      color: $primary-color-500;
+    }
+
+    .sc-button {
+      border-color: $neutral-color-50;
+      color: $neutral-color-50;
+    }
+
+    .menu-button {
+      background-image: url(pathImages("menu-white.svg"))
+    }
+  }
+
+  .container {
+    @include flex-center-between;
+    gap: 32px;
+    height: 48px;
+  }
+
+  .logo {
+    color: $primary-color-500;
+    font-size: 1.25rem;
+
+    img {
+      display: block;
+      height: 24px;
+    }
+  }
+
+  nav {
+    display: none;
+
+    .link {
+      color: $primary-color-500;
+    }
+  }
+
+  .social-links {
+    display: none;
+  }
+
+  .gn-button {
+    display: none;
+  }
+
+  .menu-button {
+    font-size: 0px;
+    @include reset-button;
+    @include square(20px);
+    @include background-image("menu.svg");
+  }
+
+  .header-right {
+    @include flex-align-center;
+    gap: 20px;
+  }
+
+  @include md {
+    .container {
+      height: 64px;
+      justify-content: flex-start;
+
+      &.between {
+        justify-content: space-between;
+      }
+    }
+
+    .logo {
+      font-size: 1.5rem;
+
+      img {
+        height: 32px;
+      }
+    }
+
+    nav {
+      @include flex-center-center;
+      gap: 1rem;
+    }
+
+    .social-links {
+      display: flex;
+    }
+
+    .buttons {
+      @include flex-align-center;
+      gap: 8px;
+    }
+
+    .gn-button {
+      display: flex;
+    }
+
+    .menu-button {
+      display: none;
+    }
+
+    .header-right {
+      gap: 24px;
+    }
+  }
+}

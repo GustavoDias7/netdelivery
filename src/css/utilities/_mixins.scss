@@ -36,13 +36,6 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-@mixin background-image($url, $size: cover) {
-  background-image: url($url);
-  background-size: $size;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
 @mixin max-width($width, $marginAuto: false) {
   width: 100%;
   max-width: $width;
@@ -86,6 +79,13 @@
   @return "../../../staticfiles/img/#{$filename}";
 }
 
+@mixin background-image($url, $size: cover) {
+  background-image: url(pathImages($url));
+  background-size: $size;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 @mixin responsive($classnames...) {
   @each $classname in $classnames {
     &.#{$classname} {
@@ -103,17 +103,3 @@
     }
   }
 }
-
-// @include responsive("square", "rectangle") using ($class) {
-//   @if $class =="square" {
-//     width: 64px;
-//     height: 64px;
-//     background: red;
-//   }
-
-//   @else if $class =="rectangle" {
-//     width: 64px;
-//     height: 64px;
-//     background: green;
-//   }
-// }

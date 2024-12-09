@@ -1,14 +1,16 @@
 .contact-bar {
   background-color: $primary-color-50;
-  box-shadow: $box-shadow-200;
   padding: 8px 0px;
 
   .container {
-    @include flex-center-between;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 8px;
 
     @include sm {
-      flex-direction: column;
-      row-gap: 8px;
+      flex-direction: row;
+      justify-content: space-between;
     }
   }
 
@@ -21,17 +23,11 @@
     a {
       @include flex-align-center;
       gap: 8px;
-      color: $primary-color-600;
-
-      p {
-        color: $primary-color-600;
-      }
+      color: $primary-color-500;
     }
 
     img {
-      $area: 20px;
-      width: $area;
-      height: $area;
+      @include square(20px);
     }
   }
 }

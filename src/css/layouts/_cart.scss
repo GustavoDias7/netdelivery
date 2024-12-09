@@ -1,21 +1,21 @@
 .cart {
   .cart-item {
-    @include flex-center-between;
+    display: flex;
+    gap: 8px;
     min-height: 64px;
 
     .img {
-      @include square(64px);
+      @include square(56px);
+      flex-shrink: 0;
       border-radius: 8px;
       overflow: hidden;
-      align-self: flex-start;
     }
 
     .cart-item-center {
-      @include flex-center-between;
+      display: flex;
       flex-wrap: wrap;
       flex: 1;
-      gap: 4px;
-      margin: 0px 16px 0px 8px;
+      gap: 8px;
 
       .cart-item-center-left {
         @include flex-center-between;
@@ -34,53 +34,26 @@
           }
         }
       }
-
-      .cart-item-center-right {
-        margin-left: auto;
-        justify-self: flex-end;
-        flex: 0 0 auto;
-        width: auto;
-
-        p {
-          display: flex;
-          flex-direction: column;
-
-          s, span {
-            line-height: 16px;
-          }
-          s {
-            text-decoration-color: #ef4444;
-            text-decoration-thickness: 2px;
-          }
-        }
-      }
     }
 
     .delete {
+      flex-shrink: 0;
       @include reset-button;
       @include square(24px);
-      @include background-image(pathImages("circle-close.svg"));
+      @include background-image("circle-close.svg");
     }
 
     @include sm {
-      align-items: flex-start;
-      gap: 8px;
+      gap: 16px;
 
       .img {
-        flex-shrink: 0;
-        @include square(56px);
+        @include square(64px);
       }
 
       .cart-item-center {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-        margin: 0px;
+        align-items: center;
 
         .cart-item-center-left {
-          flex-direction: column;
-          align-items: flex-start;
-          width: 100%;
 
           h3 {
             max-width: 220px;
@@ -88,12 +61,12 @@
         }
 
         .cart-item-center-right {
-          margin-left: 0;
+          margin-left: auto;
         }
       }
 
       .delete {
-        flex-shrink: 0;
+        align-self: center;
       }
     }
   }
@@ -106,26 +79,6 @@
   .cart-total {
     .cart-total-item {
       @include flex-center-between;
-
-      .price.tertiary {
-        strong {
-          font-size: 24px;
-          height: auto;
-          font-weight: 500;
-        }
-
-        @include sm {
-          .left span {
-            font-size: 12px;
-            position: relative;
-            top: -2px;
-          }
-
-          strong {
-            font-size: 20px;
-          }
-        }
-      }
     }
   }
 }

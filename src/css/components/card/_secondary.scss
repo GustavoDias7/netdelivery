@@ -1,66 +1,62 @@
 .card.secondary {
   position: relative;
-  @include max-width(272px, true);
+  @include max-width(272px);
   color: $neutral-color-700;
   background-color: $neutral-color-50;
   box-shadow: $box-shadow-200;
-
-  $mb: 16px;
 
   >a {
     font-size: 0;
   }
 
-  .description {
-    padding: $mb;
-  }
-
-  .subtitle,
-  .price {
-    margin-bottom: 4px;
-  }
-
-  .gn-button.sc-button {
-    margin-top: 8px;
-  }
-
-  .price {
-    @include flex-align-center;
-    gap: 6px;
-  }
-
-  .discount {
-    user-select: none;
-    padding: 2px 4px;
-    color: $neutral-color-50;
-    background-color: $primary-color-600;
-    border-radius: 4px
-  }
-
   .cart-count {
+    $area: 24px;
+
+    user-select: none;
     @include flex-center-center;
     position: absolute;
     top: 8px;
     right: 8px;
     z-index: 1;
-    height: 20px;
-    min-width: 20px;
-    background-color: $primary-color-600;
+    height: $area;
+    line-height: $area;
+    min-width: $area;
+    font-size: 16px;
+    background-color: $primary-color-500;
     color: $neutral-color-50;
     border: 1px solid $neutral-color-50;
-    border-radius: 10px;
-    padding: 0px 5px;
+    border-radius: $area;
+    padding: 0px 6px;
     opacity: 0;
     transform: scale(0);
     transition: opacity $primary-transition, transform $primary-transition;
     text-align: center;
 
+
     &.active {
       opacity: 1;
-      transform: scale(1);
+      transform: scale(1)
     }
   }
-  img {
-    background-color: $neutral-color-200;
+
+  .description {
+    padding: 16px;
+  }
+
+  .price {
+    @include flex-align-center;
+    gap: 6px;
+
+    .discount {
+      user-select: none;
+      padding: 2px 4px;
+      color: $neutral-color-50;
+      background-color: $primary-color-500;
+      border-radius: 4px;
+    }
+  }
+
+  .gn-button.sc-button {
+    margin-top: 8px;
   }
 }

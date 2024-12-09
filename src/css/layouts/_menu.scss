@@ -1,45 +1,39 @@
 .menu {
+  $width: 320px;
   position: fixed;
-  z-index: 3;
-  @include insert;
-  @include opacity(false);
-  transition: $primary-transition;
-  background-color: $opacity-color-100;
+  top: 0px;
+  right: -$width;
+  z-index: 2;
+  padding: 2rem;
+  @include max-width($width);
+  height: 100vh;
+  background-color: $neutral-color-50;
+  box-shadow: $box-shadow-200;
 
   &.active {
-    @include opacity(true);
-
-    & .menu-content {
-      margin-right: 0px;
-    }
+    top: 0px;
+    right: 0px;
   }
 
-  .menu-content {
-    position: relative;
-    $width: 320px;
-    padding: 2rem;
-    @include max-width($width);
-    margin-right: -$width;
-    margin-left: auto;
-    height: 100vh;
-    background-color: $neutral-color-50;
-    box-shadow: $box-shadow-200;
-    transition: margin-right $primary-transition;
+  .menu-button {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    font-size: 0px;
+    @include reset-button;
+    @include square(20px);
+    @include background-image("close.svg");
+  }
 
-    .menu-button {
-      position: absolute;
-      top: 2rem;
-      right: 2rem;
-      font-size: 0px;
-      @include reset-button;
-      @include square(20px);
-      @include background-image(pathImages("close.svg"));
-    }
+  nav {
+    .link {
+      display: block;
+      width: fit-content;
+      color: $primary-color-500;
+      margin-bottom: 1rem;
 
-    nav {
-      .link {
-        font-size: 1rem;
-        color: $primary-color-600;
+      &:last-child {
+        margin-bottom: 0;
       }
     }
   }

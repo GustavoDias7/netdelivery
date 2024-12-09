@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.password_validation import validate_password
 from apps.user.models import User
@@ -26,9 +25,9 @@ def signin(request, username):
                 login(request, user)
 
                 if next_page:
-                    return redirect(next_page)
+                    return redirect(next_page, username)
                 else:
-                    return redirect("homepage")
+                    return redirect("homepage", username)
 
             else:
                 login_form.add_error(None, "E-mail or password was incorrect.")
@@ -82,9 +81,9 @@ def signup(request, username):
                 login(request, user)
                 
                 if next_page:
-                    return redirect(next_page)
+                    return redirect(next_page, username)
                 else:
-                    return redirect("profile")
+                    return redirect("profile", username)
         else:
             context["form"] = user_form
             return render(request, "pages/signup.html", context)
@@ -92,27 +91,29 @@ def signup(request, username):
     return render(request, "pages/signup.html", context)
 
 def logout_view(request, username):
-    context = {"username": username}
     logout(request)
-    return redirect("signin", context)
+    return redirect("signin", username)
 
-@login_required
 def account(request, username):
+    if not request.user.is_authenticated:
+        return redirect(f"/{username}/login/?next={request.path}")
     context = {"username": username}
     return render(request, "pages/account.html", context)
 
-@login_required
 def profile(request, username):
+    if not request.user.is_authenticated:
+        return redirect(f"/{username}/login/?next={request.path}")
     context = {"username": username}
     return render(request, "pages/profile.html", context)
 
-@login_required
 def edit(request, username):
+    if not request.user.is_authenticated:
+        return redirect(f"/{username}/login/?next={request.path}")
     context = {"username": username}
     field = request.GET.get('field')
 
-    if field == "": return redirect('profile')
-    if field == "email": return redirect('profile')
+    if field == "": return redirect('profile', username)
+    if field == "email": return redirect('profile', username)
     
     fields = {
         "first_name": "nome",
@@ -122,7 +123,7 @@ def edit(request, username):
         "username": "nome de usuário",
     }
     
-    if field not in fields: return redirect('profile')
+    if field not in fields: return redirect('profile', username)
     
     context["field"] = {}
     context["field"] = {
@@ -156,7 +157,7 @@ def edit(request, username):
             user = User.objects.get(pk=request.user.id)
             user.set(field, data[field])
             user.save()
-            return redirect('profile')
+            return redirect('profile', username)
         else:
             context["field"].update({"value": form[field].value})
             context["field"].update({"errors": form.errors.get(field).as_text})

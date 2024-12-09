@@ -3,36 +3,34 @@
 
   a {
     @include flex-align-center;
-    font-size: 0px;
+
+    &:hover,
+    &:focus {
+      opacity: 1;
+    }
 
     &::after {
       content: "";
-      display: block;
+      display: inline-block;
       width: 1px;
       height: 16px;
+      background-color: $primary-color-500;
       margin: 0px 8px;
-      background-color: $primary-color-600;
     }
 
     &:last-of-type::after {
       display: none;
     }
-
-    &:hover,
-    &:focus {
-      opacity: 1;
-
-      img {
-        opacity: 0.6;
-      }
-    }
   }
 
   img {
-    transition: opacity 0.3s;
-    $area: 20px;
-    width: $area;
-    height: $area;
+    @include square(20px);
     font-size: 12px;
+    transition: 0.3s;
+
+    &:hover,
+    &:focus {
+      opacity: 0.6;
+    }
   }
 }

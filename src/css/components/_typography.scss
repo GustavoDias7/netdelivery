@@ -141,11 +141,11 @@
 }
 
 .text-color-primary {
-  color: $primary-color-600;
+  color: $primary-color-500;
 }
 
 .text-color-secondary {
-  color: $amber-color-600;
+  color: $indigo-color-500;
 }
 
 @each $bp, $vl in $breakpoints {
@@ -159,11 +159,11 @@
     }
 
     .#{$bp}\:text-color-primary {
-      color: $primary-color-600;
+      color: $primary-color-500;
     }
 
     .#{$bp}\:text-color-secondary {
-      color: $amber-color-600;
+      color: $indigo-color-600;
     }
   }
 }

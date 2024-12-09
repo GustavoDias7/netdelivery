@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
 from .models import (
     Order,
     OrderItem,
@@ -18,8 +17,9 @@ from django.utils.translation import gettext_lazy as _
 from apps.core.validators import cart_validator
 from django.core.exceptions import ObjectDoesNotExist
 
-@login_required
 def orders(request, username):
+    if not request.user.is_authenticated:
+        return redirect(f"/{username}/login/?next={request.path}")
     context = {"username": username}
     order = OrderItem.objects.all().order_by('-id')
     page_size = 10
@@ -36,8 +36,9 @@ def orders(request, username):
         
     return render(request, 'pages/orders.html', context)
 
-@login_required
 def order(request, username):
+    if not request.user.is_authenticated:
+        return redirect(f"/{username}/login/?next={request.path}")
     context = {"username": username}
     context["field"] = {}
     

@@ -30,7 +30,7 @@ ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = "user.User"
 
-LOGIN_URL = "/login"
+LOGIN_URL = "login"
 
 # Application definition
 

@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.utils.crypto import get_random_string
+from django.shortcuts import redirect
 
 def remove_non_numeric(value:str):
     return "".join(e for e in value if e.isdigit())
@@ -95,3 +96,7 @@ def fcpf(cpf: str) -> str:
         return f"***.{part1}.{part2}-**"
     else:
         return ""
+    
+# def redirect_to_login(request, username):
+#     if not request.user.is_authenticated:
+#         return redirect(f"/{username}/login/?next={request.path}")

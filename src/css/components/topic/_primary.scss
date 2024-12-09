@@ -8,7 +8,7 @@
     margin-right: 12px;
 
     .icon {
-      @include square(32px);
+      @include square(64px);
     }
   }
 
@@ -24,4 +24,5 @@
       font-size: 14px;
     }
   }
+
 }

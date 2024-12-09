@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
 from delivery.utils import remove_non_alphanumeric
 from apps.address.models import (
     Address,
@@ -9,8 +8,9 @@ from django.core.exceptions import ObjectDoesNotExist
 from . import forms
 
 
-@login_required
 def address(request, username):
+    if not request.user.is_authenticated:
+        return redirect(f"/{username}/login/?next={request.path}")
     context = {'username': username}
     
     try:
@@ -22,8 +22,9 @@ def address(request, username):
     context["address"] = address
     return render(request, "pages/address.html", context)
 
-@login_required
 def address_edit(request, username):
+    if not request.user.is_authenticated:
+        return redirect(f"/{username}/login/?next={request.path}")
     context = {'username': username}
     field = request.GET.get('field')
 

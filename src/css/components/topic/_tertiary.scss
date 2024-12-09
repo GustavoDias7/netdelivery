@@ -1,16 +1,16 @@
 .topic.tertiary {
-  display: flex;
   box-shadow: $box-shadow-200;
   border-radius: 4px;
-  padding: 40px;
+  padding: 32px;
   height: 100%;
 
   .topic-left {
-    margin-right: 12px;
+    margin-right: 0px;
+    margin-bottom: 4px;
 
     .icon {
       display: block;
-      @include square(64px);
+      margin: 0px auto;
     }
   }
 
@@ -19,15 +19,15 @@
   }
 
   @include md {
-    flex-direction: column;
-    padding: 32px;
+    display: flex;
+    padding: 40px;
 
     .topic-left {
-      margin-right: 0px;
-      margin-bottom: 4px;
+      margin-right: 12px;
+      margin-bottom: 0px;
 
       .icon {
-        margin: 0px auto;
+        @include square(64px);
       }
     }
   }

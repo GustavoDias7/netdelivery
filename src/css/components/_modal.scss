@@ -42,7 +42,7 @@
       cursor: pointer;
       border: none;
       background-color: $transparent-color;
-      @include background-image(pathImages("close.svg"));
+      @include background-image("close.svg");
 
       &:hover,
       &:focus {
@@ -86,7 +86,7 @@
         cursor: pointer;
         border: none;
         background-color: $transparent-color;
-        @include background-image(pathImages("close.svg"));
+        @include background-image("close.svg");
 
         &:hover,
         &:focus {
@@ -104,10 +104,10 @@
 
   &.cart-modal {
     .modal-content {
-      padding: 32px;
+      padding: 20px;
 
       @include sm {
-        padding: 20px;
+        padding: 32px;
       }
     }
 
@@ -117,14 +117,14 @@
       gap: 8px;
 
       .img {
-        @include square(64px);
+        @include square(48px);
         border-radius: 8px;
         overflow: hidden;
         align-self: flex-start;
         flex-shrink: 0;
 
         @include sm {
-          @include square(48px);
+          @include square(64px);
         }
       }
 
@@ -166,7 +166,7 @@
       .delete {
         @include reset-button;
         @include square(24px);
-        @include background-image(pathImages("circle-close.svg"));
+        @include background-image("circle-close.svg");
         flex-shrink: 0;
       }
     }
@@ -189,18 +189,6 @@
             font-size: 24px;
             height: auto;
             font-weight: 500;
-          }
-
-          @include sm {
-            .left span {
-              font-size: 12px;
-              position: relative;
-              top: -2px;
-            }
-
-            strong {
-              font-size: 20px;
-            }
           }
         }
       }

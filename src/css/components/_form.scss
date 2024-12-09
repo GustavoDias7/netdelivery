@@ -101,7 +101,7 @@ $svg-dimention-large: $svg-dimention + 4px;
   border: $f-primary-border;
   transition: border $primary-transition;
   background-color: transparent;
-  border-color: $slate-color-500;
+  border-color: $primary-color-500;
 
   &:disabled {
     opacity: 0.4;
@@ -202,14 +202,14 @@ $svg-dimention-large: $svg-dimention + 4px;
     &::before {
       border-left: $f-primary-border;
       border-top-left-radius: $f-border-radius;
-      border-color: $slate-color-500;
+      border-color: $primary-color-500;
       width: $f-width-left;
     }
 
     &::after {
       border-right: $f-primary-border;
       border-top-right-radius: $f-border-radius;
-      border-color: $slate-color-500;
+      border-color: $primary-color-500;
       flex: 1;
     }
 
@@ -524,8 +524,8 @@ $svg-dimention-large: $svg-dimention + 4px;
 
 .f-helper {
   display: block;
-  // font-size: 0.75rem;
-  // padding: 2px 12px 0px;
+  font-size: 0.75rem;
+  padding: 2px 12px 0px;
 
   &.error {
     color: $red-color-600;
@@ -566,17 +566,17 @@ $svg-dimention-large: $svg-dimention + 4px;
   /* for Chrome */
   -webkit-appearance: none;
 
+  /* For IE10 */
+  &::-ms-expand {
+    display: none;
+  }
+
   cursor: pointer;
   background-image: url(pathImages("select-arrow.svg"));
   background-repeat: no-repeat;
   background-size: 10px;
   background-position: calc(100% - $f-padding) center;
 
-
-  /* For IE10 */
-  &::-ms-expand {
-    display: none;
-  }
   option:first-of-type {
     display: none;
   }
@@ -600,7 +600,7 @@ textarea.f-input {
       height: $f-input-height;
       border: $f-primary-border;
       border-left: none;
-      border-color: $slate-color-500;
+      border-color: $primary-color-500;
       transition: border $primary-transition, opacity $primary-transition;
       border-top-right-radius: $f-border-radius;
       border-bottom-right-radius: $f-border-radius;
@@ -612,13 +612,13 @@ textarea.f-input {
         height: $svg-dimention;
 
         path {
-          fill: $slate-color-500;
+          fill: $primary-color-500;
         }
       }
 
       &.color {
         border: none;
-        background-color: $slate-color-500;
+        background-color: $primary-color-500;
 
         svg {
           path {

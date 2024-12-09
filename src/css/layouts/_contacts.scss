@@ -1,12 +1,7 @@
 .contacts {
   .contact-item {
+    padding: 16px;
     text-align: center;
-    padding: 32px;
-
-    &.dividers {
-      border-right: 2px solid $neutral-color-200;
-      border-left: 2px solid $neutral-color-200;
-    }
 
     .icon {
       @include square(40px);
@@ -21,7 +16,7 @@
   }
 
   .map {
-    margin-top: 32px;
+    margin-top: 20px;
     background-color: $neutral-color-50;
 
     iframe {
@@ -33,15 +28,16 @@
 
   @include md {
     .contact-item {
-      padding: 16px;
+      padding: 32px;
 
       &.dividers {
-        border: none;
+        border-right: 2px solid $neutral-color-300;
+        border-left: 2px solid $neutral-color-300;
       }
     }
 
     .map {
-      margin-top: 20px;
+      margin-top: 32px;
     }
   }
 }
