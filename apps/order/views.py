@@ -144,7 +144,23 @@ def order(request, username):
             order_item.save()
             variant.save()
         
-        # reset cart
-        # return redirect('success', username)
+        response = redirect('success', username)
+        response.set_cookie('reset_cart', True, max_age=99999, secure=True, httponly=True)
+        return response
         
     return render(request, "pages/order.html", context)
+
+
+def success(request, username):
+    if not request.user.is_authenticated:
+        return redirect(f"/{username}/login/?next={request.path}")
+    context = {"username": username}
+    
+    reset_cart = request.COOKIES.get('reset_cart')
+    if reset_cart:
+        context["reset_cart"] = True
+        response =  render(request, 'pages/success.html', context)
+        response.delete_cookie("reset_cart")
+        return response
+
+    return render(request, 'pages/success.html', context)

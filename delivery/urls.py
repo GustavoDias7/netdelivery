@@ -27,6 +27,7 @@ urlpatterns = [
     path("<slug:username>/conta/pedidos", order_views.orders, name="orders"),
     path("<slug:username>/conta/endereco/", address_views.address, name="address"),
     path("<slug:username>/conta/endereco/editar/", address_views.address_edit, name="address_edit"),
+    path("<slug:username>/sucesso", order_views.success, name="success"),
 ]
 
 urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

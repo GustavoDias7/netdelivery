@@ -198,6 +198,11 @@ class ShoppingCart {
   syncCart() {
     this.cart = this.getLocal();
   }
+  resetCart() {
+    this.cart = [];
+    this.fee = 0;
+    this.setLocal();
+  }
 }
 
 module.exports = ShoppingCart;

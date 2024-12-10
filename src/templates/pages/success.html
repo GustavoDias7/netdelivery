@@ -1,0 +1,42 @@
+{% extends "../bases/base.html" %}
+{% load static %}
+
+{% block title %}
+Página inicial
+{% endblock %}
+
+{% block css %}
+<link href="{% static 'css/pages/success.css' %}?{% now 'U' %}" rel="stylesheet">
+{% endblock %}
+
+{% block app_section %} success{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="container xs:container">
+    <h2 class="text-2xl sm:text-3xl text-color-primary text-align-center text-mb-2 sm:text-mb-4">Sucesso!</h2>
+    <p class="text-base text-align-center text-mb-4">Seu pedido foi cadastrado com sucesso! Consulte a página de pedidos para saber mais.</p>
+
+    <div class="g-root g-gap-2 sm:g-gap-4">
+      <div class="g-row gx-center">
+        <div class="g-item-12 sm:g-item-6">
+          <div>
+            <a class="gn-button pm-button small sm:regular full" href="{% url 'orders' username %}">Meus pedidos</a>
+          </div>
+        </div>
+        <div class="g-item-12 sm:g-item-6">
+          <div>
+            <a class="gn-button sc-button small sm:regular full" href="{% url 'homepage' username %}">Página inicial</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block js %}
+{% if reset_cart %}
+<script>const reset_cart = true</script> {% endif %}
+<script src="{% static 'js/pages/success.js' %}?{% now 'U' %}"></script>
+{% endblock %}

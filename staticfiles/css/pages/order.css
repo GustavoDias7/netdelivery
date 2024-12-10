@@ -5128,6 +5128,7 @@ textarea.f-input {
 }
 .header nav .link {
   color: #f43f5e;
+  font-size: 16px;
 }
 .header .social-links {
   display: none;
@@ -5608,6 +5609,10 @@ textarea.f-input {
   .about.senary .about-content .about-subtext hr {
     margin-bottom: 24px;
   }
+}
+
+.success .section {
+  padding: 128px 0px;
 }
 
 .section {
