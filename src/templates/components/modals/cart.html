@@ -75,9 +75,7 @@
             </div>
           </div>
           <div class="g-item-12">
-            <a class="gn-button pm-button full small sm:regular"
-              :href="`https://wa.me/552199999999?text=Olá, eu gostaria de fazer o pedido dos produtos: ${cart.getItemNames()}`"
-              target="_blank">
+            <a class="gn-button pm-button full small sm:regular" href="{% url 'order' username %}">
               Pedir agora
             </a>
           </div>

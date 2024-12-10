@@ -25,57 +25,55 @@ Seus pedidos
                 {% for order in orders %}
                 <div class="g-item-12">
                     <div class="order-item">
-                        <div class="top">
-                            <p class="text-mb-2">
-                                {{order.order.created|date:"d/m/Y G:i:s"}}
-                            </p>
+                        <div class="img">
+                            <a href="{{order.product.link}}">
+                                <figure class="aspect-ratio aspect-1-1 fit">
+                                    <img src="{{order.product.product.image.url}}" alt="{{order.product.name}}" />
+                                </figure>
+                            </a>
                         </div>
-                        <div class="bottom">
-                            <div class="img">
-                                <a href="/">
-                                    <figure class="aspect-ratio aspect-1-1 fit">
-                                        <img src="{{order.product.image.url}}" alt="{{order.product.name}}" />
-                                    </figure>
-                                </a>
+                        <div class="order-item-info">
+                            <div class="order-item-info-left">
+                                <h3>
+                                    <a class="text-color-primary" href="{{order.product.link}}">
+                                        {{order.product.full_name}}
+                                    </a>
+                                </h3>
+                                <p>
+                                    <strong class="{{order.order_item_status.code}}">
+                                        {{order.order_item_status.name}}
+                                    </strong>
+                                </p>
+                                {% if order.order_item_status.code == 'delivered' %}
+                                <p>Entregue: {{order.order.received_date|date:"d/m/Y G:i:s"}}</p>
+                                {% endif %}
+                                <p>Total: <strong>{{order.ftotal_price}}</strong></p>
+                                {% if order.order.shipping_fee_value %}
+                                <p>Taxa de entrega <strong>{{order.order.fshipping_fee_value}}</strong></p>
+                                {% else %}
+                                <p>Retirada</p>
+                                {% endif %}
+                                {% if order.percentage_discount > 0 %}
+                                <p>{{order.fpercentage_discount}} de desconto</p>
+                                {% endif %}
+                                <p>{{order.order.created|date:"d/m/Y G:i:s"}}</p>
                             </div>
-                            <div class="order-item-info">
-                                <div class="order-item-info-left">
-                                    <h3>{{order.product.name}}</h3>
-                                    <p>
-                                        <strong class="{{order.order_item_status.code}}">
-                                            {{order.order_item_status.name}}
-                                        </strong>
-                                    </p>
-                                    {% if order.order_item_status.code == 'delivered' %}
-                                    <p>Entregue: {{order.order.received_date|date:"d/m/Y G:i:s"}}</p>
-                                    {% endif %}
-                                    <p>Total: <strong>{{order.ftotal_price}}</strong></p>
-                                    {% if order.order.shipping_fee_value %}
-                                    <p>Taxa de entrega <strong>{{order.order.fshipping_fee_value}}</strong></p>
-                                    {% else %}
-                                    <p>Retirada</p>
-                                    {% endif %}
-                                    {% if order.percentage_discount > 0 %}
-                                    <p>{{order.fpercentage_discount}} de desconto</p>
-                                    {% endif %}
-                                </div>
-                                <div class="order-item-info-right">
-                                    <p>{{order.fquantity}}</p>
-                                    <p>{{order.order.payment_type_name}}</p>
-                                    {% if order.order_item_status.code == 'delivered' %}
-                                    <a class="gn-button tt-button small"
-                                        href="{% url 'order' username %}?repurchase=true&product_id={{order.product.id}}&quantity={{order.quantity}}">Comprar
-                                        novamente</a>
-                                    {% elif order.order_item_status.code == 'canceled' %}
-                                    <a class="gn-button tt-button small"
-                                        href="{% url 'order' username %}?repurchase=true&product_id={{order.product.id}}&quantity={{order.quantity}}">Comprar
-                                        item</a>
-                                    {% elif order.order_item_status.code == 'wating' %}
-                                    <button class="gn-button qt-button small" @click="openCancelOrder({{order.id}})">
-                                        Cancelar pedido
-                                    </button>
-                                    {% endif %}
-                                </div>
+                            <div class="order-item-info-right">
+                                <p>{{order.fquantity}}</p>
+                                <p>{{order.order.payment_type_name}}</p>
+                                {% if order.order_item_status.code == 'delivered' %}
+                                <a class="gn-button pm-button small sm:right"
+                                    href="{% url 'order' username %}?repurchase=true&product_id={{order.product.id}}&quantity={{order.quantity}}">Comprar
+                                    novamente</a>
+                                {% elif order.order_item_status.code == 'canceled' %}
+                                <a class="gn-button pm-button small sm:right"
+                                    href="{% url 'order' username %}?repurchase=true&product_id={{order.product.id}}&quantity={{order.quantity}}">Comprar
+                                    item</a>
+                                {% elif order.order_item_status.code == 'wating' %}
+                                <button class="gn-button sc-button small sm:right" @click="openCancelOrder({{order.id}})">
+                                    Cancelar pedido
+                                </button>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
