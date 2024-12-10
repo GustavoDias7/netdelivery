@@ -1,18 +1,40 @@
 import * as vue from "vue/dist/vue.esm-bundler.js";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { Navigation } from "swiper/modules";
 import { mainMixin } from "../utils/mixins";
 const { createApp } = vue;
 
 const app = createApp({
   mixins: [mainMixin],
   delimiters: ["[[", "]]"],
+  components: {
+    Swiper,
+    SwiperSlide,
+  },
   setup() {
-    return {};
+    return {
+      modules: [Navigation],
+    };
   },
   data() {
     return {
       accordion: {
         state: false,
         index: null,
+      },
+      breakpoints: {
+        0: {
+          slidesPerView: "auto",
+          spaceBetween: 0,
+        },
+        480: {
+          slidesPerView: 2,
+          spaceBetween: 16,
+        },
+        768: {
+          slidesPerView: 3,
+          spaceBetween: 16,
+        },
       },
     };
   },

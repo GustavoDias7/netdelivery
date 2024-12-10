@@ -7,7 +7,10 @@ from django.utils.translation import gettext_lazy as _
 class PaymentTypeAdmin(admin.ModelAdmin):
     list_display = ["name", "code"]
 
-admin.site.register(models.OrderItemStatus)
+@admin.register(models.OrderItemStatus)
+class OrderItemStatusAdmin(admin.ModelAdmin):
+    def has_module_permission(self, request):
+        return False
 
 class OrderItemInline(admin.StackedInline):
     model = models.OrderItem

@@ -1,7 +1,9 @@
 {% load static %}
 <header class="header">
   <div class="container md:container between">
-    <div> <a class="logo" href="{% url 'homepage' username %}"> Logo </a> </div>
+    <div> 
+      <a class="logo" href="{% url 'homepage' username %}"> {{logo}} </a> 
+    </div>
     <div class="header-right">
       <nav> 
         {% if header_categories|length or header_combos %}

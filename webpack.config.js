@@ -70,6 +70,9 @@ module.exports = {
         variables: true,
         keyframes: true,
         defaultExtractor: (content) => content.match(/[\w-/:]+(?<!:)/g) || [],
+        safelist: {
+          standard: ["swiper", /^swiper-/],
+        },
       });
     }),
   ],

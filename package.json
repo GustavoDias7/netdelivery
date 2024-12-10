@@ -19,6 +19,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "swiper": "^11.1.15",
     "axios": "^1.7.2",
     "imask": "^7.6.1",
     "v-money3": "^3.24.1",

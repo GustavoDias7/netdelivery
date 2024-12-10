@@ -31,7 +31,7 @@ class ProductVariantInline(admin.StackedInline):
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductVariantInline]
-    list_display = ("id", "name", "category",)
+    list_display = ("name", "category", "id",)
     list_filter = ("category__name",)
     readonly_fields = ("id",)
     form = forms.ProductForm

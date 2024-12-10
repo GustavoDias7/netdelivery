@@ -3,7 +3,8 @@
   @include max-width(272px);
   color: $neutral-color-700;
   background-color: $neutral-color-50;
-  box-shadow: $box-shadow-200;
+  // box-shadow: $box-shadow-200;
+  border: 1px solid $neutral-color-200;
 
   >a {
     font-size: 0;

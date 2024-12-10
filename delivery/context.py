@@ -2,7 +2,8 @@ from django.core.cache import cache
 from django.core.exceptions import ObjectDoesNotExist
 from apps.user.models import (
     Contacts, 
-    OpeningHours
+    OpeningHours,
+    User
 )
 from apps.product.models import (
     Combo,
@@ -10,21 +11,28 @@ from apps.product.models import (
     Category
 )
 
-def header_categories(request):
+def header(request):
     if request.path.startswith('/admin/'): return {}
     username = request.resolver_match.kwargs["username"]
     
     context = {
         "header_categories": [],
-        "header_combos": False
+        "header_combos": False,
+        "logo": ""
     }
+    
+    try:
+        owner = User.objects.get(username=username)
+        context["logo"] = owner.get_full_name()
+    except ObjectDoesNotExist:
+        pass
     
     categories_cache = cache.get(f"{username}_header_categories")
     if categories_cache == None:
         try:
             qs_categories = Category.objects.all()
             for category in qs_categories:
-                variant = ProductVariant.objects.filter(archived=False, product__category=category).first()
+                variant = ProductVariant.objects.filter(archived=False, product__category=category, product__user__username=username).first()
                 if variant:
                     context["header_categories"].append(variant.product.category)
             cache.set(f"{username}_header_categories", context["header_categories"])
@@ -36,7 +44,7 @@ def header_categories(request):
     combos_cache = cache.get(f"{username}_header_combos")
     if combos_cache == None:
         try:
-            qs_combos = Combo.objects.filter(archived=False).first()
+            qs_combos = Combo.objects.filter(archived=False, user__username=username).first()
             if qs_combos:
                 context["header_combos"] = True
                 cache.set(f"{username}_header_combos", context["header_combos"])
