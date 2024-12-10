@@ -62,6 +62,7 @@ class ComboItemInline(admin.StackedInline):
 class ComboAdmin(admin.ModelAdmin):
     inlines = [ComboItemInline]
     form = forms.ComboForm
+    list_display = ("name", "price", "id", "archived")
     
     def get_changeform_initial_data(self, request):
         return {"user": request.user}

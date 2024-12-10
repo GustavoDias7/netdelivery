@@ -5,46 +5,46 @@
     <h2 class="title-line text-2xl sm:text-3xl text-color-primary text-align-center text-mb-2 sm:text-mb-4">
       Combos
     </h2>
-    <div class="g-root g-no-hidden g-gap-4">
-      <div class="g-row">
-        {% for product in combos %}
-        <div class="g-item-12 sm:g-item-6 md:g-item-4">
-          <article class="card secondary">
-            <p class="cart-count" :class="{active: cart.getCount('{{product.id}}')}"
-              v-text="cart.getCount('{{product.id}}')">
-            </p>
-            <a href="{{product.link}}">
-              <figure class="aspect-ratio aspect-1-1 fit">
-                <img src="{{product.image.url}}" alt="Card Image" />
-              </figure>
-            </a>
-            <div class="description">
-              <a href="{{product.link}}">
-                <h3 class="text-xl text-color-primary">{{product.name}}</h3>
+    <swiper :pagination="true" :initial-slide="0" :breakpoints="breakpoints" :modules="modules">
+      {% for product in combos %}
+      <swiper-slide>
+        <article class="card secondary">
+          <p class="cart-count" :class="{active: cart.getCount('{{product.id}}')}"
+            v-text="cart.getCount('{{product.id}}')">
+          </p>
+          <a href="{{product.link}}">
+            <figure class="aspect-ratio aspect-1-1 fit">
+              <img src="{{product.image.url}}" alt="Card Image" />
+            </figure>
+          </a>
+          <div class="description">
+            <h3 class="text-lg">
+              <a class="text-color-primary" href="{{product.link}}">
+                {{product.name}}
               </a>
-              <p class="price text-lg">
-                {{product.ftotal}}
-                {% if product.discount %}
-                <span class="discount text-sm">{{product.fdiscount}}</span>
-                {% endif %}
-              </p>
-              <button class="gn-button pm-button small full" @click="cart.addItem(
-                  '{{product.id}}',
-                  '{{product.name}}',
-                  '{{product.price}}',
-                  '{{product.image.url}}',
-                  '{{product.discount|unlocalize}}',
-                  '{{product.link}}',
-                )">Adicionar ao carrinho</button>
-              <button class="gn-button sc-button small full" @click="openCart">
-                Abrir carrinho
-              </button>
-            </div>
-          </article>
-        </div>
-        {% endfor %}
-      </div>
-    </div>
+            </h3>
+            <p class="price text-lg">
+              {{product.ftotal}}
+              {% if product.discount %}
+              <span class="discount text-sm">{{product.fdiscount}}</span>
+              {% endif %}
+            </p>
+            <button class="gn-button pm-button small full" @click="cart.addItem(
+                '{{product.id}}',
+                '{{product.name}}',
+                '{{product.price}}',
+                '{{product.image.url}}',
+                '{{product.discount|unlocalize}}',
+                '{{product.link}}',
+              )">Adicionar ao carrinho</button>
+            <button class="gn-button sc-button small full" @click="openCart">
+              Abrir carrinho
+            </button>
+          </div>
+        </article>
+      </swiper-slide>
+      {% endfor %}
+    </swiper>
   </div>
 </section>
 {% endif %}

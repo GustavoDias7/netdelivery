@@ -4011,6 +4011,7 @@ textarea.f-input {
   position: relative;
   width: 100%;
   max-width: 272px;
+  margin: 0px auto;
   color: #404040;
   background-color: #fafafa;
   border: 1px solid #e5e5e5;
