@@ -1,15 +1,31 @@
 {% load static %}
-<section class="primary-banner section">
+<section class="banner">
   <div class="container md:container">
-    <div class="left">
-      <h2>Pizzaria Nobreza.</h2>
-      <p>
-        Descubra a verdadeira experiência na Pizzaria Nobreza! Nossas pizzas artesanais são preparadas com ingredientes
-        frescos e combinadas com sabores irresistíveis.
-      </p>
-    </div>
-    <div class="right">
-      <img src="{% static 'img/shourav-sheikh-a66sGfOnnqQ-unsplash-removebg-preview.png'%}" alt="Place Holder" />
+    <div class="g-root g-gap-8">
+      <div class="g-row g-wrap-reverse">
+        <div class="g-item-12 md:g-item-6">
+          <div>
+            <h2
+              class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-mb-4 text-color-primary"
+            >
+              Seja bem-vindo!
+            </h2>
+            <p class="text-base sm:text-xl text-mb-4 text-color-primary">
+              Bem-vindo ao nosso delivery! Aqui, você encontra uma
+              seleção de produtos, prontos para serem entregues com
+              rapidez e praticidade. Faça seu pedido agora e tenha uma
+              experiência saborosa no conforto da sua casa!
+            </p>
+          </div>
+        </div>
+        <div class="g-item-12 md:g-item-6">
+          <div>
+            <figure class="aspect-ratio aspect-16-9 fit">
+              {% include "../components/banner-illustration.html" %}
+            </figure>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
