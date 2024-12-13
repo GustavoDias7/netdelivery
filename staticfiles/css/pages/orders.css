@@ -15,6 +15,7 @@
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #262626;
 }
 
 body,
@@ -2063,6 +2064,29 @@ li {
     height: 60px;
     padding: 0px 24px;
   }
+}
+
+.multi-buttons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  user-select: none;
+}
+.multi-buttons .size {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  padding: 4px 8px;
+  font-size: 14px;
+  color: #262626;
+  background-color: #d4d4d4;
+  border-radius: 4px;
+}
+.multi-buttons .size.active {
+  color: #fafafa;
+  background-color: #f43f5e;
 }
 
 .circle-button {
@@ -5085,7 +5109,10 @@ textarea.f-input {
 }
 
 .header {
-  position: relative;
+  position: sticky;
+  top: 0px;
+  left: 0px;
+  z-index: 2;
   background-color: #fafafa;
   box-shadow: 0px 0px 6px 0px #a3a3a3;
 }
@@ -5200,6 +5227,9 @@ textarea.f-input {
 .footer.secondary .container {
   padding-top: 32px;
   padding-bottom: 32px;
+}
+.footer.secondary h3, .footer.secondary p, .footer.secondary strong {
+  color: #fafafa;
 }
 .footer.secondary .footer-top .social-links a::after {
   background-color: #fafafa;
@@ -5316,7 +5346,7 @@ textarea.f-input {
   border: none;
   border-top: 1px solid #d4d4d4;
 }
-.details article footer li {
+.details article footer p {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -5515,6 +5545,9 @@ textarea.f-input {
   display: flex;
   align-items: center;
   gap: 8px;
+  color: #f43f5e;
+}
+.contact-bar .contact-bar-left a p {
   color: #f43f5e;
 }
 .contact-bar .contact-bar-left img {

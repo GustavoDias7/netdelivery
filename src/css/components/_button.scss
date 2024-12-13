@@ -96,3 +96,24 @@
     }
   }
 }
+.multi-buttons {
+  @include flex-align-center;
+  gap: 4px;
+  flex-wrap: wrap;
+  user-select: none;
+
+  .size {
+    @include flex-center-center;
+    width: fit-content;
+    padding: 4px 8px;
+    font-size: 14px;
+    color: $neutral-color-800;
+    background-color: $neutral-color-300;
+    border-radius: 4px;
+
+    &.active {
+      color: $neutral-color-50;
+      background-color: $primary-color-500;
+    }
+  }
+}

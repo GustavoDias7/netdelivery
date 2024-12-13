@@ -1,95 +1,94 @@
 {% load l10n %}
 <section class="section">
-    <div class="container md:container">
-      <div class="details">
-        <div class="container">
-          <div class="g-root g-no-hidden g-gap-2 sm:g-gap-4">
-            <div class="g-row">
-              <div class="g-item-12 md:g-item-7">
-                <figure class="aspect-ratio aspect-1-1 fit">
-                  <img class="product-image" src="{{variant.product.image.url}}" alt="{{variant.product.name}}" />
-                </figure>
+  <div class="container md:container">
+    <div class="details primary">
+      <div class="g-root g-no-hidden g-gap-5 md:g-gap-8">
+        <div class="g-row">
+          <div class="g-item-12 sm:g-item-6 md:g-item-7">
+            <figure class="aspect-ratio aspect-1-1 fit">
+              <img
+                class="product-image"
+                src="{{variant.product.image.url}}"
+                alt="{{variant.product.name}}"
+              />
+            </figure>
+          </div>
+          <div class="g-item-12 sm:g-item-6 md:g-item-5">
+            <article class="g-root g-no-hidden g-gap-4 md:g-gap-5">
+              <div class="g-row">
+                <header class="g-item-12">
+                  <h2 class="text-lg md:text-xl text-color-primary">
+                    {{variant.full_name}}
+                  </h2>
+                </header>
+                <section class="g-item-12"><hr /></section>
+                <section class="g-item-12">
+                  <ul>
+                    <li class="text-base text-mb-2">
+                      <strong>Descrição:</strong> <span>{{variant.product.description}}</span>
+                    </li>
+                    {% if variant.diameter %}
+                    <li class="text-base text-mb-2">
+                      <strong>Diametro:</strong> <span>{{variant.diameter}}cm</span>
+                    </li>
+                    {% endif %} 
+                    {% if variant.stuffed_edge != None %}
+                    <li class="text-base text-mb-2">
+                      <strong>Borda:</strong>
+                      <span>
+                        {{variant.stuffed_edge|yesno:"Recheada,Não,recheada"}}
+                      </span>
+                    </li>
+                    {% endif %}
+                    {% if variant.discount %}
+                    <li class="text-base text-mb-2">
+                      <strong>Preço:</strong> <span>{{variant.fprice}}</span>
+                    </li>
+                    <li class="text-base text-mb-2">
+                      <strong>Desconto:</strong> <span>{{variant.fdiscount}}</span>
+                    </li>
+                    {% endif %} 
+                    {% if variant.size or variant.milliliters %}
+                    <li class="text-base">
+                      <strong>Tamanho:</strong> <br />
+                      {% include "../components/multi-buttons.html" %}
+                    </li>
+                    {% endif %}
+                  </ul>
+                </section>
+                <section class="g-item-12"><hr /></section>
+                <footer class="g-item-12">
+                  <p class="text-base">
+                    <strong>Total:</strong>
+                    <span>{{variant.ftotal}}</span>
+                  </p>
+                </footer>
               </div>
-              <div class="g-item-12 md:g-item-5">
-                <aside class="main-infos">
-                  <article>
-                    <header>
-                      <h2 class="text-xl sm:text-2xl text-color-primary text-mb-2">
-                        {{variant.full_name}}
-                      </h2>
-                    </header>
-                    <section>
-                      <ul>
-                        <li class="text-base text-mb-2">
-                          <strong>Descrição:</strong> <span>{{variant.product.description}}</span>
-                        </li>
-                        <li class="text-base text-mb-2">
-                          <strong>Preço:</strong> <span>{{variant.fprice}}</span>
-                        </li>
-                        {% if variant.discount %}
-                        <li class="text-base text-mb-2">
-                          <strong>Desconto:</strong> <span>{{variant.fdiscount}}</span>
-                        </li>
-                        {% endif %}
-                        {% if variant.stuffed_edge != None %}
-                        <li class="text-base text-mb-2">
-                          <strong>Borda:</strong> <span>{{variant.stuffed_edge|yesno:"Recheada,Não recheada"}}</span>
-                        </li>
-                        {% endif %}
-
-                        {% if variants|length %}
-                        <li class="text-base">
-                          <strong>Tamanho:</strong> <br>
-                          <ul class="multi-buttons">
-                            {% for var in variants %}
-                                <li>
-                                    {% if var.id != variant.id %}
-                                    <a 
-                                      href="/{{username}}/produto?id={{var.product.id}}&variant={{var.id}}" 
-                                      class="size" 
-                                      title="{{var.fsize}}"
-                                    >
-                                      {{var.fsize}}
-                                    </a>
-                                    {% else %}
-                                    <p 
-                                      class="size active" 
-                                      title="{{var.fsize}}"
-                                    >
-                                      {{var.fsize}}
-                                    </p>
-                                    {% endif %}
-                                </li>
-                            {% endfor %}
-                          </ul>
-                        </li>
-                        {% endif %}
-                      </ul>
-                    </section>
-                    <footer>
-                        <li> 
-                            <strong>Total:</strong>
-                            <span>{{variant.ftotal}}</span>
-                        </li>
-                    </footer>
-                  </article>
-                  <button class="gn-button pm-button full small sm:regular" @click="cart.addItem(
-                    '{{variant.id}}',
-                    '{{variant.full_name}}',
-                    '{{variant.price}}',
-                    '{{variant.product.image.url}}',
-                    '{{variant.discount|unlocalize}}',
-                    '{{variant.link}}',
-                    )">Adicionar ao carrinho
-                  </button>
-                  <button class="gn-button sc-button full small sm:regular" @click="openCart">
-                    Abrir carrinho
-                  </button>
-                </aside>
-              </div>
-            </div>
+            </article>
+            {% if not variant.archived %}
+              <button
+                class="gn-button pm-button full small sm:regular"
+                @click="cart.addItem(
+                  '{{variant.id}}',
+                  '{{variant.full_name}}',
+                  '{{variant.price}}',
+                  '{{variant.product.image.url}}',
+                  '{{variant.discount|unlocalize}}',
+                  '{{variant.link}}',
+                  )"
+              >
+                Adicionar ao carrinho
+              </button>
+              <button
+                class="gn-button sc-button full small sm:regular"
+                @click="openCart"
+              >
+                Abrir carrinho
+              </button>
+            {% endif %}
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>

@@ -24,6 +24,10 @@
       @include flex-align-center;
       gap: 8px;
       color: $primary-color-500;
+
+      p {
+        color: $primary-color-500;
+      }
     }
 
     img {

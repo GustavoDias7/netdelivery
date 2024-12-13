@@ -7,6 +7,10 @@
     padding-bottom: 32px;
   }
 
+  h3, p, strong {
+    color: $neutral-color-50;
+  }
+
   .footer-top {
     .social-links a::after {
       background-color: $neutral-color-50;

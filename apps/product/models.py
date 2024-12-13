@@ -73,6 +73,18 @@ class ProductVariant(models.Model):
             return PIZZA_SIZES[self.size]
         else:
             return None
+        
+    def fmilliliters(self):
+        if self.milliliters:
+            if self.milliliters < 1000:
+                return "{} ml".format(self.milliliters)
+            else:
+                liter = self.milliliters / 1000
+                result = str(int(liter)) if liter.is_integer() else str(liter).replace(".", ",")
+                return "{} L".format(result)
+        else:
+            return self.milliliters
+            
     
     def fprice(self):
         return locale.currency(self.price / 100, grouping=True)
@@ -95,6 +107,8 @@ class ProductVariant(models.Model):
     def full_name(self):
         if self.size:
             return f"{self.product.name} {PIZZA_SIZES[self.size]}"
+        elif self.milliliters:
+            return f"{self.product.name} {self.fmilliliters()}"
         else:
             return self.product.name
         

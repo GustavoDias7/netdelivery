@@ -1,5 +1,8 @@
 .header {
-  position: relative;
+  position: sticky;
+  top: 0px;
+  left: 0px;
+  z-index: 2;
   background-color: $neutral-color-50;
   box-shadow: $box-shadow-200;
 
