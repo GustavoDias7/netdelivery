@@ -14,7 +14,7 @@
                 <aside class="main-infos">
                   <article>
                     <header>
-                      <h2 class="text-xl sm:text-2xl text-color-primary">
+                      <h2 class="text-xl sm:text-2xl text-color-primary text-mb-2">
                         {{variant.full_name}}
                       </h2>
                     </header>
@@ -44,20 +44,19 @@
                             {% for var in variants %}
                                 <li>
                                     {% if var.id != variant.id %}
-                                    <a href="/{{username}}/produto?id={{var.product__id}}&variant={{var.id}}" class="size" title="{{var.size_name}}">
-                                        {% if var.short_size_name %}
-                                        {{var.short_size_name}}
-                                        {% else %}
-                                        {{var.size_name}}
-                                        {% endif %}
+                                    <a 
+                                      href="/{{username}}/produto?id={{var.product.id}}&variant={{var.id}}" 
+                                      class="size" 
+                                      title="{{var.fsize}}"
+                                    >
+                                      {{var.fsize}}
                                     </a>
                                     {% else %}
-                                    <p class="size active" title="{{var.size_name}}">
-                                        {% if var.short_size_name %}
-                                        {{var.short_size_name}}
-                                        {% else %}
-                                        {{var.size_name}}
-                                        {% endif %}
+                                    <p 
+                                      class="size active" 
+                                      title="{{var.fsize}}"
+                                    >
+                                      {{var.fsize}}
                                     </p>
                                     {% endif %}
                                 </li>
