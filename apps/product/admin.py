@@ -10,7 +10,7 @@ class ProductCategoryAdmin(admin.ModelAdmin):
 
 @admin.register(models.ProductVariant)
 class ProductVariantAdmin(admin.ModelAdmin):
-    search_fields = ("product__name", "size_name", "short_size_name")
+    search_fields = ("product__name", "size")
     readonly_fields = ("id",)
     
     def has_module_permission(self, request):

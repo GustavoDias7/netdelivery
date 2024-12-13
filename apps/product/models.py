@@ -7,6 +7,7 @@ from django.template.defaultfilters import slugify
 from delivery.utils import remove_non_numeric
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
+from delivery.constants import PIZZA_SIZES
 
 fs_storage = FileSystemStorage(location=settings.MEDIA_ROOT)
 
@@ -20,7 +21,7 @@ class Category(models.Model):
         verbose_name_plural = _("categories")
     
     def get_code(self):
-        return slugify(self.name) + f'-{self.id}'
+        return slugify(self.name)
 
     def __str__(self):
         return f"{self.name}"
@@ -29,42 +30,49 @@ class Product(models.Model):
     user = models.ForeignKey("user.User", null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     image = models.ImageField(storage=fs_storage, help_text=_("Add square images, with 1:1 dimension."))
-    description = models.TextField(max_length=400, validators=[MinLengthValidator(4, _("Mínimo de 4 caracteres."))])
+    description = models.TextField(max_length=600, validators=[MinLengthValidator(4, _("Mínimo de 4 caracteres."))])
     category = models.ForeignKey(Category, on_delete=models.RESTRICT)
     
     class Meta:
-        verbose_name = _("produto")
-        verbose_name_plural = _("produtos")
+        verbose_name = _("product")
+        verbose_name_plural = _("products")
     
     def __str__(self):
         return f"{self.name}"
     
 class ProductVariant(models.Model):
     product = models.ForeignKey("Product", on_delete=models.CASCADE)
-    size_name = models.CharField(max_length=40, help_text=_("Ex.: Pequena, Média, Grande, 2l, 200ml"))
-    short_size_name = models.CharField(blank=True, null=True, max_length=5, help_text=_("Opcional. Ex.: P, M, G"))
-    diameter = models.PositiveSmallIntegerField(blank=True, null=True, validators=[MaxValueValidator(32767)], help_text=_("Em centimetros"))
-    price = models.PositiveIntegerField(validators=[MaxValueValidator(2147483647)], help_text=_("Em inteiro. Ex.: 4999 para representar R$ 49,99"))
+    size = models.CharField(_("Size"), max_length=40, blank=True, null=True, choices=PIZZA_SIZES)
+    diameter = models.PositiveSmallIntegerField(_("Diameter"), blank=True, null=True, validators=[MaxValueValidator(32767)], help_text=_("Em centimetros"))
+    stuffed_edge = models.BooleanField(_("Stuffed Edge"), blank=True, null=True, choices=[(None, "Sem borda"), (True, "Sim"), (False, "Não")])
+    milliliters = models.PositiveSmallIntegerField(_("Milliliters"), blank=True, null=True, validators=[MaxValueValidator(32767)])
+    price = models.PositiveIntegerField(_("Price"), validators=[MaxValueValidator(2147483647)], help_text=_("Em inteiro. Ex.: 4999 para representar R$ 49,99"))
     discount = models.DecimalField(
+        _("Discount"),
         max_digits=3,
         decimal_places=2,
         default=0.0,
         validators=[MinValueValidator(0), MaxValueValidator(1)],
         help_text="Em decimal. Ex.: 0.1 para representar 10%. 0.0 quando não há desconto."
     )
-    stock = models.PositiveIntegerField(blank=True, null=True, validators=[MaxValueValidator(2147483647)], help_text=_("Opcional. Se não for preenchido, o estoque será ilimitado para pedidos. 0 representa que o estoque está vazio."))
-    stuffed_edge = models.BooleanField(blank=True, null=True, choices=[(None, "Sem borda"), (True, "Sim"), (False, "Não")])
-    archived = models.BooleanField(default=False)
-    default = models.BooleanField(default=False, help_text=_("A variante que representará o produto no site."))
+    stock = models.PositiveIntegerField(_("Stock"), blank=True, null=True, validators=[MaxValueValidator(2147483647)], help_text=_("Opcional. Se não for preenchido, o estoque será ilimitado para pedidos. 0 representa que o estoque está vazio."))
+    archived = models.BooleanField(_("Archived"), default=False)
+    default = models.BooleanField(_("Default"), default=False, help_text=_("A variante que representará o produto no site."))
     
     class Meta:
-        verbose_name = _("variante do produto")
-        verbose_name_plural = _("variantes do produto")
+        verbose_name = _("product variant")
+        verbose_name_plural = _("product variants")
         
     def clean_fields(self, exclude=None):
         if self.price and type(self.price) == str:
             self.price = int(remove_non_numeric(self.price))
         super().clean_fields(exclude=exclude)
+        
+    def fsize(self):
+        if self.size:
+            return PIZZA_SIZES[self.size]
+        else:
+            return None
     
     def fprice(self):
         return locale.currency(self.price / 100, grouping=True)
@@ -85,10 +93,13 @@ class ProductVariant(models.Model):
         return f"/{self.product.user.username}/produto?{query_string}" 
     
     def full_name(self):
-        return f"{self.product.name} {self.size_name}"
+        if self.size:
+            return f"{self.product.name} {PIZZA_SIZES[self.size]}"
+        else:
+            return self.product.name
         
     def __str__(self):
-        return f"{self.product.name} {self.size_name}"
+        return self.full_name()
 
     
 class Combo(models.Model):

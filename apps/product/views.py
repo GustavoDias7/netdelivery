@@ -6,7 +6,7 @@ def product(request, username):
     product_id = request.GET.get('id', "")
     variants = ProductVariant.objects.filter(product_id=product_id, product__user__username=username)
     context = {
-        "variants": variants.values("id", "product__id", "size_name", "short_size_name"),
+        "variants": variants,
         "variant": variants.get(id=variant_id),
         "username": username
     }
