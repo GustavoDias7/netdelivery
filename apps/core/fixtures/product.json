@@ -1,0 +1,33 @@
+[
+  { "model": "product.category", "pk": 1, "fields": { "name": "Pizza" } },
+  { "model": "product.category", "pk": 2, "fields": { "name": "Pizza Salgada" } },
+  { "model": "product.category", "pk": 3, "fields": { "name": "Pizza Doce" } },
+  { "model": "product.category", "pk": 4, "fields": { "name": "Pizza Vegetariana" } },
+  { "model": "product.category", "pk": 5, "fields": { "name": "Pizza Mista" } },
+
+  { "model": "product.category", "pk": 6, "fields": { "name": "Esfirra" } },
+  { "model": "product.category", "pk": 7, "fields": { "name": "Esfirra Salgada" } },
+  { "model": "product.category", "pk": 8, "fields": { "name": "Esfirra Doce" } },
+  
+  { "model": "product.category", "pk": 9, "fields": { "name": "Hambúrguer" } },
+  { "model": "product.category", "pk": 10, "fields": { "name": "Hambúrguer Tradicional" } },
+  { "model": "product.category", "pk": 11, "fields": { "name": "Hambúrguer Artesanal" } },
+  { "model": "product.category", "pk": 12, "fields": { "name": "Cachorro-Quente" } },
+  { "model": "product.category", "pk": 13, "fields": { "name": "Sanduíche" } },
+  { "model": "product.category", "pk": 14, "fields": { "name": "Salgado" } },
+  { "model": "product.category", "pk": 15, "fields": { "name": "Salgado Frito" } },
+  { "model": "product.category", "pk": 16, "fields": { "name": "Salgado Assado" } },
+  { "model": "product.category", "pk": 17, "fields": { "name": "Empanada" } },
+  { "model": "product.category", "pk": 18, "fields": { "name": "Batata Frita" } },
+  { "model": "product.category", "pk": 19, "fields": { "name": "Nugget" } },
+  { "model": "product.category", "pk": 20, "fields": { "name": "Pastel" } },
+  { "model": "product.category", "pk": 21, "fields": { "name": "Pastel Salgado" } },
+  { "model": "product.category", "pk": 22, "fields": { "name": "Pastel Doce" } },
+  { "model": "product.category", "pk": 23, "fields": { "name": "Sorvete" } },
+
+  { "model": "product.category", "pk": 24, "fields": { "name": "Açaí" } },
+  { "model": "product.category", "pk": 25, "fields": { "name": "Refrigerante" } },
+  { "model": "product.category", "pk": 26, "fields": { "name": "Suco" } },
+  { "model": "product.category", "pk": 27, "fields": { "name": "Milkshake" } }
+]
+
