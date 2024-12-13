@@ -3739,6 +3739,7 @@ textarea.f-input {
   display: flex;
   align-items: center;
   cursor: pointer;
+  width: fit-content;
 }
 .check .marker {
   position: relative;
@@ -5376,7 +5377,7 @@ textarea.f-input {
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 8px;
-  width: 79.1666666667%;
+  width: 77.5%;
 }
 .cart .cart-item .cart-item-center .cart-item-center-left h3 {
   width: 100%;
@@ -5389,6 +5390,10 @@ textarea.f-input {
   .cart .cart-item .cart-item-center .cart-item-center-left h3 {
     white-space: normal;
   }
+}
+.cart .cart-item .cart-item-center .cart-item-center-right s {
+  text-decoration-color: #ef4444;
+  text-decoration-thickness: 2px;
 }
 .cart .cart-item .delete {
   flex-shrink: 0;
@@ -5418,6 +5423,11 @@ textarea.f-input {
   }
   .cart .cart-item .cart-item-center .cart-item-center-right {
     margin-left: auto;
+  }
+  .cart .cart-item .cart-item-center .cart-item-center-right p {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
   }
   .cart .cart-item .delete {
     align-self: center;

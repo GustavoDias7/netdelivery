@@ -78,6 +78,19 @@ class ShoppingCart {
     const price = this.totalPrice();
     return (price / 100).toFixed(2).replace(".", ",");
   }
+  totalPriceNoFee() {
+    return (
+      this.cart.reduce(
+        (acc, curr) =>
+          acc + (curr.price - curr.price * curr.discount) * curr.count,
+        0
+      )
+    );
+  }
+  ftotalPriceNoFee() {
+    const price = this.totalPriceNoFee();
+    return (price / 100).toFixed(2).replace(".", ",");
+  }
   totalPriceItem(id) {
     const item = this.itemFactory({ id });
     const itemIndex = this.findItemIndex(item.id);
