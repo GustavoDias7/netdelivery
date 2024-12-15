@@ -66,6 +66,7 @@ def order(request, username):
         cart = json.loads(request.POST.get("cart")) 
         is_delivery = request.POST.get("is_delivery", False) == 'true'
         payment_code = request.POST.get("payment_type")
+        change_to = request.POST.get("change_to")
         
         if len(cart) == 0:
             context["notification"] = "Adicione itens ao carrinho."
@@ -119,6 +120,7 @@ def order(request, username):
         try:
             payment_type = PaymentType.objects.get(code=payment_code)
             order.setPaymentType(payment_type)
+            order.change_to = int(change_to) if change_to.isdigit() else None
         except PaymentType.DoesNotExist:
             context = {"notification": "Selecione uma forma de pagamento."}
             return render(request, "pages/order.html", context)

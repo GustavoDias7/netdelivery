@@ -4,9 +4,8 @@ from . import forms
 from django.utils.translation import gettext_lazy as _
 
 @admin.register(models.Category)
-class ProductCategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(admin.ModelAdmin):
     pass
-
 
 @admin.register(models.ProductVariant)
 class ProductVariantAdmin(admin.ModelAdmin):

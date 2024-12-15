@@ -33,10 +33,10 @@ class OrderAdmin(admin.ModelAdmin):
     )
     exclude = (
         "user_owner",
-        "payment_type_name",
-        "payment_type_code",
-        "shipping_fee_value",
-        "created",
+        # "payment_type_name",
+        # "payment_type_code",
+        # "shipping_fee_value",
+        # "created",
     )
     autocomplete_fields = ("client",)
     

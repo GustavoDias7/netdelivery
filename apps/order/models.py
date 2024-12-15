@@ -17,7 +17,7 @@ class Order(models.Model):
     client = models.ForeignKey(Client, null=True, blank=True, on_delete=models.SET_NULL)
     payment_type = models.ForeignKey("PaymentType", on_delete=models.RESTRICT)
     payment_type_name = models.CharField(max_length=30)
-    payment_type_code = models.CharField(max_length=30)
+    change_to = models.PositiveSmallIntegerField(_("Troco para"), null=True, validators=[MaxValueValidator(32767)])
     shipping_fee = models.ForeignKey("ShippingFee", on_delete=models.RESTRICT, null=True)
     shipping_fee_value = models.PositiveSmallIntegerField(null=True, validators=[MaxValueValidator(32767)])
     created = models.DateTimeField(db_default=Now())
@@ -25,7 +25,6 @@ class Order(models.Model):
         
     def save(self, *args, **kwargs):
         self.payment_type_name = self.payment_type.name
-        self.payment_type_code = self.payment_type.code
         self.shipping_fee_value = self.shipping_fee.value
         super(Order, self).save(*args, **kwargs)
     
@@ -44,7 +43,6 @@ class Order(models.Model):
     def setPaymentType(self, pt):
         self.payment_type = pt
         self.payment_type_name = pt.name
-        self.payment_type_code = pt.code
         
     def __str__(self):
         return f"{self.id}"
@@ -54,6 +52,7 @@ class OrderItem(models.Model):
     order_item_status = models.ForeignKey("OrderItemStatus", on_delete=models.RESTRICT, default=1)
     product = models.ForeignKey(ProductVariant, null=True, blank=True, on_delete=models.SET_NULL)
     combo = models.ForeignKey(Combo, null=True, blank=True, on_delete=models.RESTRICT)
+    product_name = models.CharField(null=True, blank=True, max_length=100)
     price = models.PositiveIntegerField(validators=[MaxValueValidator(2147483647)])
     discount = models.DecimalField(
         max_digits=3,
@@ -71,10 +70,12 @@ class OrderItem(models.Model):
         if self.product:
             self.price = self.product.price
             self.discount = self.product.discount
+            self.product_name = self.product.full_name()
             self.combo = None
         elif self.combo:
             self.price = self.combo.price
             self.discount = self.combo.discount
+            self.product_name = self.combo.name
             self.product = None
             
         super(OrderItem, self).save(*args, **kwargs)
@@ -142,26 +143,3 @@ class ShippingFee(models.Model):
             return f"{_('default')}"
         else:
             return f"ShippingFee {self.id}"
-
-# class OrderAddress(models.Model):
-#     address_number = models.PositiveSmallIntegerField(_("Number"), blank=True, null=True, validators=[MaxValueValidator(32767)]) 
-#     address_complement = models.CharField(_("Complement"), max_length=100, blank=True, null=True)
-#     uf_acronym = models.CharField("UF", max_length=2, validators=[MinLengthValidator(2)])
-#     logradouro_cep = models.CharField("CEP", max_length=8, validators=[cep_validator])
-#     logradouro_name = models.CharField("Nome do logradouro", max_length=100)
-#     logradouro_type = models.CharField("Tipo do logradouro", max_length=36)
-#     localidade_name = models.CharField("Localidade", max_length=72)
-#     bairro_name = models.CharField("Bairro", max_length=72)
-    
-#     def set(self, addr):
-#         self.address_number = addr.number
-#         self.address_complement = addr.complement
-#         self.uf_acronym = addr.logradouro.uf.acronym
-#         self.logradouro_cep = addr.logradouro.cep
-#         self.logradouro_name = addr.logradouro.name
-#         self.logradouro_type = addr.logradouro.type
-#         self.localidade_name = addr.logradouro.localidade.name
-#         self.bairro_name = addr.logradouro.bairro.name
-    
-#     def __str__(self):
-#         return f"{self.logradouro_type} {self.logradouro_name}, {self.localidade_name} - {self.uf_acronym}"
