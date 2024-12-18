@@ -31,11 +31,16 @@ Seus pedidos
                                 {% if order_items.0.order.order_status.code == 'delivered' %}
                                 <p class="text-sm">Entregue: {{order_items.0.order.received_date|date:"d/m/Y G:i:s"}}</p>
                                 {% endif %}
-                                <p class="text-sm">
+                                <p class="text-sm text-mb-1">
                                     Status: <strong class="{{order_items.0.order.order_status.code}}">
                                         {{order_items.0.order.order_status.name}}
                                     </strong>
                                 </p>
+                                {% if order_items.0.order.order_status.code == 'wating' %}
+                                <button class="gn-button sc-button xsmall" @click="openCancelOrder({{order_items.0.order.id}})">
+                                    Cancelar pedido
+                                </button>
+                                {% endif %}
                             </div> 
                             <div> 
                                 <p class="text-sm text-align-left sm:text-align-right">
@@ -49,11 +54,6 @@ Seus pedidos
                                 <p class="text-sm text-align-left sm:text-align-right text-mb-1">
                                     {{order_items.0.order.payment_type_name}}
                                 </p>
-                                {% if order_items.0.order.order_status.code == 'wating' %}
-                                <button class="gn-button sc-button small sm:right" @click="openCancelOrder({{order_items.0.order.id}})">
-                                    Cancelar pedido
-                                </button>
-                                {% endif %}
                             </div>
                         </div>
                         {% for order_item in order_items %}

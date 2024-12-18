@@ -1850,6 +1850,11 @@ li {
   font-weight: 800;
   border-width: 3px;
 }
+.gn-button.xsmall {
+  font-size: 0.75rem;
+  height: 30px;
+  padding: 0px 10px;
+}
 .gn-button.small {
   font-size: 0.875rem;
   height: 36px;
@@ -1888,6 +1893,11 @@ li {
   .gn-button.xs\:bold {
     font-weight: 800;
     border-width: 3px;
+  }
+  .gn-button.xs\:xsmall {
+    font-size: 0.75rem;
+    height: 30px;
+    padding: 0px 10px;
   }
   .gn-button.xs\:small {
     font-size: 0.875rem;
@@ -1929,6 +1939,11 @@ li {
     font-weight: 800;
     border-width: 3px;
   }
+  .gn-button.sm\:xsmall {
+    font-size: 0.75rem;
+    height: 30px;
+    padding: 0px 10px;
+  }
   .gn-button.sm\:small {
     font-size: 0.875rem;
     height: 36px;
@@ -1968,6 +1983,11 @@ li {
   .gn-button.md\:bold {
     font-weight: 800;
     border-width: 3px;
+  }
+  .gn-button.md\:xsmall {
+    font-size: 0.75rem;
+    height: 30px;
+    padding: 0px 10px;
   }
   .gn-button.md\:small {
     font-size: 0.875rem;
@@ -2009,6 +2029,11 @@ li {
     font-weight: 800;
     border-width: 3px;
   }
+  .gn-button.lg\:xsmall {
+    font-size: 0.75rem;
+    height: 30px;
+    padding: 0px 10px;
+  }
   .gn-button.lg\:small {
     font-size: 0.875rem;
     height: 36px;
@@ -2048,6 +2073,11 @@ li {
   .gn-button.xl\:bold {
     font-weight: 800;
     border-width: 3px;
+  }
+  .gn-button.xl\:xsmall {
+    font-size: 0.75rem;
+    height: 30px;
+    padding: 0px 10px;
   }
   .gn-button.xl\:small {
     font-size: 0.875rem;

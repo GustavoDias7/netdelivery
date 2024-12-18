@@ -42,6 +42,7 @@
     "right",
     "normal",
     "bold",
+    "xsmall",
     "small",
     "regular",
     "large"
@@ -75,6 +76,12 @@
     @else if $class =="bold" {
       font-weight: 800;
       border-width: 3px;
+    }
+
+    @else if $class =="xsmall" {
+      font-size: 0.75rem;
+      height: $height - 18px;
+      padding: 0px $padding - 10px;
     }
 
     @else if $class =="small" {
