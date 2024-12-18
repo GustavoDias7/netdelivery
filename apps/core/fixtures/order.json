@@ -48,7 +48,7 @@
     }
   },
   {
-    "model": "order.orderitemstatus",
+    "model": "order.orderstatus",
     "pk": 1,
     "fields": {
       "name": "Em espera",
@@ -56,31 +56,31 @@
     }
   },
   {
-    "model": "order.orderitemstatus",
+    "model": "order.orderstatus",
     "pk": 2,
+    "fields": {
+      "name": "A caminho",
+      "code": "on-the-way"
+    }
+  },
+  {
+    "model": "order.orderstatus",
+    "pk": 3,
     "fields": {
       "name": "Entregue",
       "code": "delivered"
     }
   },
   {
-    "model": "order.orderitemstatus",
-    "pk": 3,
+    "model": "order.orderstatus",
+    "pk": 4,
     "fields": {
       "name": "Cancelado",
       "code": "canceled"
     },
     "_comment": [
       {
-        "model": "order.orderitemstatus",
-        "pk": 4,
-        "fields": {
-          "name": "A caminho",
-          "code": "on-the-way"
-        }
-      },
-      {
-        "model": "order.orderitemstatus",
+        "model": "order.orderstatus",
         "pk": 5,
         "fields": {
           "name": "Preparando",
@@ -88,7 +88,7 @@
         }
       },
       {
-        "model": "order.orderitemstatus",
+        "model": "order.orderstatus",
         "pk": 6,
         "fields": {
           "name": "Pronto para retirada",
@@ -96,7 +96,7 @@
         }
       },
       {
-        "model": "order.orderitemstatus",
+        "model": "order.orderstatus",
         "pk": 7,
         "fields": {
           "name": "Retirado",
