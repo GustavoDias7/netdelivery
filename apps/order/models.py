@@ -15,17 +15,19 @@ class Order(models.Model):
     user_owner = models.ForeignKey(User, on_delete=models.PROTECT, related_name='user_owner')
     user_request = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL, related_name='user_request')
     client = models.ForeignKey(Client, null=True, blank=True, on_delete=models.SET_NULL)
+    order_status = models.ForeignKey("OrderStatus", on_delete=models.RESTRICT, default=1)
     payment_type = models.ForeignKey("PaymentType", on_delete=models.RESTRICT)
     payment_type_name = models.CharField(max_length=30)
-    change_to = models.PositiveSmallIntegerField(_("Troco para"), null=True, validators=[MaxValueValidator(32767)])
+    change_to = models.PositiveSmallIntegerField(_("Troco para"), null=True, blank=True, validators=[MaxValueValidator(32767)])
     shipping_fee = models.ForeignKey("ShippingFee", on_delete=models.RESTRICT, null=True)
     shipping_fee_value = models.PositiveSmallIntegerField(null=True, validators=[MaxValueValidator(32767)])
-    created = models.DateTimeField(db_default=Now())
+    created = models.DateTimeField(null=True, blank=True, db_default=Now())
     received_date = models.DateTimeField(null=True, blank=True)
         
     def save(self, *args, **kwargs):
         self.payment_type_name = self.payment_type.name
-        self.shipping_fee_value = self.shipping_fee.value
+        if self.shipping_fee:
+            self.shipping_fee_value = self.shipping_fee.value
         super(Order, self).save(*args, **kwargs)
     
     def fshipping_fee_value(self):
@@ -49,18 +51,18 @@ class Order(models.Model):
     
 class OrderItem(models.Model):
     order = models.ForeignKey("Order", on_delete=models.RESTRICT)
-    order_item_status = models.ForeignKey("OrderItemStatus", on_delete=models.RESTRICT, default=1)
     product = models.ForeignKey(ProductVariant, null=True, blank=True, on_delete=models.SET_NULL)
     combo = models.ForeignKey(Combo, null=True, blank=True, on_delete=models.RESTRICT)
     product_name = models.CharField(null=True, blank=True, max_length=100)
-    price = models.PositiveIntegerField(validators=[MaxValueValidator(2147483647)])
+    price = models.PositiveIntegerField(null=True, blank=True, validators=[MaxValueValidator(2147483647)])
     discount = models.DecimalField(
+        null=True, blank=True,
         max_digits=3,
         decimal_places=2,
         default=0.0,
         validators=[MinValueValidator(0), MaxValueValidator(1)],
     )
-    quantity = models.PositiveSmallIntegerField(default=1, validators=[MaxValueValidator(32767)])
+    quantity = models.PositiveSmallIntegerField(validators=[MaxValueValidator(32767)])
     
     class Meta:
         verbose_name = _("Order item")
@@ -87,6 +89,9 @@ class OrderItem(models.Model):
     def fpercentage_discount(self):
         return f"{self.percentage_discount()}%"
     
+    def fprice(self):
+        return locale.currency(self.price / 100, grouping=True)
+    
     def ftotal_price(self):
         disc = float(self.discount * self.quantity) * self.price
         fee = self.order.shipping_fee_value if self.order.shipping_fee_value != None else 0
@@ -102,7 +107,7 @@ class OrderItem(models.Model):
     def __str__(self):
         return f"{self.id}"
     
-class OrderItemStatus(models.Model):
+class OrderStatus(models.Model):
     name = models.CharField(max_length=30)
     code = models.CharField(max_length=30, unique=True)
     
