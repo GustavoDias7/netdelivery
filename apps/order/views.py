@@ -4,7 +4,7 @@ from .models import (
     OrderItem,
     ShippingFee,
     PaymentType,
-    OrderItemStatus
+    OrderStatus
 )
 from apps.product.models import ProductVariant
 from apps.address.models import (Address, WhiteList, Bairro)
@@ -15,24 +15,38 @@ import json
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from apps.core.validators import cart_validator
+from delivery.utils import remove_non_numeric
 from django.core.exceptions import ObjectDoesNotExist
 
 def orders(request, username):
     if not request.user.is_authenticated:
         return redirect(f"/{username}/login/?next={request.path}")
     context = {"username": username}
-    order = OrderItem.objects.all().order_by('-id')
+    order = Order.objects.filter(user_request=request.user).order_by('-created')
     page_size = 10
     paginated_order = Paginator(order, page_size).page(1)
-    context["orders"] = paginated_order
     
     if request.method == 'POST':
         order_id = request.POST.get('cancel_order')
-        order_item = order.get(pk=order_id)
-        order_status = OrderItemStatus.objects.get(code="canceled")
-        if order_item.order_item_status.code == 'wating':
-            order_item.order_item_status = order_status
-            order_item.save()
+        cancel_order = order.get(pk=order_id)
+        order_status = OrderStatus.objects.get(code="canceled")
+        if cancel_order.order_status.code == 'wating':
+            cancel_order.order_status = order_status
+            cancel_order.save()
+    
+    order_items = OrderItem.objects \
+        .select_related('order') \
+        .filter(order__in=paginated_order, order__user_request=request.user) \
+        .order_by('-order__created')
+    
+    context["orders"] = {}
+    for item in order_items:
+        if item.order.id in context["orders"]:
+            context["orders"][item.order.id].append(item)
+        else:
+            context["orders"][item.order.id] = []
+            context["orders"][item.order.id].append(item)
+    
         
     return render(request, 'pages/orders.html', context)
 
@@ -120,7 +134,10 @@ def order(request, username):
         try:
             payment_type = PaymentType.objects.get(code=payment_code)
             order.setPaymentType(payment_type)
-            order.change_to = int(change_to) if change_to.isdigit() else None
+            if change_to != None:
+                change_int = int(remove_non_numeric(change_to))
+                if change_int > 0:
+                    order.change_to = change_int
         except PaymentType.DoesNotExist:
             context = {"notification": "Selecione uma forma de pagamento."}
             return render(request, "pages/order.html", context)
