@@ -22,60 +22,90 @@ Seus pedidos
                     <p>Não existe pedidos!</p>
                 </div>
                 {% endif %}
-                {% for order in orders %}
+                {% for key, order_items in orders.items %}
                 <div class="g-item-12">
-                    <div class="order-item">
-                        <div class="img">
-                            <a href="{{order.product.link}}">
-                                <figure class="aspect-ratio aspect-1-1 fit">
-                                    <img src="{{order.product.product.image.url}}" alt="{{order.product.name}}" />
-                                </figure>
-                            </a>
-                        </div>
-                        <div class="order-item-info">
-                            <div class="order-item-info-left">
-                                <h3>
-                                    <a class="text-color-primary" href="{{order.product.link}}">
-                                        {{order.product.full_name}}
-                                    </a>
-                                </h3>
-                                <p>
-                                    <strong class="{{order.order_item_status.code}}">
-                                        {{order.order_item_status.name}}
+                    <div class="topic order">
+                        <div class="order-top">
+                            <div>
+                                <p class="text-sm">Criado: {{order_items.0.order.created|date:"d/m/Y G:i:s"}}</p>
+                                {% if order_items.0.order.order_status.code == 'delivered' %}
+                                <p class="text-sm">Entregue: {{order_items.0.order.received_date|date:"d/m/Y G:i:s"}}</p>
+                                {% endif %}
+                                <p class="text-sm">
+                                    Status: <strong class="{{order_items.0.order.order_status.code}}">
+                                        {{order_items.0.order.order_status.name}}
                                     </strong>
                                 </p>
-                                {% if order.order_item_status.code == 'delivered' %}
-                                <p>Entregue: {{order.order.received_date|date:"d/m/Y G:i:s"}}</p>
+                            </div> 
+                            <div> 
+                                <p class="text-sm text-align-left sm:text-align-right">
+                                    ID: {{order_items.0.order.id}}
+                                </p>
+                                {% if order_items.0.order.shipping_fee_value %}
+                                <p class="text-sm text-align-left sm:text-align-right">
+                                    Frete: <strong>{{order_items.0.order.fshipping_fee_value}}</strong>
+                                </p>
                                 {% endif %}
-                                <p>Total: <strong>{{order.ftotal_price}}</strong></p>
-                                {% if order.order.shipping_fee_value %}
-                                <p>Taxa de entrega <strong>{{order.order.fshipping_fee_value}}</strong></p>
-                                {% else %}
-                                <p>Retirada</p>
-                                {% endif %}
-                                {% if order.percentage_discount > 0 %}
-                                <p>{{order.fpercentage_discount}} de desconto</p>
-                                {% endif %}
-                                <p>{{order.order.created|date:"d/m/Y G:i:s"}}</p>
-                            </div>
-                            <div class="order-item-info-right">
-                                <p>{{order.fquantity}}</p>
-                                <p>{{order.order.payment_type_name}}</p>
-                                {% if order.order_item_status.code == 'delivered' %}
-                                <a class="gn-button pm-button small sm:right"
-                                    href="{% url 'order' username %}?repurchase=true&product_id={{order.product.id}}&quantity={{order.quantity}}">Comprar
-                                    novamente</a>
-                                {% elif order.order_item_status.code == 'canceled' %}
-                                <a class="gn-button pm-button small sm:right"
-                                    href="{% url 'order' username %}?repurchase=true&product_id={{order.product.id}}&quantity={{order.quantity}}">Comprar
-                                    item</a>
-                                {% elif order.order_item_status.code == 'wating' %}
-                                <button class="gn-button sc-button small sm:right" @click="openCancelOrder({{order.id}})">
+                                <p class="text-sm text-align-left sm:text-align-right text-mb-1">
+                                    {{order_items.0.order.payment_type_name}}
+                                </p>
+                                {% if order_items.0.order.order_status.code == 'wating' %}
+                                <button class="gn-button sc-button small sm:right" @click="openCancelOrder({{order_items.0.order.id}})">
                                     Cancelar pedido
                                 </button>
                                 {% endif %}
                             </div>
                         </div>
+                        {% for order_item in order_items %}
+                        <div class="order-item">
+                            <div class="img">
+                                {% if order_item.product %}
+                                <a href="{{order_item.product.link}}">
+                                    <figure class="aspect-ratio aspect-1-1 fit">
+                                        <img src="{{order_item.product.product.image.url}}" alt="{{order_item.product.product.name}}" />
+                                    </figure>
+                                </a>
+                                {% else %}
+                                <a href="{{order_item.combo.link}}">
+                                    <figure class="aspect-ratio aspect-1-1 fit">
+                                        <img src="{{order_item.combo.image.url}}" alt="{{order_item.combo.name}}" />
+                                    </figure>
+                                </a>
+                                {% endif %}
+                            </div>
+                            <div class="order-item-info">
+                                <div class="order-item-info-left">
+                                    <h3 class="text-lg sm:text-xl text-color-primary">
+                                        {% if order_item.product %}
+                                        <a class="text-color-primary" href="{{order_item.product.link}}">
+                                            {{order_item.product.full_name}}
+                                        </a>
+                                        {% else %}
+                                        <a class="text-color-primary" href="{{order_item.combo.link}}">
+                                            {{order_item.combo.name}}
+                                        </a>
+                                        {% endif %}
+                                    </h3>
+                                    <p class="text-base">
+                                        Preço: <strong>{{order_item.fprice}}</strong>
+                                    </p>
+                                    <p class="text-base">
+                                        Total: <strong>{{order_item.ftotal_price}}</strong>
+                                    </p>
+                                </div>
+                                <div class="order-item-info-right">
+                                    <p class="text-base text-align-left sm:text-align-right">
+                                        {{order_item.fquantity}}
+                                    </p>
+                                    {% if order_item.percentage_discount > 0 %}
+                                    <p class="text-base text-align-left sm:text-align-right">
+                                        {{order_item.fpercentage_discount}} de desconto
+                                    </p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
                     </div>
                 </div>
                 {% endfor %}

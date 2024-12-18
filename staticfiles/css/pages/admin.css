@@ -4,6 +4,22 @@
 /* transition */
 /* border */
 /* box-shadow */
+.status.wating {
+  color: #F8BD00;
+}
+.status.preparing {
+  color: #00C595;
+}
+.status.on-the-way {
+  color: #007AEA;
+}
+.status.delivered {
+  color: #00C52B;
+}
+.status.canceled {
+  color: #C51800;
+}
+
 html[data-theme=light],
 :root {
   --primary: #fecdd3;

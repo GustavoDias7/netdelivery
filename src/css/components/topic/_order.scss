@@ -1,0 +1,90 @@
+.topic.order {
+    $padding: 16px;
+    background-color: $neutral-color-100;
+    border-radius: 8px;
+  
+    .order-top {
+      display: flex;
+      flex-direction: column;
+      padding: $padding;
+      border-bottom: 1px solid $neutral-color-200;
+  
+      @include sm {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+  
+      p {
+        .wating {
+          color: #F8BD00;
+        }
+  
+        .preparing {
+          color: #00C595;
+        }
+  
+        .on-the-way {
+          color: #007AEA;
+        }
+  
+        .delivered {
+          color: #00C52B;
+        }
+  
+        .canceled {
+          color: #C51800;
+        }
+      }
+    }
+  
+    .order-item {
+      display: flex;
+      padding: $padding;
+      gap: 8px;
+      border-bottom: 1px solid $neutral-color-300;
+  
+      &:last-of-type {
+        border-bottom: unset;
+      }
+  
+      .img {
+        min-width: 48px;
+  
+        a {
+          font-size: 0;
+        }
+  
+        .aspect-ratio {
+          border-radius: 4px;
+        }
+      }
+  
+      @include sm {
+        gap: 16px;
+  
+        .img {
+          min-width: 64px;
+  
+          .aspect-ratio {
+            border-radius: 8px;
+          }
+        }
+  
+        .order-item-info {
+          display: flex;
+          justify-content: space-between;
+          flex-grow: 1;
+  
+          .order-item-info-left {
+            h3 {
+              @include max-width(240px);
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+          }
+        }
+      }
+    }
+  }
