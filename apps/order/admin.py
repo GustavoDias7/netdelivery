@@ -1,57 +1,126 @@
 from django.contrib import admin
 from . import models
-from .forms import ShippingFeeForm
+from .forms import ShippingFeeForm, OrderForm
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponseRedirect
+from django.db.models.functions import Now
+from django.utils.html import format_html
+
+import locale 
+
+locale.setlocale(locale.LC_MONETARY, 'pt_BR.UTF-8')
 
 @admin.register(models.PaymentType)
 class PaymentTypeAdmin(admin.ModelAdmin):
     list_display = ["name", "code"]
 
-@admin.register(models.OrderItemStatus)
-class OrderItemStatusAdmin(admin.ModelAdmin):
+@admin.register(models.OrderStatus)
+class OrderStatusAdmin(admin.ModelAdmin):
     def has_module_permission(self, request):
         return False
-
+    
 class OrderItemInline(admin.StackedInline):
     model = models.OrderItem
     extra = 0
     min_num = 1
-    readonly_fields = (
-        "price",
-        "discount",
-    )
+    exclude = []
+
+    def get_readonly_fields(self, request, obj=None):
+        if obj == None: return ()
+        else:
+            return (
+                "product",
+                "combo",
+                "product_name",
+                "price",
+                "discount",
+                "quantity",
+            )
+            
+    def get_exclude(self, request, obj=None):
+        exclude = super().get_exclude(request, obj)
+        if obj == None: 
+            exclude.append("product_name")
+            exclude.append("price")
+            exclude.append("discount")
+            return exclude
+        else:
+            return exclude
 
 @admin.register(models.Order)
 class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderItemInline]
     list_display = (
         "id",
-        "client",
+        "created_",
+        "order_status_",
         "payment_type",
-        "shipping_fee",
-        "shipping_fee_value",
+        "shipping_fee_value_",
     )
-    exclude = (
-        "user_owner",
-        # "payment_type_name",
-        # "payment_type_code",
-        # "shipping_fee_value",
-        # "created",
-    )
+    list_filter = ("order_status", "created")
+    exclude = ["user_owner"]
     autocomplete_fields = ("client",)
+    change_form_template = 'admin/order_change_form.html'
+    form = OrderForm
     
-    def has_change_permission(self, request, obj=None):
-        return False
+    @admin.display(description=_("Shipping fee value"))
+    def shipping_fee_value_(self, obj):
+        if obj.shipping_fee_value:
+            return locale.currency(obj.shipping_fee_value / 100, grouping=True)
+        else:
+            return None
     
+    @admin.display(description=_("Created"))
+    def created_(self, obj):
+        return obj.created.strftime("%d/%m/%Y %H:%M:%S")
+    
+    def order_status_(self, obj):
+        return format_html(
+            '<span class="status {0}">{1}</span>',
+            obj.order_status.code,
+            obj.order_status.name
+        )
+
+    def get_readonly_fields(self, request, obj=None):
+        readonly = []
+        
+        if obj == None:
+            return readonly
+        else:
+            readonly.append("user_request")
+            readonly.append("client")
+            readonly.append("order_status")
+            readonly.append("payment_type")
+            readonly.append("payment_type_name")
+            readonly.append("change_to") 
+            readonly.append("shipping_fee")
+            readonly.append("shipping_fee_value")
+            readonly.append("created")
+            readonly.append("received_date")
+            return readonly
+            
+    def get_exclude(self, request, obj=None):
+        exclude = super().get_exclude(request, obj)
+        if obj == None: 
+            exclude.append("user_request")
+            exclude.append("order_status")
+            exclude.append("payment_type_name")
+            exclude.append("shipping_fee_value")
+            exclude.append("created")
+            exclude.append("received_date")
+            return exclude
+        else:
+            return exclude
+        
     def has_delete_permission(self, request, obj=None):
         return False
-    
+        
     def get_changeform_initial_data(self, request):
         user = request.user.owner if request.user.owner else request.user
         return {"user_owner": user}
     
     def save_model(self, request, obj, form, change):
-        # self.model.payment_type_name = self.model.payment_type
         obj.user_owner = request.user.owner if request.user.owner else request.user
         super().save_model(request, obj, form, change)
     
@@ -59,7 +128,36 @@ class OrderAdmin(admin.ModelAdmin):
         qs = super().get_queryset(request)
         user = request.user.owner if request.user.owner else request.user
         return qs.filter(user_owner=user)
+    
+    def change_view(self, request, object_id, form_url="", extra_context=None):
+        extra_context = extra_context or {}
         
+        try:
+            extra_context["status"] = models.OrderStatus.objects.all().exclude(code="wating")
+            extra_context["current_status"] = self.model.objects.get(id=object_id).order_status.code
+        except ObjectDoesNotExist:
+            extra_context["status"] = None
+        
+        return super().change_view(
+            request,
+            object_id,
+            form_url,
+            extra_context=extra_context,
+        )
+        
+    def response_change(self, request, obj):
+        if "status" in request.POST:
+            status = request.POST.get("status")
+            try:
+                order_status = models.OrderStatus.objects.get(code=status)
+                obj.order_status = order_status
+                if status == "delivered":
+                    obj.received_date = Now()
+                obj.save()
+            except ObjectDoesNotExist:
+                pass
+            return HttpResponseRedirect(".")
+        return super().response_change(request, obj)
 
 @admin.register(models.ShippingFee)
 class ShippingFeeAdmin(admin.ModelAdmin):
@@ -101,18 +199,4 @@ class ShippingFeeAdmin(admin.ModelAdmin):
             return obj.bairro.localidade.uf.acronym
         else:
             return "-"
-
-# @admin.register(models.OrderAddress)
-# class OrderAddressAdmin(admin.ModelAdmin):
-#     readonly_fields = (
-#         "id",
-#         "address_number",
-#         "address_complement",
-#         "uf_acronym",
-#         "logradouro_cep",
-#         "logradouro_name",
-#         "logradouro_type",
-#         "localidade_name",
-#         "bairro_name",
-#     )
 
