@@ -1,5 +1,6 @@
 from django.contrib import admin
 from . import models
+from apps.product.models import ProductVariant, Combo
 from .forms import ShippingFeeForm, OrderForm
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ObjectDoesNotExist
@@ -47,6 +48,13 @@ class OrderItemInline(admin.StackedInline):
             return exclude
         else:
             return exclude
+    
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "product":
+            kwargs["queryset"] = ProductVariant.objects.filter(product__user=request.user, archived=False)
+        if db_field.name == "combo":
+            kwargs["queryset"] = Combo.objects.filter(user=request.user, archived=False)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 @admin.register(models.Order)
 class OrderAdmin(admin.ModelAdmin):
@@ -158,6 +166,11 @@ class OrderAdmin(admin.ModelAdmin):
                 pass
             return HttpResponseRedirect(".")
         return super().response_change(request, obj)
+    
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "shipping_fee":
+            kwargs["queryset"] = models.ShippingFee.objects.filter(user=request.user)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 @admin.register(models.ShippingFee)
 class ShippingFeeAdmin(admin.ModelAdmin):
