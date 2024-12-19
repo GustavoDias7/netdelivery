@@ -174,7 +174,7 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(models.ShippingFee)
 class ShippingFeeAdmin(admin.ModelAdmin):
-    list_display = ("bairro_", "uf", "localidade", "value", "is_default")
+    list_display = ("bairro_", "uf", "localidade", "value_", "is_default")
     autocomplete_fields = ("bairro",)
     form = ShippingFeeForm
     
@@ -190,6 +190,13 @@ class ShippingFeeAdmin(admin.ModelAdmin):
         user = request.user.owner if request.user.owner else request.user
         return qs.filter(user=user)
     
+    @admin.display(description=_("Value"))
+    def value_(self, obj):
+        if obj.value:
+            return locale.currency(obj.value / 100, grouping=True)
+        else:
+            return None
+    
     @admin.display(description='Bairro')
     def bairro_(self, obj):
         if obj.bairro:
@@ -203,6 +210,8 @@ class ShippingFeeAdmin(admin.ModelAdmin):
     def localidade(self, obj):
         if obj.bairro:
             return obj.bairro.localidade.name
+        elif obj.is_default:
+            return _("Default")
         else:
             return "-"
         
@@ -210,6 +219,8 @@ class ShippingFeeAdmin(admin.ModelAdmin):
     def uf(self, obj):
         if obj.bairro:
             return obj.bairro.localidade.uf.acronym
+        elif obj.is_default:
+            return _("Default")
         else:
             return "-"
 

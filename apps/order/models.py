@@ -2,10 +2,11 @@ from django.db import models
 from django.db.models.functions import Now
 from django.core.validators import (MinValueValidator, MaxValueValidator, MinLengthValidator)
 from django.utils.translation import gettext_lazy as _
-from apps.core.validators import cep_validator
+# from apps.core.validators import cep_validator
 from apps.address.models import *
 from apps.product.models import *
 from apps.user.models import *
+from delivery.utils import remove_non_numeric
 
 import locale 
 
@@ -136,6 +137,11 @@ class ShippingFee(models.Model):
         verbose_name_plural = _("Shipping fees")
         unique_together = ('bairro', 'user',)
         
+    def clean_fields(self, exclude=None):
+        if self.value and type(self.value) == str:
+            self.value = int(remove_non_numeric(self.value))
+        super().clean_fields(exclude=exclude)
+        
     def fvalue(self):
         float_value = self.value / 100
         formatted_value = locale.currency(float_value, grouping=True)
@@ -143,8 +149,8 @@ class ShippingFee(models.Model):
     
     def __str__(self):
         if self.bairro:
-            return f"{self.bairro.name}"
+            return f"{self.bairro.name}: {self.fvalue()}"
         elif self.is_default:
-            return f"{_('default')}"
+            return f"{_('default')}: {self.fvalue()}"
         else:
             return f"ShippingFee {self.id}"
