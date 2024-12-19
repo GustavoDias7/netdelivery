@@ -26,7 +26,7 @@ class Contacts(models.Model):
     email = models.EmailField(_("E-mail"), null=True, blank=True, max_length=255)
     address_text = models.CharField(_("Address text"), null=True, blank=True, max_length=40)
     address_link = models.URLField(_("Address link"), null=True, blank=True)
-    google_maps = models.URLField(_("Google Maps"), max_length=250, null=True, blank=True)
+    # google_maps = models.URLField(_("Google Maps"), max_length=250, null=True, blank=True)
     
     def clean_fields(self, exclude=None):
         self.whatsapp_number = remove_non_numeric(self.whatsapp_number)
