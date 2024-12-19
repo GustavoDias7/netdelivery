@@ -28,15 +28,15 @@ Seus pedidos
                         <div class="order-top">
                             <div>
                                 <p class="text-sm">Criado: {{order_items.0.order.created|date:"d/m/Y G:i:s"}}</p>
-                                {% if order_items.0.order.order_status.code == 'delivered' %}
+                                {% if order_items.0.order.status.code == 'delivered' %}
                                 <p class="text-sm">Entregue: {{order_items.0.order.received_date|date:"d/m/Y G:i:s"}}</p>
                                 {% endif %}
                                 <p class="text-sm text-mb-1">
-                                    Status: <strong class="{{order_items.0.order.order_status.code}}">
-                                        {{order_items.0.order.order_status.name}}
+                                    Status: <strong class="{{order_items.0.order.status.code}}">
+                                        {{order_items.0.order.status.name}}
                                     </strong>
                                 </p>
-                                {% if order_items.0.order.order_status.code == 'wating' %}
+                                {% if order_items.0.order.status.code == 'wating' %}
                                 <button class="gn-button sc-button xsmall" @click="openCancelOrder({{order_items.0.order.id}})">
                                     Cancelar pedido
                                 </button>

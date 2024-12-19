@@ -16,8 +16,8 @@ locale.setlocale(locale.LC_MONETARY, 'pt_BR.UTF-8')
 class PaymentTypeAdmin(admin.ModelAdmin):
     list_display = ["name", "code"]
 
-@admin.register(models.OrderStatus)
-class OrderStatusAdmin(admin.ModelAdmin):
+@admin.register(models.Status)
+class StatusAdmin(admin.ModelAdmin):
     def has_module_permission(self, request):
         return False
     
@@ -62,11 +62,11 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = (
         "id",
         "created_",
-        "order_status_",
+        "status_",
         "payment_type",
         "shipping_fee_value_",
     )
-    list_filter = ("order_status", "created")
+    list_filter = ("status", "created")
     exclude = ["user_owner"]
     autocomplete_fields = ("client",)
     change_form_template = 'admin/order_change_form.html'
@@ -83,11 +83,11 @@ class OrderAdmin(admin.ModelAdmin):
     def created_(self, obj):
         return obj.created.strftime("%d/%m/%Y %H:%M:%S")
     
-    def order_status_(self, obj):
+    def status_(self, obj):
         return format_html(
             '<span class="status {0}">{1}</span>',
-            obj.order_status.code,
-            obj.order_status.name
+            obj.status.code,
+            obj.status.name
         )
 
     def get_readonly_fields(self, request, obj=None):
@@ -98,7 +98,7 @@ class OrderAdmin(admin.ModelAdmin):
         else:
             readonly.append("user_request")
             readonly.append("client")
-            readonly.append("order_status")
+            readonly.append("status")
             readonly.append("payment_type")
             readonly.append("payment_type_name")
             readonly.append("change_to") 
@@ -112,7 +112,7 @@ class OrderAdmin(admin.ModelAdmin):
         exclude = super().get_exclude(request, obj)
         if obj == None: 
             exclude.append("user_request")
-            exclude.append("order_status")
+            exclude.append("status")
             exclude.append("payment_type_name")
             exclude.append("shipping_fee_value")
             exclude.append("created")
@@ -141,8 +141,8 @@ class OrderAdmin(admin.ModelAdmin):
         extra_context = extra_context or {}
         
         try:
-            extra_context["status"] = models.OrderStatus.objects.all().exclude(code="wating")
-            extra_context["current_status"] = self.model.objects.get(id=object_id).order_status.code
+            extra_context["status"] = models.Status.objects.all().exclude(code="wating")
+            extra_context["current_status"] = self.model.objects.get(id=object_id).status.code
         except ObjectDoesNotExist:
             extra_context["status"] = None
         
@@ -157,8 +157,8 @@ class OrderAdmin(admin.ModelAdmin):
         if "status" in request.POST:
             status = request.POST.get("status")
             try:
-                order_status = models.OrderStatus.objects.get(code=status)
-                obj.order_status = order_status
+                order_status = models.Status.objects.get(code=status)
+                obj.status = order_status
                 if status == "delivered":
                     obj.received_date = Now()
                 obj.save()

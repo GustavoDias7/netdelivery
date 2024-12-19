@@ -4,7 +4,7 @@ from .models import (
     OrderItem,
     ShippingFee,
     PaymentType,
-    OrderStatus
+    Status
 )
 from apps.product.models import ProductVariant
 from apps.address.models import (Address, WhiteList, Bairro)
@@ -29,9 +29,9 @@ def orders(request, username):
     if request.method == 'POST':
         order_id = request.POST.get('cancel_order')
         cancel_order = order.get(pk=order_id)
-        order_status = OrderStatus.objects.get(code="canceled")
-        if cancel_order.order_status.code == 'wating':
-            cancel_order.order_status = order_status
+        status = Status.objects.get(code="canceled")
+        if cancel_order.status.code == 'wating':
+            cancel_order.status = status
             cancel_order.save()
     
     order_items = OrderItem.objects \

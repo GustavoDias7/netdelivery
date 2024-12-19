@@ -48,7 +48,7 @@
     }
   },
   {
-    "model": "order.orderstatus",
+    "model": "order.status",
     "pk": 1,
     "fields": {
       "name": "Em espera",
@@ -56,7 +56,7 @@
     }
   },
   {
-    "model": "order.orderstatus",
+    "model": "order.status",
     "pk": 2,
     "fields": {
       "name": "A caminho",
@@ -64,7 +64,7 @@
     }
   },
   {
-    "model": "order.orderstatus",
+    "model": "order.status",
     "pk": 3,
     "fields": {
       "name": "Entregue",
@@ -72,7 +72,7 @@
     }
   },
   {
-    "model": "order.orderstatus",
+    "model": "order.status",
     "pk": 4,
     "fields": {
       "name": "Cancelado",
@@ -80,7 +80,7 @@
     },
     "_comment": [
       {
-        "model": "order.orderstatus",
+        "model": "order.status",
         "pk": 5,
         "fields": {
           "name": "Preparando",
@@ -88,7 +88,7 @@
         }
       },
       {
-        "model": "order.orderstatus",
+        "model": "order.status",
         "pk": 6,
         "fields": {
           "name": "Pronto para retirada",
@@ -96,7 +96,7 @@
         }
       },
       {
-        "model": "order.orderstatus",
+        "model": "order.status",
         "pk": 7,
         "fields": {
           "name": "Retirado",
