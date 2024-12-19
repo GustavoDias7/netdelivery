@@ -1,17 +1,20 @@
 {% extends "admin/change_form.html" %}
 {% block submit_buttons_bottom %}
+
+{% if current_status %}
 {% if current_status != "delivered" and current_status != "canceled" %}
-    <div class="submit-row">
-        {% for status in status %}
-            <input 
-                type="submit" 
-                id="{{status.code}}" 
-                class="status" 
-                value="{{status.name}}" 
-            />
-        {% endfor %}
-        <input type="hidden" name="status" value="" />
-    </div>
+<div class="submit-row">
+    {% for status in status %}
+        <input 
+            type="submit" 
+            id="{{status.code}}" 
+            class="status" 
+            value="{{status.name}}" 
+        />
+    {% endfor %}
+    <input type="hidden" name="status" value="" />
+</div>
+{% endif %}
 {% endif %}
 {{ block.super }}
 {% endblock %}
