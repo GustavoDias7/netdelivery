@@ -22,7 +22,7 @@ def orders(request, username):
     if not request.user.is_authenticated:
         return redirect(f"/{username}/login/?next={request.path}")
     context = {"username": username}
-    order = Order.objects.filter(user_request=request.user).order_by('-created')
+    order = Order.objects.filter(user_owner__username=username, user_request=request.user).order_by('-created')
     page_size = 10
     paginated_order = Paginator(order, page_size).page(1)
     
@@ -64,6 +64,8 @@ def order(request, username):
         wl_bairro = whitelist.bairros.get(id=address.logradouro.bairro.id)
         shippingfee = ShippingFee.objects.get(user__username=username, bairro=wl_bairro)
         context["shippingfee"] = shippingfee
+    except WhiteList.DoesNotExist:
+        whitelist = None
     except Bairro.DoesNotExist:
         context["field"].update({"address": {"errors": "Não operamos neste endereço."}})
     except Address.DoesNotExist:
@@ -100,7 +102,7 @@ def order(request, username):
         for item in cart:
             filter_list |= Q(pk=item.get("id"))
         
-        product_variants = ProductVariant.objects.filter(filter_list)
+        product_variants = ProductVariant.objects.filter(filter_list, product__user__username=username)
         
         for item in cart:
             try:
@@ -129,7 +131,12 @@ def order(request, username):
         
         order = Order()
         order.user_request = request.user
-        order.user_owner = User.objects.get(username=username)
+        
+        try:
+            order.user_owner = User.objects.get(username=username)
+        except User.DoesNotExist:
+            context["notification"] = f"A conta '{username}' não existe."
+            return render(request, "pages/order.html", context)
         
         try:
             payment_type = PaymentType.objects.get(code=payment_code)
@@ -139,7 +146,7 @@ def order(request, username):
                 if change_int > 0:
                     order.change_to = change_int
         except PaymentType.DoesNotExist:
-            context = {"notification": "Selecione uma forma de pagamento."}
+            context["notification"] = "Selecione uma forma de pagamento."
             return render(request, "pages/order.html", context)
         
         if is_delivery and shippingfee:
@@ -178,7 +185,7 @@ def success(request, username):
     reset_cart = request.COOKIES.get('reset_cart')
     if reset_cart:
         context["reset_cart"] = True
-        response =  render(request, 'pages/success.html', context)
+        response = render(request, 'pages/success.html', context)
         response.delete_cookie("reset_cart")
         return response
 

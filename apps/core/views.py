@@ -11,12 +11,6 @@ def homepage(request, username):
         "username": username,
     }
     
-    try:
-        query_user = User.objects.get(username=username, is_superuser=False)
-    except ObjectDoesNotExist:
-        print("This user do not exist!")
-        
-    
     categories_cache = cache.get(f"{username}_categories")
     if categories_cache == None:
         try:
