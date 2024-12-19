@@ -12,7 +12,10 @@
           <div class="dropdown-content">
             {% for category in header_categories %}
             <p class="text-mb-2">
-              <a class="link" href="{% url 'homepage' username %}#{{category.get_code}}">
+              <a 
+                class="link"
+                @click="closeModal('menu')"
+                href="{% url 'homepage' username %}#{{category.get_code}}">
                 {{category.name}}
               </a>
             </p>
@@ -44,7 +47,7 @@
           <a class="gn-button sc-button small" href="{% url 'signup' username %}">Cadastrar</a>
         </div>
       {% endif %}
-      <button class="menu-button">Open menu</button>
+      <button class="menu-button" @click="openModal('menu')">Open menu</button>
     </div>
   </div>
 </header>

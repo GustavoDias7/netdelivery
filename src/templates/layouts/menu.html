@@ -11,19 +11,19 @@
       <div class="dropdown-mobile">
         <button class="link text-mb-4" @click="toggleModal('dropdown')">Produtos</button>
         <div class="dropdown-content" :class="{active: modal.dropdown}">
-          {% for category_name, products in categories.items %}
+          {% for category in header_categories %}
           <p class="text-mb-4">
             <a
               class="link"
-              href="/#{{products.0.product.category.get_code}}"
+              href="{% url 'homepage' username %}#{{category.get_code}}"
               @click="closeModal('menu')"
-              >{{category_name}}
+              >{{category.name}}
             </a>
           </p>
           {% endfor %}
           {% if combos|length %}
           <p class="text-mb-4">
-            <a class="link" href="/#combos" @click="closeModal('menu')">Combos</a>
+            <a class="link" href="{% url 'homepage' username %}#combos" @click="closeModal('menu')">Combos</a>
           </p>
           {% endif %}
         </div>

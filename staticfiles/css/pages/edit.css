@@ -5190,21 +5190,26 @@ textarea.f-input {
 .dropdown-desktop .dropdown-content a {
   display: inline-block;
 }
+.dropdown-desktop .dropdown-content p:last-of-type {
+  margin-bottom: unset;
+}
 
 .dropdown-mobile .dropdown-content {
-  opacity: 0;
-  pointer-events: none;
+  display: none;
   background-color: #fafafa;
   min-width: 160px;
   box-shadow: 0px 0px 6px 0px #a3a3a3;
   padding: 12px 16px;
+  margin-bottom: 1rem;
 }
 .dropdown-mobile .dropdown-content.active {
-  opacity: 1;
-  pointer-events: all;
+  display: block;
 }
 .dropdown-mobile .dropdown-content > a {
   display: block;
+}
+.dropdown-mobile .dropdown-content p:last-of-type {
+  margin-bottom: unset;
 }
 .dropdown-mobile button {
   background-color: transparent;
@@ -5426,6 +5431,7 @@ textarea.f-input {
   display: block;
   width: fit-content;
   color: #f43f5e;
+  font-size: 1rem;
   margin-bottom: 1rem;
 }
 .menu nav .link:last-child {
