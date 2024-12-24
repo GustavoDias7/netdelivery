@@ -5,11 +5,7 @@ from django.utils.translation import gettext_lazy as _
 import locale 
 from django.template.defaultfilters import slugify
 from delivery.utils import remove_non_numeric
-from django.core.files.storage import FileSystemStorage
-from django.conf import settings
 from delivery.constants import PIZZA_SIZES
-
-fs_storage = FileSystemStorage(location=settings.MEDIA_ROOT)
 
 locale.setlocale(locale.LC_MONETARY, 'pt_BR.UTF-8')
 
@@ -29,7 +25,7 @@ class Category(models.Model):
 class Product(models.Model):
     user = models.ForeignKey("user.User", null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    image = models.ImageField(storage=fs_storage, help_text=_("Add square images, with 1:1 dimension."))
+    image = models.ImageField()
     description = models.TextField(max_length=600, validators=[MinLengthValidator(4, _("Mínimo de 4 caracteres."))])
     category = models.ForeignKey(Category, on_delete=models.RESTRICT)
     
@@ -119,7 +115,7 @@ class ProductVariant(models.Model):
 class Combo(models.Model):
     user = models.ForeignKey("user.User", null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    image = models.ImageField(storage=fs_storage, help_text=_("Add square images, with 1:1 dimension."))
+    image = models.ImageField()
     description = models.TextField(max_length=400, validators=[MinLengthValidator(4, _("Mínimo de 4 caracteres."))])
     price = models.PositiveIntegerField(validators=[MaxValueValidator(2147483647)], help_text=_("Em inteiro. Ex.: 4999 para representar R$ 49,99"))
     discount = models.DecimalField(

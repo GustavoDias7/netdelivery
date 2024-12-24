@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
+from environs import Env
+
+env = Env()
+env.read_env() 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -47,6 +51,7 @@ INSTALLED_APPS = [
     'apps.order.apps.OrderConfig',
     'apps.user.apps.UserConfig',
     'import_export',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -126,15 +131,38 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
+USE_S3 = env.bool('USE_S3')
 
-STATIC_URL = 'staticfiles/'
+if USE_S3:
+    # aws settings
+    AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+    AWS_S3_REGION_NAME = "us-east-1"
+    AWS_S3_CUSTOM_DOMAIN = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+    CLOUDFRONT_DISTRIBUTION_DOMAIN_NAME = env('CLOUDFRONT_DISTRIBUTION_DOMAIN_NAME', default=None)
+    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
 
-STATICFILES_DIRS = [
-    BASE_DIR / "staticfiles",
-]
+    if CLOUDFRONT_DISTRIBUTION_DOMAIN_NAME:
+        AWS_S3_CUSTOM_DOMAIN = CLOUDFRONT_DISTRIBUTION_DOMAIN_NAME
 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+    # s3 static settings
+    AWS_LOCATION = 'staticfiles'
+    STATIC_URL = f'{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
+    STATICFILES_STORAGE = 'delivery.storage_backends.StaticStorage'
+    
+    # s3 public media settings
+    PUBLIC_MEDIA_LOCATION = 'media'
+    MEDIA_URL = f'{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/'
+    DEFAULT_FILE_STORAGE = 'delivery.storage_backends.PublicMediaStorage'
+else:
+    STATIC_URL = 'staticfiles/'
+    STATICFILES_DIRS = [
+        BASE_DIR / "staticfiles",
+    ]
+
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

@@ -30,4 +30,5 @@ urlpatterns = [
     path("<slug:username>/sucesso", order_views.success, name="success"),
 ]
 
-urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if not settings.USE_S3:
+    urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
