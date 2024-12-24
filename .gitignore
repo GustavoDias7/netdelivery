@@ -139,5 +139,5 @@ GitHub.sublime-settings
 node_modules
 example/db.sqlite3
 cache/
-# /staticfiles/*
-# !/staticfiles/img
+/staticfiles/*
+!/staticfiles/img
