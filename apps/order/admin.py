@@ -7,10 +7,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect
 from django.db.models.functions import Now
 from django.utils.html import format_html
-
 import locale 
 
-locale.setlocale(locale.LC_MONETARY, 'pt_BR.UTF-8')
 
 @admin.register(models.PaymentType)
 class PaymentTypeAdmin(admin.ModelAdmin):

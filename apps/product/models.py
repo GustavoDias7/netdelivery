@@ -7,8 +7,6 @@ from django.template.defaultfilters import slugify
 from delivery.utils import remove_non_numeric
 from delivery.constants import PIZZA_SIZES
 
-locale.setlocale(locale.LC_MONETARY, 'pt_BR.UTF-8')
-
 class Category(models.Model):
     name = models.CharField(max_length=30, unique=True)
     

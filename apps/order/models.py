@@ -2,15 +2,12 @@ from django.db import models
 from django.db.models.functions import Now
 from django.core.validators import (MinValueValidator, MaxValueValidator, MinLengthValidator)
 from django.utils.translation import gettext_lazy as _
-# from apps.core.validators import cep_validator
 from apps.address.models import *
 from apps.product.models import *
 from apps.user.models import *
 from delivery.utils import remove_non_numeric
 
 import locale 
-
-locale.setlocale(locale.LC_MONETARY, 'pt_BR.UTF-8')
 
 class Order(models.Model):
     user_owner = models.ForeignKey(User, on_delete=models.PROTECT, related_name='user_owner')

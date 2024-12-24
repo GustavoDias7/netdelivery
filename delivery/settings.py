@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from pathlib import Path
 from environs import Env
+import locale 
+
+locale.setlocale(locale.LC_MONETARY, 'pt_BR.UTF-8')
 
 env = Env()
 env.read_env() 
@@ -30,7 +33,7 @@ SECRET_KEY = 'django-insecure-+!jgjt#elsl-go6!9ui^$k@=clf1mwkq=@so_lwi*&7=x-0+i(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 AUTH_USER_MODEL = "user.User"
 
