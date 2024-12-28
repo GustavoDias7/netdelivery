@@ -9,6 +9,7 @@ Django==5.0.6
 django-import-export==4.1.1
 django-storages==1.14.4
 environs==11.0.0
+gunicorn==23.0.0
 idna==3.7
 jmespath==1.0.1
 marshmallow==3.23.1
