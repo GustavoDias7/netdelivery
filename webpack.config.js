@@ -62,7 +62,7 @@ module.exports = {
       filename: "../../css/pages/[name].css",
     }),
 
-    ...globAll.sync("./src/templates/pages/{*,**/*}.{html}").map((src) => {
+    ...globAll.sync("./src/templates/pages/**/*.html").map((src) => {
       return new PurgeCSSPlugin({
         paths: globAll.sync(getPaths(src), { nodir: true }),
         only: [`/${path.parse(src).name}.`],
