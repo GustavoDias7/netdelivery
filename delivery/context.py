@@ -12,8 +12,13 @@ from apps.product.models import (
 )
 
 def header(request):
-    if request.path.startswith('/admin/'): return {}
-    username = request.resolver_match.kwargs["username"]
+    if request.resolver_match == None: 
+        return {}
+    else:
+        if 'username' in request.resolver_match.kwargs:
+            username = request.resolver_match.kwargs.get("username")
+        else:
+            return {}
     
     context = {
         "header_categories": [],
@@ -56,30 +61,36 @@ def header(request):
     return context
 
 def contacts(request):
-    if request.path.startswith('/admin/'): return {}
-    usarname = request.resolver_match.kwargs["username"]
+    if request.resolver_match == None: 
+        return {}
+    else:
+        if 'username' in request.resolver_match.kwargs:
+            username = request.resolver_match.kwargs.get("username")
+        else:
+            return {}
+    
     context = {
         "contacts": None,
         "opening_hours": None
     }
     
-    contacts_cache = cache.get(f"{usarname}_contacts")
+    contacts_cache = cache.get(f"{username}_contacts")
     if contacts_cache == None:
         try:
-            qs_contacts = Contacts.objects.filter(user__username=usarname).first()
+            qs_contacts = Contacts.objects.filter(user__username=username).first()
             context["contacts"] = qs_contacts
-            cache.set(f"{usarname}_contacts", context["contacts"])
+            cache.set(f"{username}_contacts", context["contacts"])
         except ObjectDoesNotExist:
             context["contacts"] = None
     else:
         context["contacts"] = contacts_cache
         
-    opening_hours_cache = cache.get(f"{usarname}_opening_hours")
+    opening_hours_cache = cache.get(f"{username}_opening_hours")
     if opening_hours_cache == None:
         try:
             qs_opening_hours = OpeningHours.objects.filter(contacts=qs_contacts)
             context["opening_hours"] = qs_opening_hours
-            cache.set(f"{usarname}_opening_hours", context["opening_hours"])
+            cache.set(f"{username}_opening_hours", context["opening_hours"])
         except ObjectDoesNotExist:
             context["opening_hours"] = None
     else:

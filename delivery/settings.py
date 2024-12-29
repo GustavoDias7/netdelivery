@@ -134,9 +134,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-USE_S3 = env.bool('USE_S3')
 
-if USE_S3:
+if not DEBUG:
     # aws settings
     AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
     AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
@@ -151,6 +150,7 @@ if USE_S3:
 
     # s3 static settings
     AWS_LOCATION = 'staticfiles'
+    # STATIC_ROOT = BASE_DIR / 'static'
     STATIC_URL = f'{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
     STATICFILES_STORAGE = 'delivery.storage_backends.StaticStorage'
     
@@ -159,6 +159,7 @@ if USE_S3:
     MEDIA_URL = f'{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/'
     DEFAULT_FILE_STORAGE = 'delivery.storage_backends.PublicMediaStorage'
 else:
+    # STATIC_ROOT = BASE_DIR / 'static'
     STATIC_URL = 'staticfiles/'
     STATICFILES_DIRS = [
         BASE_DIR / "staticfiles",

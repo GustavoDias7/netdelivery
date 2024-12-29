@@ -1,23 +1,21 @@
-{% extends "./bases/base.html" %}
+{% extends "../bases/error.html" %}
 {% load static %}
 
-{% block title %}
-  500
-{% endblock %}
-
-{% block css %}
-<link href="{% static 'css/pages/homepage.css' %}?{% now "U" %}" rel="stylesheet">
-{% endblock %}
+{% block title %}500{% endblock %}
 
 {% block content %}
 <section class="section">
   <div class="container xs:container">
-    
+    <div>
+      <h2
+        class="text-2xl sm:text-3xl text-color-primary text-align-center text-mb-2 sm:text-mb-4"
+      >
+        Erro Interno do Servidor!
+      </h2>
+      <p class="text-base text-align-center">
+        Ocorreu um erro interno no servidor. Por favor, tente novamente mais tarde.
+      </p>
+    </div>
   </div>
 </section>
 {% endblock %}
-
-{% block js %}
-<script src="{% static 'js/pages/homepage.js' %}?{% now 'U' %}"></script>
-{% endblock %}
-

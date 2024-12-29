@@ -12,6 +12,9 @@ from django.conf.urls.static import static
 # change the autocomplete text content
 admin.AdminSite.autocomplete_view = autocomplete_view
 
+handler404 = core_views.page_not_found
+handler500 = core_views.server_error
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("<slug:username>/", core_views.homepage, name="homepage"),
@@ -30,5 +33,5 @@ urlpatterns = [
     path("<slug:username>/sucesso", order_views.success, name="success"),
 ]
 
-if not settings.USE_S3:
+if settings.DEBUG:
     urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

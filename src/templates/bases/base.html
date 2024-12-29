@@ -7,16 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
     <title>
-        Delivery | {% block title %}Default title{% endblock %}
+        NetDelivery | {% block title %}Default title{% endblock %}
     </title>
     {% block css %}
-        <link href="{% static 'css/pages/index.css' %}?{% now "U" %}" rel="stylesheet">
+        <link href="{% static 'css/pages/index.css' %}?{% now "U" %}" type="text/css" rel="stylesheet">
     {% endblock %}
 </head>
 <body>
     <div class="app{% block app_section %}{% endblock %}" id="app">
-        {% comment %} {% include "../layouts/menu.html" %} {% endcomment %}
-
         {% include "../layouts/contact_bar.html" %}
         {% include "../layouts/header/secondary.html" %}
         {% include "../layouts/menu.html" %}
@@ -24,14 +22,14 @@
         
         {% block content %}{% endblock %}
 
-        {% include "../layouts/footer.html" %}
+        {% include "../layouts/footer/primary.html" %}
         
         {% include "../components/modals/logout.html" %}
         {% block modals %}{% endblock %}
         {% block notification %}{% endblock %}
     </div>
     {% block js %}
-        <script src="{% static "js/pages/main.js" %}?{% now "U" %}"></script>
+        <script src="{% static 'js/pages/main.js' %}?{% now 'U' %}"></script>
     {% endblock %}
 </body>
 </html>

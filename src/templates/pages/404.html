@@ -1,23 +1,22 @@
-{% extends "./bases/base.html" %}
+{% extends "../bases/error.html" %} 
 {% load static %}
 
-{% block title %}
-  404
-{% endblock %}
-
-{% block css %}
-<link href="{% static 'css/pages/homepage.css' %}?{% now "U" %}" rel="stylesheet">
-{% endblock %}
+{% block title %}404{% endblock %} 
 
 {% block content %}
 <section class="section">
   <div class="container xs:container">
-    
+    <div>
+      <h2
+        class="text-2xl sm:text-3xl text-color-primary text-align-center text-mb-2 sm:text-mb-4"
+      >
+        Página não encontrada!
+      </h2>
+      <p class="text-base text-align-center">
+        A página que você está procurando não foi encontrada. Verifique o
+        endereço ou volte para a página inicial.
+      </p>
+    </div>
   </div>
 </section>
-{% endblock %}
-
-{% block js %}
-<script src="{% static 'js/pages/homepage.js' %}?{% now 'U' %}"></script>
-{% endblock %}
-
+{% endblock %} {% block js %}{% endblock %}

@@ -11,8 +11,9 @@
 }
 
 body,
-html {
-  min-height: 100%;
+html,
+.app {
+  min-height: 100vh;
 }
 
 a {
