@@ -17,7 +17,7 @@ module.exports = {
     }, {}),
 
   output: {
-    path: path.resolve(__dirname, "./staticfiles/js/pages/"),
+    path: path.resolve(__dirname, "./static/js/pages/"),
     publicPath: "/",
     filename: "[name].js",
     clean: true,
@@ -45,7 +45,7 @@ module.exports = {
         type: "asset/resource",
         generator: {
           emit: false,
-          filename: "staticfiles/img/[name][ext]",
+          filename: "static/img/[name][ext]",
         },
       },
     ],
