@@ -76,7 +76,7 @@
 }
 
 @function pathImages($filename: "") {
-  @return "../../../staticfiles/img/#{$filename}";
+  @return "../../../static/img/#{$filename}";
 }
 
 @mixin background-image($url, $size: cover) {
