@@ -94,11 +94,15 @@ WSGI_APPLICATION = 'delivery.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        'NAME': env("DB_NAME"),
+        'USER': env("DB_USER"),
+        'PASSWORD': env("DB_PASSWORD"),
+        'HOST': env("DB_HOST"), 
+        'PORT': env("DB_PORT"),
     }
-}
+} 
 
 
 # Password validation
@@ -152,6 +156,7 @@ if not DEBUG:
     # s3 static settings
     AWS_LOCATION = 'staticfiles'
     STATIC_URL = f'{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/'
+    STATICFILES_DIRS = [BASE_DIR / "static"]
     STATICFILES_STORAGE = 'delivery.storage_backends.StaticStorage'
     
     # s3 public media settings
