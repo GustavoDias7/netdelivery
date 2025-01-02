@@ -13,7 +13,9 @@
   {% include "../layouts/banner.html" %}
   {% include "../layouts/products.html" %}
   {% include "../layouts/combos.html" %}
+  {% if contacts %}
   {% include "../layouts/contacts.html" %}
+  {% endif %}
 {% endblock %}
 
 {% block js %}

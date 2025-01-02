@@ -2,7 +2,9 @@
 <header class="header">
   <div class="container md:container between">
     <div> 
-      <a class="logo" href="{% url 'homepage' username %}"> {{logo}} </a> 
+      <a class="logo" href="{% url 'homepage' username %}"> 
+        {% firstof logo "NetDelivery" %}
+      </a> 
     </div>
     <div class="header-right">
       <nav> 

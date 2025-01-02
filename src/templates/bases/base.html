@@ -15,14 +15,21 @@
 </head>
 <body>
     <div class="app{% block app_section %}{% endblock %}" id="app">
+        {% if contacts %}
         {% include "../layouts/contact_bar.html" %}
+        {% endif %}
+
         {% include "../layouts/header/secondary.html" %}
         {% include "../layouts/menu.html" %}
         {% include "../components/modals/cart.html" %}
         
         {% block content %}{% endblock %}
 
+        {% if contacts %}
         {% include "../layouts/footer/primary.html" %}
+        {% else %}
+        {% include "../layouts/footer/secondary.html" %}
+        {% endif %}
         
         {% include "../components/modals/logout.html" %}
         {% block modals %}{% endblock %}
