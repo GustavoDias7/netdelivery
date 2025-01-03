@@ -20,7 +20,7 @@
           <div class="topic secondary">
             <div class="topic-left">
               <h3>Nome:</h3>
-              <p>{{user.first_name}}</p>
+              <p>{% firstof user.first_name "*Sem nome*" %}</p>
             </div>
             <div class="topic-right">
               <a href="{% url 'edit' username %}?field=first_name">Editar</a>
@@ -31,7 +31,7 @@
           <div class="topic secondary">
             <div class="topic-left">
               <h3>Sobrenome:</h3>
-              <p>{{user.last_name}}</p>
+              <p>{% firstof user.last_name "*Sem sobrenome*" %}</p>
             </div>
             <div class="topic-right">
               <a href="{% url 'edit' username %}?field=last_name">Editar</a>
@@ -63,9 +63,15 @@
               <h3>Nome de usuário:</h3>
               <p>{{user.username}}</p>
             </div>
+            {% if not user.is_staff %}
             <div class="topic-right">
               <a href="{% url 'edit' username %}?field=username">Editar</a>
             </div>
+            {% elif user.is_staff and user.owner %}
+            <div class="topic-right">
+              <a href="{% url 'edit' username %}?field=username">Editar</a>
+            </div>
+            {% endif %}
           </div>
         </div>
         <div class="g-item-12">
@@ -80,6 +86,6 @@
 {% endblock %}
 
 {% block js %}
-<script src="{% static "js/pages/profile.js" %}?{% now "U" %}"></script>
+<script src="{% static 'js/pages/profile.js' %}?{% now 'U' %}"></script>
 {% endblock %}
 
