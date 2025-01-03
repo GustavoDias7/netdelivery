@@ -27,7 +27,7 @@ def header(request):
     }
     
     try:
-        owner = User.objects.get(username=username)
+        owner = User.objects.get(username=username, owner=None, is_staff=True)
         context["logo"] = owner.get_full_name()
     except ObjectDoesNotExist:
         pass
