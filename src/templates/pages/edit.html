@@ -10,9 +10,54 @@
 {% endblock %}
 
 {% block content %}
-  {% include "../layouts/edit.html" %}
+<section class="section">
+  <div class="container xs:container">
+    <h2 class="text-2xl sm:text-3xl text-color-primary text-align-center text-mb-2 sm:text-mb-4">
+      Edite seu {{field.label}}
+    </h2>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="g-root g-gap-2 sm:g-gap-4">
+        <div class="g-row">
+            <div class="g-item-12">
+            <div class="f-row">
+                <input
+                    v-model="fields.{{field.name}}"
+                    id="{{field.name}}"
+                    name="{{field.name}}"
+                    type="text"
+                    class="f-input filled"
+                    :class="{...active(fields.{{field.name}})}"
+                    value="{% firstof field.value "" %}"
+                    {% if field.name == 'phone' %}
+                    v-mask="'(##) #####-####'"
+                    {% endif %}
+                />
+                <label for="{{field.name}}" class="f-label">{{field.label.capitalize}}</label>
+                {% if field.errors %}
+                <p class="f-helper error">{{field.errors}}</p>
+                {% endif %}
+            </div>
+            </div>
+            <div class="g-item-12">
+                <div class="f-row">
+                    <button class="gn-button pm-button full">Confirmar</button>
+                </div>
+            </div>
+            <div class="g-item-12">
+                <div class="f-row">
+                    <a href={% url 'profile' username %} class="gn-button sc-button full">Voltar</a>
+                </div>
+            </div>
+        </div>
+        </div>
+    </form>
+  </div>
+</section>
+
 {% endblock %}
 
 {% block js %}
-<script src="{% static "js/pages/signup.js" %}?{% now "U" %}"></script>
+<script src="{% static 'js/pages/signup.js' %}?{% now 'U' %}"></script>
 {% endblock %}
