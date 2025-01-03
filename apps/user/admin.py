@@ -6,13 +6,13 @@ from django.contrib.auth.admin import UserAdmin
 class EmployeerInline(admin.StackedInline):
     model = models.User
     extra = 0
-    min_num = 1
+    min_num = 0
     autocomplete_fields = ("owner",)
 
 @admin.register(models.User)
 class CustomUserAdmin(UserAdmin):
     inlines = [EmployeerInline]
-    list_display = ("email", "first_name", "last_name", "is_staff")
+    list_display = ("email", "first_name", "last_name", "username", "is_staff")
     add_fieldsets = ((
         None, 
         { 'classes': ('wide',), 'fields': ('email', 'password1', 'password2')}
