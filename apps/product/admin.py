@@ -17,7 +17,7 @@ class ProductVariantAdmin(admin.ModelAdmin):
     
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        user = request.user.owner if request.user.owner else request.user
+        user = request.user.owned_by if request.user.owned_by else request.user
         return qs.filter(product__user=user)
     
     
@@ -44,7 +44,7 @@ class ProductAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        user = request.user.owner if request.user.owner else request.user
+        user = request.user.owned_by if request.user.owned_by else request.user
         return qs.filter(user=user)
 
 
@@ -72,5 +72,5 @@ class ComboAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        user = request.user.owner if request.user.owner else request.user
+        user = request.user.owned_by if request.user.owned_by else request.user
         return qs.filter(user=user)

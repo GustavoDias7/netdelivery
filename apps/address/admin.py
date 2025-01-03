@@ -33,7 +33,7 @@ class WhiteListAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         
-        user = request.user.owner if request.user.owner else request.user
+        user = request.user.owned_by if request.user.owned_by else request.user
         qs = qs.filter(user=user)
         
         if request.method == "POST":

@@ -7,7 +7,7 @@ class EmployeerInline(admin.StackedInline):
     model = models.User
     extra = 0
     min_num = 0
-    autocomplete_fields = ("owner",)
+    autocomplete_fields = ("owned_by",)
 
 @admin.register(models.User)
 class CustomUserAdmin(UserAdmin):
@@ -18,9 +18,9 @@ class CustomUserAdmin(UserAdmin):
         { 'classes': ('wide',), 'fields': ('email', 'password1', 'password2')}
     ),)
     fieldsets = UserAdmin.fieldsets + (
-        (None, {'fields': ('phone', 'owner',)}),
+        (None, {'fields': ('phone', 'is_owner', 'owned_by',)}),
     )
-    autocomplete_fields = ("owner",)
+    autocomplete_fields = ("owned_by",)
 
 @admin.register(models.Client)
 class ClientAdmin(admin.ModelAdmin):
@@ -58,7 +58,7 @@ class ContactsAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        user = request.user.owner if request.user.owner else request.user
+        user = request.user.owned_by if request.user.owned_by else request.user
         return qs.filter(user=user)
     
     # def has_add_permission(self, request):

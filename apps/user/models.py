@@ -177,7 +177,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     
     phone = models.CharField(max_length=11, null=True, blank=True, validators=[phone_validator])
     
-    owner = models.ForeignKey("self", null=True, blank=True, on_delete=models.RESTRICT)
+    is_owner = models.BooleanField(_("owner"), default=False)
+    
+    owned_by = models.ForeignKey("self", null=True, blank=True, on_delete=models.RESTRICT)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username", "password"]

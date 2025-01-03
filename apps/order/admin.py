@@ -123,16 +123,16 @@ class OrderAdmin(admin.ModelAdmin):
         return False
         
     def get_changeform_initial_data(self, request):
-        user = request.user.owner if request.user.owner else request.user
+        user = request.user.owned_by if request.user.owned_by else request.user
         return {"user_owner": user}
     
     def save_model(self, request, obj, form, change):
-        obj.user_owner = request.user.owner if request.user.owner else request.user
+        obj.user_owner = request.user.owned_by if request.user.owned_by else request.user
         super().save_model(request, obj, form, change)
     
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        user = request.user.owner if request.user.owner else request.user
+        user = request.user.owned_by if request.user.owned_by else request.user
         return qs.filter(user_owner=user)
     
     def change_view(self, request, object_id, form_url="", extra_context=None):
@@ -185,7 +185,7 @@ class ShippingFeeAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
-        user = request.user.owner if request.user.owner else request.user
+        user = request.user.owned_by if request.user.owned_by else request.user
         return qs.filter(user=user)
     
     @admin.display(description=_("Value"))

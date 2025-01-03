@@ -63,11 +63,7 @@
               <h3>Nome de usuário:</h3>
               <p>{{user.username}}</p>
             </div>
-            {% if not user.is_staff %}
-            <div class="topic-right">
-              <a href="{% url 'edit' username %}?field=username">Editar</a>
-            </div>
-            {% elif user.is_staff and user.owner %}
+            {% if not user.is_owner %}
             <div class="topic-right">
               <a href="{% url 'edit' username %}?field=username">Editar</a>
             </div>
