@@ -175,7 +175,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         help_text=_("Designates whether this user has confirmed his account."),
     )
     
-    phone = models.CharField(max_length=11, null=True, validators=[phone_validator])
+    phone = models.CharField(max_length=11, null=True, blank=True, validators=[phone_validator])
     
     owner = models.ForeignKey("self", null=True, blank=True, on_delete=models.RESTRICT)
 
