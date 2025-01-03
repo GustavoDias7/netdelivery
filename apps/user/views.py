@@ -61,13 +61,13 @@ def signup(request, username):
             user_form.add_error("confirm_password", "Password is not equal")
 
         if user_form.is_valid():
-            username = create_username(
+            new_username = create_username(
                 user_form.data.get("first_name", ""), 
                 user_form.data.get("last_name", "")
             )
 
             user = User.objects.create_user(
-                username=username,
+                username=new_username,
                 email=user_form.data.get("email", ""),
                 first_name=user_form.data.get("first_name", ""),
                 last_name=user_form.data.get("last_name", ""),
@@ -115,13 +115,21 @@ def edit(request, username):
     if field == "": return redirect('profile', username)
     if field == "email": return redirect('profile', username)
     
+    is_owner = request.user.is_staff and request.user.owner == None
+    if is_owner:
+        if field == "username": return redirect('profile', username)
+    
     fields = {
         "first_name": "nome",
         "last_name": "sobrenome",
         # "email": "e-mail",
         "phone": "número de celular",
-        "username": "nome de usuário",
     }
+    
+    is_regular_user = not request.user.is_staff
+    not_owner = request.user.is_staff and request.user.owner
+    if is_regular_user or not_owner:
+        fields["username"] = "nome de usuário"
     
     if field not in fields: return redirect('profile', username)
     
