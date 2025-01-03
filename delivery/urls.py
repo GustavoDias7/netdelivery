@@ -12,6 +12,7 @@ from django.conf.urls.static import static
 # change the autocomplete text content
 admin.AdminSite.autocomplete_view = autocomplete_view
 
+handler403 = core_views.permission_denied
 handler404 = core_views.page_not_found
 handler500 = core_views.server_error
 

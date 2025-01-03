@@ -1,0 +1,22 @@
+{% extends "../bases/error.html" %} 
+{% load static %}
+
+{% block title %}403{% endblock %} 
+
+{% block content %}
+<section class="section">
+  <div class="container xs:container">
+    <div>
+      <h2
+        class="text-2xl sm:text-3xl text-color-primary text-align-center text-mb-2 sm:text-mb-4"
+      >
+        Forbidden (Proibido)!
+      </h2>
+      <p class="text-base text-align-center">
+        Você não tem autorização para visualizar esta página. Verifique o
+        endereço ou volte para a página inicial.
+      </p>
+    </div>
+  </div>
+</section>
+{% endblock %} {% block js %}{% endblock %}
