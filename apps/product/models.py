@@ -8,7 +8,7 @@ from delivery.utils import remove_non_numeric
 from delivery.constants import PIZZA_SIZES
 
 class Category(models.Model):
-    name = models.CharField(max_length=30, unique=True)
+    name = models.CharField(verbose_name=_("name"), max_length=30, unique=True)
     
     class Meta:
         verbose_name = _("category")
@@ -21,11 +21,11 @@ class Category(models.Model):
         return f"{self.name}"
 
 class Product(models.Model):
-    user = models.ForeignKey("user.User", null=True, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
-    image = models.ImageField()
-    description = models.TextField(max_length=600, validators=[MinLengthValidator(4, _("Mínimo de 4 caracteres."))])
-    category = models.ForeignKey(Category, on_delete=models.RESTRICT)
+    user = models.ForeignKey("user.User", verbose_name=_("user"), null=True, on_delete=models.CASCADE)
+    name = models.CharField(verbose_name=_("name"), max_length=100)
+    image = models.ImageField(verbose_name=_("image"))
+    description = models.TextField(verbose_name=_("description"), max_length=600, validators=[MinLengthValidator(4, _("Minimum of 4 characters."))])
+    category = models.ForeignKey(Category, verbose_name=_("category"), on_delete=models.RESTRICT)
     
     class Meta:
         verbose_name = _("product")
@@ -35,23 +35,23 @@ class Product(models.Model):
         return f"{self.name}"
     
 class ProductVariant(models.Model):
-    product = models.ForeignKey("Product", on_delete=models.CASCADE)
-    size = models.CharField(_("Size"), max_length=40, blank=True, null=True, choices=PIZZA_SIZES)
-    diameter = models.PositiveSmallIntegerField(_("Diameter"), blank=True, null=True, validators=[MaxValueValidator(32767)], help_text=_("Em centimetros"))
-    stuffed_edge = models.BooleanField(_("Stuffed Edge"), blank=True, null=True, choices=[(None, "Sem borda"), (True, "Sim"), (False, "Não")])
-    milliliters = models.PositiveSmallIntegerField(_("Milliliters"), blank=True, null=True, validators=[MaxValueValidator(32767)])
-    price = models.PositiveIntegerField(_("Price"), validators=[MaxValueValidator(2147483647)], help_text=_("Em inteiro. Ex.: 4999 para representar R$ 49,99"))
+    product = models.ForeignKey("Product", verbose_name=_("product"), on_delete=models.CASCADE)
+    size = models.CharField(verbose_name=_("size"), max_length=40, blank=True, null=True, choices=PIZZA_SIZES)
+    diameter = models.PositiveSmallIntegerField(verbose_name=_("diameter"), blank=True, null=True, validators=[MaxValueValidator(32767)], help_text=_("In centimeters"))
+    stuffed_edge = models.BooleanField(verbose_name=_("stuffed edge"), blank=True, null=True, choices=[(None, "Sem borda"), (True, "Sim"), (False, "Não")])
+    milliliters = models.PositiveSmallIntegerField(verbose_name=_("milliliters"), blank=True, null=True, validators=[MaxValueValidator(32767)])
+    price = models.PositiveIntegerField(verbose_name=_("price"), validators=[MaxValueValidator(2147483647)])
     discount = models.DecimalField(
-        _("Discount"),
+        verbose_name=_("discount"), 
         max_digits=3,
         decimal_places=2,
         default=0.0,
         validators=[MinValueValidator(0), MaxValueValidator(1)],
-        help_text="Em decimal. Ex.: 0.1 para representar 10%. 0.0 quando não há desconto."
+        help_text=_("In decimal. Ex.: 0.1 to represent 10%. 0.0 when there is no discount.")
     )
-    stock = models.PositiveIntegerField(_("Stock"), blank=True, null=True, validators=[MaxValueValidator(2147483647)], help_text=_("Opcional. Se não for preenchido, o estoque será ilimitado para pedidos. 0 representa que o estoque está vazio."))
-    archived = models.BooleanField(_("Archived"), default=False)
-    default = models.BooleanField(_("Default"), default=False, help_text=_("A variante que representará o produto no site."))
+    stock = models.PositiveIntegerField(verbose_name=_("stock"), blank=True, null=True, validators=[MaxValueValidator(2147483647)], help_text=_("Optional. If left blank, stock will be unlimited for orders. 0 represents that stock is empty."))
+    archived = models.BooleanField(verbose_name=_("archived"), default=False)
+    default = models.BooleanField(verbose_name=_("default"), default=False, help_text=_("The variant that will represent the product on the website."))
     
     class Meta:
         verbose_name = _("product variant")
@@ -111,19 +111,20 @@ class ProductVariant(models.Model):
 
     
 class Combo(models.Model):
-    user = models.ForeignKey("user.User", null=True, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
-    image = models.ImageField()
-    description = models.TextField(max_length=400, validators=[MinLengthValidator(4, _("Mínimo de 4 caracteres."))])
-    price = models.PositiveIntegerField(validators=[MaxValueValidator(2147483647)], help_text=_("Em inteiro. Ex.: 4999 para representar R$ 49,99"))
+    user = models.ForeignKey("user.User", verbose_name=_("user"), null=True, on_delete=models.CASCADE)
+    name = models.CharField(verbose_name=_("name"), max_length=100)
+    image = models.ImageField(verbose_name=_("image"))
+    description = models.TextField(verbose_name=_("description"), max_length=400, validators=[MinLengthValidator(4, _("Minimum of 4 characters."))])
+    price = models.PositiveIntegerField(verbose_name=_("price"), validators=[MaxValueValidator(2147483647)])
     discount = models.DecimalField(
+        verbose_name=_("discount"), 
         max_digits=3,
         decimal_places=2,
         default=0.0,
         validators=[MinValueValidator(0), MaxValueValidator(1)],
-        help_text="Em decimal. Ex.: 0.1 para representar 10%. 0.0 quando não há desconto."
+        help_text=_("In decimal. Ex.: 0.1 to represent 10%. 0.0 when there is no discount.")
     )
-    archived = models.BooleanField(default=True)
+    archived = models.BooleanField(verbose_name=_("archived"), default=False)
     
     def clean_fields(self, exclude=None):
         if self.price and type(self.price) == str:
@@ -152,8 +153,12 @@ class Combo(models.Model):
         return f"{self.name}"
     
 class ComboItem(models.Model):
-    combo = models.ForeignKey("Combo", on_delete=models.CASCADE)
-    product_variant = models.ForeignKey("ProductVariant", null=True, on_delete=models.SET_NULL)
+    combo = models.ForeignKey("Combo", verbose_name=_("combo"), on_delete=models.CASCADE)
+    product_variant = models.ForeignKey("ProductVariant", verbose_name=_("product variant"), null=True, on_delete=models.SET_NULL)
+    
+    class Meta:
+        verbose_name = _("combo item")
+        verbose_name_plural = _("combo items")
     
     def __str__(self):
         if self.product_variant.product:

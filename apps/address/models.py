@@ -4,14 +4,14 @@ from django.core.validators import (MaxValueValidator, MinLengthValidator)
 from django.utils.translation import gettext_lazy as _
 
 class Address(models.Model):
-    user = models.OneToOneField("user.User", on_delete=models.CASCADE)
+    user = models.OneToOneField("user.User", verbose_name=_("user"), on_delete=models.CASCADE)
     logradouro = models.ForeignKey("Logradouro", on_delete=models.RESTRICT, null=True)
-    number = models.PositiveSmallIntegerField(blank=True, null=True, validators=[MaxValueValidator(32767)]) 
-    complement = models.CharField(max_length=100, blank=True, null=True)
+    number = models.PositiveSmallIntegerField(_("number"), blank=True, null=True, validators=[MaxValueValidator(32767)]) 
+    complement = models.CharField(_("complement"), max_length=100, blank=True, null=True)
     
     class Meta:
-        verbose_name = _("Address")
-        verbose_name_plural = _("Addresses")
+        verbose_name = _("address")
+        verbose_name_plural = _("addresses")
     
     def get(self, name):
         return getattr(self, name)
@@ -49,10 +49,10 @@ class Logradouro(models.Model):
     uf = models.ForeignKey("UF", on_delete=models.RESTRICT)
     localidade = models.ForeignKey("Localidade", null=True, on_delete=models.SET_NULL)
     bairro = models.ForeignKey("Bairro", null=True, on_delete=models.SET_NULL)
-    name = models.CharField(max_length=100)
-    complement = models.CharField(null=True, max_length=100)
+    name = models.CharField(_("name"), max_length=100)
+    complement = models.CharField(_("complement"), null=True, max_length=100)
     cep = models.CharField(max_length=8, validators=[cep_validator])
-    type = models.CharField(max_length=36)
+    type = models.CharField(_("type"), max_length=36)
         
     def fcep(self):
         if len(self.cep):
@@ -67,14 +67,14 @@ class Logradouro(models.Model):
         return f"{self.type} {self.name}"
     
 class UF(models.Model):
-    acronym = models.CharField(max_length=2, validators=[MinLengthValidator(2)])
+    acronym = models.CharField(_("acronym"), max_length=2, validators=[MinLengthValidator(2)])
     
     def __str__(self):
         return f"{self.acronym}"
 
 class Bairro(models.Model):
     id = models.PositiveIntegerField(primary_key=True)
-    name = models.CharField(max_length=72)
+    name = models.CharField(_("name"), max_length=72)
     localidade = models.ForeignKey("Localidade", null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
@@ -88,7 +88,7 @@ class Localidade(models.Model):
     uf = models.ForeignKey("UF", on_delete=models.SET_NULL, null=True)
     situacaolocalidade = models.ForeignKey("SituacaoLocalidade", on_delete=models.RESTRICT, null=True)
     tipolocalidade = models.ForeignKey("TipoLocalidade", on_delete=models.RESTRICT)
-    name = models.CharField(max_length=72)
+    name = models.CharField(_("name"), max_length=72)
     cep = models.CharField(max_length=8, validators=[cep_validator])
     
     def select2(self):
@@ -101,25 +101,25 @@ class SituacaoLocalidade(models.Model):
     definition = models.TextField(max_length=60)
     
     def __str__(self):
-        return f"Situação {self.id}"
+        return f"{_('situation')} {self.id}"
     
 class TipoLocalidade(models.Model):
-    code = models.CharField(max_length=1)
-    definition = models.CharField(max_length=15)
+    code = models.CharField(_("code"), max_length=1)
+    definition = models.CharField(_("definition"), max_length=15)
     
     def __str__(self):
         return f"{self.code} - {self.definition}"
   
 class WhiteList(models.Model):
-    user = models.OneToOneField("user.User", on_delete=models.CASCADE)
+    user = models.OneToOneField("user.User", verbose_name=_("user"), on_delete=models.CASCADE)
     ufs = models.ManyToManyField(UF, blank=True)
     localidades = models.ManyToManyField(Localidade, blank=True)
     bairros = models.ManyToManyField(Bairro, blank=True)
 
     class Meta:
-        verbose_name = _("whiteList")
-        verbose_name_plural = _("whiteLists")
+        verbose_name = _("white list")
+        verbose_name_plural = _("white lists")
     
     def __str__(self):
-        return f"WhiteList {self.id}"
+        return f"{_('white list')} {self.id}"
   

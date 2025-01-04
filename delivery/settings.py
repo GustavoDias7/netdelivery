@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 from environs import Env
 import locale 
+from django.utils.translation import gettext_lazy as _
 
 locale.setlocale(locale.LC_MONETARY, 'pt_BR.UTF-8')
 
@@ -60,6 +61,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -132,9 +134,15 @@ LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
+USE_L10N = True
 
 USE_TZ = True
 
+LANGUAGES = [
+    ('pt-br', _('Brazilian Portuguese')),
+]
+
+LOCALE_PATHS = (BASE_DIR / "locale",)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/

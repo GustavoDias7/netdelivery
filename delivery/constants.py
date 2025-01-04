@@ -11,10 +11,10 @@ DAY_OF_THE_WEEK = {
 }
 
 PIZZA_SIZES = {
-    '1': _('Pequena'),
-    '2': _('Média'),
-    '3': _('Grande'),
-    '4': _('Gigante'),
-    '5': _('Família'),
+    '1': _('Small'),
+    '2': _('Medium'),
+    '3': _('Large'),
+    '4': _('Giant'),
+    '5': _('Family'),
     '6': _('Maracanã'),
 }

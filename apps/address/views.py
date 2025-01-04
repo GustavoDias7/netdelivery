@@ -6,6 +6,7 @@ from apps.address.models import (
 )
 from django.core.exceptions import ObjectDoesNotExist
 from . import forms
+from django.utils.translation import gettext as _
 
 
 def address(request, username):
@@ -85,7 +86,7 @@ def address_edit(request, username):
                     log = Logradouro.objects.get(cep=data[field])
                 except ObjectDoesNotExist:
                     context["field"].update({"value": form[field].value})
-                    context["field"].update({"errors": "Não operamos neste endereço."})
+                    context["field"].update({"errors": _("We do not operate at this address.")})
                     return render(request, "pages/address_edit.html", context)
                 
                 if address == None:
@@ -102,5 +103,3 @@ def address_edit(request, username):
             context["field"].update({"errors": form.errors.get(field).as_text})
         
     return render(request, "pages/address_edit.html", context)
-
-

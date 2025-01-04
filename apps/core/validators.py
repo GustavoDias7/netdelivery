@@ -23,7 +23,7 @@ def name_validator(value: str):
         )
     elif len(value) < 3:
         raise ValidationError(
-            _("Minimum 3 letters."),
+            _("Minimum of 3 letters."),
             params={"value": value},
         )
         

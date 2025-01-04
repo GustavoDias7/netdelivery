@@ -110,16 +110,16 @@ def order(request, username):
                 variant = product_variants.get(pk=product_id)
                 if variant.price != item.get("price"):
                     raise ValidationError(
-                        _(f"O preço do produto {variant.full_name()} é de {variant.fprice()}.")
+                        _(f"The price of product {variant.full_name()} is {variant.fprice()}.")
                     )
                 if variant.stock != None:
                     if variant.stock == 0:
                         raise ValidationError(
-                            _(f'"{variant.full_name()}" está sem estoque.')
+                            _(f'"{variant.full_name()}" is out of stock.')
                         )
                     if variant.stock < item.get("count"):
                         raise ValidationError(
-                            _(f"{variant.full_name()} tem {variant.stock} unidades em estoque.")
+                            _(f"{variant.full_name()} has {variant.stock} units in stock.")
                         )
                         
             except ValidationError as e:

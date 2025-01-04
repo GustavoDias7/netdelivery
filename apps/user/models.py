@@ -15,17 +15,17 @@ from delivery.utils import (remove_non_numeric, fphone_number)
 from delivery.constants import DAY_OF_THE_WEEK
 
 class Contacts(models.Model):
-    user = models.ForeignKey("user.User", on_delete=models.CASCADE)
-    whatsapp_number = models.CharField(_("WhatsApp number"), null=True, blank=True, max_length=11, validators=[cellphone_number])
-    whatsapp_message = models.TextField(_("WhatsApp message"), null=True, blank=True, max_length=100)
-    facebook_link = models.URLField(_("Facebook link"), null=True, blank=True)
-    instagram_link = models.URLField(_("Instagram link"), null=True, blank=True)
-    linkedin_link = models.URLField(_("LinkedIn link"), null=True, blank=True)
-    x_link = models.URLField(_("X link"), null=True, blank=True)
-    phone_number = models.CharField(_("Phone number"), null=True, blank=True, max_length=11, validators=[phone_validator])
-    email = models.EmailField(_("E-mail"), null=True, blank=True, max_length=255)
-    address_text = models.CharField(_("Address text"), null=True, blank=True, max_length=40)
-    address_link = models.URLField(_("Address link"), null=True, blank=True)
+    user = models.ForeignKey("user.User", verbose_name=_("user"), on_delete=models.CASCADE)
+    whatsapp_number = models.CharField(verbose_name=_("whatsApp number"), null=True, blank=True, max_length=11, validators=[cellphone_number])
+    whatsapp_message = models.TextField(verbose_name=_("whatsApp message"), null=True, blank=True, max_length=100)
+    facebook_link = models.URLField(verbose_name=_("facebook link"), null=True, blank=True)
+    instagram_link = models.URLField(verbose_name=_("instagram link"), null=True, blank=True)
+    linkedin_link = models.URLField(verbose_name=_("linkedIn link"), null=True, blank=True)
+    x_link = models.URLField(verbose_name=_("x link"), null=True, blank=True)
+    phone_number = models.CharField(verbose_name=_("phone number"), null=True, blank=True, max_length=11, validators=[phone_validator])
+    email = models.EmailField(verbose_name=_("e-mail"), null=True, blank=True, max_length=255)
+    address_text = models.CharField(verbose_name=_("address text"), null=True, blank=True, max_length=40)
+    address_link = models.URLField(verbose_name=_("address link"), null=True, blank=True)
     # google_maps = models.URLField(_("Google Maps"), max_length=250, null=True, blank=True)
     
     def clean_fields(self, exclude=None):
@@ -65,12 +65,12 @@ class Contacts(models.Model):
         return "Contacts"
 
 class OpeningHours(models.Model):
-    contacts = models.ForeignKey(Contacts, on_delete=models.CASCADE)
-    inital_day = models.CharField(_("Initial day"), max_length=1, choices=DAY_OF_THE_WEEK)
-    final_day = models.CharField(_("Final day"), null=True, blank=True, max_length=1, choices=DAY_OF_THE_WEEK)
-    inital_hour = models.TimeField(_("Initial hour"), null=True, blank=True)
-    final_hour = models.TimeField(_("Final hour"), null=True, blank=True)
-    closed = models.BooleanField(_("Closed"), default=False)
+    contacts = models.ForeignKey(Contacts, verbose_name=_("contacts"), on_delete=models.CASCADE)
+    inital_day = models.CharField(verbose_name=_("initial day"), max_length=1, choices=DAY_OF_THE_WEEK)
+    final_day = models.CharField(verbose_name=_("final day"), null=True, blank=True, max_length=1, choices=DAY_OF_THE_WEEK)
+    inital_hour = models.TimeField(verbose_name=_("initial hour"), null=True, blank=True)
+    final_hour = models.TimeField(verbose_name=_("final hour"), null=True, blank=True)
+    closed = models.BooleanField(verbose_name=_("closed"), default=False)
         
     def days(self):
         inital_day_display = self.get_inital_day_display()
@@ -88,7 +88,7 @@ class OpeningHours(models.Model):
     
     def hours(self):
         if self.closed:
-            return _('Closed')
+            return _('closed')
         else:
             template = "{:02d}h{:02d}"
             hour = template.format(self.inital_hour.hour, self.inital_hour.minute)
@@ -175,11 +175,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         help_text=_("Designates whether this user has confirmed his account."),
     )
     
-    phone = models.CharField(max_length=11, null=True, blank=True, validators=[phone_validator])
+    phone = models.CharField(verbose_name=_("phone number"), max_length=11, null=True, blank=True, validators=[phone_validator])
     
     is_owner = models.BooleanField(_("owner"), default=False)
     
-    owned_by = models.ForeignKey("self", null=True, blank=True, on_delete=models.RESTRICT)
+    owned_by = models.ForeignKey("self", verbose_name=_("owned by"), null=True, blank=True, on_delete=models.RESTRICT)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username", "password"]
@@ -214,12 +214,16 @@ class User(AbstractBaseUser, PermissionsMixin):
     #     send_mail(subject, message, from_email, [self.email])
     
 class Client(models.Model):
-    full_name = models.CharField(_("Full name"), max_length=60)
+    full_name = models.CharField(verbose_name=_("full name"), max_length=60)
     logradouro = models.ForeignKey(Logradouro, null=True, on_delete=models.SET_NULL, help_text="Pesquise pelo CEP, nome do logradouro, nome da localidade ou nome do bairro.")
-    number = models.PositiveSmallIntegerField(blank=True, null=True, validators=[MaxValueValidator(32767)]) 
-    complement = models.CharField(max_length=100, blank=True, null=True)
-    phone = models.CharField(_("Phone Number"), max_length=11, null=True, blank=True, validators=[phone_validator])
-    cpf = models.CharField("CPF", max_length=11, null=True, blank=True, unique=True, validators=[cpf_validator])
+    number = models.PositiveSmallIntegerField(verbose_name=_("number"), blank=True, null=True, validators=[MaxValueValidator(32767)]) 
+    complement = models.CharField(verbose_name=_("complement"), max_length=100, blank=True, null=True)
+    phone = models.CharField(verbose_name=_("phone number"), max_length=11, null=True, blank=True, validators=[phone_validator])
+    cpf = models.CharField(verbose_name=_("CPF"), max_length=11, null=True, blank=True, unique=True, validators=[cpf_validator])
+    
+    class Meta:
+        verbose_name = _("client")
+        verbose_name_plural = _("clients")
     
     def clean_fields(self, exclude=None):
         self.phone = remove_non_numeric(self.phone)
