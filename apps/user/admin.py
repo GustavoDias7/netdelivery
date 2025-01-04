@@ -2,25 +2,74 @@ from django.contrib import admin
 from . import models
 from . import forms
 from django.contrib.auth.admin import UserAdmin
+from django.db.models import Q
+from django.utils.translation import gettext_lazy as _
 
 class EmployeerInline(admin.StackedInline):
     model = models.User
     extra = 0
     min_num = 0
     autocomplete_fields = ("owned_by",)
+    exclude = ("password", "is_owner")
+    fields = (
+        "username", 
+        "first_name", 
+        "last_name", 
+        "email", 
+        "phone", 
+        "is_active",
+        "is_staff",
+        "is_superuser",
+        "groups",
+        "user_permissions",
+        "last_login",
+        "date_joined"
+    )
 
 @admin.register(models.User)
 class CustomUserAdmin(UserAdmin):
     inlines = [EmployeerInline]
     list_display = ("email", "first_name", "last_name", "username", "is_staff")
-    add_fieldsets = ((
-        None, 
-        { 'classes': ('wide',), 'fields': ('email', 'password1', 'password2')}
-    ),)
-    fieldsets = UserAdmin.fieldsets + (
-        (None, {'fields': ('phone', 'is_owner', 'owned_by',)}),
+    add_fieldsets = (
+        (
+            None, 
+            { 
+            'classes': ('wide',), 
+            'fields': ('email', 'username', 'password1', 'password2')
+            }
+        ),
+    )
+    
+    fieldsets = (
+        (None, {"fields": ("username", "password")}),
+        (_("Personal info"), {"fields": ("first_name", "last_name", "email", "phone")}),
+        (
+            _("Permissions"),
+            {
+                "fields": (
+                    "is_active",
+                    "is_staff",
+                    "is_superuser",
+                    "is_owner",
+                    "owned_by",
+                    "groups",
+                    "user_permissions",
+                ),
+            },
+        ),
+        (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
     autocomplete_fields = ("owned_by",)
+    
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        elif request.user.is_owner:
+            owner_and_employeers = Q(owned_by=request.user) | Q(username=request.user.username)
+            return qs.filter(owner_and_employeers)
+        else:
+            return qs.filter(username=request.user.username)
 
 @admin.register(models.Client)
 class ClientAdmin(admin.ModelAdmin):

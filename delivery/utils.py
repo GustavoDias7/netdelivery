@@ -69,7 +69,7 @@ def custom_titled_filter(title):
             return instance
     return Wrapper
 
-def create_username(fn, ln):
+def create_username(fn: str, ln: str) -> str:
     random_number = get_random_string(length=6, allowed_chars='0123456789')
     return f"{fn[:2]}{ln[:2]}{random_number}".upper()
 
