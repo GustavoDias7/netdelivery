@@ -18,3 +18,18 @@ PIZZA_SIZES = {
     '5': _('Family'),
     '6': _('Maracanã'),
 }
+
+USER_OWNER = (
+    (_("Personal info"), {"fields": ("first_name", "username", "phone")}),
+)
+
+USER_WITHOUT_PERMISSIONS = (
+    (_("Personal info"), {"fields": ("first_name", "last_name", "username", "phone")}),
+)
+
+USER_WITH_PERMISSIONS = (
+    (None, {"fields": ("username", "password")}),
+    (_("Personal info"), {"fields": ("first_name", "last_name", "email", "phone")}),
+    (_("Permissions"), { "fields": ("is_active", "is_staff", "is_superuser", "is_owner", "owned_by", "groups", "user_permissions")}),
+    (_("Important dates"), {"fields": ("last_login", "date_joined")}),
+)

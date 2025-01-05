@@ -4,6 +4,7 @@ from . import forms
 from django.contrib.auth.admin import UserAdmin
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
+from delivery.constants import (USER_WITHOUT_PERMISSIONS, USER_WITH_PERMISSIONS)
 
 class EmployeerInline(admin.StackedInline):
     model = models.User
@@ -12,10 +13,10 @@ class EmployeerInline(admin.StackedInline):
     autocomplete_fields = ("owned_by",)
     exclude = ("password", "is_owner")
     fields = (
-        "username", 
         "first_name", 
         "last_name", 
         "email", 
+        "username", 
         "phone", 
         "is_active",
         "is_staff",
@@ -25,6 +26,32 @@ class EmployeerInline(admin.StackedInline):
         "last_login",
         "date_joined"
     )
+    def get_fields(self, request, obj=None):
+        fields = super().get_fields(request, obj)
+        
+        if obj and not request.user.is_superuser:
+            return (
+                "first_name", 
+                "last_name", 
+                "username", 
+                "phone",
+            )
+        else:
+            return fields
+        
+    
+    def get_readonly_fields(self, request, obj=None):
+        readonly_fields = super().get_readonly_fields(request, obj)
+        
+        if obj and request.user.is_owner:
+            return (
+                "first_name", 
+                "last_name", 
+                "username", 
+                "phone",
+            )
+        else:
+            return readonly_fields
 
 @admin.register(models.User)
 class CustomUserAdmin(UserAdmin):
@@ -39,26 +66,6 @@ class CustomUserAdmin(UserAdmin):
             }
         ),
     )
-    
-    fieldsets = (
-        (None, {"fields": ("username", "password")}),
-        (_("Personal info"), {"fields": ("first_name", "last_name", "email", "phone")}),
-        (
-            _("Permissions"),
-            {
-                "fields": (
-                    "is_active",
-                    "is_staff",
-                    "is_superuser",
-                    "is_owner",
-                    "owned_by",
-                    "groups",
-                    "user_permissions",
-                ),
-            },
-        ),
-        (_("Important dates"), {"fields": ("last_login", "date_joined")}),
-    )
     autocomplete_fields = ("owned_by",)
     
     def get_queryset(self, request):
@@ -70,6 +77,16 @@ class CustomUserAdmin(UserAdmin):
             return qs.filter(owner_and_employeers)
         else:
             return qs.filter(username=request.user.username)
+    
+    def get_fieldsets(self, request, obj=None):
+        fieldsets = super().get_fieldsets(request, obj)
+        
+        if obj and request.user.is_superuser:
+            return USER_WITH_PERMISSIONS
+        elif obj and not request.user.is_superuser:
+            return USER_WITHOUT_PERMISSIONS
+        else:
+            return fieldsets
 
 @admin.register(models.Client)
 class ClientAdmin(admin.ModelAdmin):
