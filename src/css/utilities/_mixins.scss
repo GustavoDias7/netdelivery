@@ -76,7 +76,12 @@
 }
 
 @function pathImages($filename: "") {
-  @return "../../../static/img/#{$filename}";
+  @if $debug {
+    @return "../../../static/img/#{$filename}";
+  }
+  @else {
+    @return "https://d33gh7dcx5phic.cloudfront.net/staticfiles/img/#{$filename}";
+  }
 }
 
 @mixin background-image($url, $size: cover) {

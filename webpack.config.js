@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { PurgeCSSPlugin } = require("purgecss-webpack-plugin");
 const { getPaths } = require("./utils/recursive-path.js");
 const { DefinePlugin } = require("webpack");
+require('dotenv').config({ path: './.env' });
 
 module.exports = {
   context: __dirname,
@@ -27,7 +28,17 @@ module.exports = {
     rules: [
       {
         test: /\.(sa|sc|c)ss$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          {
+            loader: "sass-loader",
+            options: {
+              additionalData:
+                `$debug: ${process.env.DEBUG.toLowerCase() === 'true'};`
+            },
+          },
+        ],
       },
       {
         test: /\.html$/,
