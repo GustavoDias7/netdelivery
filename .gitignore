@@ -142,3 +142,4 @@ cache/
 staticfiles
 /static/*
 !/static/img
+temp/

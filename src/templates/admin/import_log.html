@@ -1,13 +1,18 @@
 {% extends 'admin/base_site.html' %} {% load static %} {% block content %}
 <div>
-  <h1>{{form_title}}</h1>
-  <h2>{{description}}</h2>
   <form method="POST" id="csv-form" enctype="multipart/form-data">
     {% csrf_token %}
     <label for="logradouros">Select a .txt file(logradouros):</label>
     <input type="file" name="logradouros" />
     <br />
-    <button id="submit">Upload .txt</button>
+    <div class="submit-row">
+      <input type="submit" value="Upload .txt">
+    </div>
   </form>
+
+  <br />
+  {% for file in files %}
+    <p>{{file}}</p>
+  {% endfor %}
 </div>
 {% endblock %}

@@ -1,10 +1,14 @@
 from django.contrib import admin
-from delivery.utils import (first_occurrence, last_occurrence, custom_titled_filter)
+from delivery.utils import (first_occurrence, last_occurrence, custom_titled_filter, create_temp_file)
 from import_export.admin import ImportExportModelAdmin
 from django.shortcuts import render
 import chardet
 from . import models
-
+from django.conf import settings
+import os
+import pandas as pd
+from os import listdir
+from os.path import isfile, join
 
 @admin.register(models.Address)
 class AddressAdmin(admin.ModelAdmin):
@@ -144,56 +148,85 @@ class LogradouroAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     @admin.display(description='bairro')
     def bairro_(self, obj):
         return obj.bairro.name
-        
+    
     def import_action(self, request):
         context = {}
         
-        if request.method == "POST":
-            logradouros_file = request.FILES.get("logradouros")
-            rows = []
+        folter = os.path.join(settings.BASE_DIR, "temp", "logradouros")
+        
+        if not os.path.exists(folter):
+            os.makedirs(folter)
+        
+        if (len(listdir(folter))):
+            files = [f for f in listdir(folter) if isfile(join(folter, f))]
+            files.sort(key=lambda a : int(a.replace(".csv", "")))
+            context["files"] = files
+        
+        logradouros_file = request.FILES.get("logradouros")
+        if request.method == "POST" and logradouros_file:
             
-            if logradouros_file:
+            create_temp_file(logradouros_file, "logradouros.csv")
+            
+            file = os.path.join(settings.BASE_DIR, "temp", "logradouros.csv")
+            
+            reader = pd.read_csv(file, chunksize=3000, sep="@", encoding="ISO-8859-1")
+            
+            for i, chunk in enumerate(reader):
+                chunk.to_csv(
+                    os.path.join(settings.BASE_DIR, "temp", "logradouros", f'{i}.csv'),
+                    sep="@",
+                    index=False, 
+                    header=["id","uf","localidade","bairro","bairro_init","name","complement","cep","type","ind_type","short_name"]
+                )
                 
-                file = logradouros_file.read()
-                file_detected = chardet.detect(file)
-                decoded = file.decode(file_detected['encoding']).splitlines()
-                
-                uf_acronym = decoded[0].split("@")[1]
-                    
-                try:
-                    uf = models.UF.objects.get(acronym=uf_acronym)
-                except models.UF.DoesNotExist:
-                    uf = None
-                
-                for line in decoded:
-                    splitted = line.split("@")
+            os.remove(file)
+            
+        elif request.method == "POST" and context.get("files"):
+            file_name = context.get("files")[0]
+            file_path = os.path.join(settings.BASE_DIR, "temp", "logradouros", file_name)
+            reader = pd.read_csv(
+                file_path, 
+                chunksize=1000,
+                sep="@",
+                encoding='utf-8'
+            )
+            
+            logradouros = []
+            for i, chunk in enumerate(reader):
+                for index, row in chunk.iterrows():
                     try:
-                        localidade = models.Localidade.objects.get(id=splitted[2])
+                        uf = models.UF.objects.get(acronym=row.uf)
+                    except models.UF.DoesNotExist:
+                        uf = None
+                    
+                    try:
+                        localidade = models.Localidade.objects.get(id=row.localidade)
                     except models.Localidade.DoesNotExist:
                         localidade = None
                     
                     try:
-                        bairro = models.Bairro.objects.get(id=splitted[3])
+                        bairro = models.Bairro.objects.get(id=row.bairro)
                     except models.Bairro.DoesNotExist:
                         bairro = None
                     
-                    if uf and localidade and bairro:
-                        logradouro = models.Logradouro(
-                            id=splitted[0],
-                            uf=uf,
-                            localidade=localidade,
-                            bairro=bairro,
-                            name=splitted[5],
-                            complement=splitted[6],
-                            cep=splitted[7],
-                            type=splitted[8],
-                        )
-                        rows.append(logradouro)
-                
-                models.Logradouro.objects.bulk_create(rows)
-                
+                    logradouro = models.Logradouro(
+                        id=row.id,
+                        uf=uf,
+                        localidade=localidade,
+                        bairro=bairro,
+                        name=row.get("name"),
+                        complement=row.complement if type(row.complement) == str else None,
+                        cep=row.cep,
+                        type=row.type,
+                    )
+                    logradouros.append(logradouro)
+            models.Logradouro.objects.bulk_create(logradouros)
+            
+            context["files"].pop(0)
+            os.remove(file_path)
+            
         return render(request, "admin/import_log.html", context)
-
+        
 @admin.register(models.Bairro)
 class BairroAdmin(ImportExportModelAdmin,admin.ModelAdmin):
     list_display = (

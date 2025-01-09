@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.utils.crypto import get_random_string
-from django.shortcuts import redirect
+from django.conf import settings
+import os
 
 def remove_non_numeric(value:str):
     return "".join(e for e in value if e.isdigit())
@@ -97,6 +98,15 @@ def fcpf(cpf: str) -> str:
     else:
         return ""
     
-# def redirect_to_login(request, username):
-#     if not request.user.is_authenticated:
-#         return redirect(f"/{username}/login/?next={request.path}")
+    
+def create_temp_file(f, filename: str):
+    temp_folder = os.path.join(settings.BASE_DIR, "temp")
+    temp_file = os.path.join(temp_folder, filename)
+    
+    if not os.path.exists(temp_folder):
+        os.mkdir(temp_folder)
+         
+    with open(file=temp_file, mode="wb+") as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+    
