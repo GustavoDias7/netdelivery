@@ -10,6 +10,10 @@
   text-align: left;
   background-color: transparent;
 
+  &:focus {
+    opacity: 1;
+  }
+
   &.primary {
     margin-bottom: 10px;
     border: 2px solid $primary-color-500;
@@ -41,6 +45,7 @@
 
     .arrow {
       @include square(18px);
+      min-width: 18px;
       margin-left: 20px;
       background-image: url(pathImages("arrow.svg"));
       background-repeat: no-repeat;

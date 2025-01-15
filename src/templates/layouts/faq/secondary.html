@@ -1,0 +1,47 @@
+<section class="section" id="faq">
+  <div class="container md:container">
+    <h2
+      class="text-2xl sm:text-3xl text-color-primary text-align-center text-mb-2 sm:text-mb-4"
+    >
+      Perguntas Frequentes
+    </h2>
+    <button
+      class="accordion secondary"
+      :class="{active: 0 == accordion.index}"
+      @click="handleAccordion(0)"
+    >
+      <div class="label">
+        <h3 class="text-lg sm:text-xl">Quais são os planos disponíveis?</h3>
+        <span class="arrow"></span>
+      </div>
+      <div class="content">
+        <div>
+          <p class="text-base sm:text-lg">
+            Possuímos três tipos:
+          </p>
+          <ul class="list primary">
+            <li class="text-base">Mensal no valor de R$ 80,00</li>
+            <li class="text-base">Trimestral no valor de R$ 60,00 (economize 25%)</li>
+            <li class="text-base">Semestral no valor de R$ 45,00 (economize 43,75%)</li>
+          </ul>
+        </div>
+      </div></button
+    ><button
+      class="accordion secondary"
+      :class="{active: 1 == accordion.index}"
+      @click="handleAccordion(1)"
+    >
+      <div class="label">
+        <h3 class="text-lg sm:text-xl">Posso conhecer o sistema por dentro?</h3>
+        <span class="arrow"></span>
+      </div>
+      <div class="content">
+        <div>
+          <p class="text-base sm:text-lg">
+            Sim, agendamos reuniões gratuitas e sem compromisso para conhecer melhor o seu negócio. Além disso, fazemos uma demonstração detalhada do sistema, para que você possa avaliar se ele atende às necessidades e demandas da sua empresa.
+          </p>
+        </div>
+      </div></button
+    >
+  </div>
+</section>

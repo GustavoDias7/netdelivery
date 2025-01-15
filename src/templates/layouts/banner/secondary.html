@@ -1,0 +1,31 @@
+{% load static %}
+<section class="banner">
+  <div class="container md:container">
+    <div class="g-root g-gap-8">
+      <div class="g-row g-wrap-reverse">
+        <div class="g-item-12 md:g-item-6">
+          <div>
+            <h2
+              class="text-2xl sm:text-3xl md:text-4xl text-mb-4 text-color-primary"
+            >
+              Seu delivery online!
+            </h2>
+            <p class="text-base sm:text-xl text-mb-4 text-color-primary">
+              Bem-vindo ao NetDelivery! Com o nosso sistema, você pode
+              disponibilizar seu cardápio online e permitir que seus clientes
+              façam pedidos de forma rápida e prática diretamente na nossa
+              plataforma.
+            </p>
+          </div>
+        </div>
+        <div class="g-item-12 md:g-item-6">
+          <div>
+            <figure class="aspect-ratio aspect-16-9 fit">
+              {% include "../../components/banner-illustration.html" %}
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

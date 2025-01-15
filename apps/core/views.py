@@ -4,6 +4,9 @@ from apps.user.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.cache import cache
 
+def index(request):
+    return render(request, "pages/index.html", {})
+
 def homepage(request, username):
     context = {
         "categories": {},

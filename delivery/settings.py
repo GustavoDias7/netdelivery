@@ -172,7 +172,7 @@ if not DEBUG:
     MEDIA_URL = f'{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/'
     DEFAULT_FILE_STORAGE = 'delivery.storage_backends.PublicMediaStorage'
 else:
-    STATIC_URL = 'staticfiles/'
+    STATIC_URL = 'static/'
     STATICFILES_DIRS = [BASE_DIR / "static"]
 
     MEDIA_URL = "/media/"
