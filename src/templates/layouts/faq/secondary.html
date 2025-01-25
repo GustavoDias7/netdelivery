@@ -17,19 +17,72 @@
       <div class="content">
         <div>
           <p class="text-base sm:text-lg">
-            Possuímos três tipos:
+            Oferecemos três tipos de planos, cada um com suas vantagens, para atender às suas necessidades:
           </p>
           <ul class="list primary">
-            <li class="text-base">Mensal no valor de R$ 80,00</li>
-            <li class="text-base">Trimestral no valor de R$ 60,00 (economize 25%)</li>
-            <li class="text-base">Semestral no valor de R$ 45,00 (economize 43,75%)</li>
+            <li class="text-base">
+              <h4>Plano Mensal (30 dias corridos)</h4>
+              <span>
+                <u>Flexibilidade total</u>: Ideal para quem precisa de uma opção sem compromisso de longo prazo. O pagamento é realizado mensalmente.
+              </span>
+            </li>
+            <li class="text-base">
+              <h4>Plano Trimestral (90 dias corridos)</h4>
+              <span>
+                <u>Desconto de 25%</u>: Ao optar pelo plano trimestral, você paga por 3 meses e economiza comparado ao pagamento mensal. Ideal para quem deseja mais economia com um compromisso de médio prazo.
+              </span>
+            </li>
+            <li class="text-base">
+              <h4>Plano Semestral (180 dias corridos)</h4>
+              <span>
+                <u>Desconto de até 43,75%</u>: O plano semestral oferece a maior economia, com pagamento para 6 meses e um valor reduzido em comparação aos planos mensais e trimestrais. Perfeito para quem busca um compromisso de longo prazo com o melhor custo-benefício.
+              </span>
+            </li>
           </ul>
+          <p class="text-base sm:text-lg">
+            Para conhecer os valores de cada plano, entre em contato conosco! Estaremos prontos para ajudar você a escolher a melhor opção.
+          </p>
         </div>
-      </div></button
-    ><button
+      </div>
+    </button>
+    <button
       class="accordion secondary"
       :class="{active: 1 == accordion.index}"
       @click="handleAccordion(1)"
+    >
+      <div class="label">
+        <h3 class="text-lg sm:text-xl">Como posso solicitar o reembolso se eu desistir do serviço?</h3>
+        <span class="arrow"></span>
+      </div>
+      <div class="content">
+        <div>
+          <p class="text-base sm:text-lg">
+            Você pode solicitar o reembolso em até 7 dias após a contratação para plano mensal, e até 30 dias após a contratação para planos trimestral e semestral, independentemente de ter utilizado o serviço. O pedido de desistência deve ser feito dentro desse prazo estipulado, e o reembolso será realizado conforme os critérios mencionados, de acordo com o Código de Defesa do Consumidor (Lei nº 8.078/1990).
+          </p>
+        </div>
+      </div>
+    </button>
+    <button
+      class="accordion secondary"
+      :class="{active: 2 == accordion.index}"
+      @click="handleAccordion(2)"
+    >
+      <div class="label">
+        <h3 class="text-lg sm:text-xl">Como posso cancelar o meu serviço?</h3>
+        <span class="arrow"></span>
+      </div>
+      <div class="content">
+        <div>
+          <p class="text-base sm:text-lg">
+            Você pode cancelar o serviço a qualquer momento entrando em contato com o suporte. O cancelamento será efetivo na próxima renovação do plano, ou seja, se você cancelar o serviço durante o período de vigência do seu plano (mensal, trimestral, semestral, etc.), o cancelamento só ocorrerá no próximo ciclo de renovação. Isso significa que você continuará tendo acesso ao serviço até o fim do período em que já pagou. Não haverá cobrança adicional após o término do ciclo em vigor.
+          </p>
+        </div>
+      </div>
+    </button>
+    <button
+      class="accordion secondary"
+      :class="{active: 3 == accordion.index}"
+      @click="handleAccordion(3)"
     >
       <div class="label">
         <h3 class="text-lg sm:text-xl">Posso conhecer o sistema por dentro?</h3>
@@ -41,7 +94,7 @@
             Sim, agendamos reuniões gratuitas e sem compromisso para conhecer melhor o seu negócio. Além disso, fazemos uma demonstração detalhada do sistema, para que você possa avaliar se ele atende às necessidades e demandas da sua empresa.
           </p>
         </div>
-      </div></button
-    >
+      </div>
+    </button>
   </div>
 </section>

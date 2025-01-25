@@ -7,6 +7,9 @@ from django.core.cache import cache
 def index(request):
     return render(request, "pages/index.html", {})
 
+def terms(request):
+    return render(request, "pages/terms.html", {})
+
 def homepage(request, username):
     context = {
         "categories": {},

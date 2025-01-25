@@ -1,0 +1,20 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+    <title>NetDelivery | Termos de uso e condições gerais</title>
+    <link href="{% static 'css/pages/terms.css' %}?{% now "U" %}" type="text/css" rel="stylesheet">
+</head>
+<body>
+    <div class="app" id="app">
+        {% include "../layouts/header/primary.html" %}
+        {% include "../layouts/terms.html" %}
+        {% include "../layouts/footer/secondary.html" %}
+    </div>
+    {% comment %} <script src="{% static 'js/pages/terms.js' %}?{% now 'U' %}"></script> {% endcomment %}
+</body>
+</html>

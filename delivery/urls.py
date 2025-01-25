@@ -19,6 +19,7 @@ handler500 = core_views.server_error
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", core_views.index, name="index"),
+    path("termos/", core_views.terms, name="terms"),
     path("<slug:username>/", core_views.homepage, name="homepage"),
     path("<slug:username>/produto/", product_views.product, name="product"),
     path("<slug:username>/combo/", product_views.combo, name="combo"),
