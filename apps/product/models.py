@@ -4,8 +4,12 @@ from django.core.validators import (MinValueValidator, MaxValueValidator, MinLen
 from django.utils.translation import gettext_lazy as _
 import locale 
 from django.template.defaultfilters import slugify
-from delivery.utils import remove_non_numeric
+from delivery.utils import (remove_non_numeric, resize_image)
 from delivery.constants import PIZZA_SIZES
+from io import BytesIO
+import sys
+from PIL import Image
+from django.core.files.uploadedfile import InMemoryUploadedFile
 
 class Category(models.Model):
     name = models.CharField(verbose_name=_("name"), max_length=30, unique=True)
@@ -30,6 +34,31 @@ class Product(models.Model):
     class Meta:
         verbose_name = _("product")
         verbose_name_plural = _("products")
+        
+    def save(self, *args, **kwargs):
+        # Opening the uploaded image
+        im = Image.open(self.image)
+
+        output = BytesIO()
+
+        # Resize/modify the image
+        im = resize_image(im, 600)
+
+        # after modifications, save it to the output
+        im.save(output, format='webp', quality=50)
+        output.seek(0)
+
+        # change the imagefield value to be the newley modifed image value
+        self.image = InMemoryUploadedFile(
+            output, 
+            'ImageField', 
+            "%s.webp" % self.image.name.split('.')[0], 
+            'image/webp',
+            sys.getsizeof(output),
+            None
+        )
+        
+        super().save(*args, **kwargs)
     
     def __str__(self):
         return f"{self.name}"

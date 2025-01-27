@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.utils.crypto import get_random_string
 from django.conf import settings
 import os
+from PIL import Image
 
 def remove_non_numeric(value:str):
     return "".join(e for e in value if e.isdigit())
@@ -109,4 +110,38 @@ def create_temp_file(f, filename: str):
     with open(file=temp_file, mode="wb+") as destination:
         for chunk in f.chunks():
             destination.write(chunk)
+
+def resize_image(image: Image, max_length: int) -> Image:
+    length = image.size[0] if image.size[0] >= image.size[1] else image.size[1]
+    length = max_length if length >= max_length else length
     
+    if image.size[0] < image.size[1]:
+        # The image is in portrait mode. Height is bigger than width.
+
+        # This makes the width fit the LENGTH in pixels while conserving the ration.
+        resized_image = image.resize((length, int(image.size[1] * (length / image.size[0]))))
+
+        # Amount of pixel to lose in total on the height of the image.
+        required_loss = (resized_image.size[1] - length)
+
+        # Crop the height of the image so as to keep the center part.
+        resized_image = resized_image.crop(
+            box=(0, required_loss / 2, length, resized_image.size[1] - required_loss / 2))
+
+        # We now have a length*length pixels image.
+        return resized_image
+    else:
+        # This image is in landscape mode or already squared. The width is bigger than the heihgt.
+
+        # This makes the height fit the LENGTH in pixels while conserving the ration.
+        resized_image = image.resize((int(image.size[0] * (length / image.size[1])), length))
+
+        # Amount of pixel to lose in total on the width of the image.
+        required_loss = resized_image.size[0] - length
+
+        # Crop the width of the image so as to keep 1080 pixels of the center part.
+        resized_image = resized_image.crop(
+            box=(required_loss / 2, 0, resized_image.size[0] - required_loss / 2, length))
+
+        # We now have a length*length pixels image.
+        return resized_image
