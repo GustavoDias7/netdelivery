@@ -4,10 +4,11 @@
     <div class="footer-top">
       <div class="g-root g-gap-8">
         <div class="g-row">
+
+          {% if contacts.address_text %}
           <div class="g-item-12 sm:g-item-6 md:g-item-3">
             <div>
               <h3 class="text-xl text-mb-1">Endereço</h3>
-              {% if contacts.address_text %}
                 <a 
                   class="text-sm" 
                   href="{{contacts.address_link}}" 
@@ -16,10 +17,11 @@
                 >
                   {{contacts.address_text}}
                 </a>
-              {% endif %}
             </div>
           </div>
+          {% endif %}
 
+          {% if contacts.phone_number or contacts.email %}
           <div class="g-item-12 sm:g-item-6 md:g-item-3">
             <div>
               <h3 class="text-xl text-mb-1">Contatos</h3>
@@ -39,7 +41,9 @@
               {% endif %}
             </div>
           </div>
+          {% endif %}
 
+          {% if opening_hours %}
           <div class="g-item-12 sm:g-item-6 md:g-item-3">
             <div>
               <h3 class="text-xl text-mb-1">Funcionamento</h3>
@@ -50,7 +54,9 @@
               {% endfor %}
             </div>
           </div>
+          {% endif %}
 
+          {% if contacts.whatsapp_number or contacts.facebook_link or contacts.instagram_link or contacts.linkedin_link or contacts.x_link %}
           <div class="g-item-12 sm:g-item-6 md:g-item-3">
             <div>
               <h3 class="text-xl text-mb-1">Siga-nos</h3>
@@ -84,11 +90,13 @@
             </div>
           </div>
         </div>
+        {% endif %}
       </div>
     </div>
     <hr>
     <div class="footer-bottom">
-      <p class="text-align-center">© 2024 Copyright: NetDelivery.</p>
+      <p class="text-xs sm:text-base">© 2024 Copyright: NetDelivery.</p>
+      <a class="text-xs sm:text-base" href="{% url "terms" %}"><u>Termos de uso</u></a>
     </div>
   </div>
 </footer>

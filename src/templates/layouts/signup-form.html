@@ -41,23 +41,6 @@
               {% endif %}
             </div>
           </div>
-          {% comment %} <div class="g-item-12">
-            <div class="f-row">
-              <input
-                v-model="fields.phone"
-                id="phone"
-                name="phone"
-                type="text"
-                class="f-input filled"
-                :class="{...active(fields.phone)}"
-                value="{{form.phone.value}}"
-              />
-              <label for="last_name" class="f-label">WhatsApp</label>
-              {% if form.errors.last_name %}
-              <p class="f-helper error">{{form.errors.last_name.as_text}}</p>
-              {% endif %}
-            </div>
-          </div> {% endcomment %}
           <div class="g-item-12">
             <div class="f-row">
               <input
@@ -134,6 +117,11 @@
             <div class="f-row">
               <button class="gn-button pm-button full">Cadastrar</button>
             </div>
+          </div>
+          <div class="g-item-12">
+            <p class="text-base text-align-center">
+              <a href="{% url "signin" username %}{{next_page}}"><u>Já tenho conta.</u></a>
+            </p>
           </div>
         </div>
       </div>

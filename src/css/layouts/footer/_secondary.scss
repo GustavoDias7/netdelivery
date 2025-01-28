@@ -7,7 +7,7 @@
     padding-bottom: 32px;
   }
 
-  h3, p, strong {
+  h3, p, strong, a, u {
     color: $neutral-color-50;
   }
 
@@ -20,6 +20,10 @@
       text-decoration: underline;
       color: $neutral-color-50;
     }
+  }
+
+  .footer-bottom {
+    @include flex-center-between;
   }
 
   hr {

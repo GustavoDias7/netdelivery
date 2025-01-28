@@ -15,7 +15,7 @@
                 name="email"
                 type="text"
                 class="f-input filled"
-                :class="active('email')"
+                :class="active(fields.email)"
                 value="{{form.email.value}}"
               />
               <label for="email" class="f-label">E-mail</label>
@@ -23,6 +23,7 @@
               <p class="f-helper error">{{form.errors.email.as_text}}</p>
               {% endif %}
             </div>
+            {{form.email.value}}
           </div>
           <div class="g-item-12">
             <div class="f-row">
@@ -32,7 +33,7 @@
                   id="password"
                   name="password"
                   class="f-input filled"
-                  :class="active('password')"
+                  :class="active(fields.password)"
                   :type="passwords.main ? 'text' : 'password'"
                 />
                 <label for="password" class="f-label">Senha</label>
@@ -63,6 +64,11 @@
             <div class="f-row">
               <button class="gn-button pm-button full">Entrar</button>
             </div>
+          </div>
+          <div class="g-item-12">
+            <p class="text-base text-align-center">
+              <a href="{% url "signup" username %}{{next_page}}"><u>Não tenho conta.</u></a>
+            </p>
           </div>
         </div>
       </div>
