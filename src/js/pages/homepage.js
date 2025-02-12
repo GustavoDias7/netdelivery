@@ -1,6 +1,6 @@
 import * as vue from "vue/dist/vue.esm-bundler.js";
 import { Swiper, SwiperSlide } from "swiper/vue";
-import { Navigation } from "swiper/modules";
+import { Navigation, Pagination } from "swiper/modules";
 import { mainMixin } from "../utils/mixins";
 const { createApp } = vue;
 
@@ -13,7 +13,7 @@ const app = createApp({
   },
   setup() {
     return {
-      modules: [Navigation],
+      modules: [Navigation, Pagination],
     };
   },
   data() {

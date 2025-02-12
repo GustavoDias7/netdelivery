@@ -5,7 +5,7 @@
     <h2 class="title-line text-2xl sm:text-3xl text-color-primary text-align-center text-mb-2 sm:text-mb-4">
       {{category_name}}
     </h2>
-    <swiper :pagination="true" :initial-slide="0" :breakpoints="breakpoints" :modules="modules">
+    <swiper class="swiper-custom" :pagination="true" :navigation="true" :initial-slide="0" :breakpoints="breakpoints" :modules="modules">
       {% for product in products %}
       <swiper-slide>
         <article class="card secondary">

@@ -59,3 +59,25 @@
 
 @import "../../../node_modules/swiper/swiper.scss";
 @import "../../../node_modules/swiper/modules/navigation.scss";
+@import "../../../node_modules/swiper/modules/pagination.scss";
+
+.swiper-custom {
+    padding-bottom: 32px;
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        color: $primary-color-500;
+        background-color: $neutral-color-100;
+        box-shadow: $box-shadow-200;
+        border-radius: 22px;
+        @include square(44px);
+
+        &::after {
+            font-size: 24px;
+            font-weight: bolder;
+        }
+    }
+    .swiper-pagination-bullet {
+        background-color: $primary-color-500;
+    }
+}
