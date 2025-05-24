@@ -65,7 +65,7 @@ class OrderItem(models.Model):
         default=0.0,
         validators=[MinValueValidator(0), MaxValueValidator(1)],
     )
-    quantity = models.PositiveSmallIntegerField(verbose_name=_("quantity"), validators=[MaxValueValidator(32767)])
+    quantity = models.PositiveSmallIntegerField(verbose_name=_("quantity"), default=1, validators=[MaxValueValidator(32767)])
     
     class Meta:
         verbose_name = _("order item")
