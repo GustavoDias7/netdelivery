@@ -18,6 +18,12 @@ class ShippingFeeForm(forms.ModelForm):
         js = ('js/pages/admin_shipping_fee.js',)
         
 class OrderForm(forms.ModelForm):
+    change_to = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'data-mask': 'currency'}
+        )
+    )
+    
     class Meta:
         model = Order
         fields = "__all__"
