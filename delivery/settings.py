@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'apps.user.apps.UserConfig',
     'import_export',
     'storages',
+    'nested_admin'
 ]
 
 MIDDLEWARE = [

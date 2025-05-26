@@ -3,6 +3,15 @@ class ShoppingCart {
     this.cart = this.getLocal();
     this.fee = 0;
   }
+  optionFactory(obj) {
+    const option = {};
+
+    if (Object.hasOwn(obj, "id")) option["id"] = obj.id;
+    if (Object.hasOwn(obj, "name")) option["name"] = obj.name;
+    if (Object.hasOwn(obj, "price")) option["price"] = Number(obj.price);
+
+    return option;
+  }
   itemFactory(obj) {
     const item = {};
 
@@ -16,11 +25,19 @@ class ShoppingCart {
     if (Object.hasOwn(obj, "img")) item["img"] = obj.img;
     if (Object.hasOwn(obj, "discount")) item["discount"] = Number(obj.discount);
     if (Object.hasOwn(obj, "link")) item["link"] = obj.link;
+    if (Object.hasOwn(obj, "options")) item["options"] = obj.options?.map(this.optionFactory) || [];
 
     return item;
   }
   findItemIndex(id) {
     return this.cart.findIndex((item) => item.id === id);
+  }
+  findItemIndexByOption(id) {
+    return this.cart.findIndex((item) => {
+      return item.options.findIndex(option => {
+        return option.id === id;
+      })
+    });
   }
   incrementCount(index) {
     this.cart[index].count += 1;
@@ -67,10 +84,11 @@ class ShoppingCart {
   }
   totalPrice() {
     return (
-      this.cart.reduce(
-        (acc, curr) =>
-          acc + (curr.price - curr.price * curr.discount) * curr.count,
-        0
+      this.cart.reduce((acc, curr) => {
+          const price_extra = curr.price + curr.extra;
+          const with_discount = price_extra - price_extra * curr.discount
+          return acc + with_discount * curr.count;
+        }, 0
       ) + this.fee
     );
   }
@@ -148,7 +166,12 @@ class ShoppingCart {
       this.fee = Number(value);
     }
   }
-  addItem(id, name, price, img, discount, link) {
+  addOption(item_id, id, name, price) {
+    const itemIndex = this.findItemIndex(item_id);
+    const option = this.optionFactory({ id, name, price });
+    if (itemIndex > -1) this.cart[itemIndex].options.push(option);
+  }
+  addItem(id, name, price, img, discount, link, options) {
     this.syncCart();
     const item = this.itemFactory({
       id,
@@ -158,7 +181,9 @@ class ShoppingCart {
       img,
       discount,
       link,
+      options,
     });
+    
     const itemIndex = this.findItemIndex(item.id);
     if (itemIndex === -1) this.cart.push(item);
     else this.incrementCount(itemIndex);

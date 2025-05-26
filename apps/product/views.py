@@ -1,13 +1,18 @@
 from django.shortcuts import render
-from .models import ProductVariant, Combo, ComboItem
+from .models import ProductVariant, Combo, ComboItem, Option, OptionGroup
 
 def product(request, username):
     variant_id = request.GET.get('variant', "")
     product_id = request.GET.get('id', "")
     variants = ProductVariant.objects.filter(product_id=product_id, product__user__username=username)
+    variant = variants.get(id=variant_id)
+    option_group = OptionGroup.objects.get(product_variant=variant)
+    options = Option.objects.filter(option_group=option_group)
     context = {
         "variants": variants,
-        "variant": variants.get(id=variant_id),
+        "variant": variant,
+        "options": options,
+        "option_group": option_group,
         "username": username
     }
     

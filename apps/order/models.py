@@ -67,6 +67,17 @@ class OrderItem(models.Model):
     )
     quantity = models.PositiveSmallIntegerField(verbose_name=_("quantity"), default=1, validators=[MaxValueValidator(32767)])
     
+    # option1 = models.CharField(verbose_name=_("option"), max_length=15)
+    # price1 = models.PositiveSmallIntegerField(verbose_name=_("price"), default=0, validators=[MaxValueValidator(32767)])
+    # option2 = models.CharField(verbose_name=_("option"), max_length=15)
+    # price2 = models.PositiveSmallIntegerField(verbose_name=_("price"), default=0, validators=[MaxValueValidator(32767)])
+    # option3 = models.CharField(verbose_name=_("option"), max_length=15)
+    # price3 = models.PositiveSmallIntegerField(verbose_name=_("price"), default=0, validators=[MaxValueValidator(32767)])
+    # option4 = models.CharField(verbose_name=_("option"), max_length=15)
+    # price4 = models.PositiveSmallIntegerField(verbose_name=_("price"), default=0, validators=[MaxValueValidator(32767)])
+    # option5 = models.CharField(verbose_name=_("option"), max_length=15)
+    # price5 = models.PositiveSmallIntegerField(verbose_name=_("price"), default=0, validators=[MaxValueValidator(32767)])
+    
     class Meta:
         verbose_name = _("order item")
         verbose_name_plural = _("order items")

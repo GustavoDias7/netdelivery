@@ -1,4 +1,5 @@
 from django.contrib import admin
+import nested_admin
 from . import models
 from . import forms
 from django.utils.translation import gettext_lazy as _
@@ -7,28 +8,55 @@ from django.utils.translation import gettext_lazy as _
 class CategoryAdmin(admin.ModelAdmin):
     pass
 
+class OptionInline(nested_admin.NestedTabularInline):
+    model = models.Option
+    extra = 0
+    min_num = 1
+    max_num = 5
+    template = 'admin/option_tabular_inline.html'
+    form = forms.OptionForm
+
+@admin.register(models.Option)
+class OptionAdmin(admin.ModelAdmin):
+    pass
+
+class OptionGroupInline(nested_admin.NestedTabularInline):
+    model = models.OptionGroup
+    extra = 0
+    min_num = 0
+    max_num = 1
+    can_delete = True
+    inlines = [OptionInline]
+    template = 'admin/option_group_tabular_inline.html'
+    
+
+@admin.register(models.OptionGroup)
+class OptionGroupAdmin(admin.ModelAdmin):
+    pass
+
+class ProductVariantInline(nested_admin.NestedStackedInline):
+    model = models.ProductVariant
+    extra = 0
+    min_num = 1
+    form = forms.ProductVariantForm
+    inlines = [OptionGroupInline]
+    
 @admin.register(models.ProductVariant)
 class ProductVariantAdmin(admin.ModelAdmin):
-    search_fields = ("product__name", "size")
+    search_fields = ("product__name", "name")
     readonly_fields = ("id",)
+    inlines = [OptionGroupInline]
     
     def has_module_permission(self, request):
-        return False
+        return True
     
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         user = request.user.owned_by if request.user.owned_by else request.user
         return qs.filter(product__user=user)
-    
-    
-class ProductVariantInline(admin.StackedInline):
-    model = models.ProductVariant
-    extra = 0
-    min_num = 1
-    form = forms.ProductVariantForm
-    
+
 @admin.register(models.Product)
-class ProductAdmin(admin.ModelAdmin):
+class ProductAdmin(nested_admin.NestedModelAdmin):
     inlines = [ProductVariantInline]
     list_display = ("name", "category", "id",)
     list_filter = ("category__name",)

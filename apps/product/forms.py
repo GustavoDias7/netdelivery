@@ -1,6 +1,26 @@
 from django import forms
-from .models import (Product, ProductVariant, Combo)
+from .models import (Product, ProductVariant, Combo, Option)
+from django.utils.translation import gettext_lazy as _
 
+class OptionForm(forms.ModelForm):
+    name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'placeholder': _('name')}
+        )
+    )
+    price = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                # 'data-mask': 'currency', 
+                'placeholder': _('price'), 
+                # 'style': 'max-width: 82px;'
+            }
+        )
+    )
+    class Meta:
+        model = Option
+        fields = "__all__"
+        
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product

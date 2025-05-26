@@ -26,18 +26,15 @@
                   <ul>
                     <li class="text-base text-mb-2">
                       <strong>Descrição:</strong> <span>{{variant.product.description}}</span>
-                    </li>
-                    {% if variant.diameter %}
+                    </li> 
+                    {% if variant.note %}
                     <li class="text-base text-mb-2">
-                      <strong>Diametro:</strong> <span>{{variant.diameter}}cm</span>
+                      <strong>Detalhe:</strong> <span>{{variant.note}}</span>
                     </li>
-                    {% endif %} 
-                    {% if variant.stuffed_edge != None %}
+                    {% endif %}
+                    {% if variant.stock %}
                     <li class="text-base text-mb-2">
-                      <strong>Borda:</strong>
-                      <span>
-                        {{variant.stuffed_edge|yesno:"Recheada,Não,recheada"}}
-                      </span>
+                      <strong>Estoque:</strong> <span>{{variant.stock}} unidades</span>
                     </li>
                     {% endif %}
                     {% if variant.discount %}
@@ -48,12 +45,51 @@
                       <strong>Desconto:</strong> <span>{{variant.fdiscount}}</span>
                     </li>
                     {% endif %} 
-                    {% if variant.size or variant.milliliters %}
-                    <li class="text-base">
-                      <strong>Tamanho:</strong> <br />
+                    {% if variants|length > 1 %}
+                    <li class="text-base text-mb-2">
+                      <strong>Variações:</strong> <br />
                       {% include "../components/multi-buttons.html" %}
                     </li>
                     {% endif %}
+
+                    <li class="text-base">
+                      <strong>Complementos:</strong> 
+                      {% if option_group.input_type == "checkbox" %} 
+                      {% if option_group.minimum %}min({{option_group.minimum}}){% endif %}
+                      {% if option_group.maximum and option_group.maximum != options|length %}max({{option_group.maximum}}){% endif %}
+                      {% endif %}
+                      <br />
+                      <ul id="option_group">
+                        {% for option in options %}
+                        {% if option_group.input_type == "radio" %}
+                        <li>
+                          <label for="{{option.id}}">
+                            <input type="radio" name="option" id="{{option.id}}">
+                            <span>
+                              <strong>{{option.name}}</strong>: <span>{{option.fprice}}</span>
+                            </span>
+                          </label>
+                        </li>
+                        {% else %}
+                        <li>
+                          <label for="{{option.id}}">
+                            <input 
+                              @change="handle_check" 
+                              :disabled="handle_maximum({{option.id}})" 
+                              type="checkbox" 
+                              name="{{option.name}}" 
+                              id="{{option.id}}"
+                              data-price="{{option.price}}"
+                            >
+                            <span>
+                              <strong>{{option.name}}</strong>: <span>{{option.fprice}}</span>
+                            </span>
+                          </label>
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                      </ul>
+                    </li>
                   </ul>
                 </section>
                 <section class="g-item-12"><hr /></section>
@@ -75,7 +111,8 @@
                   '{{variant.product.image.url}}',
                   '{{variant.discount|unlocalize}}',
                   '{{variant.link}}',
-                  )"
+                  checkboxes_filter
+                )"
               >
                 Adicionar ao carrinho
               </button>

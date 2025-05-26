@@ -10,13 +10,18 @@ DAY_OF_THE_WEEK = {
     '6': _('Sunday'),
 }
 
-PIZZA_SIZES = {
-    '1': _('Small'),
-    '2': _('Medium'),
-    '3': _('Large'),
-    '4': _('Giant'),
-    '5': _('Family'),
-    '6': _('Maracanã'),
+# PIZZA_SIZES = {
+#     '1': _('Small'),
+#     '2': _('Medium'),
+#     '3': _('Large'),
+#     '4': _('Giant'),
+#     '5': _('Family'),
+#     '6': _('Maracanã'),
+# }
+
+OPTION_TYPES = {
+    '0': _('Single choice'),
+    '1': _('Multiple choices'),
 }
 
 USER_OWNER = (

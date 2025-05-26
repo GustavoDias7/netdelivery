@@ -21,6 +21,7 @@
                 <h3 class="text-sm text-mb-2">
                   <a :href="item.link" v-text="item.name"></a>
                 </h3>
+                <p v-text="item.options"></p>
                 <div class="counter small">
                   <button class="counter-button" @click="cart.removeItem(item.id)"
                     :disabled="cart.getCount(item.id) === 1">

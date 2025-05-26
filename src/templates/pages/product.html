@@ -14,6 +14,14 @@
 {% endblock %}
 
 {% block js %}
+
+{% if option_group %}
+<script>
+  const minimum_options = {{option_group.minimum}};
+  const maximum_options = {{option_group.maximum}};
+</script>
+{% endif %}
+
 <script src="{% static 'js/pages/product.js' %}?{% now 'U' %}"></script>
 {% endblock %}
 

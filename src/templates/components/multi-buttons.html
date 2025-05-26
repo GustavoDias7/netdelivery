@@ -1,37 +1,19 @@
 <ul class="multi-buttons">
     {% for var in variants %}
-        {% if var.size %}
-            <li>
-                {% if var.id != variant.id %}
-                    <a
-                        href="/{{username}}/produto?id={{var.product.id}}&variant={{var.id}}"
-                        class="size"
-                        title="{{var.fsize}}"
-                    >
-                        {{var.fsize}}
-                    </a>
-                {% else %}
-                    <p class="size active" title="{{var.fsize}}">
-                        {{var.fsize}}
-                    </p>
-                {% endif %}
-            </li>
-        {% elif var.milliliters %}
-            <li>
-                {% if var.id != variant.id %}
-                    <a
-                        href="/{{username}}/produto?id={{var.product.id}}&variant={{var.id}}"
-                        class="size"
-                        title="{{var.fmilliliters}}"
-                    >
-                        {{var.fmilliliters}}
-                    </a>
-                {% else %}
-                    <p class="size active" title="{{var.fmilliliters}}">
-                        {{var.fmilliliters}}
-                    </p>
-                {% endif %}
-            </li>
-        {% endif %}
+        <li>
+            {% if var.id != variant.id %}
+                <a
+                    href="/{{username}}/produto?id={{var.product.id}}&variant={{var.id}}"
+                    class="size"
+                    title="{{var.name}}"
+                >
+                    {{var.name}}
+                </a>
+            {% else %}
+                <p class="size active" title="{{var.name}}">
+                    {{var.name}}
+                </p>
+            {% endif %}
+        </li>
     {% endfor %}
 </ul>

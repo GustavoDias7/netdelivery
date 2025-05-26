@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 import locale 
 from django.template.defaultfilters import slugify
 from delivery.utils import (remove_non_numeric, resize_image)
-from delivery.constants import PIZZA_SIZES
+from delivery.constants import OPTION_TYPES
 from io import BytesIO
 import sys
 from PIL import Image
@@ -26,9 +26,9 @@ class Category(models.Model):
 
 class Product(models.Model):
     user = models.ForeignKey("user.User", verbose_name=_("user"), null=True, on_delete=models.CASCADE)
-    name = models.CharField(verbose_name=_("name"), max_length=100)
+    name = models.CharField(verbose_name=_("name"), max_length=50)
     image = models.ImageField(verbose_name=_("image"))
-    description = models.TextField(verbose_name=_("description"), max_length=600, validators=[MinLengthValidator(4, _("Minimum of 4 characters."))])
+    description = models.TextField(verbose_name=_("description"), max_length=400, validators=[MinLengthValidator(4, _("Minimum of 4 characters."))])
     category = models.ForeignKey(Category, verbose_name=_("category"), on_delete=models.RESTRICT)
     
     class Meta:
@@ -37,26 +37,28 @@ class Product(models.Model):
         
     def save(self, *args, **kwargs):
         # Opening the uploaded image
-        im = Image.open(self.image)
+        print(self.image)
+        if self.image:
+            im = Image.open(self.image)
 
-        output = BytesIO()
+            output = BytesIO()
 
-        # Resize/modify the image
-        im = resize_image(im, 600)
+            # Resize/modify the image
+            im = resize_image(im, 600)
 
-        # after modifications, save it to the output
-        im.save(output, format='webp', quality=50)
-        output.seek(0)
+            # after modifications, save it to the output
+            im.save(output, format='webp', quality=50)
+            output.seek(0)
 
-        # change the imagefield value to be the newley modifed image value
-        self.image = InMemoryUploadedFile(
-            output, 
-            'ImageField', 
-            "%s.webp" % self.image.name.split('.')[0], 
-            'image/webp',
-            sys.getsizeof(output),
-            None
-        )
+            # change the imagefield value to be the newley modifed image value
+            self.image = InMemoryUploadedFile(
+                output, 
+                'ImageField', 
+                "%s.webp" % self.image.name.split('.')[0], 
+                'image/webp',
+                sys.getsizeof(output),
+                None
+            )
         
         super().save(*args, **kwargs)
     
@@ -65,10 +67,8 @@ class Product(models.Model):
     
 class ProductVariant(models.Model):
     product = models.ForeignKey("Product", verbose_name=_("product"), on_delete=models.CASCADE)
-    size = models.CharField(verbose_name=_("size"), max_length=40, blank=True, null=True, choices=PIZZA_SIZES)
-    diameter = models.PositiveSmallIntegerField(verbose_name=_("diameter"), blank=True, null=True, validators=[MaxValueValidator(32767)], help_text=_("In centimeters"))
-    stuffed_edge = models.BooleanField(verbose_name=_("stuffed edge"), blank=True, null=True, choices=[(None, "Sem borda"), (True, "Sim"), (False, "Não")])
-    milliliters = models.PositiveSmallIntegerField(verbose_name=_("milliliters"), blank=True, null=True, validators=[MaxValueValidator(32767)])
+    name = models.CharField(verbose_name=_("Name"), max_length=20, blank=True, null=True)
+    note = models.CharField(verbose_name=_("Note"), max_length=30, blank=True, null=True)
     price = models.PositiveIntegerField(verbose_name=_("price"), validators=[MaxValueValidator(2147483647)])
     discount = models.DecimalField(
         verbose_name=_("discount"), 
@@ -93,7 +93,7 @@ class ProductVariant(models.Model):
         
     def fsize(self):
         if self.size:
-            return PIZZA_SIZES[self.size]
+            return 'PIZZA_SIZES[self.size]'
         else:
             return None
         
@@ -106,8 +106,7 @@ class ProductVariant(models.Model):
                 result = str(int(liter)) if liter.is_integer() else str(liter).replace(".", ",")
                 return "{} L".format(result)
         else:
-            return self.milliliters
-            
+            return self.milliliters          
     
     def fprice(self):
         return locale.currency(self.price / 100, grouping=True)
@@ -128,16 +127,32 @@ class ProductVariant(models.Model):
         return f"/{self.product.user.username}/produto?{query_string}" 
     
     def full_name(self):
-        if self.size:
-            return f"{self.product.name} {PIZZA_SIZES[self.size]}"
-        elif self.milliliters:
-            return f"{self.product.name} {self.fmilliliters()}"
+        if self.name:
+            return f"{self.product.name} {self.name}"
         else:
             return self.product.name
         
     def __str__(self):
         return self.full_name()
 
+class OptionGroup(models.Model):
+    type = models.CharField(verbose_name=_("type"), max_length=10, default='1', choices=OPTION_TYPES)
+    minimum = models.PositiveSmallIntegerField(verbose_name=_("minimum"), validators=[MaxValueValidator(5)])
+    maximum = models.PositiveSmallIntegerField(verbose_name=_("maximum"), validators=[MaxValueValidator(5)])
+    product_variant = models.OneToOneField(verbose_name=_("variant"), to="ProductVariant", on_delete=models.CASCADE)
+    
+    def input_type(self):
+        if self.type == '0': return "radio"
+        if self.type == '1': return "checkbox"
+        else: return "text"
+
+class Option(models.Model):
+    name = models.CharField(verbose_name=_("name"), max_length=15)
+    price = models.PositiveSmallIntegerField(verbose_name=_("price"), default=0, validators=[MaxValueValidator(32767)])
+    option_group = models.ForeignKey(verbose_name=_("option group"), to="OptionGroup", blank=True, null=True, on_delete=models.CASCADE)
+    
+    def fprice(self):
+        return locale.currency(self.price / 100, grouping=True)
     
 class Combo(models.Model):
     user = models.ForeignKey("user.User", verbose_name=_("user"), null=True, on_delete=models.CASCADE)
