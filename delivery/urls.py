@@ -8,6 +8,7 @@ from apps.user import views as user_views
 from apps.core.admin import autocomplete_view
 from django.conf import settings
 from django.conf.urls.static import static
+from django.utils.translation import gettext_lazy as _
 
 # change the autocomplete text content
 admin.AdminSite.autocomplete_view = autocomplete_view
@@ -15,6 +16,8 @@ admin.AdminSite.autocomplete_view = autocomplete_view
 handler403 = core_views.permission_denied
 handler404 = core_views.page_not_found
 handler500 = core_views.server_error
+
+admin.site.site_header = _('Administration page')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
