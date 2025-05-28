@@ -56,10 +56,10 @@ def order(request, username):
     context = {"username": username}
     context["field"] = {}
     
+    shippingfee = None
     try:
         address = Address.objects.get(user=request.user)
         context["address"] = address
-        
         whitelist = WhiteList.objects.get(user__username=username)
         wl_bairro = whitelist.bairros.get(id=address.logradouro.bairro.id)
         shippingfee = ShippingFee.objects.get(user__username=username, bairro=wl_bairro)
