@@ -9,55 +9,76 @@ const app = createApp({
     return {};
   },
   data() {
-    return {
-      minimum_options: minimum_options,
-      maximum_options: maximum_options,
-      checkboxes: [],
-    };
+    return {};
   },
   methods: {
-    handle_check(e) {
-      const id = Number(e.target.id);
-      const index = this.checkboxes.findIndex((field) => field.id == id);
-      if (e.target.checked) this.checkboxes[index].checked = true;
-      else this.checkboxes[index].checked = false;
+    handleMaximum(option_id, variant_id) {
+      const not_checked = this.cart.getOption(option_id) === null;
+      const is_maximum = variant.option_group.maximum === this.cart.getOptions(variant_id).length;
+
+      console.log(this.cart.getOptions(variant_id).length);
+      console.log(variant.option_group.maximum);
+      
+      console.log(is_maximum);
+      
+      return not_checked && is_maximum;
     },
-    handle_maximum(id) {
-      let result = false
-      const index = this.checkboxes.findIndex((field) => field.id == id);
-      if (index > -1) (result = this.checkboxes[index].checked);
-      return result === false && this.maximum_options == this.check_counter;
-    }
+    handleOption(e, itemId) {
+      const checkbox = e.target;
+      const option_id = checkbox.id.split("_")[1];
+      
+      if (checkbox.checked) {
+        const hasItem = this.cart.hasItem(itemId);
+        if (hasItem) {
+          this.cart.addOption(
+            itemId, 
+            option_id, 
+            checkbox.dataset.name, 
+            checkbox.dataset.price
+          );
+        } else {
+          this.cart.addItem(
+            variant.id,
+            variant.name,
+            variant.price,
+            variant.img,
+            variant.discount,
+            variant.link,
+            this.checkboxes_filter
+          );
+        }
+      } else {
+        this.cart.removeOption(itemId, option_id);
+      }
+    },
+    isChecked(optionId) {
+      return this.cart.getOption(optionId);
+    },
   },
   computed: {
     disable_check() {
       return this.check_fields.length === maximum_options;
     },
-    check_counter() {
-      return this.checkboxes.reduce((acc, crr) => {
-        return acc + (crr.checked ? 1 : 0);
-      }, 0);
-    },
     checkboxes_filter() {
-      return this.checkboxes.filter(checkbox => checkbox.checked);
-    }
-  },
-  mounted() {
-    const $fields = document.querySelectorAll("#option_group input");
-    const fields = [];
-    $fields.forEach($field => {
-      const obj = {};
+      const $fields = document.querySelectorAll("#option_group input");
+      const fields = Array.from($fields)
+      .filter($field => {
+        return $field.checked;
+      })
+      .map($field => {
+        const obj = {};
 
-      obj["checked"] = false;
-      obj["id"] = Number($field.id);
-      obj["name"] = $field.name;
-      obj["price"] = Number($field.dataset.price);
+        obj["id"] = $field.id.split("_")[1];
+        obj["name"] = $field.dataset.name;
+        obj["price"] = Number($field.dataset.price);
+        
+        return obj;
+      });
       
-      fields.push(obj);
-    });
-    this.checkboxes = [ ...this.checkboxes, ...fields ];
-  }
-  
+      return fields;
+    },
+  },
+  mounted() {}
 });
 
 app.mount("#app");

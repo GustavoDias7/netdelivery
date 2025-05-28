@@ -17,8 +17,26 @@
 
 {% if option_group %}
 <script>
-  const minimum_options = {{option_group.minimum}};
-  const maximum_options = {{option_group.maximum}};
+  const variant = {
+    id: {{variant.id}},
+    name: '{{variant.full_name}}',
+    price: {{variant.price}},
+    discount: {{variant.discount|floatformat:"u"}},
+    img: '{{variant.product.image.url}}',
+    link: '{{variant.link}}',
+    
+    {% if option_group %}
+    option_group: {
+      minimum: {{option_group.minimum}},
+      maximum: {{option_group.maximum}},
+    },
+    {% endif %}
+    
+    {% comment %} 
+    options: [{% for option in options %}
+    {id: {{option.id}}, price: {{option.price}}},
+    {% endfor %}], {% endcomment %}
+  };
 </script>
 {% endif %}
 

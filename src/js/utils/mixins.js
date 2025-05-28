@@ -1,4 +1,4 @@
-const ShoppingCart = require("./ShoppingCart");
+const {ShoppingCart} = require("./ShoppingCart");
 
 const mainMixin = {
   data() {

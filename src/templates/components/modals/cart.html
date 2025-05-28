@@ -18,10 +18,14 @@
                 </figure>
               </a>
               <div class="cart-item-center">
-                <h3 class="text-sm text-mb-2">
+                <h3 class="text-sm" :class="item.options.length ? 'text-mb-1' : 'text-mb-2'">
                   <a :href="item.link" v-text="item.name"></a>
                 </h3>
-                <p v-text="item.options"></p>
+                <ul v-if="item.options.length" class="text-mb-2">
+                  <li class="text-xs" v-for="option in item.options" :key="option.id">
+                    <strong v-text="option.name"></strong>: <span v-text="option.fprice"></span>
+                  </li>
+                </ul>
                 <div class="counter small">
                   <button class="counter-button" @click="cart.removeItem(item.id)"
                     :disabled="cart.getCount(item.id) === 1">

@@ -20,7 +20,7 @@
       .cart-item-center-left {
         @include flex-center-between;
         flex-wrap: wrap;
-        gap: 8px;
+        gap: 4px;
         width: calc(100% * 9.3 / 12);
 
         h3 {

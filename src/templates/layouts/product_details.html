@@ -53,12 +53,13 @@
                     {% endif %}
 
                     <li class="text-base">
-                      <strong>Complementos:</strong> 
-                      {% if option_group.input_type == "checkbox" %} 
-                      {% if option_group.minimum %}min({{option_group.minimum}}){% endif %}
-                      {% if option_group.maximum and option_group.maximum != options|length %}max({{option_group.maximum}}){% endif %}
+                      <p class="text-mb-2">
+                        <strong>Complementos:</strong> 
+                        {% if option_group.input_type == "checkbox" %} 
+                        {% if option_group.minimum %}min({{option_group.minimum}}){% endif %}
+                        {% if option_group.maximum and option_group.maximum != options|length %}max({{option_group.maximum}}){% endif %}
+                      </p>
                       {% endif %}
-                      <br />
                       <ul id="option_group">
                         {% for option in options %}
                         {% if option_group.input_type == "radio" %}
@@ -71,20 +72,23 @@
                           </label>
                         </li>
                         {% else %}
-                        <li>
-                          <label for="{{option.id}}">
-                            <input 
-                              @change="handle_check" 
-                              :disabled="handle_maximum({{option.id}})" 
-                              type="checkbox" 
-                              name="{{option.name}}" 
-                              id="{{option.id}}"
-                              data-price="{{option.price}}"
-                            >
-                            <span>
-                              <strong>{{option.name}}</strong>: <span>{{option.fprice}}</span>
-                            </span>
-                          </label>
+                        <li class="text-mb-2" :key="'option_{{option.id}}'">
+                            <div class="f-row">
+                              <label for="option_{{option.id}}" class="check">
+                                <input 
+                                  type="checkbox" 
+                                  @change="e => handleOption(e, {{variant.id}})"
+                                  :checked="isChecked({{option.id}})"
+                                  :disabled="handleMaximum({{option.id}}, {{variant.id}})" 
+                                  name="option_{{option.id}}"
+                                  id="option_{{option.id}}"
+                                  data-price="{{option.price}}"
+                                  data-name="{{option.name}}"
+                                >
+                                <span class="marker"></span>
+                                <span class="text"><strong>{{option.name}}</strong>: <span>{{option.fprice}}</span></span>
+                              </label>
+                            </div>
                         </li>
                         {% endif %}
                         {% endfor %}
@@ -96,7 +100,7 @@
                 <footer class="g-item-12">
                   <p class="text-base">
                     <strong>Total:</strong>
-                    <span>{{variant.ftotal}}</span>
+                    <span v-text="cart.ftotalPriceItem({{variant.id}}) || '{{variant.ftotal}}'"></span>
                   </p>
                 </footer>
               </div>
