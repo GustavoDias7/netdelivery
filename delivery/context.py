@@ -19,11 +19,11 @@ def header(request):
             username = request.resolver_match.kwargs.get("username")
         else:
             return {}
-    
+    logo = " ".join([request.user.first_name, request.user.last_name]) or "NetDelivery"
     context = {
         "header_categories": [],
         "header_combos": False,
-        "logo": ""
+        "logo": logo
     }
     
     try:

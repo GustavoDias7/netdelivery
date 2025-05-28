@@ -3,7 +3,7 @@
   <div class="container md:container between">
     <div> 
       <a class="logo" href="{% url 'homepage' username %}"> 
-        {% firstof logo "NetDelivery" %}
+        {{logo}}
       </a> 
     </div>
     <div class="header-right">
