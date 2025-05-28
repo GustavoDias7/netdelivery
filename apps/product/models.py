@@ -37,7 +37,6 @@ class Product(models.Model):
         
     def save(self, *args, **kwargs):
         # Opening the uploaded image
-        print(self.image)
         if self.image:
             im = Image.open(self.image)
 
@@ -67,8 +66,8 @@ class Product(models.Model):
     
 class ProductVariant(models.Model):
     product = models.ForeignKey("Product", verbose_name=_("product"), on_delete=models.CASCADE)
-    name = models.CharField(verbose_name=_("Name"), max_length=20, blank=True, null=True)
-    note = models.CharField(verbose_name=_("Note"), max_length=30, blank=True, null=True)
+    name = models.CharField(verbose_name=_("name"), max_length=20, blank=True, null=True)
+    note = models.CharField(verbose_name=_("note"), max_length=30, blank=True, null=True)
     price = models.PositiveIntegerField(verbose_name=_("price"), validators=[MaxValueValidator(2147483647)])
     discount = models.DecimalField(
         verbose_name=_("discount"), 
@@ -151,6 +150,11 @@ class Option(models.Model):
     price = models.PositiveSmallIntegerField(verbose_name=_("price"), default=0, validators=[MaxValueValidator(32767)])
     option_group = models.ForeignKey(verbose_name=_("option group"), to="OptionGroup", blank=True, null=True, on_delete=models.CASCADE)
     
+    def clean_fields(self, exclude=None):
+        if self.price and type(self.price) == str:
+            self.price = int(remove_non_numeric(self.price))
+        super().clean_fields(exclude=exclude)
+        
     def fprice(self):
         return locale.currency(self.price / 100, grouping=True)
     
