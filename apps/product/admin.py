@@ -18,7 +18,8 @@ class OptionInline(nested_admin.NestedTabularInline):
 
 @admin.register(models.Option)
 class OptionAdmin(admin.ModelAdmin):
-    pass
+    def has_module_permission(self, request):
+        return False
 
 class OptionGroupInline(nested_admin.NestedTabularInline):
     model = models.OptionGroup
@@ -32,7 +33,8 @@ class OptionGroupInline(nested_admin.NestedTabularInline):
 
 @admin.register(models.OptionGroup)
 class OptionGroupAdmin(admin.ModelAdmin):
-    pass
+    def has_module_permission(self, request):
+        return False
 
 class ProductVariantInline(nested_admin.NestedStackedInline):
     model = models.ProductVariant
@@ -48,7 +50,7 @@ class ProductVariantAdmin(admin.ModelAdmin):
     inlines = [OptionGroupInline]
     
     def has_module_permission(self, request):
-        return True
+        return False
     
     def get_queryset(self, request):
         qs = super().get_queryset(request)
