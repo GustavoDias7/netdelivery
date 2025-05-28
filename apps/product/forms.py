@@ -11,9 +11,8 @@ class OptionForm(forms.ModelForm):
     price = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                # 'data-mask': 'currency', 
+                'data-mask': 'currency', 
                 'placeholder': _('price'), 
-                # 'style': 'max-width: 82px;'
             }
         )
     )
