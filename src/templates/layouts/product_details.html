@@ -52,48 +52,50 @@
                     </li>
                     {% endif %}
 
-                    <li class="text-base">
-                      <p class="text-mb-2">
-                        <strong>Complementos:</strong> 
-                        {% if option_group.input_type == "checkbox" %} 
-                        {% if option_group.minimum %}min({{option_group.minimum}}){% endif %}
-                        {% if option_group.maximum and option_group.maximum != options|length %}max({{option_group.maximum}}){% endif %}
-                      </p>
-                      {% endif %}
-                      <ul id="option_group">
-                        {% for option in options %}
-                        {% if option_group.input_type == "radio" %}
-                        <li>
-                          <label for="{{option.id}}">
-                            <input type="radio" name="option" id="{{option.id}}">
-                            <span>
-                              <strong>{{option.name}}</strong>: <span>{{option.fprice}}</span>
-                            </span>
-                          </label>
-                        </li>
-                        {% else %}
-                        <li class="text-mb-2" :key="'option_{{option.id}}'">
-                            <div class="f-row">
-                              <label for="option_{{option.id}}" class="check">
-                                <input 
-                                  type="checkbox" 
-                                  @change="e => handleOption(e, {{variant.id}})"
-                                  :checked="isChecked({{option.id}})"
-                                  :disabled="handleMaximum({{option.id}}, {{variant.id}})" 
-                                  name="option_{{option.id}}"
-                                  id="option_{{option.id}}"
-                                  data-price="{{option.price}}"
-                                  data-name="{{option.name}}"
-                                >
-                                <span class="marker"></span>
-                                <span class="text"><strong>{{option.name}}</strong>: <span>{{option.fprice}}</span></span>
-                              </label>
-                            </div>
-                        </li>
+                    {% if option_group %}
+                      <li class="text-base">
+                        <p class="text-mb-2">
+                          <strong>Complementos:</strong> 
+                          {% if option_group.input_type == "checkbox" %} 
+                          {% if option_group.minimum %}min({{option_group.minimum}}){% endif %}
+                          {% if option_group.maximum and option_group.maximum != options|length %}max({{option_group.maximum}}){% endif %}
+                        </p>
                         {% endif %}
-                        {% endfor %}
-                      </ul>
-                    </li>
+                        <ul id="option_group">
+                          {% for option in options %}
+                          {% if option_group.input_type == "radio" %}
+                          <li>
+                            <label for="{{option.id}}">
+                              <input type="radio" name="option" id="{{option.id}}">
+                              <span>
+                                <strong>{{option.name}}</strong>: <span>{{option.fprice}}</span>
+                              </span>
+                            </label>
+                          </li>
+                          {% else %}
+                          <li class="text-mb-2" :key="'option_{{option.id}}'">
+                              <div class="f-row">
+                                <label for="option_{{option.id}}" class="check">
+                                  <input 
+                                    type="checkbox" 
+                                    @change="e => handleOption(e, {{variant.id}})"
+                                    :checked="isChecked({{option.id}})"
+                                    :disabled="handleMaximum({{option.id}}, {{variant.id}})" 
+                                    name="option_{{option.id}}"
+                                    id="option_{{option.id}}"
+                                    data-price="{{option.price}}"
+                                    data-name="{{option.name}}"
+                                  >
+                                  <span class="marker"></span>
+                                  <span class="text"><strong>{{option.name}}</strong>: <span>{{option.fprice}}</span></span>
+                                </label>
+                              </div>
+                          </li>
+                          {% endif %}
+                          {% endfor %}
+                        </ul>
+                      </li>
+                    {% endif %}
                   </ul>
                 </section>
                 <section class="g-item-12"><hr /></section>
