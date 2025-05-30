@@ -23,7 +23,7 @@
     price: {{variant.price}},
     discount: {{variant.discount|floatformat:"u"}},
     img: '{{variant.product.image.url}}',
-    link: '{{variant.link}}',
+    link: '{{variant.link}}'.replace(/&amp;/g, '&'),
     
     {% if option_group %}
     option_group: {

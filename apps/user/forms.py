@@ -67,6 +67,7 @@ class ClientsForm(forms.ModelForm):
         widget=forms.TextInput(attrs={ 'data-mask': 'phone' })
     )
     cpf = forms.CharField(
+        required=False,
         label="CPF",
         max_length=14,
         widget=forms.TextInput(attrs={ 'data-mask': 'cpf' })

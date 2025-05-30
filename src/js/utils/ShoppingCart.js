@@ -326,10 +326,18 @@ class ShoppingCart extends Factories {
   toString() {
     return JSON.stringify(
       this.cart.map((item) => {
+        const options = item.options.map(option => {
+          return {
+            id: option.id,
+            name: option.name,
+            price: option.price,
+          }
+        });
         return {
           id: item.id,
           price: item.price,
           count: item.count,
+          options: options,
         };
       })
     );

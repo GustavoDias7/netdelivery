@@ -31,9 +31,13 @@ Seus pedidos
                                 {% if order_items.0.order.status.code == 'delivered' %}
                                 <p class="text-sm">Entregue: {{order_items.0.order.received_date|date:"d/m/Y G:i:s"}}</p>
                                 {% endif %}
-                                <p class="text-sm text-mb-1">
+                                <p class="text-sm">
                                     Status: <strong class="{{order_items.0.order.status.code}}">
                                         {{order_items.0.order.status.name}}
+                                    </strong>
+                                </p>
+                                <p class="text-sm">
+                                    Total: <strong>{{order_items.0.order.ftotal}}</strong>
                                     </strong>
                                 </p>
                                 {% if order_items.0.order.status.code == 'wating' %}
@@ -49,6 +53,10 @@ Seus pedidos
                                 {% if order_items.0.order.shipping_fee_value %}
                                 <p class="text-sm text-align-left sm:text-align-right">
                                     Frete: <strong>{{order_items.0.order.fshipping_fee_value}}</strong>
+                                </p>
+                                {% else %}
+                                <p class="text-sm text-align-left sm:text-align-right">
+                                    Frete: <strong style="color: #00C52B;">Grátis</strong>
                                 </p>
                                 {% endif %}
                                 <p class="text-sm text-align-left sm:text-align-right text-mb-1">
@@ -78,7 +86,7 @@ Seus pedidos
                                     <h3 class="text-lg sm:text-xl text-color-primary">
                                         {% if order_item.product %}
                                         <a class="text-color-primary" href="{{order_item.product.link}}">
-                                            {{order_item.product.full_name}}
+                                            {{order_item.product_name}}
                                         </a>
                                         {% else %}
                                         <a class="text-color-primary" href="{{order_item.combo.link}}">
@@ -86,11 +94,20 @@ Seus pedidos
                                         </a>
                                         {% endif %}
                                     </h3>
+                                    {% if order_item.foptions|length %}
+                                    <ul class="text-mb-1">
+                                        {% for option in order_item.foptions %}
+                                        <li class="text-xs">
+                                            <strong>{{option.name|title}}</strong>: <span>{{option.fprice}}</span>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
                                     <p class="text-base">
                                         Preço: <strong>{{order_item.fprice}}</strong>
                                     </p>
                                     <p class="text-base">
-                                        Total: <strong>{{order_item.ftotal_price}}</strong>
+                                        Total: <strong>{{order_item.ftotal}}</strong>
                                     </p>
                                 </div>
                                 <div class="order-item-info-right">

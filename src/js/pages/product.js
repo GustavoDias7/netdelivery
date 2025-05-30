@@ -15,12 +15,6 @@ const app = createApp({
     handleMaximum(option_id, variant_id) {
       const not_checked = this.cart.getOption(option_id) === null;
       const is_maximum = variant.option_group.maximum === this.cart.getOptions(variant_id).length;
-
-      console.log(this.cart.getOptions(variant_id).length);
-      console.log(variant.option_group.maximum);
-      
-      console.log(is_maximum);
-      
       return not_checked && is_maximum;
     },
     handleOption(e, itemId) {
@@ -37,6 +31,8 @@ const app = createApp({
             checkbox.dataset.price
           );
         } else {
+          console.log(variant.link);
+          
           this.cart.addItem(
             variant.id,
             variant.name,

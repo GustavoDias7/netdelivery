@@ -53,6 +53,9 @@ class Logradouro(models.Model):
     complement = models.CharField(_("complement"), null=True, max_length=100)
     cep = models.CharField(max_length=8, validators=[cep_validator])
     type = models.CharField(_("type"), max_length=36)
+    
+    def fullname(self):
+        return " ".join([self.type, self.name])
         
     def fcep(self):
         if len(self.cep):
@@ -90,6 +93,9 @@ class Localidade(models.Model):
     tipolocalidade = models.ForeignKey("TipoLocalidade", on_delete=models.RESTRICT)
     name = models.CharField(_("name"), max_length=72)
     cep = models.CharField(max_length=8, validators=[cep_validator])
+    
+    def localidade_name(self):
+        return " ".join([self.name, self.tipolocalidade.definition])
     
     def select2(self):
         return f"{self.name} ({self.uf})"

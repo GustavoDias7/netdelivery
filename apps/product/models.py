@@ -156,7 +156,10 @@ class Option(models.Model):
         super().clean_fields(exclude=exclude)
         
     def fprice(self):
-        return locale.currency(self.price / 100, grouping=True)
+        price = None
+        if self.price:
+            price = locale.currency(self.price / 100, grouping=True)
+        return price
     
 class Combo(models.Model):
     user = models.ForeignKey("user.User", verbose_name=_("user"), null=True, on_delete=models.CASCADE)

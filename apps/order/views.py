@@ -6,13 +6,13 @@ from .models import (
     PaymentType,
     Status
 )
-from apps.product.models import ProductVariant
+from apps.product.models import (ProductVariant, OptionGroup, Option)
 from apps.address.models import (Address, WhiteList, Bairro)
 from apps.user.models import User
 from django.core.paginator import Paginator
 from django.core.exceptions import ValidationError
 import json
-from django.db.models import Q
+from django.db.models import Q, Sum
 from django.utils.translation import gettext_lazy as _
 from apps.core.validators import cart_validator
 from delivery.utils import remove_non_numeric
@@ -56,6 +56,7 @@ def order(request, username):
     context = {"username": username}
     context["field"] = {}
     
+    address = None
     shippingfee = None
     try:
         address = Address.objects.get(user=request.user)
@@ -121,7 +122,22 @@ def order(request, username):
                         raise ValidationError(
                             _(f"{variant.full_name()} has {variant.stock} units in stock.")
                         )
+                
+                item_options = item.get("options", [])
+                if len(item_options) > 0:
+                    option_group = OptionGroup.objects.get(product_variant=variant)
+                    options = Option.objects.filter(option_group=option_group)
+                    for index, item_option in enumerate(item_options):
+                        if index+1 > option_group.maximum: 
+                            break
                         
+                        try:
+                            options.get(pk=item_option.get("id"), price=item_option.get("price"))
+                        except Exception as e:
+                            name = item_option.get("name")
+                            context["notification"] = _(f'The "{name}" option don\'t exist!')
+                            return render(request, "pages/order.html", context)
+                   
             except ValidationError as e:
                 context["notification"] = e.message
                 return render(request, "pages/order.html", context)
@@ -130,10 +146,19 @@ def order(request, username):
                 return render(request, "pages/order.html", context)
         
         order = Order()
-        order.user_request = request.user
+        
+        order.total = 0
+        order.setAddress(address)
         
         try:
             order.user_owner = User.objects.get(username=username)
+        except User.DoesNotExist:
+            context["notification"] = f"A conta '{username}' não existe."
+            return render(request, "pages/order.html", context)
+        
+        try:
+            user_request = User.objects.get(id=request.user.id)
+            order.setUser(user_request)
         except User.DoesNotExist:
             context["notification"] = f"A conta '{username}' não existe."
             return render(request, "pages/order.html", context)
@@ -151,18 +176,22 @@ def order(request, username):
         
         if is_delivery and shippingfee:
             order.setShippingFee(shippingfee)
-        
         order.save()
         
         for item in cart:
             variant = product_variants.get(pk=item.get("id"))
+            get_id= lambda a: a.get("id")
+            options_id = map(get_id, item.get("options", [{}]))
+            options = options.filter(pk__in=options_id)
             order_item = OrderItem()
             
+            order_item.total = 0
             order_item.order=order
             order_item.product=variant
             order_item.price=variant.price
             order_item.discount=variant.discount
             order_item.quantity=item.get("count")
+            order_item.set_options(options)
             
             if variant.stock != None:
                 variant.stock -= order_item.quantity 
@@ -170,9 +199,14 @@ def order(request, username):
             order_item.save()
             variant.save()
         
-        response = redirect('success', username)
-        response.set_cookie('reset_cart', True, max_age=99999, secure=True, httponly=True)
-        return response
+        # set order total
+        total_order_items = OrderItem.objects.filter(order=order).aggregate(total_sum=Sum("total"))
+        order.total = total_order_items['total_sum'] + order.shipping_fee_value
+        order.save()
+        
+        # response = redirect('success', username)
+        # response.set_cookie('reset_cart', True, max_age=99999, secure=True, httponly=True)
+        # return response
         
     return render(request, "pages/order.html", context)
 

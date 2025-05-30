@@ -6,6 +6,7 @@ window.addEventListener("load", function () {
     $(".status").each(function (index) {
       $(this).on("click", function (event) {
         $("[name='status']").val(event.target.id)
+        console.log($("[name='status']").val())
       })
     });
 

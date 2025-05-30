@@ -94,6 +94,16 @@ def cart_validator(cart):
                     params={"value": key},
                 )
                 
+            required_option_keys = ("id", "name", "price")
+            options = item.get("options", [{}])
+            for opt_key in required_option_keys:
+                for option in options:
+                    if not opt_key in option.keys():
+                        raise ValidationError(
+                            _(f'The option key "{opt_key}" in "{key}" is required.'),
+                            params={"value": opt_key},
+                        )
+                
 def cpf_validator(value:str):
     numbers = [int(digit) for digit in value if digit.isdigit()]
 
