@@ -1,6 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-from delivery.utils import remove_non_numeric
+from netdelivery.utils import remove_non_numeric
 
 def cep_validator(value: str):
     if not value.isnumeric():

@@ -4,8 +4,8 @@ from django.core.validators import (MinValueValidator, MaxValueValidator, MinLen
 from django.utils.translation import gettext_lazy as _
 import locale 
 from django.template.defaultfilters import slugify
-from delivery.utils import (remove_non_numeric, resize_image)
-from delivery.constants import PIZZA_SIZES
+from netdelivery.utils import (remove_non_numeric, resize_image)
+from netdelivery.constants import PIZZA_SIZES
 from io import BytesIO
 import sys
 from PIL import Image

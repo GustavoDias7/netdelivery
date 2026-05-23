@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from apps.address.models import *
 from apps.product.models import *
 from apps.user.models import *
-from delivery.utils import remove_non_numeric
+from netdelivery.utils import remove_non_numeric
 
 import locale 
 

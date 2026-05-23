@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from delivery.utils import remove_non_alphanumeric
+from netdelivery.utils import remove_non_alphanumeric
 from apps.address.models import (
     Address,
     Logradouro,

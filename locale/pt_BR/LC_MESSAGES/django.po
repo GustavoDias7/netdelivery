@@ -526,58 +526,58 @@ msgstr "CPF"
 msgid "clients"
 msgstr "clientes"
 
-#: delivery/constants.py:4
+#: netdelivery/constants.py:4
 msgid "Monday"
 msgstr "Segunda-feira"
 
-#: delivery/constants.py:5
+#: netdelivery/constants.py:5
 msgid "Tuesday"
 msgstr "Terça-feira"
 
-#: delivery/constants.py:6
+#: netdelivery/constants.py:6
 msgid "Wednesday"
 msgstr "Quarta-feira"
 
-#: delivery/constants.py:7
+#: netdelivery/constants.py:7
 msgid "Thursday"
 msgstr "Quinta-feira"
 
-#: delivery/constants.py:8
+#: netdelivery/constants.py:8
 msgid "Friday"
 msgstr "Sexta-feira"
 
-#: delivery/constants.py:9
+#: netdelivery/constants.py:9
 msgid "Saturday"
 msgstr "Sábado"
 
-#: delivery/constants.py:10
+#: netdelivery/constants.py:10
 msgid "Sunday"
 msgstr "Domingo"
 
-#: delivery/constants.py:14
+#: netdelivery/constants.py:14
 msgid "Small"
 msgstr "Pequeno"
 
-#: delivery/constants.py:15
+#: netdelivery/constants.py:15
 msgid "Medium"
 msgstr "Médio"
 
-#: delivery/constants.py:16
+#: netdelivery/constants.py:16
 msgid "Large"
 msgstr "Grande"
 
-#: delivery/constants.py:17
+#: netdelivery/constants.py:17
 msgid "Giant"
 msgstr "Gigante"
 
-#: delivery/constants.py:18
+#: netdelivery/constants.py:18
 msgid "Family"
 msgstr "Família"
 
-#: delivery/constants.py:19
+#: netdelivery/constants.py:19
 msgid "Maracanã"
 msgstr "Maracanã"
 
-#: delivery/settings.py:142
+#: netdelivery/settings.py:142
 msgid "Brazilian Portuguese"
 msgstr "Português Brasileiro"

@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.password_validation import validate_password
 from apps.user.models import User
 from . import forms
-from delivery.utils import (remove_non_alphanumeric, create_username)
+from netdelivery.utils import (remove_non_alphanumeric, create_username)
 
 # Create your views here.
 def signin(request, username):

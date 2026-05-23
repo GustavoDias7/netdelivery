@@ -15,12 +15,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='combo',
             name='image',
-            field=models.ImageField(default='', storage=django.core.files.storage.FileSystemStorage(location=pathlib.PurePosixPath('/home/vboxuser/projects/django-project/delivery/media')), upload_to=''),
+            field=models.ImageField(default='', storage=django.core.files.storage.FileSystemStorage(location=pathlib.PurePosixPath('/home/vboxuser/projects/django-project/netdelivery/media')), upload_to=''),
             preserve_default=False,
         ),
         migrations.AlterField(
             model_name='product',
             name='image',
-            field=models.ImageField(storage=django.core.files.storage.FileSystemStorage(location=pathlib.PurePosixPath('/home/vboxuser/projects/django-project/delivery/media')), upload_to=''),
+            field=models.ImageField(storage=django.core.files.storage.FileSystemStorage(location=pathlib.PurePosixPath('/home/vboxuser/projects/django-project/netdelivery/media')), upload_to=''),
         ),
     ]

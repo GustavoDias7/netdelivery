@@ -4,7 +4,7 @@ from . import forms
 from django.contrib.auth.admin import UserAdmin
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
-from delivery.constants import (USER_WITHOUT_PERMISSIONS, USER_WITH_PERMISSIONS)
+from netdelivery.constants import (USER_WITHOUT_PERMISSIONS, USER_WITH_PERMISSIONS)
 
 class EmployeerInline(admin.StackedInline):
     model = models.User

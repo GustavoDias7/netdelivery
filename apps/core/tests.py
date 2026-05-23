@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.core.exceptions import ValidationError
 from apps.core.validators import (name_validator, phone_validator, cep_validator)
-from delivery.utils import first_occurrence
+from netdelivery.utils import first_occurrence
 
 # Create your tests here.
 class ValidatorsTestCase(TestCase):

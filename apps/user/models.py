@@ -11,8 +11,8 @@ from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 import re
 from apps.address.models import Logradouro
-from delivery.utils import (remove_non_numeric, fphone_number)
-from delivery.constants import DAY_OF_THE_WEEK
+from netdelivery.utils import (remove_non_numeric, fphone_number)
+from netdelivery.constants import DAY_OF_THE_WEEK
 
 class Contacts(models.Model):
     user = models.ForeignKey("user.User", verbose_name=_("user"), on_delete=models.CASCADE)

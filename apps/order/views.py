@@ -15,7 +15,7 @@ import json
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from apps.core.validators import cart_validator
-from delivery.utils import remove_non_numeric
+from netdelivery.utils import remove_non_numeric
 from django.core.exceptions import ObjectDoesNotExist
 
 def orders(request, username):

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from delivery.utils import (first_occurrence, last_occurrence, custom_titled_filter, create_temp_file)
+from netdelivery.utils import (first_occurrence, last_occurrence, custom_titled_filter, create_temp_file)
 from import_export.admin import ImportExportModelAdmin
 from django.shortcuts import render
 import chardet

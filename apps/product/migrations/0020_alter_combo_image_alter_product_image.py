@@ -15,11 +15,11 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='combo',
             name='image',
-            field=models.ImageField(help_text='Add square images, with 1:1 dimension.', storage=django.core.files.storage.FileSystemStorage(location=pathlib.PurePosixPath('/home/vboxuser/projects/django-project/delivery/media')), upload_to=''),
+            field=models.ImageField(help_text='Add square images, with 1:1 dimension.', storage=django.core.files.storage.FileSystemStorage(location=pathlib.PurePosixPath('/home/vboxuser/projects/django-project/netdelivery/media')), upload_to=''),
         ),
         migrations.AlterField(
             model_name='product',
             name='image',
-            field=models.ImageField(help_text='Add square images, with 1:1 dimension.', storage=django.core.files.storage.FileSystemStorage(location=pathlib.PurePosixPath('/home/vboxuser/projects/django-project/delivery/media')), upload_to=''),
+            field=models.ImageField(help_text='Add square images, with 1:1 dimension.', storage=django.core.files.storage.FileSystemStorage(location=pathlib.PurePosixPath('/home/vboxuser/projects/django-project/netdelivery/media')), upload_to=''),
         ),
     ]
